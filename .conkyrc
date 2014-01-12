@@ -1,0 +1,91 @@
+background no
+use_xft yes
+xftfont 123:size=8
+xftalpha 0.1
+update_interval 1
+total_run_times 0
+own_window no
+own_window_type override
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+
+maximum_width 400
+minimum_size 400 100
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+default_color lightgray
+default_shade_color red
+default_outline_color green
+alignment top_right
+gap_x 10
+gap_y 10
+
+no_buffers yes
+uppercase no
+cpu_avg_samples 2
+net_avg_samples 2
+override_utf8_locale yes
+use_spacer none
+
+
+TEXT
+${alignc 32}${font Open Sans:size=20}${color lightgray}arch${color dodgerblue3} linux$font$color
+${alignc}${font Open Sans:size=10}${color white}${execi 30 users | cut -c1-6}@$nodename
+$color${font}${font Open Sans:size=20}$alignr${time %H:%M}$font
+${color dodgerblue3}${font Open Sans:Bold:size=10}Date${hr 2}$color$font
+$color${font Open Sans:size=12}$alignr${time %a}, ${time %d %b %Y}$font$color
+
+# SYS
+${font Open Sans:Bold:size=10}${color dodgerblue3}SYSTEM ${hr 2}$color${font}
+$sysname $kernel $alignr $machine
+Uptime $alignr $uptime
+
+# CPU
+${font Open Sans:Bold:size=10}${color dodgerblue3}CPU ${hr 2}
+$color${font}Intel i5 2450M$alignr ${freq_g cpu0}GHz
+${font}Core 0 ${color} @ ${cpu cpu1} % $alignc ${color dodgerblue3}${cpubar cpu1}${color}
+${font}Core 1 ${color} @ ${cpu cpu2} % $alignc ${color dodgerblue3}${cpubar cpu2}${color}
+${font}Core 2 ${color} @ ${cpu cpu3} % $alignc ${color dodgerblue3}${cpubar cpu3}${color}
+${font}Core 3 ${color} @ ${cpu cpu4} % $alignc ${color dodgerblue3}${cpubar cpu4}${color}
+
+# TOP
+${font Open Sans:Bold:size=10}${color dodgerblue3}TOP ${hr 2}
+$color${font}${font Open Sans:bold:size=8.5}PROCESS $alignr CPU USAGE$font
+${top name 1}${alignr}${top cpu 1} %
+${top name 2}${alignr}${top cpu 2} %
+${top name 3}${alignr}${top cpu 3} %
+${top name 4}${alignr}${top cpu 4} %
+${top name 5}${alignr}${top cpu 5} %
+
+# MEMORY
+${font Open Sans:Bold:size=10}${color dodgerblue3}MEMORY ${hr 2}
+$color${font}${font Open Sans:bold:size=8.5}RAM$font $mem / $memmax $alignr $memperc %
+$membar
+
+${font Open Sans:bold:size=8.5}SWAP$font $swap / $swapmax $alignr $swapperc
+${swapbar};
+
+# NETWORK
+${font Open Sans:Bold:size=10}${color dodgerblue3}Network ${hr 2}
+$color${font Open Sans:bold:size=8.5}External IP ${font}${alignr}${execi 3600 wget -O - http://ip.tupeux.com | tail}$font
+
+${font Open Sans:bold:size=8.5}enp3s0 $font$alignr ${addr enp3s0}
+down ${downspeedf enp3s0} kb/s $alignr up $alignr ${upspeedf enp3s0} kb/s
+down total ${totaldown enp3s0} $alignr up total ${totalup enp3s0}
+
+${font Open Sans:bold:size=8.5}wlp2s0 $font$alignr ${addr wlp2s0}
+down ${downspeedf wlp2s0} kb/s $alignr up $alignr ${upspeedf wlp2s0} kb/s
+down total ${totaldown wlp2s0} $alignr up total ${totalup wlp2s0}
+
+# HDD
+${font Open Sans:Bold:size=10}${color dodgerblue3}Disks ${hr 2}$color
+${font Open Sans:bold:size=8.5}ROOT $font$font$alignr ${fs_type /}
+${fs_used /} / ${fs_size /} $alignr ${fs_used_perc /} %
+${fs_bar /}
+
+${font Open Sans:bold:size=8.5}HOME $font$alignr ${fs_type /home}
+${fs_used /home} / ${fs_size /home} $alignr ${fs_used_perc /home} %
+${fs_bar /home}

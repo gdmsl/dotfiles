@@ -1,0 +1,16 @@
+# Temp or Backup files
+*~
+
+# Python compiled or object files
+*.pyo
+*.pyc
+
+# History files
+*_history
+
+# Log files
+*.log
+
+# Ignore vim installed bundles
+.vim/bundle/*
+
