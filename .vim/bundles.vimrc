@@ -2,7 +2,7 @@
 " Author: Warden (Guido Masella)
 "                (guido.masella@gmail.com)
 
-" _.General {{{
+" General utilities
 if count(g:warden_packages, 'general')
 	" ctrlp -
 	Bundle 'kien/ctrlp.vim'
@@ -27,9 +27,9 @@ if count(g:warden_packages, 'general')
 	" easymotions -
 	Bundle 'Lokaltog/vim-easymotion'
 endif
-" }}}
 
-" _.Editing {{{
+
+" Editing related plugins
 if count(g:warden_packages, 'editing')
 	" surround -
 	Bundle 'tpope/vim-surround'
@@ -37,9 +37,9 @@ if count(g:warden_packages, 'editing')
 	" trailing spaces -
 	Bundle 'bronson/vim-trailing-whitespace'
 endif
-" }}}
 
-" _.Look {{{
+
+" Look package
 if count(g:warden_packages, 'look')
 	" numbers.vim - a plugin to show relative line numbers or simple line
 	" numbers depending on the mode you are in
@@ -69,13 +69,12 @@ if count(g:warden_packages, 'look')
 
 	" vim-colors-solarized - a splendid solarized colorscheme
 	Bundle 'altercation/vim-colors-solarized'
-		"set background=dark
-		"colorscheme solarized	" set a dark solarized scheme
+		set background=dark
+		colorscheme solarized	" set a dark solarized scheme
 
 	" vim-colorschemes - collections of colorschemes
 	Bundle 'flazz/vim-colorschemes'
-		set background=dark
-		colorscheme ir_black
+		"set background=dark
+		"colorscheme ir_black
 	"
 endif
-" }}}
