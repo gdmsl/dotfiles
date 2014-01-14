@@ -69,12 +69,11 @@ if count(g:warden_packages, 'look')
 
 	" vim-colors-solarized - a splendid solarized colorscheme
 	Bundle 'altercation/vim-colors-solarized'
-		set background=dark
-		colorscheme solarized	" set a dark solarized scheme
+		"set background=dark
+		"colorscheme solarized	" set a dark solarized scheme
 
 	" vim-colorschemes - collections of colorschemes
 	Bundle 'flazz/vim-colorschemes'
-		"set background=dark
-		"colorscheme ir_black
-	"
+		set background=dark
+		colorscheme tango2
 endif
