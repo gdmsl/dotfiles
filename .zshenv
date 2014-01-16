@@ -1,2 +1,2 @@
 typeset -U path
-path=(~/Bin ~/.local/bin $path)
+path=(~/Bin ~/.local/bin /usr/local/texlive/2013/bin/x86_64-linux $path)
