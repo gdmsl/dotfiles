@@ -1,0 +1,20 @@
+# Write your default config options here!
+
+# -----------------------------------------------------------------------------
+# SUBTITLES
+#
+# Enable ASS subtitle renderer by default.
+ass=1
+
+# Maximum width of a subtitle line:
+subwidth=80
+
+# tell ass to place subtitles in black borders, when avaiables
+ass-use-margins=1
+
+
+# -----------------------------------------------------------------------------
+# DECODING
+
+# decode with multiple threads.
+lavdopts=threads=4
