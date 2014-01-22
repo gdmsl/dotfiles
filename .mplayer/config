@@ -11,6 +11,10 @@ subwidth=85
 ass-use-margins=1
 
 
+# use X11 for video output, use a wayland and framebuffer as fallbacks
+vo=vdpau,vaapi,xv,wayland,directfb,
+#vc=ffh264vdpau,ffmpeg12vdpau,ffodivxvdpau,ffwmv3vdpau,ffvc1vdpau,
+
 # -----------------------------------------------------------------------------
 # DECODING
 
