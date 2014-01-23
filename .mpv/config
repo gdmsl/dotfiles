@@ -1,0 +1,26 @@
+# default configuration that applies to every file
+[default]
+
+# use X11 for video output, use a wayland and framebuffer as fallbacks
+vo=vdpau,vaapi,xv,wayland,directfb,
+
+#use pulseaudio for audio output, choose alsa or oss4 as fallback
+ao=pulse,alsa,oss,
+
+# multithreaded decoding of H264/MPEG-1/2 (valid: 0-16)
+vd-lavc-threads=4
+
+# prefer using six channels audio
+channels=6
+
+# disable screensaver
+stop-screensaver="yes"
+
+# correct pitch when speed is faster or slower than 1.0
+af=scaletempo
+
+# allow to seek in a file which is still downloading whilst watching it
+idx=yes
+
+# skip displaying some frames to maintain A/V sync on slow systems
+framedrop=yes
