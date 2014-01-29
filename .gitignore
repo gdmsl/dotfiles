@@ -14,5 +14,3 @@
 # Ignore vim installed bundles
 .vim/bundle/*
 
-# all files
-*
