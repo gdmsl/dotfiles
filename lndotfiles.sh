@@ -23,7 +23,7 @@ done
 for filename in `cat files.list`; do
 	if [ -e "$HOME/$filename" ]; then
 		$DEBUG && echo "File $filename already exists in your HOME"
-		if [ $DEBUG ]; then
+		if $DEBUG; then
 			PS3="Overwrite?"
 			select action in "yes" "no";do
 				if [ "$action" == "yes" ]; then

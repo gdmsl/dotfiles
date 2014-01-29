@@ -3,7 +3,6 @@
 .bash_profile
 .bashrc
 .conkyrc
-.gitignore
 .gtkrc-2.0
 .i3status.conf
 .screenrc
