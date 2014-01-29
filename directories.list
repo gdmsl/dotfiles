@@ -1,0 +1,10 @@
+.config/gtk-3.0
+.config/mpd
+.config/ranger
+.i3
+.kde4/share/apps/konsole
+.local/bin
+.mplayer
+.mpv
+.vim
+.ncmpcpp

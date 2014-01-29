@@ -9,6 +9,7 @@ DEBUG=false;
 
 if [ "$1" == "v" ]; then
 	DEBUG=true;
+fi
 
 for dirname in `cat directories.list`; do
 	if [ -d "$HOME/$dirname" ]; then
@@ -24,10 +25,11 @@ for filename in `cat files.list`; do
 		$DEBUG && echo "File $filename already exists in your HOME"
 		if [ $DEBUG ]; then
 			PS3="Overwrite?"
-			select action in "yes no"; do
+			select action in "yes" "no";do
 				if [ "$action" == "yes" ]; then
 					cp -f "$filename" "$HOME/$filename"
 				fi
+				break;
 			done
 		else
 			cp -f "$filename" "$HOME/$filename"
