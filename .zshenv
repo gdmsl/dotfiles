@@ -11,3 +11,9 @@ export VDPAU_DRIVER=va_gl
 # Enabling AntiAliasing for applications using the
 # .. java virtual machine.
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
+
+# Default text editor
+export EDITOR="vim"
+
+# Default browser
+export BROWSER="chromium"

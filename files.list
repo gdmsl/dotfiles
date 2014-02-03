@@ -20,7 +20,6 @@
 .config/ranger/scope.sh
 .config/ranger/tagged
 .i3/config
-.kde4/share/apps/konsole/Tango.colorscheme
 .local/bin/i3exit.sh
 .local/bin/viminstall.sh
 .mplayer/config
