@@ -1,6 +1,7 @@
 .config/gtk-3.0
 .config/mpd
 .config/ranger
+.config/termite
 .i3
 .local/bin
 .mplayer

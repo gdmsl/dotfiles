@@ -18,7 +18,9 @@ font pango:Droid Sans Mono 10
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+#bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec termite
+bindsym $mod+Shift+Return exec xterm
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -225,7 +227,7 @@ bar {
 	tray_output primary
 
 	# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-	font pango:DejaVu Sans Mono, Icons, FontAwesome 10
+	font pango:Droid Sans Mono, Icons, FontAwesome 10
 
 	colors {
 		background #000000
@@ -247,7 +249,7 @@ bar {
 	workspace_buttons yes
 
 	# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-	font pango:DejaVu Sans Mono, Icons, FontAwesome 10
+	font pango:Droid Sans Mono, Icons, FontAwesome 10
 
 	colors {
 		background #000000

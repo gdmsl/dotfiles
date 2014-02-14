@@ -19,6 +19,7 @@
 .config/ranger/rifle.conf
 .config/ranger/scope.sh
 .config/ranger/tagged
+.config/termite/config
 .i3/config
 .local/bin/i3exit.sh
 .local/bin/viminstall.sh

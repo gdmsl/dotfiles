@@ -17,3 +17,6 @@ export EDITOR="vim"
 
 # Default browser
 export BROWSER="chromium"
+
+# Default terminal emulator
+export TERMINAL="xterm"
