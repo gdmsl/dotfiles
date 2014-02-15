@@ -1,6 +1,6 @@
 # Select the prompt from the standards
 # use prompt -l or prompt -p to list and preview them
-prompt walters
+prompt grml
 
 # User defined aliases
 alias feh='feh --draw-filename --draw-tinted --force-aliasing --image-bg black --scale-down'
