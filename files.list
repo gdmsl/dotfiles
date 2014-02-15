@@ -29,3 +29,4 @@
 .vim/before.vimrc
 .vim/bundles.vimrc
 .vim/local.vimrc
+.profile
