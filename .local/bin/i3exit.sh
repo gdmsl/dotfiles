@@ -22,6 +22,9 @@ case "$1" in
     shutdown)
         systemctl poweroff
         ;;
+    hybrid)
+        systemctl hybrid-sleep
+	;;
     *)
         echo "Usage: $0 {lock|logout|suspend|hibernate|reboot|shutdown}"
         exit 2
