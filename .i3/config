@@ -267,9 +267,6 @@ bar {
 # Network Manager Applet
 exec /usr/bin/nm-applet
 
-# Pulse Audio volume applet
-exec /usr/bin/pa-applet
-
 # Clipit
 exec clipit
 
