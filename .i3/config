@@ -66,6 +66,8 @@ mode "$mode_system" {
 }
 bindsym $mod+z mode "$mode_system"
 
+# add todo with todo.sh
+bindsym $mod+i exec i3-input -F 'exec --no-startup-id todo.sh add "%s"' -P 'Add Todo: '
 
 # ----------------------------------------------------------------------------
 
@@ -240,7 +242,7 @@ assign [class="Midori"] $WS02
 for_window [class="Nautilus" instance="file_progress"] floating enable
 for_window [class="Gnome-clocks"] floating enable
 for_window [class="XClock"] floating enable
-for_window [Class="thunar" instance="Thunar" title="Avanzamento delle operazione sui file"] floating enable
+for_window [class="Thunar" title="Avanzamento delle operazione sui file"] floating enable
 for_window [class="Xfce4-notifyd"] floating enable
 
 # ----------------------------------------------------------------------------
