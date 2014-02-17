@@ -1,0 +1,64 @@
+!
+! .xrdb/tango.xrdb
+!
+
+! AUTHOR: guido.masella@gmail.com
+
+! Tango Color Scheme for Xresources
+
+! Background and Foreground
+#define COLOR_background	#111111
+#define COLOR_foreground	#babdb6
+
+! Black
+#define COLOR_dblack	#000000
+#define COLOR_lblack	#555753
+
+! Red
+#define COLOR_dred	#ff6565
+#define COLOR_lred	#ff8d8d
+
+! Green
+#define COLOR_dgreen	#93d44f
+#define COLOR_lgreen	#c8e7a8
+
+! Yellow
+#define COLOR_dyellow	#eab93d
+#define COLOR_lyellow	#ffc123
+
+! Blue
+#define COLOR_dblue	#204a87
+#define COLOR_lblue	#3465a4
+
+! Magenta
+#define COLOR_dmagenta	#ce5c00
+#define COLOR_lmagenta	#f57900
+
+! Cyan
+#define COLOR_dcyan	#89b6e2
+#define COLOR_lcyan	#46a4ff
+
+! White
+#define COLOR_dwhite	#cccccc
+#define COLOR_lwhite	#ffffff
+
+! COLORSCHEME:
+*background: COLOR_background
+*foreground: COLOR_foreground
+
+*color0:  COLOR_dblack
+*color1:  COLOR_dred
+*color2:  COLOR_dgreen
+*color3:  COLOR_dyellow
+*color4:  COLOR_dblue
+*color5:  COLOR_dmagenta
+*color6:  COLOR_dcyan
+*color7:  COLOR_dwhite
+*color8:  COLOR_lblack
+*color9:  COLOR_lred
+*color10: COLOR_lgreen
+*color11: COLOR_lyellow
+*color12: COLOR_lblue
+*color13: COLOR_lmagenta
+*color14: COLOR_lcyan
+*color15: COLOR_lwhite

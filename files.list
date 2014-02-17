@@ -30,3 +30,4 @@
 .vim/bundles.vimrc
 .vim/local.vimrc
 .profile
+.xrdb/tango.xrdb
