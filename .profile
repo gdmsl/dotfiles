@@ -21,5 +21,5 @@ export EDITOR="vim"
 export BROWSER="chromium"
 
 # Default terminal emulator
-export TERMINAL="xterm"
+export TERMINAL="uxterm"
 
