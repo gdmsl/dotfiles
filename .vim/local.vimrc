@@ -1,5 +1,6 @@
+"
 " ~/.vim/local.vimrc
-" Author: Warden (Guido Masella)
-"                (guido.masella@gmail.com)
-
+"
+" Author: Guido Masella <guido.masella@gmail.com>
+"
 

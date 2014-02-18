@@ -1,9 +1,11 @@
+"
 " ~/.vim/bundles.vimrc
-" Author: Warden (Guido Masella)
-"                (guido.masella@gmail.com)
+"
+" Author: Guido Masella <guido.masella@gmail.com>
+"
 
 " General utilities
-if count(g:warden_packages, 'general')
+if count(g:gmas_packages, 'general')
 	" ctrlp -
 	Bundle 'kien/ctrlp.vim'
 		let g:ctrlp_map = '<c-p>'
@@ -30,7 +32,7 @@ endif
 
 
 " Editing related plugins
-if count(g:warden_packages, 'editing')
+if count(g:gmas_packages, 'editing')
 	" surround -
 	Bundle 'tpope/vim-surround'
 
@@ -40,7 +42,7 @@ endif
 
 
 " Look package
-if count(g:warden_packages, 'look')
+if count(g:gmas_packages, 'look')
 	" numbers.vim - a plugin to show relative line numbers or simple line
 	" numbers depending on the mode you are in
 	Bundle 'myusuf3/numbers.vim'
