@@ -160,19 +160,25 @@ bindsym $mod+r mode "resize"
 # WORKSPACES -----------------------------------------------------------------
 
 # Defining workspace variables
-set $WS01 1:term
-set $WS02 2:web
-set $WS03 3:system
-set $WS04 4
-set $WS05 5
-set $WS06 6
-set $WS07 7
-set $WS08 8
-set $WS09 9
-set $WS10 10
-set $WS11 11
-set $WS12 12
-set $WS13 13
+# command information centre (terminals for general use)
+set $WS01 1:cic
+# joint intellicence (web browsing)
+set $WS02 2:jit
+#communications center (chat & emails)
+set $WS03 3:com
+set $WS04 4:dradis
+# aircraft maintenance division (system maintenante)
+set $WS05 5:amid
+# fleet operations division (ssh terminals)
+set $WS06 6:fleetops
+set $WS07 7:deck
+set $WS08 8:deck
+# combat system division (gaming)
+set $WS09 9:csd
+set $WS10 10:deck
+set $WS11 11:deck
+set $WS12 12:deck
+set $WS13 13:deck
 
 # Putting workspaces on screens
 # .. 10 workspaces on LVDS1 (internal laptop monitor)
@@ -244,6 +250,10 @@ for_window [class="Gnome-clocks"] floating enable
 for_window [class="XClock"] floating enable
 for_window [class="Thunar" title="Avanzamento delle operazione sui file"] floating enable
 for_window [class="Xfce4-notifyd"] floating enable
+
+# Steam goes float on workspace 9 (so it will be more difficult
+# .. to reach and less distracting)
+for_window [instance="Steam"] $WS09; floating enable
 
 # ----------------------------------------------------------------------------
 
