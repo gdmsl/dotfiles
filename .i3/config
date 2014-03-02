@@ -69,6 +69,9 @@ bindsym $mod+z mode "$mode_system"
 # add todo with todo.sh
 bindsym $mod+i exec i3-input -F 'exec --no-startup-id todo.sh add "%s"' -P 'Add Todo: '
 
+# take screenshots
+bindcode 107 exec --no-startup-id "scrot -e 'mv $f ~/Immagini/Screenshots/'"
+
 # ----------------------------------------------------------------------------
 
 
