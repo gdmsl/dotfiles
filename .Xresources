@@ -8,7 +8,8 @@ xterm*locale:		true
 xterm*utf8:		2
 
 ! fonts and colors
-xterm*faceName:		Terminus:style=Regular:size=10
+xterm*faceName:		Terminus::size=10
+xterm*font:		7x13
 xterm*dynamicColors:	true
 xterm*eightBitInput:	true
 
@@ -19,5 +20,5 @@ xterm*toolBar:		false
 
 
 ! colorscheme
-#include "/home/guido/.xrdb/tango.xrdb"
+#include "/home/guido/.xrdb/solarized.xrdb"
 
