@@ -11,7 +11,8 @@ ao=pulse,alsa,oss,
 vd-lavc-threads=4
 
 # prefer using six channels audio
-channels=6
+# I have a simple stereo laptop!!!
+channels=2
 
 # disable screensaver
 stop-screensaver="yes"
