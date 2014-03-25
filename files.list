@@ -26,9 +26,7 @@
 .mplayer/config
 .mpv/config
 .ncmpcpp/config
-.vim/before.vimrc
-.vim/bundles.vimrc
-.vim/local.vimrc
 .profile
 .xrdb/tango.xrdb
 .xrdb/solarized.xrdb
+.xrdb/tango2.xrdb
