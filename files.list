@@ -30,3 +30,5 @@
 .xrdb/tango.xrdb
 .xrdb/solarized.xrdb
 .xrdb/tango2.xrdb
+.tmux.conf
+.tmuxline

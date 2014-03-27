@@ -267,14 +267,40 @@ Bundle 'gmarik/vundle'
 
 " LaTeX
 " LaTeX {
-    " Bundle 'jcf/vim-latex'
-    " let g:tex_flavor='latex'
+    Bundle 'jcf/vim-latex'
+    let g:tex_flavor='latex'
+    let g:tex_conceal = ""
 " }
 
 " Markdown
 " Markdown {
     Bundle 'tpope/vim-markdown'
     Bundle 'spf13/vim-preview'
+" }
+
+" Tagbar
+" Tagbar {
+    Bundle 'majutsushi/tagbar'
+    nnoremap <silent> <leader>tt :TagbarToggle<CR>
+    set tags=./tags;/,~/.vimtags
+
+    " Make tags placed in .git/tags file available in all levels of a repository
+    let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
+    if gitroot != ''
+        let &tags = &tags . ',' . gitroot . '/.git/tags'
+    endif
+" }
+
+" Tmuxline
+" Tmuxline {
+    Bundle 'edkolev/tmuxline.vim'
+    " tune airline separators for tmuxline
+    let g:tmuxline_separators = {
+        \ 'left' : '',
+        \ 'left_alt': '>',
+        \ 'right' : '',
+        \ 'right_alt' : '<',
+        \ 'space' : ' '}
 " }
 
 " ============================================================================
