@@ -18,7 +18,6 @@ xterm*saveLines:	10240
 xterm*scrollBar:	false
 xterm*toolBar:		false
 
-
 ! colorscheme
 !#include "/home/guido/.xrdb/solarized.xrdb"
 #include "/home/guido/.xrdb/tango2.xrdb"
