@@ -43,28 +43,28 @@ color0 =  #000000
 color8 =  #555753
 
 # DarkRed + Red
-color1 =  #ff6565
-color9 =  #ff8d8d
+color1 =  #cc0000
+color9 =  #ef2929
 
 # DarkGreen + Green
-color2 =  #93d44f
-color10 = #c8e7a8
+color2 =  #4e9a06
+color10 = #8ae234
 
 # DarkYellow + Yellow
-color3 =  #eab93d
-color11 = #ffc123
+color3 =  #c4a000
+color11 = #fce94f
 
 # DarkBlue + Blue
-color4 =  #204a87
-color12 = #3465a4
+color4 =  #3465a4
+color12 = #729fcf
 
 # DarkMagenta + Magenta
-color5 =  #ce5c00
-color13 = #f57900
+color5 =  #75507b
+color13 = #ad7fa8
 
 # DarkCyan + Cyan (both not tango)
-color6 =  #89b6e2
-color14 = #46a4ff
+color6 =  #06989a
+color14 = #34e2e2
 
 # LightGrey + White
 color7 =  #cccccc

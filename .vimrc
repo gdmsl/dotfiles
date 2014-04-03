@@ -34,7 +34,8 @@ filetype plugin on
 filetype indent on
 
 " Script encoding to unicode
-scriptencoding utf-8
+"scriptencoding utf-8
+
 
 " ============================================================================
 " } General
@@ -93,7 +94,6 @@ Bundle 'gmarik/vundle'
 " Numbers.vim
 " Numbers.vim {
 	Bundle 'myusuf3/numbers.vim'
-	set number
 " }
 
 " Airline
@@ -109,7 +109,6 @@ Bundle 'gmarik/vundle'
 " Colorschemes {
 	Bundle 'altercation/vim-colors-solarized'
 	Bundle 'flazz/vim-colorschemes'
-    colorscheme tango
 " }
 
 " Autoclose
@@ -383,7 +382,13 @@ if has("gui_running")
     set guioptions+=e
     set t_Co=256
     set guitablabel=%M\ %t
+else
+    set term=xterm-256color
+    set t_Co=256
 endif
+
+" Set a colorscheme
+colorscheme tango
 
 " Always enable folding
 set foldenable
