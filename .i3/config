@@ -265,7 +265,7 @@ for_window [instance="Steam"] $WS09; floating enable
 
 # Font used to display widows titles, and other i3 stuffs
 # .. not used for i3bar
-font pango:Droid Sans Mono 10
+font pango:Source Code Pro 10
 
 # Colors
 # class                 border  backgr. text    indicator
@@ -296,7 +296,7 @@ bar {
 	workspace_buttons yes
 	tray_output primary
 
-	font pango:Droid Sans Mono, Icons, FontAwesome 10
+	font pango:Source Code Pro, Icons, FontAwesome 10
 
 	colors {
 		background #000000
@@ -317,7 +317,7 @@ bar {
 	position          bottom
 	workspace_buttons yes
 
-	font pango:Droid Sans Mono, Icons, FontAwesome 10
+	font pango:Source Code Pro, Icons, FontAwesome 10
 
 	colors {
 		background #000000
