@@ -12,7 +12,7 @@
 ## file which defines that while launching ncmpcpp.
 ##
 #
-ncmpcpp_directory = "~/.ncmpcpp"
+#ncmpcpp_directory = "~/.ncmpcpp"
 #
 ##
 ## Directory for storing downloaded lyrics. It
@@ -20,17 +20,17 @@ ncmpcpp_directory = "~/.ncmpcpp"
 ## (eg. ncmpc) also use that location.
 ##
 #
-lyrics_directory = "~/.lyrics"
+#lyrics_directory = "~/.lyrics"
 #
 ##### connection settings #####
 #
 ## set it in order to make tag editor and renaming files work properly
 #
-mpd_host = "localhost"
+#mpd_host = "localhost"
 #
-mpd_port = "6600"
+#mpd_port = "6600"
 #
-mpd_music_dir = "~/Musica"
+#mpd_music_dir = ""
 #
 #mpd_connection_timeout = "5"
 #
@@ -61,7 +61,6 @@ mpd_music_dir = "~/Musica"
 #visualizer_in_stereo = "no"
 #
 #visualizer_fifo_path = ""
-visualizer_fifo_path = "/tmp/mpd.fifo"
 #
 ##
 ## Note: Below parameter is needed for ncmpcpp
@@ -72,7 +71,6 @@ visualizer_fifo_path = "/tmp/mpd.fifo"
 ##
 #
 #visualizer_output_name = ""
-visualizer_output_name = "my_fifo"
 #
 ##
 ## Note: Below parameter defines how often ncmpcpp
@@ -83,7 +81,6 @@ visualizer_output_name = "my_fifo"
 ##
 #
 #visualizer_sync_interval = "30"
-visualizer_sync_interval = "10"
 #
 ##
 ## Note: To enable spectrum frequency visualization
@@ -91,7 +88,6 @@ visualizer_sync_interval = "10"
 ##
 #
 #visualizer_type = "wave" (spectrum/wave)
-visualizer_type = "spectrum"
 #
 #visualizer_look = "◆│"
 #
@@ -459,7 +455,7 @@ visualizer_type = "spectrum"
 #
 ##### colors definitions #####
 #
-colors_enabled = "yes"
+#colors_enabled = "yes"
 #
 #empty_tag_color = "cyan"
 #
@@ -493,3 +489,45 @@ colors_enabled = "yes"
 #
 #active_window_border = "red"
 #
+
+# ===========================================================================
+# Begin of configurations
+
+# Directories {{{
+ncmpcpp_direcotry = "~/.ncmpcpp"
+lyrics_direcotry  = "~/.lyrics"
+# }}}
+
+# MPD {{{
+mpd_host = "localhost"
+mpd_port = "6600"
+mpd_music_dir = "~/Musica"
+mpd_connection_timeout = "5"
+mpd_crossfade_time = "5"
+# }}}
+
+# Visualizer {{{
+visualizer_in_stereo = "yes" # needs format "44100:16:2" in mpd.conf
+visualizer_fifo_path = "/tmp/mpd.fifo"
+visualizer_output_name = "my_fifo"
+visualizer_sync_interval = "30"
+visualizer_type = "spectrum"
+visualizer_look = "◆│"
+visualizer_color = "white"
+# }}}
+
+# User Interface {{{
+user_interface = "alternative"
+colors_enabled = "yes"
+titles_visibility = "yes"
+follow_now_playing_lyrics = "yes"
+now_playing_prefix = "▶ "
+volume_color = "green"
+mouse_list_scroll_whole_page = "no"
+mouse_support = "no"
+progressbar_look = "=>="
+progressbar_color= "yellow"
+color1 = "white"
+color2 = "green"
+main_window_color = "blue"
+# }}}
