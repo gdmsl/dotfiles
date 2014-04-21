@@ -349,7 +349,10 @@ bindsym $mod+minus scratchpad show
 # AUTOSTART ------------------------------------------------------------------
 
 # Network Manager Applet
-exec /usr/bin/nm-applet
+# exec /usr/bin/nm-applet
+
+# WICD GTK+ Client
+exec wicd-client --tray
 
 # Clipit
 exec clipit
