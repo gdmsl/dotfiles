@@ -269,7 +269,7 @@ font pango:Source Code Pro 10
 
 # Colors
 # class                 border  backgr. text    indicator
-client.focused          #c4a000 #edd400 #111111 #f57900
+client.focused          #105d61 #1dafb8 #111111 #f57900
 client.focused_inactive #333333 #5f676a #ffffff #484e50
 client.unfocused        #333333 #222222 #888888 #292d2e
 client.urgent           #2f343a #cc0000 #ffffff #a40000
@@ -349,10 +349,10 @@ bindsym $mod+minus scratchpad show
 # AUTOSTART ------------------------------------------------------------------
 
 # Network Manager Applet
-# exec /usr/bin/nm-applet
+exec /usr/bin/nm-applet
 
 # WICD GTK+ Client
-exec wicd-client --tray
+#exec wicd-client --tray
 
 # Clipit
 exec clipit
@@ -371,5 +371,8 @@ exec --no-startup-id sh ~/.fehbg
 
 # load the Xresources
 exec --no-startup-id "xrdb ~/.Xresources"
+
+# conky
+exec --no-startup-id conky
 
 # ----------------------------------------------------------------------------
