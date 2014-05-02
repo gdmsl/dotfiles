@@ -18,7 +18,7 @@ export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
 export EDITOR="vim"
 
 # Default browser
-export BROWSER="chromium"
+export BROWSER="firefox"
 
 # Default terminal emulator
 export TERMINAL="uxterm"
