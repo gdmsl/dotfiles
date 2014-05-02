@@ -294,7 +294,7 @@ bar {
 	status_command    i3status
 	position          bottom
 	workspace_buttons yes
-	tray_output primary
+	tray_output LVDS1
 
 	font pango:Source Code Pro, Icons, FontAwesome 10
 
@@ -316,6 +316,7 @@ bar {
 	status_command    i3status
 	position          bottom
 	workspace_buttons yes
+    tray_output LVDS1
 
 	font pango:Source Code Pro, Icons, FontAwesome 10
 
