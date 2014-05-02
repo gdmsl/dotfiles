@@ -269,19 +269,19 @@ font pango:Source Code Pro 10
 
 # Colors
 # class                 border  backgr. text    indicator
-client.focused          #105d61 #1dafb8 #111111 #f57900
+client.focused          #105d61 #1dafb8 #020F0F #de1b1b
 client.focused_inactive #333333 #5f676a #ffffff #484e50
 client.unfocused        #333333 #222222 #888888 #292d2e
-client.urgent           #2f343a #cc0000 #ffffff #a40000
+client.urgent           #2f343a #de1b1b #ffffff #a40000
 
 # Keybindings to change border style
 bindsym $mod+t border normal
-bindsym $mod+y border pixel 2
+bindsym $mod+y border pixel 3
 bindsym $mod+u border none
 
 # New windows are titleless and with 2 pixel border
-new_window pixel 2
-new_float pixel 2
+new_window pixel 3
+new_float pixel 3
 
 # ----------------------------------------------------------------------------
 
@@ -303,10 +303,10 @@ bar {
 		statusline #babdb6
 		separator #babdb6
 
-		focused_workspace  #000000 #babdb6
+		focused_workspace  #020f0f #1dafb8
 		active_workspace   #ffffff #333333
 		inactive_workspace #888888 #2e3436
-		urgent_workspace   #ffffff #cc0000
+		urgent_workspace   #ffffff #de1b1b
 	}
 }
 
@@ -324,10 +324,10 @@ bar {
 		statusline #babdb6
 		separator #babdb6
 
-		focused_workspace  #000000 #babdb6
+		focused_workspace  #020f0f #1dafb8
 		active_workspace   #ffffff #333333
 		inactive_workspace #888888 #2e3436
-		urgent_workspace   #ffffff #cc0000
+		urgent_workspace   #ffffff #de1b1b
 	}
 }
 
