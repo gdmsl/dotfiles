@@ -245,7 +245,7 @@ bindsym $mod+Shift+KP_2 move container to workspace $WS12
 bindsym $mod+Shift+KP_3 move container to workspace $WS13
 bindsym $mod+Shift+KP_4 move container to workspace $WS14
 bindsym $mod+Shift+KP_5 move container to workspace $WS15
-bindsym $mod+Shift+KP_6 move container to workspace $WS15
+bindsym $mod+Shift+KP_6 move container to workspace $WS16
 
 # switch workspace back and forth
 bindsym $mod+b workspace back_and_forth
