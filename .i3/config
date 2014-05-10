@@ -17,7 +17,7 @@ bindsym $mod+Return exec termite
 bindsym $mod+Shift+Return exec i3-sensible-terminal
 
 # Start a filemanager
-bindsym $mod+KP_5 exec xterm -e ranger
+bindsym $mod+x exec xterm -e ranger
 
 # start dmenu (a program launcher) with Super+d and
 # .. a modified version (which reads only .desktop files) with
@@ -182,23 +182,34 @@ set $WS10 10:deck
 set $WS11 11:deck
 set $WS12 12:deck
 set $WS13 13:deck
+set $WS14 14:deck
+set $WS15 15:deck
+set $WS16 16:deck
+
+# outputs
+set $O1 LVDS1
+set $O2 VGA1
+set $O3 HDMI1
 
 # Putting workspaces on screens
 # .. 10 workspaces on LVDS1 (internal laptop monitor)
 # .. 3 workpaces on VGA1
-workspace $WS01 output LVDS1
-workspace $WS02 output LVDS1
-workspace $WS03 output LVDS1
-workspace $WS04 output LVDS1
-workspace $WS05 output LVDS1
-workspace $WS06 output LVDS1
-workspace $WS07 output LVDS1
-workspace $WS08 output LVDS1
-workspace $WS09 output LVDS1
-workspace $WS10 output LVDS1
-workspace $WS11 output VGA1
-workspace $WS12 output VGA1
-workspace $WS13 output VGA1
+workspace $WS01 output $O1
+workspace $WS02 output $O1
+workspace $WS03 output $O1
+workspace $WS04 output $O1
+workspace $WS05 output $O1
+workspace $WS06 output $O1
+workspace $WS07 output $O1
+workspace $WS08 output $O1
+workspace $WS09 output $O1
+workspace $WS10 output $O1
+workspace $WS11 output $O3
+workspace $WS12 output $O3
+workspace $WS13 output $O3
+workspace $WS14 output $O3
+workspace $WS15 output $O3
+workspace $WS16 output $O3
 
 # switch to workspace
 bindsym $mod+1 workspace $WS01
@@ -214,6 +225,9 @@ bindsym $mod+0 workspace $WS10
 bindsym $mod+KP_1 workspace $WS11
 bindsym $mod+KP_2 workspace $WS12
 bindsym $mod+KP_3 workspace $WS13
+bindsym $mod+KP_4 workspace $WS14
+bindsym $mod+KP_5 workspace $WS15
+bindsym $mod+KP_6 workspace $WS16
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $WS01
@@ -229,13 +243,16 @@ bindsym $mod+Shift+0 move container to workspace $WS10
 bindsym $mod+Shift+KP_1 move container to workspace $WS11
 bindsym $mod+Shift+KP_2 move container to workspace $WS12
 bindsym $mod+Shift+KP_3 move container to workspace $WS13
+bindsym $mod+Shift+KP_4 move container to workspace $WS14
+bindsym $mod+Shift+KP_5 move container to workspace $WS15
+bindsym $mod+Shift+KP_6 move container to workspace $WS15
 
 # switch workspace back and forth
 bindsym $mod+b workspace back_and_forth
 
 # switch to prev or next workspace
-bindsym $mod+KP_4 workspace prev_on_output
-bindsym $mod+KP_6 workspace next_on_output
+bindsym $mod+p workspace prev_on_output
+bindsym $mod+n workspace next_on_output
 
 # ----------------------------------------------------------------------------
 
@@ -310,11 +327,12 @@ bar {
 	}
 }
 
-# VGA1 bar
+# BIG monitor bar
 bar {
-	output            VGA1
-	status_command    i3status
-	position          bottom
+	output            HDMI1
+    output            VGA1
+	status_command    i3status -c /home/guido/.i3status-big.conf
+	position          top
 	workspace_buttons yes
     tray_output LVDS1
 
@@ -331,7 +349,6 @@ bar {
 		urgent_workspace   #ffffff #de1b1b
 	}
 }
-
 # ----------------------------------------------------------------------------
 
 

@@ -32,3 +32,4 @@
 .xrdb/tango2.xrdb
 .tmux.conf
 .tmuxline
+.i3status-big.conf
