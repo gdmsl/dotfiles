@@ -18,6 +18,7 @@ bindsym $mod+Shift+Return exec i3-sensible-terminal
 
 # Start a filemanager
 bindsym $mod+x exec xterm -e ranger
+bindsym $mod+Shift+x exec thunar
 
 # start dmenu (a program launcher) with Super+d and
 # .. a modified version (which reads only .desktop files) with
@@ -163,28 +164,22 @@ bindsym $mod+r mode "resize"
 # WORKSPACES -----------------------------------------------------------------
 
 # Defining workspace variables
-# command information centre (terminals for general use)
-set $WS01 1:cic
-# joint intellicence (web browsing)
-set $WS02 2:jit
-#communications center (chat & emails)
-set $WS03 3:com
-set $WS04 4:dradis
-# aircraft maintenance division (system maintenante)
-set $WS05 5:amid
-# fleet operations division (ssh terminals)
-set $WS06 6:fleetops
-set $WS07 7:deck
-set $WS08 8:deck
-# combat system division (gaming)
-set $WS09 9:csd
-set $WS10 10:deck
-set $WS11 11:deck
-set $WS12 12:deck
-set $WS13 13:deck
-set $WS14 14:deck
-set $WS15 15:deck
-set $WS16 16:deck
+set $WS01 1:ctrl
+set $WS02 2:web
+set $WS03 3
+set $WS04 4
+set $WS05 5
+set $WS06 6:ssh
+set $WS07 7:ssh
+set $WS08 8:com
+set $WS09 9:steam
+set $WS10 10
+set $WS11 11:monitor
+set $WS12 12
+set $WS13 13
+set $WS14 14
+set $WS15 15:media
+set $WS16 16:pdb
 
 # outputs
 set $O1 LVDS1
@@ -273,7 +268,8 @@ for_window [class="Xfce4-notifyd"] floating enable
 
 # Steam goes float on workspace 9 (so it will be more difficult
 # .. to reach and less distracting)
-for_window [instance="Steam"] $WS09; floating enable
+for_window [class="Steam"] floating enable
+assign [class="Steam"] $WS09
 
 # ----------------------------------------------------------------------------
 
@@ -286,7 +282,7 @@ font pango:Source Code Pro 10
 
 # Colors
 # class                 border  backgr. text    indicator
-client.focused          #105d61 #1dafb8 #020F0F #de1b1b
+client.focused          #447821 #5aa02c #020F0F #de1b1b
 client.focused_inactive #333333 #5f676a #ffffff #484e50
 client.unfocused        #333333 #222222 #888888 #292d2e
 client.urgent           #2f343a #de1b1b #ffffff #a40000
@@ -320,7 +316,7 @@ bar {
 		statusline #babdb6
 		separator #babdb6
 
-		focused_workspace  #020f0f #1dafb8
+		focused_workspace  #020f0f #5aa02c
 		active_workspace   #ffffff #333333
 		inactive_workspace #888888 #2e3436
 		urgent_workspace   #ffffff #de1b1b
@@ -343,7 +339,7 @@ bar {
 		statusline #babdb6
 		separator #babdb6
 
-		focused_workspace  #020f0f #1dafb8
+		focused_workspace  #020f0f #5aa02c
 		active_workspace   #ffffff #333333
 		inactive_workspace #888888 #2e3436
 		urgent_workspace   #ffffff #de1b1b
@@ -391,6 +387,6 @@ exec --no-startup-id sh ~/.fehbg
 exec --no-startup-id "xrdb ~/.Xresources"
 
 # conky
-exec --no-startup-id conky
+#exec --no-startup-id conky
 
 # ----------------------------------------------------------------------------

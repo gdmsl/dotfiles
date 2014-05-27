@@ -289,6 +289,11 @@ Bundle 'gmarik/vundle'
         \ 'space' : ' '}
 " }
 
+" Julia Plugin
+" Julia Lang {
+    Bundle 'JuliaLang/julia-vim'
+" }
+
 " ============================================================================
 " } Vundle
 

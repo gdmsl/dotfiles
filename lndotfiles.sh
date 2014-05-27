@@ -33,10 +33,11 @@ for filename in `cat files.list`; do
 				break;
 			done
 		else
-			rm "$HOME/$filename"
+			rm -f "$HOME/$filename"
 			ln -s "$PWD/$filename" "$HOME/$filename"
 		fi
 	else
+		rm "$HOME/$filename"
 		ln -s "$PWD/$filename" "$HOME/$filename"
 		$DEBUG && echo "Linked $filename in your HOME"
 	fi

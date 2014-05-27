@@ -4,3 +4,5 @@ prompt grml
 
 # User defined aliases
 alias feh='feh --draw-filename --draw-tinted --force-aliasing --image-bg black --scale-down'
+
+alias betty="~/Sviluppo/github/betty/main.rb"
