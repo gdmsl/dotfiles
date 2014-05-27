@@ -282,7 +282,7 @@ font pango:Source Code Pro 10
 
 # Colors
 # class                 border  backgr. text    indicator
-client.focused          #447821 #5aa02c #020F0F #de1b1b
+client.focused          #105d61 #1dafb8 #020F0F #de1b1b
 client.focused_inactive #333333 #5f676a #ffffff #484e50
 client.unfocused        #333333 #222222 #888888 #292d2e
 client.urgent           #2f343a #de1b1b #ffffff #a40000
@@ -316,7 +316,7 @@ bar {
 		statusline #babdb6
 		separator #babdb6
 
-		focused_workspace  #020f0f #5aa02c
+		focused_workspace  #020f0f #cccccc
 		active_workspace   #ffffff #333333
 		inactive_workspace #888888 #2e3436
 		urgent_workspace   #ffffff #de1b1b
@@ -339,7 +339,7 @@ bar {
 		statusline #babdb6
 		separator #babdb6
 
-		focused_workspace  #020f0f #5aa02c
+		focused_workspace  #020f0f #cccccc
 		active_workspace   #ffffff #333333
 		inactive_workspace #888888 #2e3436
 		urgent_workspace   #ffffff #de1b1b
