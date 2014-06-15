@@ -34,6 +34,9 @@
 # Feh background
 ( sleep 1s && sh ~/.fehbg ) &
 
+# Compositor
+( sleep 1s && compton --config ~/.config/compton.conf -b ) &
+
 # sound icon
 ( sleep 1s && volumeicon ) &
 
@@ -41,5 +44,5 @@
 ( sleep 1s && tint2 ) &
 
 # start conky
-( sleep 3s && conky ) &
+# ( sleep 3s && conky ) &
 

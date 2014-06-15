@@ -5,6 +5,7 @@ xftalpha 0.1
 update_interval 1
 total_run_times 0
 own_window no
+own_window_class conky
 own_window_type override
 own_window_transparent yes
 own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
