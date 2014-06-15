@@ -25,3 +25,5 @@ idx=yes
 
 # skip displaying some frames to maintain A/V sync on slow systems
 framedrop=yes
+
+sub-text-color='#FFFF00'
