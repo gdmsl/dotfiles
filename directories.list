@@ -2,6 +2,7 @@
 .config/mpd
 .config/ranger
 .config/termite
+.config/openbox
 .i3
 .local/bin
 .mplayer

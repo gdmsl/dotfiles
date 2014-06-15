@@ -33,3 +33,8 @@
 .tmux.conf
 .tmuxline
 .i3status-big.conf
+.config/openbox/autostart
+.config/openbox/environment
+.config/openbox/menu.xml
+.config/openbox/rc.xml
+
