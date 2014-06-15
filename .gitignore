@@ -1,5 +1,6 @@
 # Temp or Backup files
 *~
+*.swp
 
 # Python compiled or object files
 *.pyo
