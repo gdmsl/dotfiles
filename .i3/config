@@ -316,7 +316,7 @@ bar {
 		statusline #babdb6
 		separator #babdb6
 
-		focused_workspace  #020f0f #cccccc
+		focused_workspace  #020f0f #babdb6
 		active_workspace   #ffffff #333333
 		inactive_workspace #888888 #2e3436
 		urgent_workspace   #ffffff #de1b1b
@@ -339,7 +339,7 @@ bar {
 		statusline #babdb6
 		separator #babdb6
 
-		focused_workspace  #020f0f #cccccc
+		focused_workspace  #020f0f #babdb6
 		active_workspace   #ffffff #333333
 		inactive_workspace #888888 #2e3436
 		urgent_workspace   #ffffff #de1b1b
@@ -387,6 +387,6 @@ exec --no-startup-id sh ~/.fehbg
 exec --no-startup-id "xrdb ~/.Xresources"
 
 # conky
-#exec --no-startup-id conky
+exec --no-startup-id conky
 
 # ----------------------------------------------------------------------------
