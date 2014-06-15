@@ -3,6 +3,7 @@
 .config/ranger
 .config/termite
 .config/openbox
+.config/tint2
 .i3
 .local/bin
 .mplayer
