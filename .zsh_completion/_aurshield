@@ -1,0 +1,49 @@
+#compdef aurshield
+
+_aurshield() {
+    local context curcontext="$curcontext" state line
+    typeset -A opt_args
+
+    local ret=1
+
+    _arguments -C \
+        '1: :_aurshield_cmds' \
+        '*::arg:->args' \
+    && ret=0
+
+    case $state in
+        (args)
+            curcontext="${curcontext%:*:*}:aurshield-cmd-$words[1]:"
+            case $line[1] in
+                (clear|update|init|unwatch|watch|make)
+                    _message 'no more arguments' && ret=0
+                    ;;
+                (repo-add)
+                    _arguments '1:Pacman Package:_files -g "*.pkg.*"' && ret=0
+                    ;;
+                *)
+                    _call_function ret _aurshield_cmd_$words[1] && ret=0
+                    (( ret )) && _message 'no more arguments'
+                    ;;
+            esac
+            ;;
+    esac
+}
+
+(( $+functions[_aurshield_cmds] )) ||
+_aurshield_cmds() {
+    local commands; commands=(
+    'watch:Add packages in the watchlist and also downloads them'
+    'unwatch:Remove packages from the watchlist'
+    'list:List packages from the watchlist'
+    'make:Start making prcess _NOT YET IMPLEMENTED_'
+    'init:Create directories and sample config files for AURShield'
+    'clear:Remove unused contents from the AUR folder'
+    'repo-add:add the package into local AUR repository'
+    )
+    _describe -t commands 'AUR Shield command' commands "$@"
+}
+
+_aurshield "$@"
+
+# vim: set ft=zsh tw=78 :
