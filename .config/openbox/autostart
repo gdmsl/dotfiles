@@ -35,10 +35,13 @@
 ( sleep 1s && sh ~/.fehbg ) &
 
 # Compositor
-( sleep 1s && compton --config ~/.config/compton.conf -b ) &
+( sleep 1s && compton --config ~/.config/compton/compton-openbox.conf -b ) &
 
 # sound icon
 ( sleep 1s && volumeicon ) &
+
+# nm-applet
+( sleep 1s && nm-applet ) &
 
 # tint2
 ( sleep 1s && tint2 ) &

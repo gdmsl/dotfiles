@@ -37,7 +37,7 @@
 .config/openbox/environment
 .config/openbox/menu.xml
 .config/openbox/rc.xml
-.config/compton.conf
+.config/compton/compton-openbox.conf
 .config/tint2/default.tint2rc
 .config/tint2/tint2rc
 .config/tint2/tint2confrc

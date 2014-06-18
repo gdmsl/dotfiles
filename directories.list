@@ -4,6 +4,7 @@
 .config/termite
 .config/openbox
 .config/tint2
+.config/compton
 .i3
 .local/bin
 .mplayer
