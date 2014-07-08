@@ -5,6 +5,7 @@
 .config/openbox
 .config/tint2
 .config/compton
+.config/aurshield
 .i3
 .local/bin
 .mplayer
@@ -12,3 +13,7 @@
 .vim
 .ncmpcpp
 .xrdb
+.irssi
+.irssi/scripts
+.irssi/scripts/autorun
+

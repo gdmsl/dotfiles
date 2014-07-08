@@ -20,6 +20,8 @@
 .config/ranger/scope.sh
 .config/ranger/tagged
 .config/termite/config
+.config/aurshield/config
+.makepkg.conf
 .i3/config
 .local/bin/i3exit.sh
 .local/bin/viminstall.sh
@@ -41,4 +43,7 @@
 .config/tint2/default.tint2rc
 .config/tint2/tint2rc
 .config/tint2/tint2confrc
+.irssi/config
+.irssi/default.theme
+.irssi/scripts/autorun/nicklist.pl
 
