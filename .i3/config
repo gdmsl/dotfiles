@@ -164,22 +164,24 @@ bindsym $mod+r mode "resize"
 # WORKSPACES -----------------------------------------------------------------
 
 # Defining workspace variables
-set $WS01 1:ctrl
-set $WS02 2:web
+set $WS01 1
+set $WS02 2
 set $WS03 3
 set $WS04 4
 set $WS05 5
-set $WS06 6:ssh
-set $WS07 7:ssh
-set $WS08 8:com
-set $WS09 9:steam
+set $WS06 6
+set $WS07 7
+set $WS08 8
+set $WS09 9
 set $WS10 10
-set $WS11 11:monitor
+set $WS11 11
 set $WS12 12
 set $WS13 13
 set $WS14 14
-set $WS15 15:media
-set $WS16 16:pdb
+set $WS15 15
+set $WS16 16
+set $WSweb web
+set $WSgaming gaming
 
 # outputs
 set $O1 LVDS1
@@ -205,6 +207,8 @@ workspace $WS13 output $O3
 workspace $WS14 output $O3
 workspace $WS15 output $O3
 workspace $WS16 output $O3
+workspace $WSweb output $O1
+workspace $WSgaming output $01
 
 # switch to workspace
 bindsym $mod+1 workspace $WS01
@@ -223,6 +227,8 @@ bindsym $mod+KP_3 workspace $WS13
 bindsym $mod+KP_4 workspace $WS14
 bindsym $mod+KP_5 workspace $WS15
 bindsym $mod+KP_6 workspace $WS16
+bindsym $mod+backslash workspace $WSweb
+bindsym $mod+apostrophe workspace $WSgaming
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $WS01
@@ -241,6 +247,8 @@ bindsym $mod+Shift+KP_3 move container to workspace $WS13
 bindsym $mod+Shift+KP_4 move container to workspace $WS14
 bindsym $mod+Shift+KP_5 move container to workspace $WS15
 bindsym $mod+Shift+KP_6 move container to workspace $WS16
+bindsym $mod+Shift+backslash move container to workspace $WSweb
+bindsym $mod+Shift+apostrophe move container to workspace $WSgaming
 
 # switch workspace back and forth
 bindsym $mod+b workspace back_and_forth
@@ -255,9 +263,9 @@ bindsym $mod+n workspace next_on_output
 # WINDOWS RULES --------------------------------------------------------------
 
 # assign web browsers to workspace 2:web
-assign [class="Chromium"] $WS02
-assign [class="Firefox"] $WS02
-assign [class="Midori"] $WS02
+assign [class="Chromium"] $WSweb
+assign [class="Firefox"] $WSweb
+assign [class="Midori"] $WSweb
 
 # force apps to go in floating mode
 for_window [class="Nautilus" instance="file_progress"] floating enable
@@ -269,7 +277,7 @@ for_window [class="Xfce4-notifyd"] floating enable
 # Steam goes float on workspace 9 (so it will be more difficult
 # .. to reach and less distracting)
 for_window [class="Steam"] floating enable
-assign [class="Steam"] $WS09
+assign [class="Steam"] $WSgaming
 
 # ----------------------------------------------------------------------------
 
@@ -388,5 +396,8 @@ exec --no-startup-id "xrdb ~/.Xresources"
 
 # conky
 exec --no-startup-id conky
+
+# gnome-keyring
+exec --no-startup-id "/usr/bin/gnome-keyring-daemon --start"
 
 # ----------------------------------------------------------------------------

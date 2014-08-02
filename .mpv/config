@@ -12,7 +12,7 @@ vd-lavc-threads=4
 
 # prefer using six channels audio
 # I have a simple stereo laptop!!!
-channels=2
+audio-channels=2
 
 # disable screensaver
 stop-screensaver="yes"
@@ -21,7 +21,7 @@ stop-screensaver="yes"
 af=scaletempo
 
 # allow to seek in a file which is still downloading whilst watching it
-idx=yes
+index=yes
 
 # skip displaying some frames to maintain A/V sync on slow systems
 framedrop=yes
