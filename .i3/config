@@ -23,8 +23,8 @@ bindsym $mod+Shift+x exec thunar
 # start dmenu (a program launcher) with Super+d and
 # .. a modified version (which reads only .desktop files) with
 # .. Super+Shift+d
-bindsym $mod+d exec dmenu_run -fn 'Source Code Pro-10' -nb '#111111' -nf '#babdb6' -sb '#8ae234' -sf '#111111'
-bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop -dmenu="dmenu -fn 'Source Code Pro-10' -nb '#111111' -nf '#babdb6' -sb '#8ae234' -sf '#111111'"
+bindsym $mod+d exec dmenu_run -fn 'Source Code Pro-10'
+bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -fn 'Source Code Pro-10'"
 
 
 # Reload the configuration file
