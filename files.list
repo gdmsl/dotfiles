@@ -32,7 +32,6 @@
 .xrdb/tango.xrdb
 .xrdb/solarized.xrdb
 .xrdb/tango2.xrdb
-.xrdb/base16-default.dark.xrdb
 .tmux.conf
 .tmuxline
 .i3status-big.conf
@@ -47,4 +46,3 @@
 .irssi/config
 .irssi/default.theme
 .irssi/scripts/autorun/nicklist.pl
-.base16-default.dark.sh

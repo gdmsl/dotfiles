@@ -32,78 +32,43 @@ cursor_shape = block
 #size_hints = false
 
 
-## Tango Color Scheme
-#[colors]
-## background and foreground
-#background = #111111
-#foreground = #babdb6
-
-## Black (not tango) + DarkGrey
-#color0 =  #151515
-#color8 =  #555753
-
-## DarkRed + Red
-#color1 =  #cc0000
-#color9 =  #ef2929
-
-## DarkGreen + Green
-#color2 =  #4e9a06
-#color10 = #8ae234
-
-## DarkYellow + Yellow
-#color3 =  #c4a000
-#color11 = #fce94f
-
-## DarkBlue + Blue
-#color4 =  #3465a4
-#color12 = #729fcf
-
-## DarkMagenta + Magenta
-#color5 =  #75507b
-#color13 = #ad7fa8
-
-## DarkCyan + Cyan (both not tango)
-#color6 =  #06989a
-#color14 = #34e2e2
-
-## LightGrey + White
-#color7 =  #cccccc
-#color15 = #ffffff
-
+# Tango Color Scheme
 [colors]
-# Base16 Default
-# Scheme: Chris Kempson (http://chriskempson.com)
+# background and foreground
+background = #111111
+foreground = #babdb6
 
-foreground      = #d0d0d0
-foreground_bold = #d0d0d0
-cursor          = #d0d0d0
-background      = #151515
+# Black (not tango) + DarkGrey
+color0 =  #151515
+color8 =  #555753
 
-# 16 color space
-color0  = #151515
-color1  = #ac4142
-color2  = #90a959
-color3  = #f4bf75
-color4  = #6a9fb5
-color5  = #aa759f
-color6  = #75b5aa
-color7  = #d0d0d0
-color8  = #505050
-color9  = #ac4142
-color10 = #90a959
-color11 = #f4bf75
-color12 = #6a9fb5
-color13 = #aa759f
-color14 = #75b5aa
-color15 = #f5f5f5
+# DarkRed + Red
+color1 =  #cc0000
+color9 =  #ef2929
 
-# 256 color space
-color16 = #d28445
-color17 = #8f5536
-color18 = #202020
-color19 = #303030
-color20 = #b0b0b0
-color21 = #e0e0e0
+# DarkGreen + Green
+color2 =  #4e9a06
+color10 = #8ae234
+
+# DarkYellow + Yellow
+color3 =  #c4a000
+color11 = #fce94f
+
+# DarkBlue + Blue
+color4 =  #3465a4
+color12 = #729fcf
+
+# DarkMagenta + Magenta
+color5 =  #75507b
+color13 = #ad7fa8
+
+# DarkCyan + Cyan (both not tango)
+color6 =  #06989a
+color14 = #34e2e2
+
+# LightGrey + White
+color7 =  #cccccc
+color15 = #ffffff
 
 [hints]
 #font = Monospace 12

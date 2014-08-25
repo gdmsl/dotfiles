@@ -294,12 +294,6 @@ Bundle 'gmarik/vundle'
     Bundle 'JuliaLang/julia-vim'
 " }
 
-" Base 16
-" Base16 {
-    Plugin 'chriskempson/base16-vim'
-    let base16colorspace=256  " Access colors present in 256 colorspace
-" }
-
 " ============================================================================
 " } Vundle
 
@@ -386,7 +380,7 @@ else
 endif
 
 " Set a colorscheme
-colorscheme base16-default
+colorscheme tango
 
 " Always enable folding
 set foldenable
