@@ -293,6 +293,7 @@ assign [class="Sialan Telegram" instance="Sigram"] $WScomm
 # Scratchpad
 for_window [title="^fehdsxslide$"] move scratchpad
 for_window [title="^vimpad$"] move scratchpad
+for_window [title="^scratchpadclock$"] move scratchpad
 
 # ----------------------------------------------------------------------------
 
@@ -420,5 +421,5 @@ exec --no-startup-id "xrdb ~/.Xresources"
 # scratchpad apps
 exec --no-startup-id ~/Bin/vimpad
 exec --no-startup-id ~/Bin/fehdsxslide
-
+exec --no-startup-id xterm -T scratchpadclock -e zsh -c "tty-clock -s -c"
 # ----------------------------------------------------------------------------
