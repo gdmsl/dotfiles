@@ -100,7 +100,7 @@ Bundle 'gmarik/vundle'
 " Airline {
 	Bundle 'bling/vim-airline'
 	let g:airline#extensions#tabline#enabled = 1
-    "let g:airline_theme = 'molokai'    " :echo g:airline_theme_map for list
+    "let g:airline_theme = 'base16'    " :echo g:airline_theme_map for list
     let g:airline_left_sep = '›'        " Slightly fancier than '>'
     let g:airline_right_sep = '‹'       " Slightly fancier than '<'
 " }
@@ -294,6 +294,12 @@ Bundle 'gmarik/vundle'
     Bundle 'JuliaLang/julia-vim'
 " }
 
+" Base 16
+" Base16 {
+    Plugin 'chriskempson/base16-vim'
+    let base16colorspace=256  " Access colors present in 256 colorspace
+" }
+
 " ============================================================================
 " } Vundle
 
@@ -380,7 +386,7 @@ else
 endif
 
 " Set a colorscheme
-colorscheme tango
+colorscheme base16-default
 
 " Always enable folding
 set foldenable

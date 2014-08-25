@@ -13,3 +13,6 @@ if [ ! -d vundle ]; then
 fi
 
 vim -c 'BundleInstall'
+
+git clone https://github.com/chriskempson/base16-shell ~/.config/base16-shell
+git clone https://github.com/chriskempson/base16-xresources ~/.xrdb/base16-xresources

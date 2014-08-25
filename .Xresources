@@ -19,6 +19,7 @@ xterm*scrollBar:	false
 xterm*toolBar:		false
 
 ! colorscheme
-!#include "/home/guido/.xrdb/solarized.xrdb"
-#include "/home/gdmsl/.xrdb/tango2.xrdb"
+!#include "/home/gdmsl/.xrdb/solarized.xrdb"
+!#include "/home/gdmsl/.xrdb/tango2.xrdb"
+#include "/home/gdmsl/.xrdb/base16-xresources/base16-default.dark.xresources"
 
