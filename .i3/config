@@ -71,6 +71,10 @@ bindsym $mod+z mode "$mode_system"
 # add todo with todo.sh
 bindsym $mod+i exec i3-input -F 'exec --no-startup-id todo.sh add "%s"' -P 'Add Todo: '
 
+# slam all opened tombs
+bindsym $mod+Shift+egrave exec --no-startup-id tomb slam all
+bindsym $mod+egrave exec "i3-nagbar -t warning -m 'Do you want to slam all opened tombs?' -b 'Slamm All!' 'tomb slam all'"
+
 # take screenshots
 bindcode 107 exec --no-startup-id "scrot -e 'mv $f ~/Immagini/Screenshots/'"
 
@@ -165,24 +169,25 @@ bindsym $mod+r mode "resize"
 # WORKSPACES -----------------------------------------------------------------
 
 # Defining workspace variables
-set $WS01 1
-set $WS02 2
-set $WS03 3
-set $WS04 4
-set $WS05 5
-set $WS06 6
-set $WS07 7
-set $WS08 8
-set $WS09 9
-set $WS10 10
-set $WS11 11
-set $WS12 12
-set $WS13 13
-set $WS14 14
-set $WS15 15
-set $WS16 16
-set $WSweb web
-set $WSgaming gaming
+set $WS01 "1: 1"
+set $WS02 "2: 2"
+set $WS03 "3: 3"
+set $WS04 "4: 4"
+set $WS05 "5: 5"
+set $WS06 "6: 6"
+set $WS07 "7: 7"
+set $WS08 "8: 8"
+set $WS09 "9: 9"
+set $WS10 "10: 10"
+set $WS11 "11: 11"
+set $WS12 "12: 12"
+set $WS13 "13: 13"
+set $WS14 "14: 14"
+set $WS15 "15: 15"
+set $WS16 "16: 16"
+set $WSweb "0: WEB"
+set $WSgaming "17: GAMING"
+set $WScomm "18: IM"
 
 # outputs
 set $O1 LVDS1
@@ -210,6 +215,7 @@ workspace $WS15 output $O3
 workspace $WS16 output $O3
 workspace $WSweb output $O1
 workspace $WSgaming output $01
+workspace $WScomm output $O1
 
 # switch to workspace
 bindsym $mod+1 workspace $WS01
@@ -230,6 +236,7 @@ bindsym $mod+KP_5 workspace $WS15
 bindsym $mod+KP_6 workspace $WS16
 bindsym $mod+backslash workspace $WSweb
 bindsym $mod+apostrophe workspace $WSgaming
+bindsym $mod+igrave workspace $WScomm
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $WS01
@@ -250,6 +257,7 @@ bindsym $mod+Shift+KP_5 move container to workspace $WS15
 bindsym $mod+Shift+KP_6 move container to workspace $WS16
 bindsym $mod+Shift+backslash move container to workspace $WSweb
 bindsym $mod+Shift+apostrophe move container to workspace $WSgaming
+bindsym $mod+Shift+igrave move container to workspace $WScomm
 
 # switch workspace back and forth
 bindsym $mod+b workspace back_and_forth
@@ -263,7 +271,7 @@ bindsym $mod+n workspace next_on_output
 
 # WINDOWS RULES --------------------------------------------------------------
 
-# assign web browsers to workspace 2:web
+# assign web browsers to workspace web
 assign [class="Chromium"] $WSweb
 assign [class="Firefox"] $WSweb
 assign [class="Midori"] $WSweb
@@ -275,10 +283,16 @@ for_window [class="XClock"] floating enable
 for_window [class="Thunar" title="Avanzamento delle operazione sui file"] floating enable
 for_window [class="Xfce4-notifyd"] floating enable
 
-# Steam goes float on workspace 9 (so it will be more difficult
-# .. to reach and less distracting)
+# Steam goes float on workspace gaming
 for_window [class="Steam"] floating enable
 assign [class="Steam"] $WSgaming
+
+# Assings to IM workspace
+assign [class="Sialan Telegram" instance="Sigram"] $WScomm
+
+# Scratchpad
+for_window [title="^fehdsxslide$"] move scratchpad
+for_window [title="^vimpad$"] move scratchpad
 
 # ----------------------------------------------------------------------------
 
@@ -317,6 +331,7 @@ bar {
 	position          top
 	workspace_buttons yes
 	tray_output LVDS1
+    strip_workspace_numbers yes
 
 	font pango:Source Code Pro, Icons, FontAwesome 10
 
@@ -340,6 +355,7 @@ bar {
 	position          top
 	workspace_buttons yes
     tray_output LVDS1
+    strip_workspace_numbers yes
 
 	font pango:Source Code Pro, Icons, FontAwesome 10
 
@@ -400,5 +416,9 @@ exec --no-startup-id "xrdb ~/.Xresources"
 
 # gnome-keyring
 # exec --no-startup-id "/usr/bin/gnome-keyring-daemon --start"
+
+# scratchpad apps
+exec --no-startup-id ~/Bin/vimpad
+exec --no-startup-id ~/Bin/fehdsxslide
 
 # ----------------------------------------------------------------------------
