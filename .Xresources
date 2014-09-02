@@ -25,5 +25,5 @@ URxvt.letterSpace: -2
 
 ! colorscheme
 !#include "/home/gdmsl/.xrdb/solarized.xrdb"
-#include "/home/gdmsl/.xrdb/tango2.xrdb"
+#include "/home/gdmsl/.xrdb/tomorrownight.xrdb"
 
