@@ -529,5 +529,5 @@ progressbar_look = "=>="
 progressbar_color= "yellow"
 color1 = "white"
 color2 = "green"
-main_window_color = "blue"
+main_window_color = "cyan"
 # }}}
