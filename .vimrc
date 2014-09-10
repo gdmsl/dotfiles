@@ -294,6 +294,12 @@ Bundle 'gmarik/vundle'
     Bundle 'JuliaLang/julia-vim'
 " }
 
+" Base 16
+" Base 16 {
+    Bundle 'chriskempson/base16-vim'
+    let base16colorspace=256  " Access colors present in 256 colorspace
+" }
+
 " ============================================================================
 " } Vundle
 

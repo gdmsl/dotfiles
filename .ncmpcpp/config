@@ -14,6 +14,7 @@
 #
 #ncmpcpp_directory = "~/.ncmpcpp"
 #
+#
 ##
 ## Directory for storing downloaded lyrics. It
 ## defaults to ~/.lyrics since other MPD clients
@@ -494,8 +495,8 @@
 # Begin of configurations
 
 # Directories {{{
-ncmpcpp_direcotry = "~/.ncmpcpp"
-lyrics_direcotry  = "~/.lyrics"
+ncmpcpp_directory = "~/.ncmpcpp"
+lyrics_directory  = "~/.lyrics"
 # }}}
 
 # MPD {{{
@@ -507,12 +508,12 @@ mpd_crossfade_time = "5"
 # }}}
 
 # Visualizer {{{
-visualizer_in_stereo = "yes" # needs format "44100:16:2" in mpd.conf
+visualizer_in_stereo = "yes"
 visualizer_fifo_path = "/tmp/mpd.fifo"
 visualizer_output_name = "my_fifo"
 visualizer_sync_interval = "30"
-visualizer_type = "spectrum"
-visualizer_look = "◆│"
+visualizer_type = "wave"
+visualizer_look = "#│"
 visualizer_color = "white"
 # }}}
 
