@@ -25,5 +25,6 @@ URxvt.letterSpace: -2
 
 ! colorscheme
 !#include "/home/gdmsl/.xrdb/solarized.xrdb"
-#include "/home/gdmsl/.xrdb/tango2.xrdb"
+!#include "/home/gdmsl/.xrdb/tango2.xrdb"
+#include "/home/gdmsl/.xrdb/base16-monokai.dark.xrdb"
 

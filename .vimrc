@@ -386,7 +386,7 @@ else
 endif
 
 " Set a colorscheme
-colorscheme tango
+colorscheme base16-monokai
 
 " Always enable folding
 set foldenable

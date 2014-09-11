@@ -31,46 +31,6 @@ cursor_shape = block
 # set size hints for the window
 #size_hints = false
 
-
-# Tango Color Scheme
-[colors]
-# background and foreground
-background = #111111
-foreground = #babdb6
-
-# Black (not tango) + DarkGrey
-color0 =  #151515
-color8 =  #555753
-
-# DarkRed + Red
-color1 =  #cc0000
-color9 =  #ef2929
-
-# DarkGreen + Green
-color2 =  #4e9a06
-color10 = #8ae234
-
-# DarkYellow + Yellow
-color3 =  #c4a000
-color11 = #fce94f
-
-# DarkBlue + Blue
-color4 =  #3465a4
-color12 = #729fcf
-
-# DarkMagenta + Magenta
-color5 =  #75507b
-color13 = #ad7fa8
-
-# DarkCyan + Cyan (both not tango)
-color6 =  #06989a
-color14 = #34e2e2
-
-# LightGrey + White
-color7 =  #cccccc
-color15 = #ffffff
-
-
 # Tomorrow-Night colors
 #[colors]
 #foreground = #c5c8c6
@@ -117,3 +77,37 @@ color15 = #ffffff
 #roundness = 2.0
 
 # vim: ft=dosini
+[colors]
+# Base16 Monokai
+# Scheme: Wimer Hazenberg (http://www.monokai.nl)
+
+foreground      = #f8f8f2
+foreground_bold = #f8f8f2
+cursor          = #f8f8f2
+background      = #272822
+
+# 16 color space
+color0  = #272822
+color1  = #f92672
+color2  = #a6e22e
+color3  = #f4bf75
+color4  = #66d9ef
+color5  = #ae81ff
+color6  = #a1efe4
+color7  = #f8f8f2
+color8  = #75715e
+color9  = #f92672
+color10 = #a6e22e
+color11 = #f4bf75
+color12 = #66d9ef
+color13 = #ae81ff
+color14 = #a1efe4
+color15 = #f9f8f5
+
+# 256 color space
+color16 = #fd971f
+color17 = #cc6633
+color18 = #383830
+color19 = #49483e
+color20 = #a59f85
+color21 = #f5f4f1
