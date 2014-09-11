@@ -306,7 +306,7 @@ font pango:Source Code Pro 10
 
 # Colors
 # class                 border  backgr. text    indicator
-client.focused          #333333 #729fcf #020F0F #cc0000
+client.focused          #272822 #66d9ef #272822 #f92672
 client.focused_inactive #333333 #5f676a #ffffff #484e50
 client.unfocused        #333333 #222222 #888888 #292d2e
 client.urgent           #2f343a #de1b1b #ffffff #a40000
@@ -337,14 +337,14 @@ bar {
 	font pango:Source Code Pro, Icons, FontAwesome 10
 
 	colors {
-		background #111111
-		statusline #babdb6
-		separator #babdb6
+		background #272822
+		statusline #f8f8f2
+		separator #f8f8f2
 
-		focused_workspace  #111111 #729fcf
+		focused_workspace  #272822 #66d9ef
 		active_workspace   #ffffff #333333
 		inactive_workspace #888888 #2e3436
-		urgent_workspace   #ffffff #ef2929
+		urgent_workspace   #f8f8f2 #f92672
 	}
 }
 
@@ -361,14 +361,14 @@ bar {
 	font pango:Source Code Pro, Icons, FontAwesome 10
 
 	colors {
-		background #111111
-		statusline #babdb6
-		separator #babdb6
+		background #272822
+		statusline #f8f8f2
+		separator #f8f8f2
 
-		focused_workspace  #111111 #729fcf
+		focused_workspace  #272822 #66d9ef
 		active_workspace   #ffffff #333333
 		inactive_workspace #888888 #2e3436
-		urgent_workspace   #ffffff #ef2929
+		urgent_workspace   #f8f8f2 #f92672
 	}
 }
 # ----------------------------------------------------------------------------
