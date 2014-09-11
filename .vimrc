@@ -386,7 +386,7 @@ else
 endif
 
 " Set a colorscheme
-colorscheme Tomorrow-Night
+colorscheme tango
 
 " Always enable folding
 set foldenable
