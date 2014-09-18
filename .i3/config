@@ -276,6 +276,10 @@ assign [class="Chromium"] $WSweb
 assign [class="Firefox"] $WSweb
 assign [class="Midori"] $WSweb
 
+# newsreaders and podcast managers on WS06
+assign [class="Liferea"] $WS06
+assign [class="Gpodder"] $WS06
+
 # force apps to go in floating mode
 for_window [class="Nautilus" instance="file_progress"] floating enable
 for_window [class="Gnome-clocks"] floating enable
