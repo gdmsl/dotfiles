@@ -61,6 +61,23 @@ Bundle 'gmarik/vundle'
     set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 " }
 
+" NERDTREE
+" NERDTREE {
+    Bundle 'scrooloose/nerdtree'
+    Bundle 'jistr/vim-nerdtree-tabs'
+    map <C-e> <plug>NERDTreeTabsToggle<CR>
+    map <leader>e :NERDTreeFind<CR>
+    nmap <leader>nt :NERDTreeFind<CR>
+    let NERDTreeShowBookmarks=1
+    let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
+    let NERDTreeChDirMode=0
+    let NERDTreeQuitOnOpen=1
+    let NERDTreeShowHidden=1
+    let NERDTreeKeepTreeInNewTab=1
+    let g:nerdtree_tabs_open_on_gui_startup=0
+
+" }
+
 " Fugitive
 " Fugitive {
     Bundle 'tpope/vim-fugitive'
@@ -100,7 +117,7 @@ Bundle 'gmarik/vundle'
 " Airline {
 	Bundle 'bling/vim-airline'
 	let g:airline#extensions#tabline#enabled = 1
-    "let g:airline_theme = 'base16'    " :echo g:airline_theme_map for list
+    let g:airline_theme = 'base16'    " :echo g:airline_theme_map for list
     let g:airline_left_sep = ''        " Slightly fancier than '>'
     let g:airline_right_sep = ''       " Slightly fancier than '<'
 " }
@@ -300,6 +317,11 @@ Bundle 'gmarik/vundle'
     let base16colorspace=256  " Access colors present in 256 colorspace
 " }
 
+" Synatstic
+" Syntastic {
+    Bundle 'scrooloose/syntastic'
+" }
+
 " ============================================================================
 " } Vundle
 
@@ -386,7 +408,7 @@ else
 endif
 
 " Set a colorscheme
-colorscheme base16-monokai
+colorscheme  Monokai
 
 " Always enable folding
 set foldenable
