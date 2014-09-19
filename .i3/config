@@ -1,10 +1,11 @@
 #
 # ~/.i3/config
 #
+# vim: set ft=conf sw=4 ts=4 sts=4 et tw=78 fdm=marker fdl=0 foldmarker={{{,}}} :
 
 # AUTHOR: Guido Masella <guido.masella@gmail.com>
 
-# BASE/APPS KEYBINDINGS ------------------------------------------------------
+# BASE/APPS KEYBINDINGS {{{
 
 # Use the Super ("win") key as default modifier
 set $mod Mod4
@@ -78,10 +79,9 @@ bindsym $mod+egrave exec "i3-nagbar -t warning -m 'Do you want to slam all opene
 # take screenshots
 bindcode 107 exec --no-startup-id "scrot -e 'mv $f ~/Immagini/Screenshots/'"
 
-# ----------------------------------------------------------------------------
+# }}}
 
-
-# LAYOUT/WINDOWS KEYBINDINGS -------------------------------------------------
+# LAYOUT/WINDOWS KEYBINDINGS {{{
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -164,9 +164,9 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 
-# ----------------------------------------------------------------------------
+# }}}
 
-# WORKSPACES -----------------------------------------------------------------
+# WORKSPACES {{{
 
 # Defining workspace variables
 set $WS01 "1: 1"
@@ -266,10 +266,9 @@ bindsym $mod+b workspace back_and_forth
 bindsym $mod+p workspace prev_on_output
 bindsym $mod+n workspace next_on_output
 
-# ----------------------------------------------------------------------------
+# }}}
 
-
-# WINDOWS RULES --------------------------------------------------------------
+# WINDOWS RULES {{{
 
 # assign web browsers to workspace web
 assign [class="Chromium"] $WSweb
@@ -299,10 +298,9 @@ for_window [title="^fehdsxslide$"] move scratchpad
 for_window [title="^vimpad$"] move scratchpad
 for_window [title="^scratchpadclock$"] move scratchpad
 
-# ----------------------------------------------------------------------------
+# }}}
 
-
-# LOOK -----------------------------------------------------------------------
+# LOOK {{{
 
 # Font used to display widows titles, and other i3 stuffs
 # .. not used for i3bar
@@ -324,10 +322,9 @@ bindsym $mod+u border none
 new_window pixel 3
 new_float pixel 3
 
-# ----------------------------------------------------------------------------
+# }}}
 
-
-# BARS -----------------------------------------------------------------------
+# BARS {{{
 
 # LVDS1 bar
 bar {
@@ -375,10 +372,9 @@ bar {
 		urgent_workspace   #f8f8f2 #f92672
 	}
 }
-# ----------------------------------------------------------------------------
+# }}}
 
-
-# SCRATCHPAD -----------------------------------------------------------------
+# SCRATCHPAD {{{
 
 # Scratchpad
 # Make the currently focused window a scratchpad
@@ -387,25 +383,21 @@ bindsym $mod+Shift+minus move scratchpad
 # Show the first scratchpad window
 bindsym $mod+minus scratchpad show
 
-# ----------------------------------------------------------------------------
+# }}}
 
-
-# AUTOSTART ------------------------------------------------------------------
+# AUTOSTART {{{
 
 # Network Manager Applet
 exec /usr/bin/nm-applet
 
-# WICD GTK+ Client
-#exec wicd-client --tray
-
-# Clipit
-exec clipit
+# Parcellite
+exec parcellite
 
 # Screen off after 5 minutes
 exec --no-startup-id xset dpms 600
 
 # Solid Color Background
-exec --no-startup-id xsetroot -solid "#050505"
+exec --no-startup-id xsetroot -solid "#111111"
 
 # set the laptop monitor as default (primary)
 exec xrandr --output LVDS1 --primary
@@ -430,4 +422,4 @@ exec --no-startup-id xterm -T scratchpadclock -e zsh -c "tty-clock -s -c"
 # MEGA
 exec --no-startup-id megasync
 
-# ----------------------------------------------------------------------------
+# }}}
