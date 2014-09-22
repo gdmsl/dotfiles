@@ -13,6 +13,10 @@ fi
 
 [[ -f ~/.Xresources ]] && xrdb ~/.Xresources
 
+# start gnome-keyring
+#eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
+#export GPG_AGENT_INFO SSH_AUTH_SOCK
+
 # exec gnome-session
 # exec startkde
 # exec startxfce4
