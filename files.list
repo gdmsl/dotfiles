@@ -11,7 +11,6 @@
 .zprofile
 .zshenv
 .zshrc
-.zshrc.local
 .config/gtk-3.0/settings.ini
 .config/mpd/mpd.conf
 .config/ranger/commands.py
@@ -48,3 +47,4 @@
 .irssi/scripts/autorun/nicklist.pl
 .xrdb/tomorrownight.xrdb
 .xrdb/base16-monokai.dark.xrdb
+.zsh/aliases.zsh

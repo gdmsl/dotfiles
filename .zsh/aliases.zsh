@@ -1,11 +1,3 @@
-# Select the prompt from the standards
-# use prompt -l or prompt -p to list and preview them
-prompt grml
-
 # User defined aliases
 alias feh='feh --draw-tinted --force-aliasing --image-bg black --scale-down'
 alias twitter="ttytter -ssl -dostream -readline -ansi -newline -exts=$HOME/.ttytter/ttytter-extension/oxhak_ttytter_output.pl"
-
-# completition
-fpath=(~/.zsh_completion $fpath)
-
