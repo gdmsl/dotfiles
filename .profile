@@ -24,5 +24,5 @@ export EDITOR="vim"
 export BROWSER="firefox"
 
 # Default terminal emulator
-export TERMINAL="uxterm"
+export TERMINAL="urxvt"
 

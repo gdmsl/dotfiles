@@ -23,7 +23,7 @@
 .makepkg.conf
 .i3/config
 .local/bin/i3exit.sh
-.local/bin/viminstall.sh
+.local/bin/gdmslinstall.sh
 .mplayer/config
 .mpv/config
 .ncmpcpp/config
