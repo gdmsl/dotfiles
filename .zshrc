@@ -4,14 +4,12 @@ ZSH_THEME="bureau"
 
 HIST_STAMPS="yyyy-mm-dd"
 
-plugins=(git archlinux vi-mode cp tmux github)
+plugins=(git archlinux vi-mode cp tmux github history history-substring-search)
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.zsh/aliases.zsh
 source $HOME/.profile
-
-HISTSIZE=1000
-SAVEHIST=20
+source $ZSH/plugins/history-substring-search/history-substring-search.zsh
 
 # completition system
 autoload -Uz compinit zcalc

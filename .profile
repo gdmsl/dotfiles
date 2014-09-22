@@ -26,3 +26,6 @@ export BROWSER="firefox"
 # Default terminal emulator
 export TERMINAL="urxvt"
 
+# SSH Askpass
+export SSH_ASKPASS=ssh-askpass
+
