@@ -22,6 +22,12 @@ xterm*toolBar:		false
 URxvt*scrollBar:    false
 URxvt.font: xft:Source Code Pro:size=10
 URxvt.letterSpace: -2
+URxvt.perl-ext-common:      default,clipboard,url-select,keyboard-select
+URxvt.url-select.launcher:  firefox
+URxvt.url-select.underline: true
+URxvt.keysym.M-u:           perl:url-select:select_next
+URxvt.keysym.M-Escape:      perl:keyboard-select:activate
+URxvt.keysym.M-s:           perl:keyboard-select:search
 
 ! colorscheme
 !#include "/home/gdmsl/.xrdb/solarized.xrdb"

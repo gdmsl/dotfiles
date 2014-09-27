@@ -415,7 +415,7 @@ exec --no-startup-id "xrdb ~/.Xresources"
 # exec --no-startup-id "/usr/bin/gnome-keyring-daemon --start"
 
 # scratchpad apps
-exec --no-startup-id ~/Bin/vimpad
+exec --no-startup-id vimpad
 #exec --no-startup-id ~/Bin/fehdsxslide
 exec --no-startup-id xterm -T scratchpadclock -e zsh -c "tty-clock -s -c"
 
