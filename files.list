@@ -3,7 +3,7 @@
 .bash_profile
 .bashrc
 .conkyrc
-.gtkrc-2.0
+#.gtkrc-2.0
 .i3status.conf
 .screenrc
 .vimrc
@@ -11,7 +11,7 @@
 .zprofile
 .zshenv
 .zshrc
-.config/gtk-3.0/settings.ini
+#.config/gtk-3.0/settings.ini
 .config/mpd/mpd.conf
 .config/ranger/commands.py
 .config/ranger/rc.conf
@@ -48,3 +48,5 @@
 .xrdb/tomorrownight.xrdb
 .xrdb/base16-monokai.dark.xrdb
 .zsh/aliases.zsh
+.config/redshift.conf
+
