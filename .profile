@@ -24,7 +24,7 @@ export EDITOR="vim"
 export BROWSER="firefox"
 
 # Default terminal emulator
-export TERMINAL="urxvt"
+export TERMINAL="urxvtc"
 
 # SSH Askpass
 export SSH_ASKPASS=ssh-askpass

@@ -391,7 +391,7 @@ bindsym $mod+minus scratchpad show
 exec /usr/bin/nm-applet
 
 # Parcellite
-exec parcellite
+exec clipit
 
 # Screen off after 5 minutes
 exec --no-startup-id xset dpms 600
