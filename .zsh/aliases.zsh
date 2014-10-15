@@ -13,3 +13,7 @@ alias pamcan='pacman'
 alias pacmna='pacman'
 
 
+#remote
+alias onida='DISPLAY=192.168.0.194:0'
+alias idampv='DISPLAY=192.168.0.194:0 mpv --mute=yes'
+
