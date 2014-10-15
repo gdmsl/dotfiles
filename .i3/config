@@ -188,6 +188,7 @@ set $WS16 "16: 16"
 set $WSweb "0: WEB"
 set $WSgaming "17: GAMING"
 set $WScomm "18: IM"
+set $WSborderlands "19: BORDERLANS"
 
 # outputs
 set $O1 LVDS1
@@ -216,6 +217,7 @@ workspace $WS16 output $O3
 workspace $WSweb output $O1
 workspace $WSgaming output $01
 workspace $WScomm output $O1
+workspace $WSborderlands output $03
 
 # switch to workspace
 bindsym $mod+1 workspace $WS01
@@ -297,6 +299,10 @@ assign [class="Sialan Telegram" instance="Sigram"] $WScomm
 for_window [title="^fehdsxslide$"] move scratchpad
 for_window [title="^vimpad$"] move scratchpad
 for_window [title="^scratchpadclock$"] move scratchpad
+
+# GAMES
+assign [class="Borderlands2"] $WSborderlands
+for_window [class="Borderlands2"] fullscreen
 
 # }}}
 
