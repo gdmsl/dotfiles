@@ -249,8 +249,7 @@
 ##
 ## - define sequence of tags, that have to be displayed in case
 ##   predecessor is empty in a way similar to the one in classic
-##   song format, i.e. using '|' character, e.g. {a|c|p:Owner}
-##   creates column named "Owner" that tries to display artist
+##   song format, i.e. using '|' character, e.g. {a|c|p:Owner} ##   creates column named "Owner" that tries to display artist
 ##   tag and then composer and performer if previous ones are
 ##   not available.
 ##
@@ -502,7 +501,7 @@ lyrics_directory  = "~/.lyrics"
 # MPD {{{
 mpd_host = "localhost"
 mpd_port = "6600"
-mpd_music_dir = "~/Musica"
+mpd_music_dir = "~/Music"
 mpd_connection_timeout = "5"
 mpd_crossfade_time = "5"
 # }}}
