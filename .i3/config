@@ -42,14 +42,14 @@ bindsym XF86MonBrightnessDown exec "xbacklight -dec 10"
 bindsym XF86MonBrightnessUp exec "xbacklight -inc 20"
 
 # Volume ALSA
-#bindsym XF86AudioMute exec --no-startup-id "amixer set Master toggle"
-#bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer set Master 5%+ unmute"
-#bindsym XF86AudioLowerVolume exec --no-startup-id "amixer set Master 5%- unmute"
+bindsym XF86AudioMute exec --no-startup-id "amixer set Master toggle"
+bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer set Master 5%+ unmute"
+bindsym XF86AudioLowerVolume exec --no-startup-id "amixer set Master 5%- unmute"
 
 # Volume PULSE
-bindsym XF86AudioMute exec --no-startup-id "amixer -D pulse set Master toggle"
-bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer -D pulse set Master 5%+ unmute"
-bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pulse set Master 5%- unmute"
+#bindsym XF86AudioMute exec --no-startup-id "amixer -D pulse set Master toggle"
+#bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer -D pulse set Master 5%+ unmute"
+#bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pulse set Master 5%- unmute"
 
 
 # Alsamixer
@@ -194,7 +194,7 @@ set $WS16 "16: 16"
 set $WSweb "0: WEB"
 set $WSgaming "17: GAMING"
 set $WScomm "18: IM"
-set $WSborderlands "19: BORDERLANS"
+set $WSgame "19: GAME"
 
 # outputs
 set $O1 LVDS1
@@ -307,8 +307,10 @@ for_window [title="^vimpad$"] move scratchpad
 for_window [title="^scratchpadclock$"] move scratchpad
 
 # GAMES
-assign [class="Borderlands2"] $WSborderlands
+assign [class="Borderlands2"] $WSgame
 for_window [class="Borderlands2"] fullscreen
+assign [class="dota_linux"] $WSgame
+for_window [class="dota_linux"] fullscreen
 
 # }}}
 
