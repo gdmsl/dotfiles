@@ -47,4 +47,7 @@
 .xrdb/base16-monokai.dark.xrdb
 .zsh/aliases.zsh
 .config/redshift.conf
+.config/user-dirs.dirs
+.config/user-dirs.locale
+
 
