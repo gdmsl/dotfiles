@@ -408,7 +408,7 @@ else
 endif
 
 " Set a colorscheme
-colorscheme  Monokai
+colorscheme  Monokai-chris
 
 " Always enable folding
 set foldenable
