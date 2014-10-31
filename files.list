@@ -3,7 +3,6 @@
 .bash_profile
 .bashrc
 .conkyrc
-#.gtkrc-2.0
 .i3status.conf
 .screenrc
 .vimrc
@@ -11,7 +10,6 @@
 .zprofile
 .zshenv
 .zshrc
-#.config/gtk-3.0/settings.ini
 .config/mpd/mpd.conf
 .config/ranger/commands.py
 .config/ranger/rc.conf
@@ -19,7 +17,7 @@
 .config/ranger/scope.sh
 .config/ranger/tagged
 .config/termite/config
-.config/aurshield/config
+.config/aurshield/aurshield.conf
 .makepkg.conf
 .i3/config
 .local/bin/i3exit.sh

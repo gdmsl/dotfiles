@@ -1,5 +1,0 @@
-AURDIR=$HOME/Arch/aur
-TEMPDIR=/tmp/aurshield-$USER
-WATCHLIST=$HOME/.config/aurshield/watchlist
-AURREPODIR=$HOME/Arch/aurshield/
-PKGDEST=$HOME/Arch/makepkg
