@@ -42,9 +42,9 @@ bindsym XF86MonBrightnessDown exec "xbacklight -dec 10"
 bindsym XF86MonBrightnessUp exec "xbacklight -inc 20"
 
 # Volume ALSA
-bindsym XF86AudioMute exec --no-startup-id "amixer set Master toggle"
-bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer set Master 5%+ unmute"
-bindsym XF86AudioLowerVolume exec --no-startup-id "amixer set Master 5%- unmute"
+bindsym XF86AudioMute exec --no-startup-id "amixer set Master toggle; pkill -RTMIN+10 i3blocks"
+bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer set Master 5%+ unmute; pkill -RTMIN+10 i3blocks"
+bindsym XF86AudioLowerVolume exec --no-startup-id "amixer set Master 5%- unmute; pkill -RTMIN+10 i3blocks"
 
 # Volume PULSE
 #bindsym XF86AudioMute exec --no-startup-id "amixer -D pulse set Master toggle"
@@ -53,10 +53,10 @@ bindsym XF86AudioLowerVolume exec --no-startup-id "amixer set Master 5%- unmute"
 
 
 # Alsamixer
-bindsym $mod+m exec xterm -e alsamixer
+bindsym $mod+m exec "xterm -e alsamixer; pkill -RTMIN+10 i3blocks"
 
 # Locker
-bindsym $mod+ugrave exec i3lock -d -c 000000
+bindsym $mod+ugrave exec i3lock -d -c 272822
 
 # Shutdown menu
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown, (Shift+h) hybrid-sleep
@@ -343,7 +343,7 @@ new_float pixel 3
 # LVDS1 bar
 bar {
 	output            LVDS1
-	status_command    i3status
+	status_command    i3blocks
 	position          top
 	workspace_buttons yes
 	tray_output LVDS1
@@ -367,7 +367,7 @@ bar {
 bar {
 	output            HDMI1
     output            VGA1
-	status_command    i3status -c /home/gdmsl/.i3status-big.conf
+	status_command    i3blocks
 	position          top
 	workspace_buttons yes
     tray_output LVDS1

@@ -49,5 +49,5 @@
 .config/redshift.conf
 .config/user-dirs.dirs
 .config/user-dirs.locale
-
+.i3blocks.conf
 
