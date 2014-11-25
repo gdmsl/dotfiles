@@ -1,10 +1,11 @@
 export ZSH=$HOME/.oh-my-zsh
 
 ZSH_THEME="bureau"
+ZSH_THEME="robbyrussell"
 
 HIST_STAMPS="yyyy-mm-dd"
 
-plugins=(git archlinux vi-mode cp tmux github history history-substring-search)
+plugins=(jump git archlinux vi-mode cp tmux github history history-substring-search)
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.zsh/aliases.zsh

@@ -21,10 +21,10 @@ export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswi
 export EDITOR="vim"
 
 # Default browser
-export BROWSER="chromium"
+export BROWSER="firefox"
 
 # Default terminal emulator
-export TERMINAL="urxvtc"
+export TERMINAL="urxvt"
 
 # SSH Askpass
 export SSH_ASKPASS=ssh-askpass
