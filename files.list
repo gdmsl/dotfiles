@@ -1,5 +1,6 @@
 .Xresources
 .bash_logout
+.toprc
 .bash_profile
 .bashrc
 .conkyrc
