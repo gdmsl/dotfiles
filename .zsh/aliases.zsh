@@ -17,3 +17,6 @@ alias pacmna='pacman'
 alias onida='DISPLAY=192.168.0.194:0'
 alias idampv='DISPLAY=192.168.0.194:0 mpv --mute=yes'
 
+
+# git is a 3 letter word and so git-annex should be
+alias anx='git-annex'
