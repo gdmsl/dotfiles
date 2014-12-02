@@ -32,7 +32,7 @@ git clone git://github.com/chriskempson/base16-builder.git ~/.base16
 
 echo "Installing Maliwan Color Scheme"
 cd ~/.base16
-./base16 $DOTFILES/maliwan.yml
+./base16 ~/.maliwan.yml
 bash ~/.base16/output/guake/base16-maliwan.dark.sh
 bash ~/.base16/output/gnome-terminal/base16-maliwan.dark.sh
 cp -f ~/.base16/output/xresources/base16-maliwan.dark.xresources ~/.xrdb/base16-maliwan.dark.xrdb
