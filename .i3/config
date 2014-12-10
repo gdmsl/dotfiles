@@ -434,6 +434,9 @@ exec --no-startup-id xterm -T scratchpadclock -e zsh -c "tty-clock -s -c"
 # MEGA
 exec --no-startup-id megasync
 
+# Redshift
+exec --no-startup-id "redshift-gtk"
+
 # Sound
 exec --no-startup-id "ogg123 /usr/share/sounds/freedesktop/stereo/service-login.oga"
 
