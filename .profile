@@ -27,5 +27,5 @@ export BROWSER="firefox"
 export TERMINAL="termite"
 
 # SSH Askpass
-export SSH_ASKPASS=ssh-askpass
+export SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass
 
