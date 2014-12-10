@@ -342,8 +342,7 @@ new_float pixel 3
 # LVDS1 bar
 bar {
 	output            LVDS1
-    output            DVI-1
-	status_command    i3blocks
+	status_command    i3blocks -c ~/.i3blocks-razor.conf
 	position          top
 	workspace_buttons yes
 	tray_output LVDS1
@@ -363,14 +362,13 @@ bar {
 	}
 }
 
-# BIG monitor bar
+# Alchemist BAR
 bar {
-	output            HDMI1
-    output            VGA1
-	status_command    i3blocks
+	output            DVI-1
+	status_command    i3blocks -c ~/.i3blocks-alchemist.conf
 	position          top
 	workspace_buttons yes
-    tray_output LVDS1
+    tray_output DVI-1
     strip_workspace_numbers yes
 
 	font pango:Source Code Pro, Icons, FontAwesome 10
