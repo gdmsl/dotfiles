@@ -36,5 +36,6 @@ cd ~/.base16
 bash ~/.base16/output/guake/base16-maliwan.dark.sh
 bash ~/.base16/output/gnome-terminal/base16-maliwan.dark.sh
 cp -f ~/.base16/output/xresources/base16-maliwan.dark.xresources ~/.xrdb/base16-maliwan.dark.xrdb
+cp -f ~/.base16/output/bim/base16-maliwan.vim ~/.vim/colors/base16-maliwan.vimx
 
 

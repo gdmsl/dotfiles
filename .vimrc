@@ -408,7 +408,9 @@ else
 endif
 
 " Set a colorscheme
-colorscheme  Monokai-chris
+"colorscheme  Monokai-chris
+let g:base16_shell_path="/home/gdmsl/.base16/output/shell/"
+colorscheme base16-monokai
 
 " Always enable folding
 set foldenable

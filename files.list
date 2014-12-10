@@ -45,7 +45,6 @@
 .irssi/default.theme
 .irssi/scripts/autorun/nicklist.pl
 .xrdb/tomorrownight.xrdb
-.xrdb/base16-monokai.dark.xrdb
 .zsh/aliases.zsh
 .config/redshift.conf
 .config/user-dirs.dirs

@@ -1,18 +1,26 @@
 scheme: "Maliwan"
 author: "Guido Masella (guido.masella@gmail.com)"
-base00: "141414" # black
-base01: "292929"
-base02: "414141"
-base03: "c56101" # maliwan orange
-base04: "a59f85"
-base05: "838383"
-base06: "8b8b8b"
-base07: "bebebe" # white
-base08: "a8081b" # red
-base09: "fd971f"
-base0A: "c0ad24" # lyellow
-base0B: "2d8320" # green
-base0C: "08a997" # cyan
-base0D: "304e5e" # too cool blue
-base0E: "a02456" # magenta
-base0F: "cc6633"
+base00: "151312"
+base01: "2b2725"
+base02: "403a38"
+base03: "605755"
+base04: "847875"
+base05: "9b8d8b"
+base06: "b0a09f"
+base07: "c1b0b0"
+base08: "bf2f72"
+base09: "ca6b1c"
+base0A: "c3ad31"
+base0B: "54a640"
+base0C: "2fa994"
+base0D: "507985"
+base0E: "a91b30"
+base0F: "304e5e"
+
+# maliwan orange: #c56101
+# red: #a8081b
+# magenta: a02456
+# green: #2d8320
+# blue: #304e5e
+# cyan: #08a997
+# yellow: #c0ad24
