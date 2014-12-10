@@ -51,3 +51,4 @@
 .config/user-dirs.locale
 .i3blocks.conf
 .maliwan.yml
+.dircolors
