@@ -23,7 +23,7 @@ URxvt*scrollBar:            false
 URxvt.font:                 xft:Source Code Pro:size=10
 URxvt.letterSpace:          -2
 URxvt.perl-ext-common:      default,matcher,clipboard,selection-to-clipboard
-URxvt.url-select.launcher:  chromium
+URxvt.url-select.launcher:  firefox
 URxvt.url-select.underline: true
 URxvt.keysym.M-c:           perl:clipboard:copy
 URxvt.keysym.M-v:           perl:clipboard:paste

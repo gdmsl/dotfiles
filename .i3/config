@@ -83,7 +83,7 @@ bindsym $mod+Shift+egrave exec --no-startup-id tomb slam all
 bindsym $mod+egrave exec "i3-nagbar -t warning -m 'Do you want to slam all opened tombs?' -b 'Slamm All!' 'tomb slam all'"
 
 # take screenshots
-bindcode 107 exec --no-startup-id "scrot -e 'mv $f ~/Immagini/Screenshots/'"
+bindcode 107 exec --no-startup-id "scrot -e 'mv $f ~/Immagini/Screenshots/' && ogg123 /usr/share/sounds/freedesktop/stereo/screen-capture.oga"
 
 # }}}
 
