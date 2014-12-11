@@ -41,6 +41,40 @@ cursor_shape = block
 #roundness = 2.0
 
 [colors]
+# Base16 Maliwan
+# Scheme: Guido Masella (guido.masella@gmail.com)
+
+foreground      = #a0a0a0
+foreground_bold = #a0a0a0
+cursor          = #a0a0a0
+background      = #141414
+
+# 16 color space
+color0  = #141414
+color1  = #d20927
+color2  = #3faf29
+color3  = #ddc228
+color4  = #3c7f9c
+color5  = #c92c75
+color6  = #08ba9c
+color7  = #a0a0a0
+color8  = #686868
+color9  = #d20927
+color10 = #3faf29
+color11 = #ddc228
+color12 = #3c7f9c
+color13 = #c92c75
+color14 = #08ba9c
+color15 = #d8d8d8
+
+# 256 color space
+color16 = #d56000
+color17 = #e06ba1
+color18 = #303030
+color19 = #4c4c4c
+color20 = #848484
+color21 = #bcbcbc
+[colors]
 # Base16 Monokai
 # Scheme: Wimer Hazenberg (http://www.monokai.nl)
 
