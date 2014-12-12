@@ -299,6 +299,7 @@ assign [class="Steam"] $WSgaming
 
 # Assings to IM workspace
 assign [class="Sialan Telegram" instance="Sigram"] $WScomm
+assign [class="Telegram" instance="Telegram"] $WScomm
 
 # Scratchpad
 for_window [title="^fehdsxslide$"] move scratchpad
@@ -342,7 +343,7 @@ new_float pixel 3
 # LVDS1 bar
 bar {
 	output            LVDS1
-	status_command    i3blocks -c ~/.i3blocks-razor.conf
+	status_command    ~/.local/bin/i3blocks-gdmsl.sh
 	position          top
 	workspace_buttons yes
 	tray_output LVDS1
@@ -365,7 +366,7 @@ bar {
 # Alchemist BAR
 bar {
 	output            DVI-1
-	status_command    i3blocks -c ~/.i3blocks-alchemist.conf
+	status_command    ~/.local/bin/i3blocks-gdmsl.sh
 	position          top
 	workspace_buttons yes
     tray_output DVI-1
