@@ -58,3 +58,4 @@
 .i3blocks-razor.conf
 .i3blocks-alchemist.conf
 .local/bin/i3blocks-gdmsl.sh
+.xprofile
