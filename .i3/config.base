@@ -195,11 +195,6 @@ set $WSgaming "17: GAMING"
 set $WScomm "18: IM"
 set $WSgame "19: GAME"
 
-# outputs
-set $O1 LVDS1
-set $O2 VGA1
-set $O3 HDMI1
-
 # Putting workspaces on screens
 # .. 10 workspaces on LVDS1 (internal laptop monitor)
 # .. 3 workpaces on VGA1
@@ -338,55 +333,6 @@ new_float pixel 3
 
 # }}}
 
-# BARS {{{
-
-# LVDS1 bar
-bar {
-	output            LVDS1
-	status_command    i3blocks -c ~/.i3blocks-razor.conf
-	position          top
-	workspace_buttons yes
-	tray_output LVDS1
-    strip_workspace_numbers yes
-
-	font pango:Source Code Pro, Icons, FontAwesome 10
-
-	colors {
-		background #272822
-		statusline #f8f8f2
-		separator #f8f8f2
-
-		focused_workspace  #272822 #66d9ef
-		active_workspace   #ffffff #333333
-		inactive_workspace #888888 #2e3436
-		urgent_workspace   #f8f8f2 #f92672
-	}
-}
-
-# Alchemist BAR
-bar {
-	output            DVI-1
-	status_command    i3blocks -c ~/.i3blocks-alchemist.conf
-	position          top
-	workspace_buttons yes
-    tray_output DVI-1
-    strip_workspace_numbers yes
-
-	font pango:Source Code Pro, Icons, FontAwesome 10
-
-	colors {
-		background #272822
-		statusline #f8f8f2
-		separator #f8f8f2
-
-		focused_workspace  #272822 #66d9ef
-		active_workspace   #ffffff #333333
-		inactive_workspace #888888 #2e3436
-		urgent_workspace   #f8f8f2 #f92672
-	}
-}
-# }}}
-
 # SCRATCHPAD {{{
 
 # Scratchpad
@@ -412,14 +358,11 @@ exec --no-startup-id xset dpms 600
 # Solid Color Background
 exec --no-startup-id xsetroot -solid "#111111"
 
-# set the laptop monitor as default (primary)
-exec xrandr --output LVDS1 --primary
+# set the $O1 as default (primary)
+exec xrandr --output $O1 --primary
 
 # set the background using feh
 exec --no-startup-id sh ~/.fehbg
-
-# load the Xresources
-exec --no-startup-id "xrdb ~/.Xresources"
 
 # conky
 #exec --no-startup-id conky

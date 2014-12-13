@@ -20,7 +20,9 @@
 .config/termite/config
 .config/aurshield/aurshield.conf
 .makepkg.conf
-.i3/config
+.i3/config.base
+.i3/config.alchemist
+.i3/config.razor
 .local/bin/i3exit.sh
 .local/bin/gdmslinstall.sh
 .mplayer/config
