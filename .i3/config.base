@@ -55,7 +55,7 @@ bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pulse set Master 5%
 bindsym $mod+m exec "xterm -e alsamixer; pkill -RTMIN+10 i3blocks"
 
 # Locker
-bindsym $mod+ugrave exec i3lock -d -c 272822
+bindsym $mod+ugrave exec i3lock -d -c 272822 -i /home/gdmsl/Pictures/Wallpapers/mine/i3lockbg-yoko_g_gdmsl_grain.png
 
 # Shutdown menu
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown, (Shift+h) hybrid-sleep
@@ -287,6 +287,11 @@ for_window [class="Gnome-clocks"] floating enable
 for_window [class="XClock"] floating enable
 for_window [class="Thunar" title="Avanzamento delle operazione sui file"] floating enable
 for_window [class="Xfce4-notifyd"] floating enable
+
+# force apps to not go in floating mode
+for_window [class="gimp"] floating disable
+for_window [window_role="gimp-toolbox"] floating disable
+for_window [window_role="gimp-dock"] floating disable
 
 # Steam goes float on workspace gaming
 for_window [class="Steam"] floating enable

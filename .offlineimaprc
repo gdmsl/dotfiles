@@ -1,0 +1,20 @@
+[general]
+maxsyncaccounts = 1
+pythonfile = ~/.local/bin/offlineimap.py
+accounts = Gmail
+
+[Account Gmail]
+remoterepository = Gmail-Remote
+localrepository  = Gmail-Local
+status_backend = sqlite
+
+[Repository Gmail-Local]
+type = Maildir
+localfolders = ~/Mail/Gmail
+
+[Repository Gmail-Remote]
+type = Gmail
+remoteusereval = get_username("gmail")
+remotepasseval = get_password("gmail")
+maxconnections = 3
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt

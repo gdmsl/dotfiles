@@ -8,8 +8,6 @@
 .screenrc
 .vimrc
 .xinitrc
-.zprofile
-.zshenv
 .zshrc
 .config/mpd/mpd.conf
 .config/ranger/commands.py
@@ -59,3 +57,18 @@
 .i3blocks-alchemist.conf
 .local/bin/i3blocks-gdmsl.sh
 .xprofile
+.local/bin/offlineimap.py
+.offlineimaprc
+.msmtprc
+.mutt/aliases
+.mutt/colors
+.mutt/general
+.mutt/mailboxes
+.mutt/auto_views
+.mutt/bindings
+.mutt/macros
+.mutt/mailboxes
+.mutt/mailcap
+.mutt/gmail
+.muttrc
+.mutt/signature

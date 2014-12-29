@@ -19,3 +19,9 @@
 .zsh
 .vim/colors
 .config/mpd/playlists
+.mutt
+.mutt/cache
+.mutt/cache/bodies
+.mutt/cache/headers
+.mutt/certificates
+.mutt/temp

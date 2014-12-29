@@ -1,0 +1,20 @@
+#
+# ~/.muttrc
+#
+
+push V
+
+set header_cache     = ~/.mutt/cache/headers
+set message_cachedir = ~/.mutt/cache/bodies
+set mailcap_path     = ~/.mutt/mailcap
+set certificate_file = ~/.mutt/certificates
+set tmpdir           = ~/.mutt/temp
+set signature        = ~/.mutt/signature
+
+source ~/.mutt/general
+source ~/.mutt/colors
+source ~/.mutt/macros
+source ~/.mutt/bindings
+source ~/.mutt/auto_views
+source ~/.mutt/gmail
+source ~/.mutt/mailboxes
