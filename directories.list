@@ -25,3 +25,5 @@
 .mutt/cache/headers
 .mutt/certificates
 .mutt/temp
+.config/systemd
+.config/systemd/user

@@ -55,7 +55,7 @@ bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pulse set Master 5%
 bindsym $mod+m exec "xterm -e alsamixer; pkill -RTMIN+10 i3blocks"
 
 # Locker
-bindsym $mod+ugrave exec i3lock -d -c 272822 -i /home/gdmsl/Pictures/Wallpapers/mine/i3lockbg-yoko_g_gdmsl_grain.png
+bindsym $mod+ugrave exec i3lock -d -c 272822 -i /home/gdmsl/Pictures/Wallpapers/graing/i3lockbg-g.png
 
 # Shutdown menu
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown, (Shift+h) hybrid-sleep
@@ -83,6 +83,12 @@ bindsym $mod+egrave exec "i3-nagbar -t warning -m 'Do you want to slam all opene
 
 # take screenshots
 bindcode 107 exec --no-startup-id "scrot -e 'mv $f ~/Pictures/Screenshots/' && ogg123 /usr/share/sounds/freedesktop/stereo/screen-capture.oga"
+
+
+# wallpaper control
+# .. mod+g will stop the wallpaper timer and set a
+# .. fallback wallpaper
+bindsym $mod+g exec --no-startup-id "~/.local/bin/bgfallback.sh"
 
 # }}}
 

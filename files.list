@@ -72,3 +72,7 @@
 .mutt/gmail
 .muttrc
 .mutt/signature
+.wallpaper
+.local/bin/bgfallback.sh
+.config/systemd/user/feh-wallpaper.service
+.config/systemd/user/feh-wallpaper.timer
