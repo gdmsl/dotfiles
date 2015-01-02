@@ -1,4 +1,4 @@
-background no
+background yes
 use_xft yes
 xftfont Source Code Pro:size=9
 xftalpha 0.1

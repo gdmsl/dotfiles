@@ -11,9 +11,9 @@ unset record
 mailboxes +Gmail/INBOX +Gmail/Important +Gmail/[Gmail].All\ Mail
 
 macro index D \
-    "<save-message>+[Gmail].Trash<enter>" \
+    "<save-message>+Gmail/[Gmail].Trash<enter>" \
         "move message to the trash"
 
 macro index S \
-    "<save-message>+[Gmail].Spam<enter>" \
+    "<save-message>+Gmail/[Gmail].Spam<enter>" \
         "mark message as spam"
