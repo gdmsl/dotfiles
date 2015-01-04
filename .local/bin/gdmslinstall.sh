@@ -38,4 +38,7 @@ bash ~/.base16/output/gnome-terminal/base16-maliwan.dark.sh
 cp -f ~/.base16/output/xresources/base16-maliwan.dark.xresources ~/.xrdb/base16-maliwan.dark.xrdb
 cp -f ~/.base16/output/bim/base16-maliwan.vim ~/.vim/colors/base16-maliwan.vimx
 
-
+echo "Installing blocklets for i3bar"
+mkdir ~/.i3blocklets
+cd ~/.i3blocklets
+git clone https://gist.github.com/ec8e613d4f20d94ae099.git bandwith
