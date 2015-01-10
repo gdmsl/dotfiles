@@ -396,4 +396,7 @@ exec --no-startup-id "redshift-gtk"
 # Sound
 #exec --no-startup-id "ogg123 /usr/share/sounds/freedesktop/stereo/service-login.oga"
 
+# weather
+# exec --no-startup-id weather
+
 # }}}

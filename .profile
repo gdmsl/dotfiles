@@ -29,3 +29,8 @@ export TERMINAL="termite"
 # SSH Askpass
 export SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass
 
+
+# usefull paths
+export TOOLSPATH=$HOME/Develop/tools
+export I3SESSIONS=$HOME/Arch/i3sessions
+
