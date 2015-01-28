@@ -269,17 +269,17 @@ Bundle 'gmarik/vundle'
     Bundle 'scrooloose/nerdcommenter'
 " }
 
-" Python
-" Python {
-    Bundle 'klen/python-mode'
-    " Disable if python support not present
-    if !has('python')
-       let g:pymode = 0
-    endif
-    Bundle 'python.vim'
-    Bundle 'python_match.vim'
-    Bundle 'pythoncomplete'
-" }
+"" Python
+"" Python {
+"    Bundle 'klen/python-mode'
+"    " Disable if python support not present
+"    if !has('python')
+"       let g:pymode = 0
+"    endif
+"    Bundle 'python.vim'
+"    Bundle 'python_match.vim'
+"    Bundle 'pythoncomplete'
+"" }
 
 " LaTeX
 " LaTeX {

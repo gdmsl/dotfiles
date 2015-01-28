@@ -1,21 +1,21 @@
 scheme: "Maliwan"
 author: "Guido Masella (guido.masella@gmail.com)"
-base00: "141414"
-base01: "303030"
-base02: "4c4c4c"
-base03: "686868"
-base04: "848484"
-base05: "a0a0a0"
-base06: "bcbcbc"
-base07: "d8d8d8"
-base08: "d20927"
-base09: "d56000"
-base0A: "ddc228"
-base0B: "3faf29"
-base0C: "08ba9c"
-base0D: "3c7f9c"
-base0E: "c92c75"
-base0F: "e06ba1"
+base00: "1A1A1A"
+base01: "262626"
+base02: "666666"
+base03: "737373"
+base04: "8C8C8C"
+base05: "999999"
+base06: "DEDEDE"
+base07: "EBEBEB"
+base08: "c56101"
+base09: "c40205"
+base0A: "c4c102"
+base0B: "02c460"
+base0C: "02b4c4"
+base0D: "0266c4"
+base0E: "c102c4"
+base0F: "6002c4"
 
 
 # 00-07 greyscale
@@ -37,3 +37,29 @@ base0F: "e06ba1"
 # blue: #1A3544
 # cyan: #08a997
 # yellow: #c0ad24
+
+
+# background tones
+# #1A1A1A
+# #262626
+
+# content tones
+# #666666
+# #737373
+# #999999
+# #A6A6A6
+
+
+# background tones
+# #EBEBEB
+# #F7F7F7
+
+# accent colors
+# yellow   #c4c102
+# orange   #c56101
+# red      #c40205
+# magenta  #c102c4
+# violet   #6002c4
+# blue     #0266c4
+# cyan     #02b4c4
+# green    #02c460
