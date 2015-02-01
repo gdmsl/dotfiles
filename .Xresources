@@ -9,7 +9,7 @@ xterm*utf8:		2
 
 ! fonts and colors
 xterm*faceName:		Source Code Pro::size=10
-xterm*font:		7x13
+xterm*font:		6x13
 xterm*dynamicColors:	true
 xterm*eightBitInput:	true
 
@@ -37,4 +37,6 @@ URxvt*cursorBlink:          true
 !#include "/home/gdmsl/.xrdb/solarized.xrdb"
 !#include "/home/gdmsl/.xrdb/tango2.xrdb"
 #include "/home/gdmsl/.xrdb/base16-monokai.dark.256.xresources"
+!#include "/home/gdmsl/.xrdb/gdmsl.xresources"
+!#include "/home/gdmsl/.xrdb/solarized.xresources"
 

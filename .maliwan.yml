@@ -8,14 +8,14 @@ base04: "8C8C8C"
 base05: "999999"
 base06: "DEDEDE"
 base07: "EBEBEB"
-base08: "c56101"
-base09: "c40205"
-base0A: "c4c102"
-base0B: "02c460"
-base0C: "02b4c4"
-base0D: "0266c4"
-base0E: "c102c4"
-base0F: "6002c4"
+base08: "cc4e54"
+base09: "cc7a4e"
+base0A: "ccac4e"
+base0B: "60cc4e"
+base0C: "4eccb9"
+base0D: "4ea0cc"
+base0E: "b94ecc"
+base0F: "4e60cc"
 
 
 # 00-07 greyscale
@@ -60,6 +60,6 @@ base0F: "6002c4"
 # red      #c40205
 # magenta  #c102c4
 # violet   #6002c4
-# blue     #0266c4
-# cyan     #02b4c4
+# blue     #387494
+# cyan     #58b6e8
 # green    #02c460
