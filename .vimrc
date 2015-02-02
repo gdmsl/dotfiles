@@ -113,7 +113,7 @@ Bundle 'gmarik/vundle'
 " Airline {
 	Bundle 'bling/vim-airline'
 	let g:airline#extensions#tabline#enabled = 1
-    let g:airline_theme = 'base16'    " :echo g:airline_theme_map for list
+    "let g:airline_theme = ''    " :echo g:airline_theme_map for list
     let g:airline_left_sep = ''        " Slightly fancier than '>'
     let g:airline_right_sep = ''       " Slightly fancier than '<'
     let g:airline#extensions#tabline#left_sep = ''
@@ -273,9 +273,9 @@ else
 endif
 
 " Set a colorscheme
-"colorscheme  ir_black
-let g:base16_shell_path="/home/gdmsl/.base16/output/shell/"
-colorscheme base16-monokai
+colorscheme  ir_black
+"let g:base16_shell_path="/home/gdmsl/.base16/output/shell/"
+"colorscheme base16-monokai
 
 " Always enable folding
 set foldenable

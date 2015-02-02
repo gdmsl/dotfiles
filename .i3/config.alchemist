@@ -29,14 +29,14 @@ bar {
 	font pango:Source Code Pro, Icons, FontAwesome 10
 
 	colors {
-		background #272822
-		statusline #f8f8f2
-		separator #f8f8f2
+		background #1a1a1a
+		statusline #e0e0e0
+		separator #212121
 
-		focused_workspace  #272822 #66d9ef
-		active_workspace   #ffffff #333333
-		inactive_workspace #888888 #2e3436
-		urgent_workspace   #f8f8f2 #f92672
+		focused_workspace  #e0e0e0 #212121
+		active_workspace   #424242 #212121
+		inactive_workspace #424242 #212121
+		urgent_workspace   #e0e0e0 #f44336
 	}
 }
 # }}}

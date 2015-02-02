@@ -33,10 +33,17 @@ URxvt*saveLines:            12000
 URxvt*cursorUnderline:      true
 URxvt*cursorBlink:          true
 
+! xft settings ---------------------------------------------------------------
+Xft.dpi:        96
+Xft.antialias:  true
+Xft.rgba:       rgb
+Xft.hinting:    true
+Xft.hintstyle:  hintslight
+
 ! colorscheme
 !#include "/home/gdmsl/.xrdb/solarized.xrdb"
 !#include "/home/gdmsl/.xrdb/tango2.xrdb"
-#include "/home/gdmsl/.xrdb/base16-monokai.dark.256.xresources"
-!#include "/home/gdmsl/.xrdb/gdmsl.xresources"
+!#include "/home/gdmsl/.xrdb/base16-monokai.dark.256.xresources"
+#include "/home/gdmsl/.xrdb/gdmsl.xresources"
 !#include "/home/gdmsl/.xrdb/solarized.xresources"
 

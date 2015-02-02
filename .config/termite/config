@@ -42,70 +42,37 @@ cursor_shape = block
 #roundness = 2.0
 
 [colors]
-# Base16 Maliwan
-# Scheme: Guido Masella (guido.masella@gmail.com)
+#
+# GDMSL Colors
+# Author = Guido Masella (gdmsl) <guido.masella@gmail.com>
+#
 
-foreground      = #a0a0a0
-foreground_bold = #a0a0a0
-cursor          = #a0a0a0
-background      = #141414
+background = #1A1A1A
+foreground = #e0e0e0
+foreground_bold = #e0e0e0
+cursor = #e0e0e0
 
-# 16 color space
-color0  = #141414
-color1  = #d20927
-color2  = #3faf29
-color3  = #ddc228
-color4  = #3c7f9c
-color5  = #c92c75
-color6  = #08ba9c
-color7  = #a0a0a0
-color8  = #686868
-color9  = #d20927
-color10 = #3faf29
-color11 = #ddc228
-color12 = #3c7f9c
-color13 = #c92c75
-color14 = #08ba9c
-color15 = #d8d8d8
-
-# 256 color space
-color16 = #d56000
-color17 = #e06ba1
-color18 = #303030
-color19 = #4c4c4c
-color20 = #848484
-color21 = #bcbcbc
-[colors]
-# Base16 Monokai
-# Scheme: Wimer Hazenberg (http://www.monokai.nl)
-
-foreground      = #f8f8f2
-foreground_bold = #f8f8f2
-cursor          = #f8f8f2
-background      = #272822
-
-# 16 color space
-color0  = #272822
-color1  = #f92672
-color2  = #a6e22e
-color3  = #f4bf75
-color4  = #66d9ef
-color5  = #ae81ff
-color6  = #a1efe4
-color7  = #f8f8f2
-color8  = #75715e
-color9  = #f92672
-color10 = #a6e22e
-color11 = #f4bf75
-color12 = #66d9ef
-color13 = #ae81ff
-color14 = #a1efe4
-color15 = #f9f8f5
-
-# 256 color space
-color16 = #fd971f
-color17 = #cc6633
-color18 = #383830
-color19 = #49483e
-color20 = #a59f85
-color21 = #f5f4f1
+# Black + DarkGrey
+color0 =  #212121
+color8 =  #424242
+# DarkRed + Red
+color1 =  #ef5350
+color9 =  #f44336
+# DarkGreen + Green
+color2 =  #4caf50
+color10 = #76ff03
+# DarkYellow + Yellow
+color3 =  #fdd835
+color11 = #ffeb3b
+# DarkBlue + Blue
+color4 =  #2196f3
+color12 = #03a9f4
+# DarkMagenta + Magenta
+color5 =  #d500f9
+color13 = #ea80fc
+#DarkCyan + Cyan
+color6 =  #009688
+color14 = #00bcd4
+# LightGrey + White
+color7 =  #bdbdbd
+color15 = #e0e0e0
