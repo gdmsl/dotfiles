@@ -1,6 +1,6 @@
 background yes
 use_xft yes
-xftfont Inconsolata:size=10
+xftfont Source Code Pro:size=9
 xftalpha 0.1
 update_interval 1
 total_run_times 0

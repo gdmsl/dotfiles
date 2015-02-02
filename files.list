@@ -28,8 +28,8 @@
 .ncmpcpp/config
 .profile
 .xrdb/tango.xrdb
-.xrdb/solarized.xrdb
 .xrdb/tango2.xrdb
+.xrdb/gdmsl.colors
 .tmux.conf
 .tmuxline
 .i3status-big.conf

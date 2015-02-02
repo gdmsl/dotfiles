@@ -24,8 +24,8 @@ bindsym $mod+Shift+x exec thunar
 # start dmenu (a program launcher) with Super+d and
 # .. a modified version (which reads only .desktop files) with
 # .. Super+Shift+d
-bindsym $mod+d exec dmenu_run -b -l 15  -fn 'Inconsolata-10' -nb '#212121' -nf '#424242' -sb '#212121' -sf '#e0e0e0'
-bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -l 15 -i -fn 'Inconsolata-10' -nb '#212121' -nf '#424242' -sb '#212121' -sf '#e0e0e0'"
+bindsym $mod+d exec dmenu_run -b -l 15  -fn 'Source Code Pro-10' -nb '#212121' -nf '#424242' -sb '#212121' -sf '#e0e0e0'
+bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -l 15 -i -fn 'Source Code Pro-10' -nb '#212121' -nf '#424242' -sb '#212121' -sf '#e0e0e0'"
 
 
 # Reload the configuration file
@@ -325,7 +325,7 @@ for_window [class="dota_linux"] fullscreen
 
 # Font used to display widows titles, and other i3 stuffs
 # .. not used for i3bar
-font pango:Inconsolata 10
+font pango:Source Code Pro 10
 
 # Colors
 # class                 border  backgr. text    indicator
