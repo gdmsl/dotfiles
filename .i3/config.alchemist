@@ -21,7 +21,7 @@ set $O3 DVI-0
 bar {
 	output            DVI-1
 	status_command    i3blocks -c ~/.i3blocks-alchemist.conf
-	position          top
+	position          bottom
 	workspace_buttons yes
     tray_output DVI-1
     strip_workspace_numbers yes

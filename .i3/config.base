@@ -377,7 +377,7 @@ exec xrandr --output $O1 --primary
 exec --no-startup-id sh ~/.fehbg
 
 # conky
-exec --no-startup-id conky
+#exec --no-startup-id conky
 
 # gnome-keyring
 # exec --no-startup-id "/usr/bin/gnome-keyring-daemon --start"
