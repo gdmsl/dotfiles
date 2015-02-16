@@ -38,7 +38,7 @@
                   'Active' - where the active window is -->
   </placement>
   <theme>
-    <name>Numix-ArchBlue</name>
+    <name>Menda-Dark</name>
     <titleLayout>DNLIMC</titleLayout>
     <!--
       available characters are NDSLIMC, each can occur at most once.

@@ -60,15 +60,16 @@
 
 <menu id="root-menu" label="Openbox 3">
   <separator label="Applications" />
-  <menu id="Accessori" />
-  <menu id="Audio &amp; Video" />
-  <menu id="Giochi" />
-  <menu id="Grafica" />
+  <menu id="Accessories" />
+  <menu id="Archlinux" />
+  <menu id="Sound &amp; Video" />
+  <menu id="Games" />
+  <menu id="Graphics" />
   <menu id="Internet" />
-  <menu id="Istruzione" />
-  <menu id="Programmazione" />
-  <menu id="Strumenti di sistema" />
-  <menu id="Ufficio" />
+  <menu id="Science &amp; Math" />
+  <menu id="Programming" />
+  <menu id="System Tools" />
+  <menu id="Office" />
   <separator label="System" />
   <menu id="system-menu"/>
   <separator />
