@@ -41,9 +41,5 @@ Xft.hinting:    true
 Xft.hintstyle:  hintslight
 
 ! colorscheme
-!#include "/home/gdmsl/.xrdb/solarized.xrdb"
-!#include "/home/gdmsl/.xrdb/tango2.xrdb"
-!#include "/home/gdmsl/.xrdb/base16-monokai.dark.256.xresources"
 #include "/home/gdmsl/.xrdb/gdmsl.xresources"
-!#include "/home/gdmsl/.xrdb/solarized.xresources"
 

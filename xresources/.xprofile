@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# ~/.xprofile
+#
+
+# sourcing all files in ~/.xprofile.d
+if [ -d $HOME/.xprofile.d ]; then
+  for f in $HOME/.xprofile.d/*; do
+    [ -x "$f" ] && . "$f"
+  done
+  unset f
+fi
+
+# load the Xresources
+[[ -f ~/.Xresources ]] && xrdb ~/.Xresources
+

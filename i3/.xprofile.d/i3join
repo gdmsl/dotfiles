@@ -1,12 +1,7 @@
 #!/bin/sh
 #
-# ~/.xprofile
+# AUTHOR: Guido Masella <guido.masella@gmail.com>
 #
-
-
-# load the Xresources
-[[ -f ~/.Xresources ]] && xrdb ~/.Xresources
-
 
 # compose the i3 configuration file
 [[ -f ~/.i3/config.base ]] && [[ -f ~/.i3/config.$HOSTNAME ]] && \
