@@ -38,6 +38,8 @@
 .config/openbox/menu.xml
 .config/openbox/rc.xml
 .config/compton/compton-openbox.conf
+.config/compton/compton-i3.conf
+.config/gtk-3.0/gtk.css
 .config/tint2/default.tint2rc
 .config/tint2/tint2rc
 .config/tint2/tint2confrc

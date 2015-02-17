@@ -55,7 +55,7 @@ bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pulse set Master 5%
 bindsym $mod+m exec "xterm -e alsamixer; pkill -RTMIN+10 i3blocks"
 
 # Locker
-bindsym $mod+ugrave exec i3lock -d -c 272822 -i /home/gdmsl/Pictures/Wallpapers/graing/i3lockbg-g.png
+bindsym $mod+ugrave exec i3lock -d -c 272822 -i /home/gdmsl/Pictures/Wallpapers/mine/material_kiss-i3lock.png
 
 # Shutdown menu
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown, (Shift+h) hybrid-sleep
@@ -398,5 +398,8 @@ exec --no-startup-id "redshift-gtk"
 
 # weather
 # exec --no-startup-id weather
+
+# compositor
+exec "compton --config ~/.config/compton/compton-i3.conf -b"
 
 # }}}
