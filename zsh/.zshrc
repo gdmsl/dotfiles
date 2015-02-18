@@ -1,8 +1,14 @@
-# dircolors for TERMITE
-eval $(dircolors ~/.dircolors)
-
 # oh-my-zsh
 export ZSH=$HOME/.oh-my-zsh
+
+# install OMGzsh
+if [ ! -d $ZSH ]; then
+    echo "First start: installing OHMYZSH"
+    git clone git://github.com/robbyrussell/oh-my-zsh.git $ZSH
+fi
+
+# dircolors for TERMITE
+eval $(dircolors ~/.dircolors)
 
 ZSH_THEME="bureau"
 ZSH_THEME="robbyrussell"
