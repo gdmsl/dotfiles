@@ -6,6 +6,9 @@
 .config/tint2
 .config/compton
 .config/aurshield
+.config/dunst
+.config/matplotlib
+.config/matplotlib/stylelib
 .i3
 .local/bin
 .mplayer

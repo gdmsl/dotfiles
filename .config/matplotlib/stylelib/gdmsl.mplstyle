@@ -1,0 +1,57 @@
+#
+# AUTHOR: Guido Masella <guido.masella@gmail.com>
+#
+
+lines.linewidth      : 2.0
+lines.solid_capstyle : butt
+
+patch.linewidth   : 0.5
+patch.facecolor   : 2196F3
+patch.edgecolor   : 424242
+patch.antialiased : True
+
+svg.fonttype : path
+
+grid.linestyle : -
+grid.linewidth : 1.0
+grid.color     : cbcbcb
+
+font.size           : 12.0
+font.serif          : Source Serif Pro, Bitstream Vera Serif
+font.sans-serif     : Source Sans Pro, Bitstream Vera Sans
+font.monospace      : Source Code Pro, Bitstream Vera Sans Mono
+
+axes.facecolor   : f0f0f0
+axes.edgecolor   : e0e0e0
+axes.axisbelow   : True
+axes.grid        : True
+axes.linewidth   : 3.0
+axes.titlesize   : x-large
+axes.labelsize   : large
+axes.labelcolor  : 424242
+axes.color_cycle : 2196F3, F44336, 9C27B0, 4CAF50, CDDC39, 607D8B, FF9800, 009688, E91E63, 795548
+
+legend.fancybox : True
+legend.shadow   : True
+
+savefig.edgecolor : f0f0f0
+savefig.facecolor : f0f0f0
+
+xtick.major.size : 0
+xtick.minor.size : 0
+ytick.major.size : 0
+ytick.minor.size : 0
+xtick.color      : 424242
+ytick.color      : 424242
+xtick.direction  : out
+ytick.direction  : out
+
+figure.facecolor : f0f0f0
+figure.edgecolor : 0.50
+figure.figsize   : 8,6
+figure.dpi       : 96
+
+figure.subplot.left: 0.08
+figure.subplot.right: 0.95
+figure.subplot.bottom: 0.07
+

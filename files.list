@@ -9,7 +9,10 @@
 .vimrc
 .xinitrc
 .zshrc
+.juliarc.jl
 .config/mpd/mpd.conf
+.config/dunst/dunstrc
+.config/matplotlib/stylelib/gdmsl.mplstyle
 .config/ranger/commands.py
 .config/ranger/rc.conf
 .config/ranger/rifle.conf
