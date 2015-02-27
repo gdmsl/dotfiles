@@ -21,9 +21,9 @@ stop-screensaver="yes"
 af=scaletempo
 
 # allow to seek in a file which is still downloading whilst watching it
-index=yes
+index=default
 
 # skip displaying some frames to maintain A/V sync on slow systems
-framedrop=yes
+framedrop=decoder+vo
 
 sub-text-color='#FFFF00'
