@@ -9,9 +9,9 @@
 # WORKSPACES {{{
 
 # outputs
-set $O1 DVI-1
-set $O2 S-video
-set $O3 DVI-0
+set $O1 VGA-0
+set $O2 DVI-D-0
+set $O3 HDMI-0
 
 # }}}
 
@@ -19,7 +19,7 @@ set $O3 DVI-0
 
 # Alchemist BAR on DVI-1
 bar {
-	output            DVI-1
+	output            VGA-0
 	status_command    i3blocks -c ~/.i3blocks-alchemist.conf
 	position          bottom
 	workspace_buttons yes
