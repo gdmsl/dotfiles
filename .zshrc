@@ -4,9 +4,7 @@ eval $(dircolors ~/.dircolors)
 # oh-my-zsh
 export ZSH=$HOME/.oh-my-zsh
 
-#ZSH_THEME="robbyrussell"
-ZSH_THEME="bureau"
-#ZSH_THEME="avit"
+ZSH_THEME="robbyrussell"
 
 HIST_STAMPS="yyyy-mm-dd"
 
