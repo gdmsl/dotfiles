@@ -1,3 +1,3 @@
-#feh  --no-fehbg --bg-fill '/home/gdmsl/Pictures/Wallpapers/graing/wallpaper-g.png' 
-#feh  --no-fehbg --bg-fill '/home/gdmsl/Pictures/Wallpapers/flash/the-flash-2014-549134f3dec94-ns.jpg' 
-feh  --no-fehbg --bg-fill '/home/gdmsl/Pictures/Wallpapers/mine/material_kiss.png' 
+#feh  --no-fehbg --bg-fill '/home/gdmsl/Pictures/Wallpapers/mine/material_kiss.png' 
+
+feh --no-fehbg --bg-fill "$HOME/Pictures/wallpaper.png"

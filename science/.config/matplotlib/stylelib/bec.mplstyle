@@ -1,0 +1,67 @@
+#
+# AUTHOR: Guido Masella <guido.masella@gmail.com>
+#
+
+lines.linewidth       : 1.3
+lines.solid_capstyle  : projecting # butt|round|projecting
+lines.solid_joinstyle : bevel # miter|round|bevel
+lines.dash_capstyle   : projecting # butt|round|projecting
+lines.dash_joinstyle  : bevel # miter|round|bevel
+lines.antialiased     : True
+
+patch.linewidth   : 0.5
+patch.facecolor   : 000000
+patch.edgecolor   : 000000
+patch.antialiased : True
+
+svg.fonttype : path
+
+grid.linestyle : -
+grid.linewidth : 1.3
+grid.color     : 000000
+
+font.family         : sans-serif
+font.size           : 12.0
+font.serif          : Arial
+font.sans-serif     : Arial
+font.monospace      : Andale Mono
+font.weight         : 500
+
+axes.facecolor   : ffffff
+axes.edgecolor   : 000000
+axes.axisbelow   : True
+axes.grid        : False
+axes.linewidth   : 1.3
+axes.titlesize   : x-large
+axes.labelsize   : large
+axes.labelcolor  : 000000
+axes.color_cycle : b, g, r, c, m, y, k
+
+legend.fancybox : False
+legend.shadow   : True
+
+savefig.edgecolor : ffffff
+savefig.facecolor : ffffff
+
+xtick.major.size  : 5
+xtick.major.width : 1.3
+xtick.minor.size  : 5
+xtick.minor.width : 1.3
+ytick.major.size  : 5
+ytick.major.width : 1.3
+ytick.minor.size  : 5
+ytick.minor.width : 1.3
+xtick.color       : 000000
+ytick.color       : 000000
+xtick.direction   : out
+ytick.direction   : out
+
+figure.facecolor : ffffff
+figure.edgecolor : ffffff
+figure.figsize   : 8,6
+figure.dpi       : 96
+
+figure.subplot.left: 0.08
+figure.subplot.right: 0.95
+figure.subplot.bottom: 0.07
+
