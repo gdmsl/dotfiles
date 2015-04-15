@@ -1,5 +1,5 @@
 #
-# ~/.i3/config.alchemist
+# ~/.i3/config.razor
 #
 # vim: set ft=conf sw=4 ts=4 sts=4 et tw=78 fdm=marker fdl=0 foldmarker={{{,}}} :
 
@@ -9,18 +9,17 @@
 # WORKSPACES {{{
 
 # outputs
-set $O1 VGA-0
-set $O2 DVI-D-0
-set $O3 HDMI-0
+set $O1 LVDS1
+set $O2 VGA1
+set $O3 HDMI1
 
 # }}}
 
 # BARS {{{
 
-# Alchemist BAR on DVI-1
 bar {
 	output            $O1
-	status_command    i3blocks -c ~/.i3blocks/alchemist.conf
+	status_command    i3blocks -c ~/.juggernaut.conf
 	position          bottom
 	workspace_buttons yes
     tray_output $O1
