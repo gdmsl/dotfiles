@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# AUTHOR: Guido Masella <guido.masella@gmail.com>
+#
+
+# compose the i3 configuration file
+[[ -f ~/.i3/config.base ]] && [[ -f ~/.i3/config.$HOSTNAME ]] && \
+    cat ~/.i3/config.$HOSTNAME > ~/.i3/config && \
+    cat ~/.i3/config.base >> ~/.i3/config
