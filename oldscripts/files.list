@@ -9,7 +9,10 @@
 .vimrc
 .xinitrc
 .zshrc
+.juliarc.jl
 .config/mpd/mpd.conf
+.config/dunst/dunstrc
+.config/matplotlib/stylelib/gdmsl.mplstyle
 .config/ranger/commands.py
 .config/ranger/rc.conf
 .config/ranger/rifle.conf
@@ -20,7 +23,7 @@
 .makepkg.conf
 .i3/config.base
 .i3/config.alchemist
-.i3/config.razor
+.i3/config.juggernaut
 .local/bin/i3exit.sh
 .local/bin/gdmslinstall.sh
 .mplayer/config
@@ -55,7 +58,7 @@
 .maliwan.yml
 .dircolors
 .fehbg
-.i3blocks-razor.conf
+.i3blocks-juggernaut.conf
 .i3blocks-alchemist.conf
 .local/bin/i3blocks-gdmsl.sh
 .xprofile
