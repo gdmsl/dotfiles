@@ -13,7 +13,10 @@ alias pamcan='pacman'
 alias pacmna='pacman'
 
 # funny
-alias fuck='sudo $(fc -ln -1)'
+alias fuck='$(thefuck $(fc -ln -1))'
+alias fuckoff='$(thefuck $(fc -ln -1))'
+alias pls='$(thefuck $(fc -ln -1))'
+alias please='$(thefuck $(fc -ln -1))'
 
 #remote
 alias onida='DISPLAY=192.168.0.194:0'

@@ -23,11 +23,7 @@ zstyle ':completion:*' file-sort modification reverse
 autoload -U colors && colors
 zstyle ':completion:*' list-colors "=(#b) #([0-9]#)*=31=36"
 
-# start gnome keyring
-if [ -n "$DESKTOP_SESSION" ];then
-    eval $(gnome-keyring-daemon --start --components=ssh)
-    export SSH_AUTH_SOCK
-fi
+eval $(dircolors ~/.dircolors)
 
 # Startup message
 echo -n "$fg[yellow]"

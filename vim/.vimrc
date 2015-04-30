@@ -167,6 +167,13 @@ Bundle 'gmarik/vundle'
     Plugin 'JuliaLang/julia-vim'
 " }
 
+" Pandoc
+" Pandoc {
+    Plugin 'vim-pandoc/vim-pandoc'
+    Plugin 'vim-pandoc/vim-pandoc-syntax'
+    let g:pandoc#syntax#conceal#use = 0
+" }
+
 " Base 16
 " Base 16 {
     Bundle 'chriskempson/base16-vim'
@@ -176,6 +183,11 @@ Bundle 'gmarik/vundle'
 " Synatstic
 " Syntastic {
     Bundle 'scrooloose/syntastic'
+" }
+
+" Cvim
+" Cvim {
+    Bundle 'jstejada/cvim'
 " }
 
 call vundle#end()
@@ -292,6 +304,9 @@ set colorcolumn=80
 " behaivour
 " Editing "{
 " ============================================================================
+
+" disable spell checking by default
+set nospell
 
 " Backspace for dummies
 set backspace=indent,eol,start

@@ -312,6 +312,8 @@ for_window [title="^fehdsxslide$"] move scratchpad
 for_window [title="^vimpad$"] move scratchpad
 for_window [title="^scratchpadclock$"] move scratchpad
 for_window [title="scratchpadweather"] move scratchpad
+for_window [title="scratchmonitor"] move scratchpad
+for_window [class="Pavucontrol"] move scratchpad
 
 # GAMES
 assign [class="Borderlands2"] $WSgame
@@ -401,5 +403,11 @@ exec --no-startup-id "redshift-gtk"
 
 # compositor
 exec "compton --config ~/.config/compton/compton-i3.conf -b"
+
+# volume control for pulseaudio
+exec --no-startup-id pavucontrol
+
+# system monitor
+exec --no-startup-id xterm -T scratchmonitor -e zsh -c "glances"
 
 # }}}
