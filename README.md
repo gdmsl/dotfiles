@@ -15,7 +15,8 @@ I **code and edit text files** using vim from the terminal, keeping it slim (no 
 
 I use zsh as my default **shell** keeping dash and fish as secondary choices.
 
-I use *GNOME* as my default, full featured **DE** but i switch to i3 (i3, urxvt, vim, ranger plus other tools) for intensive task which require high concentration and/or a big amount of terminals (urxvt). The openbox desktop is an experiment.
+I use **i3** as my default window manager in a custom desktop envirorment
+(with ranger as file manager). I also use **XFCE** as my fallback DE of choice.
 
 I **listen to music** using `lollypop` or `mpd + ncmpcpp` and my default player, both for audio and video is the excellent `mpv`.
 
@@ -23,6 +24,8 @@ I **listen to music** using `lollypop` or `mpd + ncmpcpp` and my default player,
 
  * zsh
  * git
+ * stow
+ * xrandr
 
 Common requirements for *both* **i3** and **openbox**
 
@@ -30,6 +33,10 @@ Common requirements for *both* **i3** and **openbox**
  * alsa-utils
  * clipit
  * network-manager-applet
+ * glances
+ * pavucontrol
+ * compton (AUR)
+ * tty-clock
 
 These are the requirements for using the **i3 desktop** (archlinux packages):
 
@@ -40,14 +47,13 @@ These are the requirements for using the **i3 desktop** (archlinux packages):
  For the **openbox** desktop:
 
   * openbox
-  * compton (AUR)
   * tint2
 
 
 ## Installation
-To install these files clone the repository and then run in order the script `lndotfiles.sh` from the repo dir and `.local/bin/gdmslinstall.sh`. The first script will create the directory and symlink all the stuff from the *dotfiles* repository to your home folder replacing quietly all the files you already have (so make backups if you need them). The second script will install ohmyzsh, vim bundles using vundle and my personal color scheme using base16-builder. Read the script before executing it.
-
-NOTE: to install correctly the color scheme for gnome-terminal make sure that you have modified at least once the default profile (in order to create the keys for dconf)
+I use `GNU stow` to create and manage the symlinks from the `dotfiles`
+directory to my home directory. Each directory in the repo is a module for
+stow. This will allow to create only symlinks for the software needed.
 
 In short:
 
@@ -55,8 +61,12 @@ In short:
 $ cd ~
 $ git clone https://github.com/dotfiles.git
 $ cd dotfiles
-$ ./lndotfiles.sh
-$ .local/bin/gdmslinstall.sh
+$ stow -t $HOME --no-folding <name of the module>
+```
+
+and for unistall a module:
+```
+$ stow -t $HOME --no-folding -D <name of the module>
 ```
 
 If you use Arch Linux please consider to remove my personal informations from `~/.makepkg.conf`
