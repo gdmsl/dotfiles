@@ -25,7 +25,7 @@ bar {
     tray_output $O1
     strip_workspace_numbers yes
 
-	font pango:Source Code Pro, Icons, FontAwesome 10
+	font pango:Sauce Code Powerline, Source Code Pro, Icons, FontAwesome 10
 
 	colors {
 		background #1a1a1a

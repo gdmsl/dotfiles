@@ -327,7 +327,7 @@ for_window [class="dota_linux"] fullscreen
 
 # Font used to display widows titles, and other i3 stuffs
 # .. not used for i3bar
-font pango:Source Code Pro 10
+font pango:Sauce Code Powerline 10, Source Code Pro 10
 
 # Colors
 # class                 border  backgr. text    indicator
