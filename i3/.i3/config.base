@@ -305,7 +305,7 @@ assign [class="Steam"] $WSgaming
 
 # Assings to IM workspace
 assign [class="Sialan Telegram" instance="Sigram"] $WScomm
-assign [class="Telegram" instance="Telegram"] $WScomm
+assign [class="telegram" instance="telegram"] $WScomm
 
 # Scratchpad
 for_window [title="^fehdsxslide$"] move scratchpad

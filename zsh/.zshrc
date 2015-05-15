@@ -25,6 +25,11 @@ zstyle ':completion:*' list-colors "=(#b) #([0-9]#)*=31=36"
 
 eval $(dircolors ~/.dircolors)
 
+if [ -n "$DESKTOP_SESSION" ];then
+    eval $(gnome-keyring-daemon --start)
+    export SSH_AUTH_SOCK
+fi
+
 # Startup message
 echo -n "$fg[yellow]"
 fortune -a -s
