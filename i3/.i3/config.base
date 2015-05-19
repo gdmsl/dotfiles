@@ -88,7 +88,10 @@ bindcode 107 exec --no-startup-id "scrot -e 'mv $f ~/Pictures/Screenshots/' && o
 # wallpaper control
 # .. mod+g will stop the wallpaper timer and set a
 # .. fallback wallpaper
-bindsym $mod+g exec --no-startup-id "~/.local/bin/bgfallback.sh"
+#bindsym $mod+g exec --no-startup-id "~/.local/bin/bgfallback.sh"
+
+# turn off the screen
+bindsym $mod+g exec "sleep 2; xset dpms force off"
 
 # }}}
 
