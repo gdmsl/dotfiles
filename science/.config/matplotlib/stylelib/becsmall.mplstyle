@@ -42,6 +42,9 @@ legend.shadow   : True
 
 savefig.edgecolor : ffffff
 savefig.facecolor : ffffff
+savefig.transparent : True
+savefig.bbox : tight
+savefig.dpi : 900
 
 xtick.major.size  : 5
 xtick.major.width : 1.3
@@ -60,6 +63,7 @@ figure.facecolor : ffffff
 figure.edgecolor : ffffff
 figure.figsize   : 4,3
 figure.dpi       : 96
+
 
 figure.subplot.left: 0.08
 figure.subplot.right: 0.95

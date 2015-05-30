@@ -42,6 +42,8 @@ legend.shadow   : True
 
 savefig.edgecolor : ffffff
 savefig.facecolor : ffffff
+savefig.bbox : tight
+savefig.dpi : 900
 
 xtick.major.size  : 5
 xtick.major.width : 1.3
