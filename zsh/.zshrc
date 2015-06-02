@@ -1,7 +1,8 @@
 # oh-my-zsh
 export ZSH=$HOME/.oh-my-zsh
 ZSH_CUSTOM=$HOME/.my-oh-my-zsh
-ZSH_THEME="gdmsl"
+#ZSH_THEME="gdmsl"
+ZSH_THEME="notebook"
 
 HIST_STAMPS="yyyy-mm-dd"
 
