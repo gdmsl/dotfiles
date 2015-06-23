@@ -29,14 +29,14 @@ bar {
 	font pango:Sauce Code Powerline, Source Code Pro, Icons, FontAwesome 10
 
 	colors {
-		background #1a1a1a
+		background #1d1f21
 		statusline #e0e0e0
-		separator #212121
+		separator #8abeb7
 
-		focused_workspace  #e0e0e0 #212121
-		active_workspace   #424242 #212121
-		inactive_workspace #424242 #212121
-		urgent_workspace   #e0e0e0 #f44336
+		focused_workspace  #e0e0e0 #282a2e
+		active_workspace   #373b41 #282a2e
+		inactive_workspace #373b41 #282a2e
+		urgent_workspace   #e0e0e0 #cc6666
 	}
 }
 # }}}

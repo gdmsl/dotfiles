@@ -114,7 +114,7 @@ Bundle 'gmarik/vundle'
 	Bundle 'bling/vim-airline'
     let g:airline_powerline_fonts = 1
 	let g:airline#extensions#tabline#enabled = 1
-    let g:airline_theme = 'murmur'    " echo g:airline_theme_map for list
+    let g:airline_theme = 'base16'    " echo g:airline_theme_map for list
     "let g:airline_left_sep = ''        " Slightly fancier than '>'
     "let g:airline_right_sep = ''       " Slightly fancier than '<'
     "let g:airline#extensions#tabline#left_sep = ''
@@ -189,6 +189,21 @@ Bundle 'gmarik/vundle'
 " Cvim
 " Cvim {
     Bundle 'jstejada/cvim'
+" }
+
+" Gotham color sheme
+" Gotham {
+    Plugin 'whatyouhide/vim-gotham'
+" }
+
+" Vim indent guides
+" Indent {
+    Plugin 'nathanaelkane/vim-indent-guides'
+" }
+
+" Vim languagetool
+" Indent {
+    Plugin 'vim-scripts/LanguageTool'
 " }
 
 call vundle#end()
@@ -286,9 +301,9 @@ else
 endif
 
 " Set a colorscheme
-colorscheme  jellybeans
-"let g:base16_shell_path="/home/gdmsl/.base16/output/shell/"
-"colorscheme base16-monokai
+"colorscheme  jellybeans
+let g:base16_shell_path="/home/gdmsl/.base16/"
+colorscheme base16-tomorrow
 
 " Always enable folding
 set foldenable

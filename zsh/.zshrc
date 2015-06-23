@@ -10,8 +10,11 @@ plugins=(jump git archlinux cp tmux github history history-substring-search)
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.zsh/aliases.zsh
+source $HOME/.zsh/functions.zsh
 source $HOME/.profile
 source $ZSH/plugins/history-substring-search/history-substring-search.zsh
+export AURREPO=$HOME/Arch/AURshield/repo/aurshield.db.tar.gz
+export AURREPODIR=$HOME/Arch/AURshield/repo/
 
 # completition system
 autoload -Uz compinit zcalc

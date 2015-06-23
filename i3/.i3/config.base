@@ -24,8 +24,8 @@ bindsym $mod+Shift+x exec thunar
 # start dmenu (a program launcher) with Super+d and
 # .. a modified version (which reads only .desktop files) with
 # .. Super+Shift+d
-bindsym $mod+d exec dmenu_run -b -l 15  -fn 'Source Code Pro-10' -nb '#212121' -nf '#424242' -sb '#212121' -sf '#e0e0e0'
-bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -l 15 -i -fn 'Source Code Pro-10' -nb '#212121' -nf '#424242' -sb '#212121' -sf '#e0e0e0'"
+bindsym $mod+d exec dmenu_run -b -l 15  -fn 'Source Code Pro-10' -nb '#1d1f21' -nf '#969896' -sb '#81a2be' -sf '#1d1f21'
+bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -l 15 -i -fn 'Source Code Pro-10' -nb '#1d1f21' -nf '#969896' -sb '#81a2be' -sf '#1d1f21'"
 
 
 # Reload the configuration file
@@ -311,9 +311,6 @@ assign [class="Sialan Telegram" instance="Sigram"] $WScomm
 assign [class="telegram" instance="telegram"] $WScomm
 
 # Scratchpad
-for_window [title="^fehdsxslide$"] move scratchpad
-for_window [title="^vimpad$"] move scratchpad
-for_window [title="^scratchpadclock$"] move scratchpad
 for_window [title="scratchpadweather"] move scratchpad
 for_window [title="scratchmonitor"] move scratchpad
 for_window [class="Pavucontrol"] move scratchpad
@@ -334,10 +331,10 @@ font pango:Sauce Code Powerline 10, Source Code Pro 10
 
 # Colors
 # class                 border  backgr. text    indicator
-client.focused          #212121 #bdbdbd #212121 #2196f3
-client.focused_inactive #212121 #424242 #bdbdbd #cfd8dc
-client.unfocused        #212121 #424242 #bdbdbd #cfd8dc
-client.urgent           #212121 #f44336 #212121 #9e9e9e
+client.focused          #282a2e #969896 #282a2e #cc6666
+client.focused_inactive #282a2e #373b41 #969896 #969896
+client.unfocused        #282a2e #373b41 #969896 #969896
+client.urgent           #282a2e #969896 #282a2e #cc6666
 
 # Keybindings to change border style
 bindsym $mod+t border normal
@@ -386,11 +383,6 @@ exec --no-startup-id sh ~/.fehbg
 
 # gnome-keyring
 # exec --no-startup-id "/usr/bin/gnome-keyring-daemon --start"
-
-# scratchpad apps
-exec --no-startup-id xterm -T vimpad -e vim
-#exec --no-startup-id ~/Bin/fehdsxslide
-exec --no-startup-id xterm -T scratchpadclock -e zsh -c "tty-clock -s -c"
 
 # MEGA
 exec --no-startup-id megasync

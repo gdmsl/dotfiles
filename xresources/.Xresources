@@ -41,5 +41,5 @@ Xft.hinting:    true
 Xft.hintstyle:  hintslight
 
 ! colorscheme
-#include "/home/gdmsl/.xrdb/gdmsl.xresources"
+#include "/home/gdmsl/.xrdb/base16-tomorrow.dark.256.xresources"
 
