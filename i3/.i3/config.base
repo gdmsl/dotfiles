@@ -55,7 +55,7 @@ bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pulse set Master 5%
 bindsym $mod+m exec "xterm -e alsamixer; pkill -RTMIN+10 i3blocks"
 
 # Locker
-bindsym $mod+ugrave exec "i3lock -d -i /home/gdmsl/Pictures/i3lock.png"
+bindsym $mod+$lockkey exec "i3lock -d -i /home/gdmsl/Pictures/i3lock.png"
 
 # Shutdown menu
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown, (Shift+h) hybrid-sleep
@@ -78,8 +78,8 @@ bindsym $mod+z mode "$mode_system"
 bindsym $mod+i exec i3-input -F 'exec --no-startup-id todo.sh add "%s"' -P 'Add Todo: '
 
 # slam all opened tombs
-bindsym $mod+Shift+egrave exec --no-startup-id tomb slam all
-bindsym $mod+egrave exec "i3-nagbar -t warning -m 'Do you want to slam all opened tombs?' -b 'Slamm All!' 'tomb slam all'"
+bindsym $mod+Shift+$tombkey exec --no-startup-id tomb slam all
+bindsym $mod+$tombkeye exec "i3-nagbar -t warning -m 'Do you want to slam all opened tombs?' -b 'Slamm All!' 'tomb slam all'"
 
 # take screenshots
 bindcode 107 exec --no-startup-id "scrot -e 'mv $f ~/Pictures/Screenshots/' && ogg123 /usr/share/sounds/freedesktop/stereo/screen-capture.oga"
@@ -245,9 +245,9 @@ bindsym $mod+KP_3 workspace $WS13
 bindsym $mod+KP_4 workspace $WS14
 bindsym $mod+KP_5 workspace $WS15
 bindsym $mod+KP_6 workspace $WS16
-bindsym $mod+backslash workspace $WSweb
-bindsym $mod+apostrophe workspace $WSgaming
-bindsym $mod+igrave workspace $WScomm
+bindsym $mod+$webkey workspace $WSweb
+bindsym $mod+$gamingkey workspace $WSgaming
+bindsym $mod+$commkey workspace $WScomm
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $WS01
@@ -266,9 +266,9 @@ bindsym $mod+Shift+KP_3 move container to workspace $WS13
 bindsym $mod+Shift+KP_4 move container to workspace $WS14
 bindsym $mod+Shift+KP_5 move container to workspace $WS15
 bindsym $mod+Shift+KP_6 move container to workspace $WS16
-bindsym $mod+Shift+backslash move container to workspace $WSweb
-bindsym $mod+Shift+apostrophe move container to workspace $WSgaming
-bindsym $mod+Shift+igrave move container to workspace $WScomm
+bindsym $mod+Shift+$webkey move container to workspace $WSweb
+bindsym $mod+Shift+$gamingkey move container to workspace $WSgaming
+bindsym $mod+Shift+$commkey move container to workspace $WScomm
 
 # switch workspace back and forth
 bindsym $mod+b workspace back_and_forth

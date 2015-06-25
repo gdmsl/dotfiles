@@ -5,6 +5,13 @@
 
 # AUTHOR: Guido Masella <guido.masella@gmail.com>
 
+# KEYS {{{
+set $lockkey ugrave
+set $tombkey egrave
+set $webkey backslash
+set $gamingkey apostrophe
+set $commkey igrave
+# }}}
 
 # WORKSPACES {{{
 
