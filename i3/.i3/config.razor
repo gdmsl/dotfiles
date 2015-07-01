@@ -11,6 +11,7 @@ set $tombkey egrave
 set $webkey backslash
 set $gamingkey apostrophe
 set $commkey igrave
+set $scratchkey minus
 # }}}
 
 # WORKSPACES {{{
@@ -32,17 +33,17 @@ bar {
     tray_output $O1
     strip_workspace_numbers yes
 
-	font pango:Sauce Code Powerline, Source Code Pro, Icons, FontAwesome 10
+	font pango:Sauce Code Powerline, Source Code Pro, Icons, FontAwesome 9
 
 	colors {
-		background #1d1f21
-		statusline #e0e0e0
-		separator #8abeb7
+		background #272822
+		statusline #f9f8f5
+		separator #f9f8f5
 
-		focused_workspace  #e0e0e0 #282a2e
-		active_workspace   #373b41 #282a2e
-		inactive_workspace #373b41 #282a2e
-		urgent_workspace   #e0e0e0 #cc6666
+		focused_workspace  #272822 #a59f85
+		active_workspace   #a59f85 #49483e
+		inactive_workspace #a59f85 #272822
+		urgent_workspace   #272822 #f92672
 	}
 }
 # }}}

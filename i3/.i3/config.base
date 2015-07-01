@@ -24,8 +24,8 @@ bindsym $mod+Shift+x exec thunar
 # start dmenu (a program launcher) with Super+d and
 # .. a modified version (which reads only .desktop files) with
 # .. Super+Shift+d
-bindsym $mod+d exec dmenu_run -b -l 15  -fn 'Source Code Pro-10' -nb '#1d1f21' -nf '#969896' -sb '#81a2be' -sf '#1d1f21'
-bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -l 15 -i -fn 'Source Code Pro-10' -nb '#1d1f21' -nf '#969896' -sb '#81a2be' -sf '#1d1f21'"
+bindsym $mod+d exec dmenu_run -b -l 15  -fn 'Source Code Pro-10' -nb '#272822' -nf '#a59f85' -sb '#383830' -sf '#f92672'
+bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -l 15 -i -fn 'Source Code Pro-10' -nb '#272822' -nf '#a59f85' -sb '#383830' -sf '#f92672'"
 
 
 # Reload the configuration file
@@ -327,14 +327,14 @@ for_window [class="dota_linux"] fullscreen
 
 # Font used to display widows titles, and other i3 stuffs
 # .. not used for i3bar
-font pango:Sauce Code Powerline 10, Source Code Pro 10
+font pango:Sauce Code Powerline 9, Source Code Pro 9
 
 # Colors
 # class                 border  backgr. text    indicator
-client.focused          #282a2e #969896 #282a2e #cc6666
-client.focused_inactive #282a2e #373b41 #969896 #969896
-client.unfocused        #282a2e #373b41 #969896 #969896
-client.urgent           #282a2e #969896 #282a2e #cc6666
+client.focused          #383830 #a59f85 #383830 #f92672
+client.focused_inactive #383830 #49483e #a59f85 #fd971f
+client.unfocused        #383830 #49483e #a59f85 #fd971f
+client.urgent           #383830 #f92672 #383830 #fd971f
 
 # Keybindings to change border style
 bindsym $mod+t border normal
@@ -351,10 +351,10 @@ new_float pixel 3
 
 # Scratchpad
 # Make the currently focused window a scratchpad
-bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+Shift+$scratchkey move scratchpad
 
 # Show the first scratchpad window
-bindsym $mod+minus scratchpad show
+bindsym $mod+$scratchkey scratchpad show
 
 # }}}
 

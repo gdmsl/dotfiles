@@ -14,3 +14,4 @@ fi
 # load the Xresources
 [[ -f ~/.Xresources ]] && xrdb ~/.Xresources
 
+export MOZ_USE_OMTC=1

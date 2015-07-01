@@ -19,6 +19,8 @@ export GPG_AGENT_INFO SSH_AUTH_SOCK
 
 xrandr --output LVDS1 --gamma 0.8:0.9:0.7 --primary
 
+export MOZ_USE_OMTC=1
+
 if [ "$HOSTNAME" = "alchemist" ]; then
     cat ~/.xbindkeys.d/m1.xbind > ~/.xinitrc
     xbindkeys
