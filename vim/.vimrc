@@ -303,7 +303,7 @@ endif
 " Set a colorscheme
 "colorscheme  jellybeans
 let g:base16_shell_path="/home/gdmsl/.base16/"
-colorscheme base16-monokai
+colorscheme base16-tomorrow
 
 " Always enable folding
 set foldenable

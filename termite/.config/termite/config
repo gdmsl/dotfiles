@@ -83,38 +83,37 @@ color14 = #00bcd4
 # LightGrey + White
 color7 =  #bdbdbd
 color15 = #e0e0e0
-
 [colors]
-# Base16 Monokai
-# Scheme: Wimer Hazenberg (http://www.monokai.nl)
+# Base16 Tomorrow
+# Scheme: Chris Kempson (http://chriskempson.com)
 
-foreground      = #f8f8f2
-foreground_bold = #f8f8f2
-cursor          = #f8f8f2
-background      = #272822
+foreground      = #c5c8c6
+foreground_bold = #c5c8c6
+cursor          = #c5c8c6
+background      = #1d1f21
 
 # 16 color space
-color0  = #272822
-color1  = #f92672
-color2  = #a6e22e
-color3  = #f4bf75
-color4  = #66d9ef
-color5  = #ae81ff
-color6  = #a1efe4
-color7  = #f8f8f2
-color8  = #75715e
-color9  = #f92672
-color10 = #a6e22e
-color11 = #f4bf75
-color12 = #66d9ef
-color13 = #ae81ff
-color14 = #a1efe4
-color15 = #f9f8f5
+color0  = #1d1f21
+color1  = #cc6666
+color2  = #b5bd68
+color3  = #f0c674
+color4  = #81a2be
+color5  = #b294bb
+color6  = #8abeb7
+color7  = #c5c8c6
+color8  = #969896
+color9  = #cc6666
+color10 = #b5bd68
+color11 = #f0c674
+color12 = #81a2be
+color13 = #b294bb
+color14 = #8abeb7
+color15 = #ffffff
 
 # 256 color space
-color16 = #fd971f
-color17 = #cc6633
-color18 = #383830
-color19 = #49483e
-color20 = #a59f85
-color21 = #f5f4f1
+color16 = #de935f
+color17 = #a3685a
+color18 = #282a2e
+color19 = #373b41
+color20 = #b4b7b4
+color21 = #e0e0e0

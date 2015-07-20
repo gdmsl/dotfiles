@@ -18,10 +18,9 @@ alias fuckoff='$(thefuck $(fc -ln -1))'
 alias pls='$(thefuck $(fc -ln -1))'
 alias please='$(thefuck $(fc -ln -1))'
 
-#remote
-alias onida='DISPLAY=192.168.0.194:0'
-alias idampv='DISPLAY=192.168.0.194:0 mpv --mute=yes'
-
-
 # git is a 3 letter word and so git-annex should be
 alias anx='git-annex'
+
+# shut down the system
+alias ggwp='systemctl poweroff'
+alias gg='systemctl reboot'

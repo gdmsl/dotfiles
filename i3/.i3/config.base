@@ -24,9 +24,8 @@ bindsym $mod+Shift+x exec thunar
 # start dmenu (a program launcher) with Super+d and
 # .. a modified version (which reads only .desktop files) with
 # .. Super+Shift+d
-bindsym $mod+d exec dmenu_run -b -l 15  -fn 'Source Code Pro-10' -nb '#272822' -nf '#a59f85' -sb '#383830' -sf '#f92672'
-bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -l 15 -i -fn 'Source Code Pro-10' -nb '#272822' -nf '#a59f85' -sb '#383830' -sf '#f92672'"
-
+bindsym $mod+d exec dmenu_run -b -l 15  -fn 'Source Code Pro-10' -nb '#1d1f21' -nf '#c5c8c6' -sb '#373b41' -sf '#e0e0e0'
+bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -l 15 -i -fn 'Source Code Pro-10' -nb '#1d1f21' -nf '#c5c8c6' -sb '#373b41' -sf '#e0e0e0'"
 
 # Reload the configuration file
 bindsym $mod+Shift+c reload
@@ -296,6 +295,7 @@ for_window [class="Gnome-clocks"] floating enable
 for_window [class="XClock"] floating enable
 for_window [class="Thunar" title="Avanzamento delle operazione sui file"] floating enable
 for_window [class="Xfce4-notifyd"] floating enable
+for_window [title="RydbergExplosion*"] floating enable
 
 # force apps to not go in floating mode
 for_window [class="gimp"] floating disable
@@ -327,14 +327,14 @@ for_window [class="dota_linux"] fullscreen
 
 # Font used to display widows titles, and other i3 stuffs
 # .. not used for i3bar
-font pango:Sauce Code Powerline 9, Source Code Pro 9
+font pango:Sauce Code Powerline, Source Code Pro 10
 
 # Colors
 # class                 border  backgr. text    indicator
-client.focused          #383830 #a59f85 #383830 #f92672
-client.focused_inactive #383830 #49483e #a59f85 #fd971f
-client.unfocused        #383830 #49483e #a59f85 #fd971f
-client.urgent           #383830 #f92672 #383830 #fd971f
+client.focused          #1d1f21 #81a2be #1d1f21 #f0c674
+client.focused_inactive #1d1f21 #373b41 #e0e0e0 #f0c674
+client.unfocused        #1d1f21 #373b41 #b4b7b4 #f0c674
+client.urgent           #1d1f21 #cc6666 #1d1f21 #f0c674
 
 # Keybindings to change border style
 bindsym $mod+t border normal
