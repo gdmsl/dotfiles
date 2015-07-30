@@ -2,7 +2,11 @@
 export ZSH=$HOME/.oh-my-zsh
 ZSH_CUSTOM=$HOME/.my-oh-my-zsh
 #ZSH_THEME="gdmsl"
-ZSH_THEME="notebook"
+#ZSH_THEME="notebook"
+ZSH_THEME="agnoster"
+#ZSH_THEME="mortalscumbag"
+
+DEFAULT_USER="gdmsl"
 
 HIST_STAMPS="yyyy-mm-dd"
 
@@ -13,8 +17,8 @@ source $HOME/.zsh/aliases.zsh
 source $HOME/.zsh/functions.zsh
 source $HOME/.profile
 source $ZSH/plugins/history-substring-search/history-substring-search.zsh
-export AURREPO=$HOME/Arch/AURshield/repo/aurshield.db.tar.gz
-export AURREPODIR=$HOME/Arch/AURshield/repo/
+export AURREPO=/srv/aur/aurshield.db.tar.gz
+export AURREPODIR=/srv/aur/
 
 # completition system
 autoload -Uz compinit zcalc

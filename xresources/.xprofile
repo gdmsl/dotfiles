@@ -14,4 +14,9 @@ fi
 # load the Xresources
 [[ -f ~/.Xresources ]] && xrdb ~/.Xresources
 
+if ["$HOSTNAME" = "alchemist" ]; then
+    cat ~/.xbindkeys.d/m1.xbind > ~/.xbindkeysrc
+    exec xbindkeys
+fi
+
 export MOZ_USE_OMTC=1
