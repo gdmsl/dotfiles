@@ -24,3 +24,7 @@ alias anx='git-annex'
 # shut down the system
 alias ggwp='systemctl poweroff'
 alias gg='systemctl reboot'
+
+# download url from clipboard
+alias downclip='wget $(xsel -b)'
+alias videoclip='youtube-dl "$(xsel -b)"'

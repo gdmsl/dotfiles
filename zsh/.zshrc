@@ -5,6 +5,7 @@ ZSH_CUSTOM=$HOME/.my-oh-my-zsh
 #ZSH_THEME="notebook"
 ZSH_THEME="agnoster"
 #ZSH_THEME="mortalscumbag"
+#ZSH_THEME="robbyrussell"
 
 DEFAULT_USER="gdmsl"
 

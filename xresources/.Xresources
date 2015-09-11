@@ -8,7 +8,7 @@ xterm*locale:		true
 xterm*utf8:		2
 
 ! fonts and colors
-xterm*faceName:		Sauce Code Powerline::size=9
+xterm*faceName:		Hack::size=10
 xterm*font:		6x13
 xterm*dynamicColors:	true
 xterm*eightBitInput:	true
@@ -20,7 +20,7 @@ xterm*toolBar:		false
 
 ! urxvt settings --------------------------------------------------------------
 URxvt*scrollBar:            false
-URxvt.font:                 xft:Sauce Code Powerline:size=9
+URxvt.font:                 xft:Hack:size=10
 URxvt.letterSpace:          -2
 URxvt.perl-ext-common:      default,matcher,clipboard,selection-to-clipboard
 URxvt.url-select.launcher:  firefox
@@ -34,11 +34,12 @@ URxvt*cursorUnderline:      true
 URxvt*cursorBlink:          true
 
 ! xft settings ---------------------------------------------------------------
-Xft.dpi:        96
+!Xft.dpi:        96
+Xft.lcdfilter:  lcddefault
 Xft.antialias:  true
 Xft.rgba:       rgb
 Xft.hinting:    true
-Xft.hintstyle:  hintslight
+Xft.hintstyle:  slight
 
 ! colorscheme
 #include "/home/gdmsl/.xrdb/base16-tomorrow.dark.256.xresources"

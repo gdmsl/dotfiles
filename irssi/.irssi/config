@@ -49,7 +49,7 @@ servers = (
     port = "9999";
     use_ssl = "yes";
     autoconnect = "yes";
-  },
+  }
 );
 
 chatnets = {
@@ -305,6 +305,7 @@ settings = {
     nick = "gdmsl";
   };
   "fe-text" = { actlist_sort = "refnum"; };
+  "fe-common/core" = { theme = "revolutionaryv3"; };
 };
 ignores = (
   { level = "JOINS PARTS QUITS"; channels = ( "#archlinux" ); },

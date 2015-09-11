@@ -155,12 +155,13 @@ Bundle 'gmarik/vundle'
 " Tmuxline {
     Bundle 'edkolev/tmuxline.vim'
     " tune airline separators for tmuxline
-    let g:tmuxline_separators = {
-        \ 'left' : '',
-        \ 'left_alt': '>',
-        \ 'right' : '',
-        \ 'right_alt' : '<',
-        \ 'space' : ' '}
+    "let g:tmuxline_separators = {
+    "    \ 'left' : '',
+    "    \ 'left_alt': '>',
+    "    \ 'right' : '',
+    "    \ 'right_alt' : '<',
+    "    \ 'space' : ' '}
+    let g:tmuxline_preset = 'full'
 " }
 
 " Julia Plugin
@@ -202,7 +203,7 @@ Bundle 'gmarik/vundle'
 " }
 
 " Vim languagetool
-" Indent {
+" Language Tool {
     Plugin 'vim-scripts/LanguageTool'
 " }
 

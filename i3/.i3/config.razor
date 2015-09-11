@@ -33,7 +33,29 @@ bar {
     tray_output $O1
     strip_workspace_numbers yes
 
-	font pango:Sauce Code Powerline, Source Code Pro, Icons, FontAwesome 9
+	font pango:Hack, Source Code Pro, Icons, FontAwesome 10
+
+	colors {
+		background #1d1f21
+		statusline #e0e0e0
+		separator #969896
+
+        focused_workspace  #1d1f21 #81a2be
+        active_workspace   #b4b7b4 #373b41
+        inactive_workspace #b4b7b4 #282a2e
+        urgent_workspace   #1d1f21 #f0ct74
+	}
+}
+
+bar {
+	output            $O3
+	status_command    i3blocks -c ~/.i3blocks/razor.conf
+	position          top
+	workspace_buttons yes
+    tray_output $O1
+    strip_workspace_numbers yes
+
+	font pango:Hack, Source Code Pro, Icons, FontAwesome 9
 
 	colors {
 		background #1d1f21

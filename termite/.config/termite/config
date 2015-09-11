@@ -9,15 +9,7 @@ allow_bold = true
 dynamic_title = true
 urgent_on_bell = true
 clickable_url = true
-#font = Anonymice Powerline 10
-#font = Literation Mono Powerline 10
-#font = Inconsolata for Powerline 10
-#font = Meslo for Powerline 10
-#font = Ubuntu Mono derivative Powerline 10
-font = Sauce Code Powerline 9
-#font = DejaVu Sans Mono for Powerline 9
-#font = Source Code Pro 10
-#font = Hermit 10
+font = Hack
 scrollback_lines = 10000
 search_wrap = true
 #icon_name = terminal
@@ -59,30 +51,6 @@ foreground = #e0e0e0
 foreground_bold = #e0e0e0
 cursor = #e0e0e0
 
-# Black + DarkGrey
-color0 =  #212121
-color8 =  #424242
-# DarkRed + Red
-color1 =  #ef5350
-color9 =  #f44336
-# DarkGreen + Green
-color2 =  #4caf50
-color10 = #76ff03
-# DarkYellow + Yellow
-color3 =  #fdd835
-color11 = #ffeb3b
-# DarkBlue + Blue
-color4 =  #2196f3
-color12 = #03a9f4
-# DarkMagenta + Magenta
-color5 =  #d500f9
-color13 = #ea80fc
-#DarkCyan + Cyan
-color6 =  #009688
-color14 = #00bcd4
-# LightGrey + White
-color7 =  #bdbdbd
-color15 = #e0e0e0
 [colors]
 # Base16 Tomorrow
 # Scheme: Chris Kempson (http://chriskempson.com)

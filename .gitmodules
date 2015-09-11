@@ -4,3 +4,6 @@
 [submodule "zsh/.my-oh-my-zsh/themes/zsh-notebook"]
 	path = zsh/.my-oh-my-zsh/themes/zsh-notebook
 	url = https://github.com/pry0cc/zsh-notebook
+[submodule "science/.local/bin/ipynb_output_filter"]
+	path = science/.local/bin/ipynb_output_filter
+	url = https://github.com/toobaz/ipynb_output_filter

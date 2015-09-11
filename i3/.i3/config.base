@@ -24,8 +24,8 @@ bindsym $mod+Shift+x exec thunar
 # start dmenu (a program launcher) with Super+d and
 # .. a modified version (which reads only .desktop files) with
 # .. Super+Shift+d
-bindsym $mod+d exec dmenu_run -b -l 15  -fn 'Source Code Pro-10' -nb '#1d1f21' -nf '#c5c8c6' -sb '#373b41' -sf '#e0e0e0'
-bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -l 15 -i -fn 'Source Code Pro-10' -nb '#1d1f21' -nf '#c5c8c6' -sb '#373b41' -sf '#e0e0e0'"
+bindsym $mod+d exec dmenu_run -b -l 15  -fn 'Hack-10' -nb '#1d1f21' -nf '#c5c8c6' -sb '#373b41' -sf '#e0e0e0'
+bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -l 15 -i -fn 'Hack-10' -nb '#1d1f21' -nf '#c5c8c6' -sb '#373b41' -sf '#e0e0e0'"
 
 # Reload the configuration file
 bindsym $mod+Shift+c reload
@@ -84,10 +84,21 @@ bindsym $mod+$tombkeye exec "i3-nagbar -t warning -m 'Do you want to slam all op
 bindcode 107 exec --no-startup-id "scrot -e 'mv $f ~/Pictures/Screenshots/' && ogg123 /usr/share/sounds/freedesktop/stereo/screen-capture.oga"
 
 
-# wallpaper control
-# .. mod+g will stop the wallpaper timer and set a
-# .. fallback wallpaper
-#bindsym $mod+g exec --no-startup-id "~/.local/bin/bgfallback.sh"
+# common actions
+set $mode_actions Actions (z)Downclip, (x)RP, (c)RPP, (v)BT, (a)Videoclip
+mode "$mode_actions" {
+	bindsym z exec --no-startup-id "wget -P ~/Downloads/ $(xsel -b)", exec notify-send -t 2000 "Downloaded $(xsel -b) in ~/Downloads", mode "default"
+	bindsym x exec --no-startup-id "wget -P ~/.marks/rp $(xsel -b)", exec notify-send -t 2000 "Downloaded $(xsel -b) in RP", mode "default"
+	bindsym c exec --no-startup-id "wget -P ~/.marks/rpp $(xsel -b)", exec notify-send -t 2000 "Downloaded $(xsel -b) in RPP", mode "default"
+	bindsym v exec --no-startup-id "wget -P ~/.marks/bt $(xsel -b)", exec notify-send -t 2000 "Downloaded $(xsel -b) in BT", mode "default"
+	bindsym a exec --no-startup-id "youtube-dl  -o '~/Downloads/youtube-dl/%(title)s-%(id)s.%(ext)s' $(xsel -b)", exec notify-send -t 2000 "Downloaded $(xsel -b) in ~/Downloads/youtube-dl", mode "default"
+
+	# back to normal: Enter or Escape
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+Shift+z mode "$mode_actions"
+
 
 # turn off the screen
 bindsym $mod+g exec "sleep 2; xset dpms force off"
@@ -225,7 +236,7 @@ workspace $WS16 output $O3
 workspace $WSweb output $O1
 workspace $WSgaming output $01
 workspace $WScomm output $O1
-workspace $WSborderlands output $03
+workspace $WSborderlands output $01
 
 # switch to workspace
 bindsym $mod+1 workspace $WS01
@@ -319,7 +330,9 @@ for_window [class="Pavucontrol"] move scratchpad
 assign [class="Borderlands2"] $WSgame
 for_window [class="Borderlands2"] fullscreen
 assign [class="dota_linux"] $WSgame
+assign [class="dota2"] $WSgame
 for_window [class="dota_linux"] fullscreen
+for_window [class="dota2"] fullscreen
 
 # }}}
 
@@ -327,7 +340,7 @@ for_window [class="dota_linux"] fullscreen
 
 # Font used to display widows titles, and other i3 stuffs
 # .. not used for i3bar
-font pango:Sauce Code Powerline, Source Code Pro 10
+font pango:Hack, Source Code Pro, DejaVu Sans Mono 10
 
 # Colors
 # class                 border  backgr. text    indicator
@@ -338,12 +351,12 @@ client.urgent           #1d1f21 #cc6666 #1d1f21 #f0c674
 
 # Keybindings to change border style
 bindsym $mod+t border normal
-bindsym $mod+y border pixel 3
+bindsym $mod+y border pixel 2
 bindsym $mod+u border none
 
 # New windows are titleless and with 2 pixel border
-new_window pixel 3
-new_float pixel 3
+new_window pixel 2
+new_float pixel 2
 
 # }}}
 
