@@ -6,7 +6,7 @@
 " Plugins --------------------------------------------------------------------
 
 " LoadPlugins {{{
-call plug#begin('.nvim/plugged')
+call plug#begin('~/.nvim/plugged')
 
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
@@ -252,7 +252,4 @@ augroup text_files
     autocmd FileType text setlocal textwidth=78
 augroup END
 " }}}
-
-
-
 
