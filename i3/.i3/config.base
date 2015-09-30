@@ -24,8 +24,8 @@ bindsym $mod+Shift+x exec thunar
 # start dmenu (a program launcher) with Super+d and
 # .. a modified version (which reads only .desktop files) with
 # .. Super+Shift+d
-bindsym $mod+d exec dmenu_run -b -l 15  -fn 'Hack-10' -nb '#1d1f21' -nf '#c5c8c6' -sb '#373b41' -sf '#e0e0e0'
-bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -l 15 -i -fn 'Hack-10' -nb '#1d1f21' -nf '#c5c8c6' -sb '#373b41' -sf '#e0e0e0'"
+bindsym $mod+d exec dmenu_run -b -l 15  -fn 'Hack-10' -nb '#262626' -nf '#a89984' -sb '#928374' -sf '#ebdbb2'
+bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -l 15 -i -fn 'Hack-10' -nb '#262626' -nf '#a89984' -sb '#928374' -sf '#ebdbb2'"
 
 # Reload the configuration file
 bindsym $mod+Shift+c reload
@@ -306,7 +306,7 @@ for_window [class="Gnome-clocks"] floating enable
 for_window [class="XClock"] floating enable
 for_window [class="Thunar" title="Avanzamento delle operazione sui file"] floating enable
 for_window [class="Xfce4-notifyd"] floating enable
-for_window [title="RydbergExplosion*"] floating enable
+for_window [title="fehslide"] floating enable
 
 # force apps to not go in floating mode
 for_window [class="gimp"] floating disable
@@ -344,10 +344,10 @@ font pango:Hack, Source Code Pro, DejaVu Sans Mono 10
 
 # Colors
 # class                 border  backgr. text    indicator
-client.focused          #1d1f21 #81a2be #1d1f21 #f0c674
-client.focused_inactive #1d1f21 #373b41 #e0e0e0 #f0c674
-client.unfocused        #1d1f21 #373b41 #b4b7b4 #f0c674
-client.urgent           #1d1f21 #cc6666 #1d1f21 #f0c674
+client.focused          #262626 #484848 #ebdbb2 #d79921
+client.focused_inactive #262626 #484848 #a89984 #d79921
+client.unfocused        #262626 #484848 #a89984 #d79921
+client.urgent           #262626 #cc241b #262626 #d79921
 
 # Keybindings to change border style
 bindsym $mod+t border normal
@@ -383,7 +383,7 @@ exec clipit
 exec --no-startup-id xset dpms 600
 
 # Solid Color Background
-exec --no-startup-id xsetroot -solid "#111111"
+exec --no-startup-id xsetroot -solid "#262626"
 
 # set the $O1 as default (primary)
 exec xrandr --output $O1 --primary

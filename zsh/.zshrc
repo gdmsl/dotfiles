@@ -13,6 +13,7 @@ HIST_STAMPS="yyyy-mm-dd"
 
 plugins=(jump git archlinux cp tmux github history history-substring-search)
 
+
 source $ZSH/oh-my-zsh.sh
 source $HOME/.zsh/aliases.zsh
 source $HOME/.zsh/functions.zsh

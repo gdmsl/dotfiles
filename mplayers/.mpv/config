@@ -1,6 +1,8 @@
 # default configuration that applies to every file
 [default]
 
+hwdec=vdpau
+
 # use X11 for video output, use a wayland and framebuffer as fallbacks
 vo=vdpau,vaapi,xv,wayland,directfb,
 

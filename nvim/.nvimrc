@@ -46,7 +46,7 @@ augroup airline_config
   let g:airline#extensions#tabline#enabled = 1
   let g:airline#extensions#tabline#fnamecollapse = 0
   let g:airline#extensions#tabline#fnamemod = ':t'
-  let g:airline_theme = 'base16'
+  let g:airline_theme = 'hybrid'
 augroup END
 " }}}
 
@@ -90,10 +90,10 @@ augroup END
 " }}}
 
 " Base16 {{{
-augroup base16_config
-    let base16colorspace=256
-    let g:base16_shell_path="~/.base16/"
-augroup END
+"augroup base16_config
+    "let base16colorspace=256
+    "let g:base16_shell_path="~/.base16/"
+"augroup END
 " }}}
 
 " Fugitive {{{
@@ -132,7 +132,11 @@ augroup syntastic_config
   autocmd!
   let g:syntastic_error_symbol = '✗'
   let g:syntastic_warning_symbol = '⚠'
+  let g:syntastic_cpp_compiler_options = '-std=c++11'
 augroup END
+" }}}
+
+" NeoMake {{{
 " }}}
 
 " Settings -------------------------------------------------------------------
@@ -157,7 +161,7 @@ let g:mapleader = ','
 set t_Co=256
 set background=dark
 syntax on
-colorscheme base16-tomorrow
+colorscheme gruvbox
 " }}}
 
 "Folding {{{
