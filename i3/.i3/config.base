@@ -24,8 +24,8 @@ bindsym $mod+Shift+x exec thunar
 # start dmenu (a program launcher) with Super+d and
 # .. a modified version (which reads only .desktop files) with
 # .. Super+Shift+d
-bindsym $mod+d exec dmenu_run -b -l 15  -fn 'Hack-10' -nb '#262626' -nf '#a89984' -sb '#928374' -sf '#ebdbb2'
-bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -l 15 -i -fn 'Hack-10' -nb '#262626' -nf '#a89984' -sb '#928374' -sf '#ebdbb2'"
+bindsym $mod+d exec dmenu_run -b -l 15  -fn 'Hack-10' -nb '#262626' -nf '#ebdbb2' -sb '#484848' -sf '#ebdbb2'
+bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -l 15 -i -fn 'Hack-10' -nb '#262626' -nf '#ebdbb2' -sb '#484848' -sf '#ebdbb2'"
 
 # Reload the configuration file
 bindsym $mod+Shift+c reload
@@ -54,7 +54,7 @@ bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pulse set Master 5%
 bindsym $mod+m exec "xterm -e alsamixer; pkill -RTMIN+10 i3blocks"
 
 # Locker
-bindsym $mod+$lockkey exec "i3lock -d -i /home/gdmsl/Pictures/i3lock.png"
+bindsym $mod+$lockkey exec "i3lock -d -e -f -c 262626"
 
 # Shutdown menu
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown, (Shift+h) hybrid-sleep
@@ -81,7 +81,7 @@ bindsym $mod+Shift+$tombkey exec --no-startup-id tomb slam all
 bindsym $mod+$tombkeye exec "i3-nagbar -t warning -m 'Do you want to slam all opened tombs?' -b 'Slamm All!' 'tomb slam all'"
 
 # take screenshots
-bindcode 107 exec --no-startup-id "scrot -e 'mv $f ~/Pictures/Screenshots/' && ogg123 /usr/share/sounds/freedesktop/stereo/screen-capture.oga"
+bindcode 107 exec --no-startup-id "maim ~/Pictures/Screenshots/$(date +%F-%T).png && ogg123 /usr/share/sounds/freedesktop/stereo/screen-capture.oga"
 
 
 # common actions
@@ -146,6 +146,7 @@ bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
+bindsym $mod+$stickykey sticky toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
@@ -389,10 +390,13 @@ exec --no-startup-id xsetroot -solid "#262626"
 exec xrandr --output $O1 --primary
 
 # set the background using feh
-exec --no-startup-id sh ~/.fehbg
+#exec --no-startup-id sh ~/.fehbg
+
+# set the background using nitrogen
+#exec --no-startup-id nitrogen --restore
 
 # conky
-#exec --no-startup-id conky
+exec --no-startup-id "conky -c .conkyrc-$HOST"
 
 # gnome-keyring
 # exec --no-startup-id "/usr/bin/gnome-keyring-daemon --start"
