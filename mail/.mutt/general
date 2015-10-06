@@ -6,7 +6,7 @@
 set realname   = "Guido Masella"      # real name
 set charset    = "utf-8"              # encoding of messages
 set mail_check = 0                    # how often mutt search for new messages
-set editor     = "/usr/bin/vim +/^$"  # vim as editor
+set editor     = "/usr/bin/nvim +/^$"  # vim as editor
 
 # Aliases --------------------------------------------------------------------
 set alias_file = ~/.mutt/aliases      # path to the file of aliases

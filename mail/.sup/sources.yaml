@@ -1,15 +1,22 @@
 ---
 - !supmua.org,2006-10-01/Redwood/Maildir
-  uri: maildir:/home/gdmsl/Mail/Gmail/archive
+  uri: maildir:/home/gdmsl/Mail/Gmail/inbox
   usual: true
   archived: false
   sync_back: true
   id: 1
   labels: []
 - !supmua.org,2006-10-01/Redwood/Maildir
-  uri: maildir:/home/gdmsl/Mail/Gmail/sent
+  uri: maildir:/home/gdmsl/Mail/Gmail/archive
   usual: true
   archived: true
   sync_back: true
   id: 2
+  labels: []
+- !supmua.org,2006-10-01/Redwood/Maildir
+  uri: maildir:/home/gdmsl/Mail/Gmail/sent
+  usual: true
+  archived: true
+  sync_back: true
+  id: 3
   labels: []

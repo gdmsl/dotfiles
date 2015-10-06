@@ -9,7 +9,7 @@ set message_cachedir = ~/.cache/mutt/bodies
 set mailcap_path     = ~/.mutt/mailcap
 set certificate_file = ~/.cache/mutt/certificates
 set tmpdir           = ~/.cache/mutt/tmp
-set signature        = ~/.mutt/signature
+set signature        = ~/.signature
 
 source ~/.mutt/general
 source ~/.mutt/colors
