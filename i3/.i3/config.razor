@@ -12,7 +12,7 @@ set $webkey backslash
 set $gamingkey apostrophe
 set $commkey igrave
 set $scratchkey minus
-set $stickykey dot
+set $stickykey period
 # }}}
 
 # WORKSPACES {{{
@@ -29,44 +29,44 @@ set $O3 HDMI1
 bar {
 	output            $O1
 	status_command    i3blocks -c ~/.i3blocks/razor.conf
-	position          top
+	position          bottom
 	workspace_buttons yes
     tray_output $O1
     strip_workspace_numbers yes
 
-	font pango:Hack, Source Code Pro, Icons, FontAwesome 10
+	font pango:Hack, Source Code Pro, FontAwesome, Icons 10
 
 	colors {
 		background #262626
 		statusline #ebdbb2
 		separator #928374
 
-        focused_workspace  #ebdbb2 #484848
-        active_workspace   #a89984 #262626
-        inactive_workspace #a89984 #262626
-        urgent_workspace   #262626 #cc241d
+        focused_workspace  #484848 #484848 #ebdbb2
+        active_workspace   #262626 #262626 #a89984
+        inactive_workspace #262626 #262626 #a89984
+        urgent_workspace   #cc241d #cc241d #262626
 	}
 }
 
 bar {
 	output            $O3
 	status_command    i3blocks -c ~/.i3blocks/razor.conf
-	position          top
+	position          bottom
 	workspace_buttons yes
     tray_output $O1
     strip_workspace_numbers yes
 
-	font pango:Hack, Source Code Pro, Icons, FontAwesome 9
+	font pango:Hack, Source Code Pro, FontAwesome, Icons 10
 
 	colors {
 		background #262626
 		statusline #ebdbb2
 		separator #928374
 
-        focused_workspace  #ebdbb2 #484848
-        active_workspace   #a89984 #262626
-        inactive_workspace #a89984 #262626
-        urgent_workspace   #262626 #cc241d
+        focused_workspace  #484848 #484848 #ebdbb2
+        active_workspace   #262626 #262626 #a89984
+        inactive_workspace #262626 #262626 #a89984
+        urgent_workspace   #cc241d #cc241d #262626
 	}
 }
 # }}}

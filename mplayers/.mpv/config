@@ -1,10 +1,10 @@
 # default configuration that applies to every file
 [default]
 
-hwdec=vdpau
+hwdec=vaapi
 
-# use X11 for video output, use a wayland and framebuffer as fallbacks
-vo=vdpau,vaapi,xv,wayland,directfb,
+# video output
+vo=opengl-hq,opengl
 
 #use pulseaudio for audio output, choose alsa or oss4 as fallback
 ao=pulse,alsa,oss,

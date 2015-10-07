@@ -24,8 +24,10 @@ bindsym $mod+Shift+x exec thunar
 # start dmenu (a program launcher) with Super+d and
 # .. a modified version (which reads only .desktop files) with
 # .. Super+Shift+d
-bindsym $mod+d exec dmenu_run -b -l 15  -fn 'Hack-10' -nb '#262626' -nf '#ebdbb2' -sb '#484848' -sf '#ebdbb2'
-bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -l 15 -i -fn 'Hack-10' -nb '#262626' -nf '#ebdbb2' -sb '#484848' -sf '#ebdbb2'"
+#bindsym $mod+d exec dmenu_run -b -l 15  -fn 'Hack-10' -nb '#262626' -nf '#ebdbb2' -sb '#484848' -sf '#ebdbb2'
+#bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -l 15 -i -fn 'Hack-10' -nb '#262626' -nf '#ebdbb2' -sb '#484848' -sf '#ebdbb2'"
+bindsym $mod+d exec rofi -show run -font "Hack 10" -fg "#ebdbb2" -bg "#262626" -hlfg "#ebdbb2" -hlbg "#484848" -bc "#606060" -bw 2 -o 85
+bindsym $mod+Shift+d exec rofi -show window -font "Hack 10" -fg "#ebdbb2" -bg "#262626" -hlfg "#ebdbb2" -hlbg "#484848" -bc "#606060" -bw 2 -o 85
 
 # Reload the configuration file
 bindsym $mod+Shift+c reload
@@ -78,7 +80,7 @@ bindsym $mod+i exec i3-input -F 'exec --no-startup-id todo.sh add "%s"' -P 'Add 
 
 # slam all opened tombs
 bindsym $mod+Shift+$tombkey exec --no-startup-id tomb slam all
-bindsym $mod+$tombkeye exec "i3-nagbar -t warning -m 'Do you want to slam all opened tombs?' -b 'Slamm All!' 'tomb slam all'"
+bindsym $mod+$tombkey exec "i3-nagbar -t warning -m 'Do you want to slam all opened tombs?' -b 'Slamm All!' 'tomb slam all'"
 
 # take screenshots
 bindcode 107 exec --no-startup-id "maim ~/Pictures/Screenshots/$(date +%F-%T).png && ogg123 /usr/share/sounds/freedesktop/stereo/screen-capture.oga"
@@ -196,24 +198,24 @@ bindsym $mod+r mode "resize"
 # Defining workspace variables
 set $WS01 "1: 1"
 set $WS02 "2: 2"
-set $WS03 "3: 3"
-set $WS04 "4: 4"
-set $WS05 "5: 5"
-set $WS06 "6: 6"
-set $WS07 "7: 7"
-set $WS08 "8: 8"
-set $WS09 "9: 9"
-set $WS10 "10: 10"
+set $WS03 "3: 3"
+set $WS04 "4: 4"
+set $WS05 "5: 5"
+set $WS06 "6: 6"
+set $WS07 "7: 7"
+set $WS08 "8: 8"
+set $WS09 "9: 9"
+set $WS10 "10: 10"
 set $WS11 "11: 11"
 set $WS12 "12: 12"
-set $WS13 "13: 13"
-set $WS14 "14: 14"
+set $WS13 "13: 13"
+set $WS14 "14: 14"
 set $WS15 "15: 15"
 set $WS16 "16: 16"
-set $WSweb "0: WEB"
-set $WSgaming "17: GAMING"
-set $WScomm "18: IM"
-set $WSgame "19: GAME"
+set $WSweb "0:"
+set $WSgaming "17:"
+set $WScomm "18:"
+set $WSgame "19:"
 
 # Putting workspaces on screens
 # .. 10 workspaces on LVDS1 (internal laptop monitor)
@@ -301,6 +303,13 @@ assign [class="Midori"] $WSweb
 assign [class="Liferea"] $WS06
 assign [class="Gpodder"] $WS06
 
+# windows title
+#for_window [class=".*"] title_format "<b>%title</b>"
+for_window [class=".*"] title_format "  <b>%title</b> "
+for_window [class="Chromium"] title_format "  <b>%title</b> "
+for_window [class="Firefox"] title_format "  <b>%title</b> "
+for_window [class="Termite"] title_format "  <b>%title</b> "
+
 # force apps to go in floating mode
 for_window [class="Nautilus" instance="file_progress"] floating enable
 for_window [class="Gnome-clocks"] floating enable
@@ -341,13 +350,13 @@ for_window [class="dota2"] fullscreen
 
 # Font used to display widows titles, and other i3 stuffs
 # .. not used for i3bar
-font pango:Hack, Source Code Pro, DejaVu Sans Mono 10
+font pango:Hack, Source Code Pro, DejaVu Sans Mono, FontAwesome, Icons 10
 
 # Colors
 # class                 border  backgr. text    indicator
-client.focused          #262626 #484848 #ebdbb2 #d79921
-client.focused_inactive #262626 #484848 #a89984 #d79921
-client.unfocused        #262626 #484848 #a89984 #d79921
+client.focused          #262626 #606060 #ebdbb2 #d79921
+client.focused_inactive #262626 #505050 #a89984 #d79921
+client.unfocused        #262626 #404040 #a89984 #d79921
 client.urgent           #262626 #cc241b #262626 #d79921
 
 # Keybindings to change border style
@@ -402,7 +411,10 @@ exec --no-startup-id "conky -c .conkyrc-$HOST"
 # exec --no-startup-id "/usr/bin/gnome-keyring-daemon --start"
 
 # MEGA
-exec --no-startup-id megasync
+exec --no-startup-id "megasync"
+
+# DUNST
+exec --no-startup-id "dunst"
 
 # Redshift
 exec --no-startup-id "redshift-gtk"

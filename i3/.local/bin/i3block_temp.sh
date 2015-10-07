@@ -3,12 +3,17 @@
 # AUTHOR: Guido Masella <guido.masella@gmail.com>
 #
 
+if [ "$HOSTNAME" = "razor" ]; then
+    temp=`sensors coretemp-isa-0000 | awk '/Physical/ { print \$4 }' | grep -m 1 --color=none -o "[0-9]\{1,\}" - | head -n 1`
+elif [ "$HOSTNAME" = "alchemist" ]; then
+    temp=`sensors coretemp-isa-0000 | awk '/Core0/ { print \$4 }' | grep -m 1 --color=none -o "[0-9]\{1,\}" - | head -n 1`
+fi
+
 bef='<span  letter_spacing="-4800" rise="00">'
 aft='</span>'
 small='<span font="6">'
 replay='<span font="8"  letter_spacing="-11500">'
 
-temp=`sensors coretemp-isa-0000 | awk '/Physical/ { print $4 }' | grep -m 1 --color=none -o "[0-9]\{1,\}" - | head -n 1`
 echo -e "$temp°C\n$temp°C"
 case "$temp" in
     1[0-9]|2[0-9] ) echo "#03a9f4" ;;

@@ -10,6 +10,8 @@ export PATH="$HOME/.local/bin:/usr/local/texlive/2015/bin/x86_64-linux:$HOME/.lo
 # .. of hardware acceleration with my Intel card
 if [ "$HOST" = "razor" ]; then
     export VDPAU_DRIVER=va_gl
+elif [ "$HOST" = "alchemist" ]; then
+    export VDPAU_DRIVER=nvidia
 fi
 
 # I dunno.... :)

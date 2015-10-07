@@ -31,5 +31,5 @@
     :alternates: []
     :sendmail: "msmtp -t --read-envelope-from"
     :signature: "/home/gdmsl/.signature"
-    :gpgkey: ''
+    :gpgkey: 'rsa4096'
 :time_mode: 24h
