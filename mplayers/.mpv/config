@@ -4,10 +4,10 @@
 hwdec=vaapi
 
 # video output
-vo=opengl-hq,opengl
+vo=opengl,vdpau
 
 #use pulseaudio for audio output, choose alsa or oss4 as fallback
-ao=pulse,alsa,oss,
+ao=pulse,alsa
 
 # multithreaded decoding of H264/MPEG-1/2 (valid: 0-16)
 vd-lavc-threads=4

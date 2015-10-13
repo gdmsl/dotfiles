@@ -30,7 +30,7 @@ set $O3 HDMI-0
 bar {
 	output            $O1
 	status_command    i3blocks -c ~/.i3blocks/alchemist.conf
-	position          top
+	position          bottom
 	workspace_buttons yes
     tray_output $O1
     strip_workspace_numbers yes

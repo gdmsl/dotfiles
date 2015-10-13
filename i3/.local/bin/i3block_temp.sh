@@ -4,9 +4,9 @@
 #
 
 if [ "$HOSTNAME" = "razor" ]; then
-    temp=`sensors coretemp-isa-0000 | awk '/Physical/ { print \$4 }' | grep -m 1 --color=none -o "[0-9]\{1,\}" - | head -n 1`
+    temp=`sensors coretemp-isa-0000 | awk '/Physical/ { print $4 }' | grep -m 1 --color=none -o "[0-9]\{1,\}" - | head -n 1`
 elif [ "$HOSTNAME" = "alchemist" ]; then
-    temp=`sensors coretemp-isa-0000 | awk '/Core0/ { print \$4 }' | grep -m 1 --color=none -o "[0-9]\{1,\}" - | head -n 1`
+    temp=`sensors coretemp-isa-0000 | awk '/Core 0/ { print $3 }' | grep -m 1 --color=none -o "[0-9]\{1,\}" - | head -n 1`
 fi
 
 bef='<span  letter_spacing="-4800" rise="00">'

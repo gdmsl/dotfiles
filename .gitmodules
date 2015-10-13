@@ -10,3 +10,6 @@
 [submodule "nvim/.nvim/vim-plug"]
 	path = nvim/.nvim/vim-plug
 	url = https://github.com/junegunn/vim-plug
+[submodule "xresources/.xrdb/solarized"]
+	path = xresources/.xrdb/solarized
+	url = http://github.com/solarized/xresources
