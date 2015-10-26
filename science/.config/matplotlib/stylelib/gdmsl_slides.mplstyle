@@ -1,0 +1,72 @@
+#
+# AUTHOR: Guido Masella <guido.masella@gmail.com>
+#
+
+lines.linewidth      : 2
+lines.solid_capstyle : butt
+lines.antialiased : True
+lines.markersize : 10
+
+patch.linewidth   : 0.5
+patch.facecolor   : 2196F3
+patch.edgecolor   : 424242
+patch.antialiased : True
+
+svg.fonttype : path
+
+grid.linestyle : -
+grid.linewidth : 1.0
+grid.color     : cbcbcb
+
+font.size           : 11.0
+font.serif          : computer modern roamn, Roboto Slab, Bitstream Vera Serif
+font.sans-serif     : computer modern sans serif, Roboto, Bitstream Vera Sans
+font.monospace      : computer modern typewriter, Hack, Bitstream Vera Sans Mono
+
+text.antialiased    : True
+text.hinting        : auto
+text.hinting_factor : 2
+text.usetex         : True
+
+axes.facecolor   : f0f0f0
+axes.edgecolor   : e0e0e0
+axes.axisbelow   : True
+axes.grid        : True
+axes.linewidth   : 2.0
+axes.titlesize   : 24
+axes.labelsize   : 20
+axes.labelcolor  : 424242
+axes.color_cycle : 2196F3, F44336, 9C27B0, 4CAF50, CDDC39, 607D8B, FF9800, 009688, E91E63, 795548
+axes.formatter.use_mathtext : False
+
+legend.fancybox : True
+legend.shadow   : True
+
+savefig.edgecolor : f0f0f0
+savefig.facecolor : f0f0f0
+savefig.bbox : tight
+#savefig.dpi : 600
+
+xtick.major.size : 0
+xtick.minor.size : 0
+ytick.major.size : 0
+ytick.minor.size : 0
+xtick.color      : 424242
+ytick.color      : 424242
+xtick.direction  : out
+ytick.direction  : out
+ytick.labelsize : 16
+xtick.labelsize : 16
+
+figure.facecolor : f0f0f0
+figure.edgecolor : 0.50
+#figure.figsize   : 6,8
+figure.dpi       : 96
+
+figure.subplot.left: 0.08
+figure.subplot.right: 0.95
+figure.subplot.bottom: 0.07
+
+ps.fonttype       : 42
+pdf.fonttype       : 42
+
