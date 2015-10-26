@@ -304,17 +304,15 @@ assign [class="Liferea"] $WS06
 assign [class="Gpodder"] $WS06
 
 # windows title
-#for_window [class=".*"] title_format "<b>%title</b>"
-for_window [class=".*"] title_format "  <b>%title</b> "
-for_window [class="Chromium"] title_format "  <b>%title</b> "
-for_window [class="Firefox"] title_format "  <b>%title</b> "
-for_window [class="Termite"] title_format "  <b>%title</b> "
+#for_window [class=".*"] title_format " <b>%title</b>"
+for_window [class=".*"] title_format " 3  <b>%title</b> "
+for_window [class="Chromium"] title_format "   <b>%title</b> "
+for_window [class="Firefox"] title_format "   <b>%title</b> "
 
 # force apps to go in floating mode
 for_window [class="Nautilus" instance="file_progress"] floating enable
 for_window [class="Gnome-clocks"] floating enable
 for_window [class="XClock"] floating enable
-for_window [class="Thunar" title="Avanzamento delle operazione sui file"] floating enable
 for_window [class="Xfce4-notifyd"] floating enable
 for_window [title="fehslide"] floating enable
 
