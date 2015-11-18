@@ -18,8 +18,8 @@ set $stickykey period
 # WORKSPACES {{{
 
 # outputs
-set $O1 LVDS1
-set $O2 VGA1
+set $O1 eDP1
+set $O2 DP1
 set $O3 HDMI1
 
 # }}}
