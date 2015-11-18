@@ -26,8 +26,7 @@ bindsym $mod+Shift+x exec thunar
 # .. Super+Shift+d
 #bindsym $mod+d exec dmenu_run -b -l 15  -fn 'Hack-10' -nb '#262626' -nf '#ebdbb2' -sb '#484848' -sf '#ebdbb2'
 #bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -l 15 -i -fn 'Hack-10' -nb '#262626' -nf '#ebdbb2' -sb '#484848' -sf '#ebdbb2'"
-bindsym $mod+d exec rofi -show run -font "Hack 10" -fg "#ebdbb2" -bg "#262626" -hlfg "#ebdbb2" -hlbg "#484848" -bc "#606060" -bw 2 -o 85
-bindsym $mod+Shift+d exec rofi -show window -font "Hack 10" -fg "#ebdbb2" -bg "#262626" -hlfg "#ebdbb2" -hlbg "#484848" -bc "#606060" -bw 2 -o 85
+bindsym $mod+d exec --no-startup-id "rofi -modi 'run,ssh,window' -show run"
 
 # Reload the configuration file
 bindsym $mod+Shift+c reload
@@ -210,9 +209,9 @@ set $WS11 "11: 11"
 set $WS12 "12: 12"
 set $WS13 "13: 13"
 set $WS14 "14: 14"
-set $WS15 "15: 15"
-set $WS16 "16: 16"
-set $WSweb "0:"
+set $WS15 "15:15"
+set $WS16 "16:16"
+set $WSweb "0:"
 set $WSgaming "17:"
 set $WScomm "18:"
 set $WSgame "19:"

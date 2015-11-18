@@ -18,8 +18,8 @@ set $stickykey dot
 # WORKSPACES {{{
 
 # outputs
-set $O1 VGA-0
-set $O2 DVI-D-0
+set $O2 VGA-0
+set $O1 DVI-D-0
 set $O3 HDMI-0
 
 # }}}
@@ -29,7 +29,7 @@ set $O3 HDMI-0
 # Alchemist BAR on DVI-1
 bar {
 	output            $O1
-	status_command    i3blocks -c ~/.i3blocks/alchemist.conf
+	status_command    i3blocks -c ~/.i3blocks/spectre.conf
 	position          bottom
 	workspace_buttons yes
     tray_output $O1
