@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# AUTHOR: Guido Masella <guido.masella@gmail.com>
+#
+
+if [ "$HOSTNAME" = "spectre" ]; then
+    xrandr --dpi 96
+fi
+
+
+if [ "$HOSTNAME" = "rubick" ]; then
+    xrandr --dpi 120
+fi
+
