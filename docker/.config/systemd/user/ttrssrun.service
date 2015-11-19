@@ -1,7 +1,7 @@
 [Unit]
 Description=TTRSS
-Requires=docker.service ttrssdb.service
-After=docker.service ttrssdb.service
+Requires=/usr/lib/systemd/system/docker.service ttrssdb.service
+After=/usr/lib/systemd/system/docker.service ttrssdb.service
 
 [Service]
 Restart=always

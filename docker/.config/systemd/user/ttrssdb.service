@@ -1,7 +1,7 @@
 [Unit]
 Description=PostgreSQL for TTRSS
-Requires=docker.service
-After=docker.service
+Requires=/usr/lib/systemd/system/docker.service
+After=/usr/lib/systemd/system/docker.service
 
 [Service]
 Restart=always
