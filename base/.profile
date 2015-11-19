@@ -33,6 +33,9 @@ export TERMINAL="termite"
 # SSH Askpass
 export SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass
 
+# QT5 style
+QT_STYLE_OVERRIDE=GTK+
+
 
 # usefull paths
 export TOOLSPATH=$HOME/Develop/tools
