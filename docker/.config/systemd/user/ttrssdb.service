@@ -1,0 +1,12 @@
+[Unit]
+Description=PostgreSQL for TTRSS
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker start -a ttrssdb
+ExecStop=/usr/bin/docker stop -t 2 ttrssdb
+
+[Install]
+WantedBy=multi-user.target

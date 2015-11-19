@@ -1,0 +1,12 @@
+[Unit]
+Description=TTRSS
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker start -a dockercraft
+ExecStop=/usr/bin/docker stop -t 2 dockercraft
+
+[Install]
+WantedBy=multi-user.target

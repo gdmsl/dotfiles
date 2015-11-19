@@ -1,0 +1,12 @@
+[Unit]
+Description=TTRSS
+Requires=docker.service ttrssdb.service
+After=docker.service ttrssdb.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker start -a ttrssrun
+ExecStop=/usr/bin/docker stop -t 2 ttrssrun
+
+[Install]
+WantedBy=multi-user.target
