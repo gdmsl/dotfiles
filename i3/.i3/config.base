@@ -431,4 +431,7 @@ exec --no-startup-id pavucontrol
 # system monitor
 exec --no-startup-id xterm -T scratchmonitor -e zsh -c "glances"
 
+# file manager
+exec --no-startup-id "pcmanfm -d"
+
 # }}}
