@@ -70,3 +70,8 @@ bar {
 	}
 }
 # }}}
+
+
+# AUTOSTART {{{
+exec --no-startup-id blueman-applet
+# }}}

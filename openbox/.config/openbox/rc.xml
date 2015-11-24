@@ -312,13 +312,13 @@
       </action>
     </keybind>
     <!-- Keybindings for running applications -->
-    <!-- Keybind for DMENU -->
+    <!-- Keybind for ROFI -->
     <keybind key="W-d">
       <action name="Execute">
         <startupnotify>
           <enabled>false</enabled>
         </startupnotify>
-        <command>dmenu_run -fn 'Source Code Pro-10'</command>
+        <command>rofi -modi 'run,ssh,window' -show run</command>
       </action>
     </keybind>
     <!-- Keybind for the lockscreen -->
@@ -358,32 +358,32 @@
           <name>Ranger</name>
         </startupnotify>
         <command>xterm -e ranger</command>
-      </action>
+      </action-D>
     </keybind>
-    <!-- Keybind for Alsamixer -->
+    <!-- Keybind for Pavucontrol -->
     <keybind key="W-m">
       <action name="Execute">
         <startupnotify>
           <enabled>true</enabled>
-          <name>Alsamixer</name>
+          <name>Pavucontrol</name>
         </startupnotify>
-        <command>xterm -e alsamixer</command>
+        <command>pavucontrol</command>
       </action>
     </keybind>
     <!-- Keybindings for alsa volume management -->
     <keybind key="XF86AudioRaiseVolume">
       <action name="Execute">
-        <command>amixer set Master 5%+ unmute</command>
+        <command>amixer -D pulse set Master 5%+ unmute</command>
       </action>
     </keybind>
     <keybind key="XF86AudioLowerVolume">
       <action name="Execute">
-        <command>amixer set Master 5%- unmute</command>
+        <command>amixer -D pulse set Master 5%- unmute</command>
       </action>
     </keybind>
     <keybind key="XF86AudioMute">
       <action name="Execute">
-        <command>amixer set Master toggle</command>
+        <command>amixer -D pulse set Master toggle</command>
       </action>
     </keybind>
     <!-- Keybindings for brightness -->

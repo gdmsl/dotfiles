@@ -19,11 +19,8 @@
 # load the Xresources
 ( sleep 1s && xrdb ~/.Xresources ) &
 
-# set the laptop monitor as default (primary)
-( sleep 1s && xrandr --output LVDS1 --primary ) &
-
 # Solid color background
-( sleep 1s && xsetroot -solid "#050505" ) &
+( sleep 1s && xsetroot -solid "#262626" ) &
 
 # Clipit
 ( sleep 1s && clipit ) &
@@ -32,7 +29,7 @@
 ( sleep 1s && xset dpms 600 ) &
 
 # Feh background
-( sleep 1s && sh ~/.fehbg ) &
+#( sleep 1s && sh ~/.fehbg ) &
 
 # Compositor
 ( sleep 1s && compton --config ~/.config/compton/compton-openbox.conf -b ) &
