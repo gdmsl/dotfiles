@@ -402,7 +402,7 @@ exec xrandr --output $O1 --primary
 #exec --no-startup-id nitrogen --restore
 
 # conky
-exec --no-startup-id "conky -c .conkyrc-$HOST"
+#exec --no-startup-id "conky -c .conkyrc-$HOST"
 
 # gnome-keyring
 # exec --no-startup-id "/usr/bin/gnome-keyring-daemon --start"

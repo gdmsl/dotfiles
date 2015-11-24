@@ -22,6 +22,9 @@
 # Solid color background
 ( sleep 1s && xsetroot -solid "#262626" ) &
 
+# dunst
+( sleep 1s && dunst ) &
+
 # Clipit
 ( sleep 1s && clipit ) &
 
@@ -34,8 +37,8 @@
 # Compositor
 ( sleep 1s && compton --config ~/.config/compton/compton-openbox.conf -b ) &
 
-# sound icon
-( sleep 1s && volumeicon ) &
+# pulse audio controller
+( sleep 1s && pavucontrol ) &
 
 # nm-applet
 ( sleep 1s && nm-applet ) &
@@ -43,6 +46,17 @@
 # tint2
 ( sleep 1s && tint2 ) &
 
+# pcmanfm
+( sleep 1s && pcmanfm -d ) &
+
+# megasync
+( sleep 1s && megasync ) &
+
+# redshift
+( sleep 1s && redshift-gtk ) &
+
+# redshift
+( sleep 1s && menutray -i ) &
+
 # start conky
 # ( sleep 3s && conky ) &
-
