@@ -51,6 +51,7 @@ rofi.bc:    #606060
 rofi.bw:    2
 rofi.o:     85
 rofi.terminal:  xterm
+rofi.location:  2
 !rofi.dpi: 120
 
 ! colorscheme

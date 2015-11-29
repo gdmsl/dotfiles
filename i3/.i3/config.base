@@ -220,9 +220,9 @@ set $WSgame "19:"
 # .. 10 workspaces on LVDS1 (internal laptop monitor)
 # .. 3 workpaces on VGA1
 workspace $WS01 output $O1
-workspace $WS02 output $O1
+workspace $WS02 output $O3
 workspace $WS03 output $O1
-workspace $WS04 output $O1
+workspace $WS04 output $O3
 workspace $WS05 output $O1
 workspace $WS06 output $O1
 workspace $WS07 output $O1
