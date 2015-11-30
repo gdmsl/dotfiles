@@ -15,6 +15,13 @@ set $scratchkey minus
 set $stickykey period
 # }}}
 
+# KEYBINDINGS {{{
+bindsym XF86KbdBrightnessDown exec "asuskeyboard.sh down"
+bindsym XF86KbdBrightnessUp exec "asuskeyboard.sh up"
+bindsym Shift+XF86KbdBrightnessDown exec "xbacklight -dec 10"
+bindsym Shift*XF86KbdBrightnessUp exec "xbacklight -inc 20"
+# }}}
+
 # WORKSPACES {{{
 
 # outputs
