@@ -27,8 +27,9 @@ Plug 'JuliaLang/julia-vim'
 Plug 'chriskempson/base16-vim'
 Plug 'benekastah/neomake'
 Plug 'tpope/vim-markdown', {'for' : 'markdown'}
-Plug 'scrooloose/syntastic'
+"Plug 'scrooloose/syntastic'
 Plug 'kien/rainbow_parentheses.vim'
+Plug 'majutsushi/tagbar'
 
 call plug#end()
 " }}}
@@ -128,15 +129,25 @@ augroup nerdtree_config
 " }}}
 
 " Syntastic {{{
-augroup syntastic_config
-  autocmd!
-  let g:syntastic_error_symbol = '✗'
-  let g:syntastic_warning_symbol = '⚠'
-  let g:syntastic_cpp_compiler_options = '-std=c++11'
+"augroup syntastic_config
+"  autocmd!
+"  let g:syntastic_error_symbol = '✗'
+"  let g:syntastic_warning_symbol = '⚠'
+"  let g:syntastic_cpp_compiler_options = '-std=c++11'
+"augroup END
+" }}}
+
+" NeoMake {{{
+augroup neomake_config
+    autocmd! BufWritePost * Neomake
 augroup END
 " }}}
 
 " NeoMake {{{
+augroup tagbar_config
+    autocmd!
+    nmap <F8> :TagbarToggle<CR>
+augroup END
 " }}}
 
 " Settings -------------------------------------------------------------------
