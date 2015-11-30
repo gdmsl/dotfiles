@@ -28,8 +28,10 @@ Plug 'chriskempson/base16-vim'
 Plug 'benekastah/neomake'
 Plug 'tpope/vim-markdown', {'for' : 'markdown'}
 "Plug 'scrooloose/syntastic'
+Plug 'easymotion/vim-easymotion'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'majutsushi/tagbar'
+Plug 'vim-scripts/loremipsum'
 
 call plug#end()
 " }}}
@@ -41,13 +43,14 @@ call plug#end()
 augroup airline_config
   autocmd!
   let g:airline_powerline_fonts = 1
-  let g:airline#extensions#syntastic#enabled = 1
+  let g:airline#extensions#syntastic#enabled = 0
   let g:airline#extensions#tabline#buffer_nr_format = '%s '
   let g:airline#extensions#tabline#buffer_nr_show = 1
   let g:airline#extensions#tabline#enabled = 1
   let g:airline#extensions#tabline#fnamecollapse = 0
   let g:airline#extensions#tabline#fnamemod = ':t'
-  let g:airline_theme = 'hybrid'
+  let g:airline#extensions#tmuxline#enabled = 0
+  let g:airline_theme = 'zenburn'
 augroup END
 " }}}
 
@@ -79,7 +82,7 @@ augroup END
 " Tmuxline {{{
 augroup tmuxline_config
     autocmd!
-    let g:tmuxline_preset = 'full'
+    let g:tmuxline_preset = 'minimal'
 augroup END
 " }}}
 
@@ -143,10 +146,16 @@ augroup neomake_config
 augroup END
 " }}}
 
-" NeoMake {{{
+" Tagbar {{{
 augroup tagbar_config
     autocmd!
     nmap <F8> :TagbarToggle<CR>
+augroup END
+" }}}
+
+" Easymotions {{{
+augroup easymotion_config
+    autocmd!
 augroup END
 " }}}
 
@@ -164,8 +173,8 @@ set undodir=~/.cache/nvim/undo
 " }}}
 
 " Mapleader {{{
-let mapleader = ','
-let g:mapleader = ','
+"let mapleader = ','
+"let g:mapleader = ','
 " }}}
 
 " Colorscheme {{{
