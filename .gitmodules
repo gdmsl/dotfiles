@@ -13,3 +13,6 @@
 [submodule "nvim/.config/nvim/vim-plug"]
 	path = nvim/.config/nvim/vim-plug
 	url = https://github.com/junegunn/vim-plug.git
+[submodule "ttf-iosevka"]
+	path = ttf-iosevka
+	url = aur:ttf-iosevka
