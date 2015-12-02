@@ -36,6 +36,10 @@ export SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass
 # QT5 style
 QT_STYLE_OVERRIDE=GTK+
 
+# Ruby
+export GEM_HOME=$(ruby -e 'print Gem.user_dir')
+export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+
 
 # usefull paths
 export TOOLSPATH=$HOME/Develop/tools

@@ -3,30 +3,30 @@
 ! Author: Guido Masella (gdmsl) <guido.masella@gmail.com>
 !
 
-*background: #1A1A1A
-*foreground: #e0e0e0
+*background: #282828
+*foreground: #888888
 
 ! Black + DarkGrey
-*color0:  #212121
-*color8:  #424242
+*color0:  #282828
+*color8:  #404040
 ! DarkRed + Red
-*color1:  #ef5350
-*color9:  #f44336
+*color1:  #99292f
+*color9:  #f0d541
 ! DarkGreen + Green
-*color2:  #4caf50
-*color10: #76ff03
+*color2:  #309040
+*color10: #4be364
 ! DarkYellow + Yellow
 *color3:  #fdd835
 *color11: #ffeb3b
 ! DarkBlue + Blue
-*color4:  #2196f3
-*color12: #03a9f4
+*color4:  #296799
+*color12: #40A0F0
 ! DarkMagenta + Magenta
-*color5:  #d500f9
-*color13: #ea80fc
+*color5:  #992972
+*color13: #f041b2
 !DarkCyan + Cyan
-*color6:  #009688
-*color14: #00bcd4
+*color6:  #299993
+*color14: #41d0e7
 ! LightGrey + White
-*color7:  #bdbdbd
-*color15: #e0e0e0
+*color7:  #888888
+*color15: #ffffff

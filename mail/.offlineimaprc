@@ -1,16 +1,18 @@
 [general]
-accounts = Gmail
-ui = ttyui
+accounts = gmail
+ui = Noninteractive.Quiet
 pythonfile = ~/.local/bin/offlineimap.py
 
-[Account Gmail]
-localrepository = GmailLocal
-remoterepository = GmailRemote
+[Account gmail]
+autorefresh=10
+quick=5
+localrepository = gmail-local
+remoterepository = gmail-remote
 status_backend = sqlite
 
-[Repository GmailLocal]
+[Repository gmail-local]
 type = Maildir
-localfolders = ~/Mail/Gmail
+localfolders = ~/Mail/gmail
 nametrans = lambda s: {  'starred' : '[Gmail]/Starred',
                         'trash' : '[Gmail]/Trash',
                         'spam' : '[Gmail]/Spam',
@@ -22,12 +24,12 @@ nametrans = lambda s: {  'starred' : '[Gmail]/Starred',
                       }.get (s, s)
 
 
-[Repository GmailRemote]
+[Repository gmail-remote]
 type = Gmail
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 remoteuser = guido.masella@gmail.com
 remotepasseval = get_pass()
-nametrans = lambda s: {  '[Gmail]/Starred' : 'starred',
+nametrans = lambda s: {  '[Gmail]/Starred' : 'flagged',
                          '[Gmail]/Trash'   : 'trash',
                          '[Gmail]/Spam'    : 'spam',
                          '[Gmail]/Sent Mail' : 'sent',
