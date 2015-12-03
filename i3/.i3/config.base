@@ -86,12 +86,13 @@ bindcode 107 exec --no-startup-id "maim ~/Pictures/Screenshots/$(date +%F-%T).pn
 
 
 # common actions
-set $mode_actions Actions (z)Downclip, (x)RP, (c)RPP, (v)BT, (a)Videoclip
+set $mode_actions Actions (z)Downclip, (x)RP, (c)RPP, (v)BT, (b)RTG, (a)Videoclip
 mode "$mode_actions" {
 	bindsym z exec --no-startup-id "wget -P ~/Downloads/ $(xsel -b)", exec notify-send -t 2000 "Downloaded $(xsel -b) in ~/Downloads", mode "default"
 	bindsym x exec --no-startup-id "wget -P ~/.marks/rp $(xsel -b)", exec notify-send -t 2000 "Downloaded $(xsel -b) in RP", mode "default"
 	bindsym c exec --no-startup-id "wget -P ~/.marks/rpp $(xsel -b)", exec notify-send -t 2000 "Downloaded $(xsel -b) in RPP", mode "default"
 	bindsym v exec --no-startup-id "wget -P ~/.marks/bt $(xsel -b)", exec notify-send -t 2000 "Downloaded $(xsel -b) in BT", mode "default"
+	bindsym v exec --no-startup-id "wget -P ~/.marks/rtg $(xsel -b)", exec notify-send -t 2000 "Downloaded $(xsel -b) in RTG", mode "default"
 	bindsym a exec --no-startup-id "youtube-dl  -o '~/Downloads/youtube-dl/%(title)s-%(id)s.%(ext)s' $(xsel -b)", exec notify-send -t 2000 "Downloaded $(xsel -b) in ~/Downloads/youtube-dl", mode "default"
 
 	# back to normal: Enter or Escape
