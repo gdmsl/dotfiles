@@ -1,5 +1,5 @@
 [global]
-    font = Source code Pro 10
+    font = Hack 10
 
     # Allow a small subset of html markup:
     #   <b>bold</b>
@@ -139,7 +139,7 @@
     dmenu = /usr/bin/dmenu -p dunst:
 
     # Browser for opening urls in context menu.
-    browser = /usr/bin/chromium
+    browser = /usr/bin/firefox
 
     # Align icons left/right/off
     icon_position = left

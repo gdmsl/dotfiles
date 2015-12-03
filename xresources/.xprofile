@@ -18,9 +18,9 @@ if [ "$HOSTNAME" = "rubick" ]; then
     xrdb -merge ~/.xrdb/fullhd.xresources
 fi
 
-if [ "$HOSTNAME" = "alchemist" ]; then
-    cat ~/.xbindkeys.d/m1.xbind > ~/.xbindkeysrc
-    exec xbindkeys
-fi
+#if [ "$HOSTNAME" = "alchemist" ]; then
+#    cat ~/.xbindkeys.d/m1.xbind > ~/.xbindkeysrc
+#    exec xbindkeys
+#fi
 
 export MOZ_USE_OMTC=1
