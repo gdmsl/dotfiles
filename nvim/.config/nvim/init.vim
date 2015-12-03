@@ -32,6 +32,8 @@ Plug 'easymotion/vim-easymotion'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'majutsushi/tagbar'
 Plug 'vim-scripts/loremipsum'
+Plug 'justmao945/vim-clang'
+Plug 'mhinz/vim-startify'
 
 call plug#end()
 " }}}
@@ -158,6 +160,19 @@ augroup easymotion_config
     autocmd!
 augroup END
 " }}}
+
+" Startify {{{
+augroup startify_config
+    autocmd!
+    let g:startify_session_dir = '~/.cache/nvim/session'
+    let g:startify_change_to_vcs_root = 1
+    let g:startify_custom_header =
+      \ map(split(system('fortune | cowsay'), '\n'), '"   ". v:val') + ['','']
+    let g:startify_relative_path = 1
+augroup END
+" }}}
+
+
 
 " Settings -------------------------------------------------------------------
 
