@@ -7,6 +7,10 @@ ZSH_THEME="agnoster"
 #ZSH_THEME="mortalscumbag"
 #ZSH_THEME="robbyrussell"
 
+if [ "$TERM" = "linux" ]; then
+    ZSH_THEME="trapd00r"
+fi
+
 DEFAULT_USER="gdmsl"
 
 HIST_STAMPS="yyyy-mm-dd"
@@ -38,6 +42,11 @@ eval $(dircolors ~/.dircolors)
 if [ -n "$DESKTOP_SESSION" ];then
     eval $(gnome-keyring-daemon --start)
     export SSH_AUTH_SOCK
+fi
+
+if [ "$TERM" = "linux" ]; then
+    source $HOME/.vconsole_theme
+    clear
 fi
 
 # Startup message

@@ -42,12 +42,14 @@ Xft.hinting:    true
 Xft.hintstyle:  slight
 
 ! rofi -----------------------------------------------------------------------
-rofi.bg:    #262626
-rofi.fg:    #ebdbb2
+rofi.bg:    #2d2d2d
+rofi.fg:    #d3d0d8
 rofi.font:  Hack 10
-rofi.hlfg:  #ebdbb2
-rofi.hlbg:  #484848
-rofi.bc:    #606060
+rofi.hlfg:  #2d2d2d
+rofi.hlbg:  #d3d0d8
+rofi.fg-active: #f2f0ec
+rofi.bg-active: #6699cc
+rofi.bc:    #6699cc
 rofi.bw:    2
 rofi.o:     85
 rofi.terminal:  xterm
