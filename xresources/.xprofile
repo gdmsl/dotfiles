@@ -18,6 +18,9 @@ if [ "$HOSTNAME" = "rubick" ]; then
     xrdb -merge ~/.xrdb/fullhd.xresources
 fi
 
+#wallpaper
+nitrogen --restore &
+
 #if [ "$HOSTNAME" = "alchemist" ]; then
 #    cat ~/.xbindkeys.d/m1.xbind > ~/.xbindkeysrc
 #    exec xbindkeys
