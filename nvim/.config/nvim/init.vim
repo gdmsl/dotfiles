@@ -52,7 +52,7 @@ augroup airline_config
   let g:airline#extensions#tabline#fnamecollapse = 0
   let g:airline#extensions#tabline#fnamemod = ':t'
   let g:airline#extensions#tmuxline#enabled = 0
-  let g:airline_theme = 'zenburn'
+  let g:airline_theme = 'base16'
 augroup END
 " }}}
 
