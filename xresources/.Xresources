@@ -55,5 +55,5 @@ rofi.location:  2
 !rofi.dpi: 120
 
 ! colorscheme
-#include "/home/gdmsl/.xrdb/gruvbox.xresources"
+#include "/home/gdmsl/.xrdb/base-16-eighties.dark.256.xresources"
 
