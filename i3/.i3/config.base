@@ -352,10 +352,10 @@ font pango:Hack, Source Code Pro, DejaVu Sans Mono, FontAwesome, Icons 10
 
 # Colors
 # class                 border  backgr. text    indicator
-client.focused          #262626 #606060 #ebdbb2 #d79921
-client.focused_inactive #262626 #505050 #a89984 #d79921
-client.unfocused        #262626 #404040 #a89984 #d79921
-client.urgent           #262626 #cc241b #262626 #d79921
+client.focused          #2d2d2d #6699cc #f2f0ec #f2f0ec
+client.focused_inactive #2d2d2d #515151 #f2f0ec #f2f0ec
+client.unfocused        #2d2d2d #393939 #f2f0ec #f2f0ec
+client.urgent           #2d2d2d #f2777a #f2f0ec #f2f0ec
 
 # Keybindings to change border style
 bindsym $mod+t border normal

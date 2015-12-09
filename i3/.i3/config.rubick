@@ -44,14 +44,14 @@ bar {
 	font pango:Hack, Source Code Pro, FontAwesome, Icons 10
 
 	colors {
-		background #262626
-		statusline #ebdbb2
-		separator #928374
+		background #2d2d2d
+		statusline #f2f0ec
+		separator #f2f0ec
 
-        focused_workspace  #484848 #484848 #ebdbb2
-        active_workspace   #262626 #262626 #a89984
-        inactive_workspace #262626 #262626 #a89984
-        urgent_workspace   #cc241d #cc241d #262626
+        focused_workspace  #d3d0c8 #d3d0c8 #2d2d2d
+        active_workspace   #2d2d2d #2d2d2d #d3d0c8
+        inactive_workspace #2d2d2d #2d2d2d #d3d0c8
+        urgent_workspace   #f2777a #f2777a #f2f0ec
 	}
 }
 
@@ -66,14 +66,14 @@ bar {
 	font pango:Hack, Source Code Pro, FontAwesome, Icons 10
 
 	colors {
-		background #262626
-		statusline #ebdbb2
-		separator #928374
+		background #2d2d2d
+		statusline #f2f0ec
+		separator #f2f0ec
 
-        focused_workspace  #484848 #484848 #ebdbb2
-        active_workspace   #262626 #262626 #a89984
-        inactive_workspace #262626 #262626 #a89984
-        urgent_workspace   #cc241d #cc241d #262626
+        focused_workspace  #d3d0c8 #d3d0c8 #2d2d2d
+        active_workspace   #2d2d2d #2d2d2d #d3d0c8
+        inactive_workspace #2d2d2d #2d2d2d #d3d0c8
+        urgent_workspace   #f2777a #f2777a #f2f0ec
 	}
 }
 # }}}

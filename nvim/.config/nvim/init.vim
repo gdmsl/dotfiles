@@ -196,7 +196,7 @@ set undodir=~/.cache/nvim/undo
 set t_Co=256
 set background=dark
 syntax on
-colorscheme gruvbox
+colorscheme base16-eighties
 " }}}
 
 "Folding {{{
