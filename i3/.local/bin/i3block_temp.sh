@@ -3,11 +3,7 @@
 # AUTHOR: Guido Masella <guido.masella@gmail.com>
 #
 
-if [ "$HOSTNAME" = "rubick" ]; then
-    temp=`sensors coretemp-isa-0000 | awk '/Physical/ { print $4 }' | grep -m 1 --color=none -o "[0-9]\{1,\}" - | head -n 1`
-elif [ "$HOSTNAME" = "spectre" ]; then
-    temp=`sensors coretemp-isa-0000 | awk '/Physical/ { print $4 }' | grep -m 1 --color=none -o "[0-9]\{1,\}" - | head -n 1`
-fi
+temp=`sensors coretemp-isa-0000 | awk '/Physical/ { print $4 }' | grep -m 1 --color=none -o "[0-9]\{1,\}" - | head -n 1`
 
 bef='<span  letter_spacing="-4800" rise="00">'
 aft='</span>'

@@ -1,0 +1,83 @@
+#
+# ~/.i3/config.razor
+#
+# vim: set ft=conf sw=4 ts=4 sts=4 et tw=78 fdm=marker fdl=0 foldmarker={{{,}}} :
+
+# AUTHOR: Guido Masella <guido.masella@gmail.com>
+
+# KEYS {{{
+set $lockkey ugrave
+set $tombkey egrave
+set $webkey backslash
+set $gamingkey apostrophe
+set $commkey igrave
+set $scratchkey minus
+set $stickykey period
+# }}}
+
+# KEYBINDINGS {{{
+bindsym XF86KbdBrightnessDown exec "asuskeyboard.sh down"
+bindsym XF86KbdBrightnessUp exec "asuskeyboard.sh up"
+bindsym Shift+XF86KbdBrightnessDown exec "xbacklight -dec 10"
+bindsym Shift*XF86KbdBrightnessUp exec "xbacklight -inc 20"
+# }}}
+
+# WORKSPACES {{{
+
+# outputs
+set $O1 LVDS1
+set $O2 VGA1
+set $O3 HDMI1
+
+# }}}
+
+# BARS {{{
+
+bar {
+	output            $O1
+	status_command    i3blocks -c ~/.i3blocks/qop.conf
+	position          bottom
+	workspace_buttons yes
+    tray_output $O1
+    strip_workspace_numbers yes
+
+	font pango:Hack, Source Code Pro, FontAwesome, Icons 10
+
+	colors {
+		background #2d2d2d
+		statusline #f2f0ec
+		separator #f2f0ec
+
+        focused_workspace  #d3d0c8 #d3d0c8 #2d2d2d
+        active_workspace   #2d2d2d #2d2d2d #d3d0c8
+        inactive_workspace #2d2d2d #2d2d2d #d3d0c8
+        urgent_workspace   #f2777a #f2777a #f2f0ec
+	}
+}
+
+bar {
+	output            $O3
+	status_command    i3blocks -c ~/.i3blocks/qop.conf
+	position          bottom
+	workspace_buttons yes
+    tray_output $O1
+    strip_workspace_numbers yes
+
+	font pango:Hack, Source Code Pro, FontAwesome, Icons 10
+
+	colors {
+		background #2d2d2d
+		statusline #f2f0ec
+		separator #f2f0ec
+
+        focused_workspace  #d3d0c8 #d3d0c8 #2d2d2d
+        active_workspace   #2d2d2d #2d2d2d #d3d0c8
+        inactive_workspace #2d2d2d #2d2d2d #d3d0c8
+        urgent_workspace   #f2777a #f2777a #f2f0ec
+	}
+}
+# }}}
+
+# AUTOSTART {{{
+exec --no-startup-id blueman-applet
+# }}}
