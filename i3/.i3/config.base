@@ -295,7 +295,7 @@ bindsym $mod+n workspace next_on_output
 # WINDOWS RULES {{{
 
 # assign web browsers to workspace web
-assign [class="Chromium"] $WSweb
+assign [class="chromium"] $WSweb
 assign [class="Firefox"] $WSweb
 assign [class="Midori"] $WSweb
 
@@ -306,7 +306,7 @@ assign [class="Gpodder"] $WS06
 # windows title
 #for_window [class=".*"] title_format " <b>%title</b>"
 for_window [class=".*"] title_format " 3  <b>%title</b> "
-for_window [class="Chromium"] title_format "   <b>%title</b> "
+for_window [class="chromium"] title_format "   <b>%title</b> "
 for_window [class="Firefox"] title_format "   <b>%title</b> "
 
 # force apps to go in floating mode
@@ -385,7 +385,7 @@ bindsym $mod+$scratchkey scratchpad show
 exec /usr/bin/nm-applet
 
 # Parcellite
-exec clipit
+exec copyq
 
 # Screen off after 5 minutes
 exec --no-startup-id xset dpms 600

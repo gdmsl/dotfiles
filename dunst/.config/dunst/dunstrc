@@ -31,7 +31,7 @@
 
     # Alignment of message text.
     # Possible values are "left", "center" and "right".
-    alignment = left
+    alignment = center
 
     # The frequency with wich text that is longer than the notification
     # window allows bounces back and forth.
@@ -64,7 +64,7 @@
     # the top and down respectevly.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "300x5+30+20"
+    geometry = "300x5-30+20"
 
     # Shrink window if it's smaller than the width.  Will be ignored if
     # width is 0.
@@ -73,7 +73,7 @@
     # The transparency of the window.  Range: [0; 100].
     # This option will only work if a compositing windowmanager is
     # present (e.g. xcompmgr, compiz, etc.).
-    transparency = 10
+    transparency = 0
 
     # Don't remove messages, if the user is idle (no mouse or keyboard input)
     # for longer than idle_threshold seconds.
@@ -148,8 +148,8 @@
     icon_folders = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
 
 [frame]
-    width = 3
-    color = "#bdbdbd"
+    width = 1
+    color = "#6699cc"
 
 [shortcuts]
 
@@ -175,18 +175,18 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#212121"
-    foreground = "#bdbdbd"
+    background = "#2d2d2d"
+    foreground = "#99cc99"
     timeout = 10
 
 [urgency_normal]
-    background = "#212121"
-    foreground = "#e0e0e0"
+    background = "#2d2d2d"
+    foreground = "#f2f0ec"
     timeout = 10
 
 [urgency_critical]
-    background = "#bdbdbd"
-    foreground = "#1a1a1a"
+    background = "#2d2d2d"
+    foreground = "#f2777a"
     timeout = 0
 
 
