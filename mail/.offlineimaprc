@@ -1,6 +1,6 @@
 [general]
 accounts = gmail
-ui = Noninteractive.Quiet
+ui = ttyui
 pythonfile = ~/.local/bin/offlineimap.py
 
 [Account gmail]

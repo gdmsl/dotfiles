@@ -14,7 +14,7 @@
 :discard_snippets_from_encrypted_messages: false
 :load_more_threads_when_scrolling: true
 :default_attachment_save_dir: ''
-:sent_source: maildir:/home/gdmsl/Mail/Gmail/sent
+:sent_source: maildir:/home/gdmsl/Mail/gmail/sent
 :archive_sent: true
 :poll_interval: 300
 :wrap_width: 0
@@ -31,5 +31,5 @@
     :alternates: []
     :sendmail: "msmtp -t --read-envelope-from"
     :signature: "/home/gdmsl/.signature"
-    :gpgkey: 'rsa4096'
+    :gpgkey: '0BC98D7E'
 :time_mode: 24h
