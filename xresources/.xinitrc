@@ -29,7 +29,7 @@ fi
 # exec gnome-session
 # exec startkde
 # exec startxfce4
-#exec i3
+exec i3
 # ...or the Window Manager of your choice
 
 #exec $1

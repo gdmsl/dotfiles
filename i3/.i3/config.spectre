@@ -12,7 +12,7 @@ set $webkey dead_grave
 set $gamingkey minus
 set $commkey equal
 set $scratchkey slash
-set $stickykey dot
+set $stickykey period
 # }}}
 
 # WORKSPACES {{{
