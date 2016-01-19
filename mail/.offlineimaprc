@@ -29,6 +29,7 @@ type = Gmail
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 remoteuser = guido.masella@gmail.com
 remotepasseval = get_pass()
+auth_mechanisms = LOGIN
 nametrans = lambda s: {  '[Gmail]/Starred' : 'flagged',
                          '[Gmail]/Trash'   : 'trash',
                          '[Gmail]/Spam'    : 'spam',
