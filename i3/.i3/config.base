@@ -326,8 +326,8 @@ for_window [class="Steam"] floating enable
 assign [class="Steam"] $WSgaming
 
 # Assings to IM workspace
-assign [class="Sialan Telegram" instance="Sigram"] $WScomm
-assign [class="telegram" instance="telegram"] $WScomm
+assign [class="Telegram"] $WScomm
+assign [class="geary"] $WScomm
 
 # Scratchpad
 for_window [title="scratchpadweather"] move scratchpad
@@ -424,7 +424,7 @@ exec --no-startup-id "redshift-gtk"
 # exec --no-startup-id weather
 
 # compositor
-exec "compton --config ~/.config/compton/compton-i3.conf -b"
+exec "LD_PRELOAD=/usr/lib/mumble/libmumble.so compton --config ~/.config/compton/compton-i3.conf -b"
 
 # volume control for pulseaudio
 exec --no-startup-id pavucontrol
