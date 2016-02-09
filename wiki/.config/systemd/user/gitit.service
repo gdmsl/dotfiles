@@ -1,0 +1,12 @@
+[Unit]
+Description=my personal wiki
+
+[Service]
+Type=simple
+WorkingDirectory=%h/.gitit
+ExecStart=/home/gdmsl/.cabal/bin/gitit -f %h/.gitit/gitit.conf
+Restart=no
+
+[Install]
+WantedBy=console.target
+
