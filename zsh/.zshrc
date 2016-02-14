@@ -8,7 +8,7 @@ ZSH_THEME="agnoster"
 #ZSH_THEME="robbyrussell"
 
 if [ "$TERM" = "linux" ]; then
-    ZSH_THEME="trapd00r"
+    ZSH_THEME="robbyrussel"
 fi
 
 DEFAULT_USER="gdmsl"

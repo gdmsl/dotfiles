@@ -29,6 +29,7 @@ Plug 'chriskempson/base16-vim'
 Plug 'benekastah/neomake'
 Plug 'tpope/vim-markdown', {'for' : 'markdown'}
 "Plug 'scrooloose/syntastic'
+Plug 'sudar/vim-arduino-syntax'
 Plug 'google/vim-maktaba'
 Plug 'google/vim-glaive'
 Plug 'google/vim-codefmt'
