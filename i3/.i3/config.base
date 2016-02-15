@@ -55,7 +55,7 @@ bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pulse set Master 5%
 bindsym $mod+m exec "xterm -e alsamixer; pkill -RTMIN+10 i3blocks"
 
 # Locker
-bindsym $mod+$lockkey exec "i3lock -d -e -f -c 262626"
+bindsym $mod+$lockkey exec "i3lock -d -e -f -c 262626 -i ~/Pictures/Wallpapers/mine/glider.png"
 
 # Shutdown menu
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown, (Shift+h) hybrid-sleep

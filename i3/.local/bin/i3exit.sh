@@ -1,6 +1,6 @@
 #!/bin/sh
 lock() {
-    i3lock -d -c 000000
+    i3lock -d -c 2d2d2d -i ~/Pictures/Wallpapers/mine/glider.png
 }
 
 case "$1" in
