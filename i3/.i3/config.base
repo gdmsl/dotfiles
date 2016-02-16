@@ -27,6 +27,7 @@ bindsym $mod+Shift+x exec thunar
 #bindsym $mod+d exec dmenu_run -b -l 15  -fn 'Hack-10' -nb '#262626' -nf '#ebdbb2' -sb '#484848' -sf '#ebdbb2'
 #bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -l 15 -i -fn 'Hack-10' -nb '#262626' -nf '#ebdbb2' -sb '#484848' -sf '#ebdbb2'"
 bindsym $mod+d exec --no-startup-id "rofi -modi 'run,ssh,window' -show run"
+bindsym $mod+Shift+d exec --no-startup-id "rofi-filefinder.sh"
 
 # Reload the configuration file
 bindsym $mod+Shift+c reload
