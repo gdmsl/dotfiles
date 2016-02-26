@@ -7,9 +7,6 @@
 [submodule "science/.local/bin/ipynb_output_filter"]
 	path = science/.local/bin/ipynb_output_filter
 	url = https://github.com/toobaz/ipynb_output_filter
-[submodule "xresources/.xrdb/solarized"]
-	path = xresources/.xrdb/solarized
-	url = http://github.com/solarized/xresources
 [submodule "nvim/.config/nvim/vim-plug"]
 	path = nvim/.config/nvim/vim-plug
 	url = https://github.com/junegunn/vim-plug.git
