@@ -42,14 +42,14 @@ Xft.hinting:    true
 Xft.hintstyle:  slight
 
 ! rofi -----------------------------------------------------------------------
-rofi.bg:    #383830
-rofi.fg:    #f9f8f5
+rofi.bg:    #2d2d2d
+rofi.fg:    #d3d0d8
 rofi.font:  Hack 10
-rofi.hlbg:  #f92672
-rofi.hlfg:  #f9f8f5
-rofi.fg-active: #f82672
-rofi.bg-active: #75715e
-rofi.bc:    #f5f4f1
+rofi.hlfg:  #2d2d2d
+rofi.hlbg:  #d3d0d8
+rofi.fg-active: #f2f0ec
+rofi.bg-active: #6699cc
+rofi.bc:    #6699cc
 rofi.bw:    2
 rofi.o:     85
 rofi.terminal:  xterm
@@ -57,5 +57,5 @@ rofi.location:  2
 !rofi.dpi: 120
 
 ! colorscheme
-#include "/home/gdmsl/.xrdb/base16-monokai.dark.256.xresources"
+#include "/home/gdmsl/.xrdb/base16-eighties.dark.256.xresources"
 

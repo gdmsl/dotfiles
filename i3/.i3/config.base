@@ -353,10 +353,10 @@ font pango:Hack, Source Code Pro, DejaVu Sans Mono, FontAwesome, Icons 10
 
 # Colors
 # class                 border  backgr. text    indicator
-client.focused          #272822 #fd971f #f9f8f5 #f92672
-client.focused_inactive #272822 #75715e #f9f8f5 #f92672
-client.unfocused        #272822 #383830 #f9f8f5 #f92672
-client.urgent           #272822 #f92672 #f9f8f5 #f9f8f5
+client.focused          #2d2d2d #6699cc #f2f0ec #f2f0ec
+client.focused_inactive #2d2d2d #515151 #f2f0ec #f2f0ec
+client.unfocused        #2d2d2d #393939 #f2f0ec #f2f0ec
+client.urgent           #2d2d2d #f2777a #f2f0ec #f2f0ec
 
 # Keybindings to change border style
 bindsym $mod+t border normal
@@ -392,7 +392,7 @@ exec copyq
 exec --no-startup-id xset dpms 600
 
 # Solid Color Background
-exec --no-startup-id xsetroot -solid "#272822"
+exec --no-startup-id xsetroot -solid "#262626"
 
 # set the $O1 as default (primary)
 exec xrandr --output $O1 --primary

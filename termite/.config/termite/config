@@ -41,36 +41,37 @@ cursor_shape = block
 #roundness = 2.0
 
 [colors]
-# Base16 Monokai
-# Scheme: Wimer Hazenberg (http://www.monokai.nl)
+# Base16 Eighties
+# Scheme: Chris Kempson (http://chriskempson.com)
 
-foreground      = #f8f8f2
-foreground_bold = #f8f8f2
-cursor          = #f8f8f2
-background      = #272822
+foreground      = #d3d0c8
+foreground_bold = #d3d0c8
+cursor          = #d3d0c8
+background      = #2d2d2d
+#background = rgba(45,45,45,0.95)
 
 # 16 color space
-color0  = #272822
-color1  = #f92672
-color2  = #a6e22e
-color3  = #f4bf75
-color4  = #66d9ef
-color5  = #ae81ff
-color6  = #a1efe4
-color7  = #f8f8f2
-color8  = #75715e
-color9  = #f92672
-color10 = #a6e22e
-color11 = #f4bf75
-color12 = #66d9ef
-color13 = #ae81ff
-color14 = #a1efe4
-color15 = #f9f8f5
+color0  = #2d2d2d
+color1  = #f2777a
+color2  = #99cc99
+color3  = #ffcc66
+color4  = #6699cc
+color5  = #cc99cc
+color6  = #66cccc
+color7  = #d3d0c8
+color8  = #747369
+color9  = #f2777a
+color10 = #99cc99
+color11 = #ffcc66
+color12 = #6699cc
+color13 = #cc99cc
+color14 = #66cccc
+color15 = #f2f0ec
 
 # 256 color space
-color16 = #fd971f
-color17 = #cc6633
-color18 = #383830
-color19 = #49483e
-color20 = #a59f85
-color21 = #f5f4f1
+color16 = #f99157
+color17 = #d27b53
+color18 = #393939
+color19 = #515151
+color20 = #a09f93
+color21 = #e8e6df
