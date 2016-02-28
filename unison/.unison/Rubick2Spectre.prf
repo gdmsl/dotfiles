@@ -1,7 +1,7 @@
 label = Sync rubick via ssh to the archive on grepublic.no-ip.biz
 
 root = /home/gdmsl
-root = ssh://gdmsl@grepublic.no-ip.biz//mnt/archive0/gdmsl
+root = ssh://gdmsl@192.168.1.100/mnt/archive0/gdmsl
 
 sshargs = -C
 
