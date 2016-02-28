@@ -1,0 +1,22 @@
+label = Sync rubick via ssh to the archive on grepublic.no-ip.biz
+
+root = /home/gdmsl
+root = ssh://gdmsl@grepublic.no-ip.biz//mnt/archive0/gdmsl
+
+sshargs = -C
+
+# directories
+path=Documents/Identity
+path=Documents/CurriculumVitae
+path=Documents/DyINO
+path=Documents/SECURE
+path=Documents/Wiki
+path=Documents/AbstractOliver
+
+path=Pictures/Avatars
+path=Pictures/Cyberpunk
+path=Pictures/Projects
+path=Pictures/Screenshot
+path=Pictures/Mine
+path=Pictures/Gore
+path=Pictures/DoTA2
