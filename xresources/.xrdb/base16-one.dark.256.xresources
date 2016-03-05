@@ -1,0 +1,50 @@
+! Base16 One
+! Scheme: 
+
+#define base00 #282a2e
+#define base01 #373a40
+#define base02 #5c5f66
+#define base03 #747880
+#define base04 #80848c
+#define base05 #9ca4b5
+#define base06 #a6afbf
+#define base07 #b1bbcc
+#define base08 #a63a43
+#define base09 #9c7048
+#define base0A #b0873a
+#define base0B #7b9e62
+#define base0C #4a858c
+#define base0D #1e6aa8
+#define base0E #9344ab
+#define base0F #824944
+
+*foreground:   base05
+*background:   base00
+*cursorColor:  base05
+
+*color0:       base00
+*color1:       base08
+*color2:       base0B
+*color3:       base0A
+*color4:       base0D
+*color5:       base0E
+*color6:       base0C
+*color7:       base05
+
+*color8:       base03
+*color9:       base08
+*color10:      base0B
+*color11:      base0A
+*color12:      base0D
+*color13:      base0E
+*color14:      base0C
+*color15:      base07
+
+! Note: colors beyond 15 might not be loaded (e.g., xterm, urxvt),
+! use 'shell' template to set these if necessary
+*color16:      base09
+*color17:      base0F
+*color18:      base01
+*color19:      base02
+*color20:      base04
+*color21:      base06
