@@ -139,17 +139,17 @@
     dmenu = /usr/bin/dmenu -p dunst:
 
     # Browser for opening urls in context menu.
-    browser = /usr/bin/firefox
+    browser = /usr/bin/chromium
 
     # Align icons left/right/off
-    icon_position = left
+    icon_position = off
 
     # Paths to default icons.
     icon_folders = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
 
 [frame]
-    width = 1
-    color = "#6699cc"
+    width = 0
+    color = "#373a40"
 
 [shortcuts]
 
@@ -175,18 +175,18 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#2d2d2d"
-    foreground = "#99cc99"
+    background = "#7b9e62"
+    foreground = "#b1bbcc"
     timeout = 10
 
 [urgency_normal]
-    background = "#2d2d2d"
-    foreground = "#f2f0ec"
+    background = "#1e6aa8"
+    foreground = "#b1bbcc"
     timeout = 10
 
 [urgency_critical]
-    background = "#2d2d2d"
-    foreground = "#f2777a"
+    background = "#a63a43"
+    foreground = "#b1bbcc"
     timeout = 0
 
 
