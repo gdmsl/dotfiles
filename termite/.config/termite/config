@@ -75,3 +75,105 @@ color18 = #393939
 color19 = #515151
 color20 = #a09f93
 color21 = #e8e6df
+[colors]
+# Base16 One
+# Scheme: Chris Kempson (http://chriskempson.com)
+
+foreground      = #80848c
+foreground_bold = #80848c
+cursor          = #80848c
+background      = #282a2e
+
+# 16 color space
+color0  = #282a2e
+color1  = #a63a43
+color2  = #7b9e62
+color3  = #b0873a
+color4  = #1e6aa8
+color5  = #9344ab
+color6  = #4a858c
+color7  = #80848c
+color8  = #5c5f66
+color9  = #a63a43
+color10 = #7b9e62
+color11 = #b0873a
+color12 = #1e6aa8
+color13 = #9344ab
+color14 = #4a858c
+color15 = #9ca4b5
+
+# 256 color space
+color16 = #9c7048
+color17 = #824944
+color18 = #373a40
+color19 = #4e5259
+color20 = #747880
+color21 = #8f96a6
+[colors]
+# Base16 One
+# Scheme: Chris Kempson (http://chriskempson.com)
+
+foreground      = #b1bbcc
+foreground_bold = #b1bbcc
+cursor          = #b1bbcc
+background      = #282a2e
+
+# 16 color space
+color0  = #282a2e
+color1  = #a63a43
+color2  = #7b9e62
+color3  = #b0873a
+color4  = #1e6aa8
+color5  = #9344ab
+color6  = #4a858c
+color7  = #b1bbcc
+color8  = #80848c
+color9  = #a63a43
+color10 = #7b9e62
+color11 = #b0873a
+color12 = #1e6aa8
+color13 = #9344ab
+color14 = #4a858c
+color15 = #c2cde0
+
+# 256 color space
+color16 = #9c7048
+color17 = #824944
+color18 = #373a40
+color19 = #5c5f66
+color20 = #9ca4b5
+color21 = #bcc6d9
+[colors]
+# Base16 One
+# Scheme: Chris Kempson (http://chriskempson.com)
+
+foreground      = #9ca4b5
+foreground_bold = #9ca4b5
+cursor          = #9ca4b5
+background      = #282a2e
+
+# 16 color space
+color0  = #282a2e
+color1  = #a63a43
+color2  = #7b9e62
+color3  = #b0873a
+color4  = #1e6aa8
+color5  = #9344ab
+color6  = #4a858c
+color7  = #9ca4b5
+color8  = #747880
+color9  = #a63a43
+color10 = #7b9e62
+color11 = #b0873a
+color12 = #1e6aa8
+color13 = #9344ab
+color14 = #4a858c
+color15 = #b1bbcc
+
+# 256 color space
+color16 = #9c7048
+color17 = #824944
+color18 = #373a40
+color19 = #5c5f66
+color20 = #80848c
+color21 = #a6afbf
