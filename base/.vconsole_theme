@@ -1,23 +1,23 @@
 #!/bin/sh
-# Base16 Eighties - Virtual console color setup script
-# Chris Kempson (http://chriskempson.com)
+# Base16 One - Virtual console color setup script
+# 
 
-color00="2d2d2d" # Base 00 - Black
-color01="f2777a" # Base 08 - Red
-color02="99cc99" # Base 0B - Green
-color03="ffcc66" # Base 0A - Yellow
-color04="6699cc" # Base 0D - Blue
-color05="cc99cc" # Base 0E - Magenta
-color06="66cccc" # Base 0C - Cyan
-color07="d3d0c8" # Base 05 - White
-color08="747369" # Base 03 - Bright Black
+color00="282a2e" # Base 00 - Black
+color01="a63a43" # Base 08 - Red
+color02="7b9e62" # Base 0B - Green
+color03="b0873a" # Base 0A - Yellow
+color04="1e6aa8" # Base 0D - Blue
+color05="9344ab" # Base 0E - Magenta
+color06="4a858c" # Base 0C - Cyan
+color07="9ca4b5" # Base 05 - White
+color08="747880" # Base 03 - Bright Black
 color09=$color01 # Base 08 - Bright Red
 color10=$color02 # Base 0B - Bright Green
 color11=$color03 # Base 0A - Bright Yellow
 color12=$color04 # Base 0D - Bright Blue
 color13=$color05 # Base 0E - Bright Magenta
 color14=$color06 # Base 0C - Bright Cyan
-color15="f2f0ec" # Base 07 - Bright White
+color15="b1bbcc" # Base 07 - Bright White
 
 # 16 color space
 echo -e "\e]P0$color00"
