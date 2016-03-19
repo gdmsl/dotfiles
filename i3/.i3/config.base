@@ -323,7 +323,7 @@ for_window [window_role="gimp-toolbox"] floating disable
 for_window [window_role="gimp-dock"] floating disable
 
 # Steam goes float on workspace gaming
-for_window [class="Steam"] floating enable
+#for_window [class="Steam"] floating enable
 assign [class="Steam"] $WSgaming
 
 # Assings to IM workspace
