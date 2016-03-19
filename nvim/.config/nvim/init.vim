@@ -39,6 +39,8 @@ Plug 'majutsushi/tagbar'
 Plug 'vim-scripts/loremipsum'
 Plug 'justmao945/vim-clang'
 Plug 'mhinz/vim-startify'
+Plug 'airblade/vim-gitgutter'
+Plug 'rust-lang/rust.vim'
 
 call plug#end()
 " }}}
@@ -197,7 +199,17 @@ augroup startify_config
 augroup END
 " }}}
 
+" GitGutter {{{
+augroup gitgutter_config
+    autocmd!
+augroup END
+" }}}
 
+" RustLang {{{
+augroup rust_config
+    autocmd!
+augroup END
+" }}}
 
 " Settings -------------------------------------------------------------------
 
