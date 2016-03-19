@@ -228,7 +228,7 @@ workspace $WS04 output $O3
 workspace $WS05 output $O1
 workspace $WS06 output $O1
 workspace $WS07 output $O1
-workspace $WS08 output $O1
+workspace $WS08 output $O2
 workspace $WS09 output $O1
 workspace $WS10 output $O1
 workspace $WS11 output $O3

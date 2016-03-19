@@ -26,8 +26,8 @@ bindsym Shift*XF86KbdBrightnessUp exec "xbacklight -inc 20"
 
 # outputs
 set $O1 eDP1
-set $O2 DP1
-set $O3 HDMI1
+set $O3 DP1
+set $O2 HDMI1
 
 # }}}
 
