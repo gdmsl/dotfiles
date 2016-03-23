@@ -6,9 +6,10 @@ After=network.target
 Type=forking
 KillMode=none
 ExecStart=/usr/bin/tmux new-session -s rt -n rtorrent -d rtorrent
-ExecStop=/usr/bin/bash -c "/usr/bin/tmux send-keys -t rt:rtorrent C-q && while pidof rtorrent > /dev/null; do sleep 0.5; echo rtorrent still running...; done"
+ExecStop=/usr/bin/bash -c "/usr/bin/tmux send-keys -t rt:rtorrent.0 C-q && while pidof rtorrent > /dev/null; do sleep 0.5; echo rtorrent still running...; done"
 WorkingDirectory=%h
 Restart=on-failure
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
+
