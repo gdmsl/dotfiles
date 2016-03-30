@@ -8,9 +8,9 @@
 # KEYS {{{
 set $lockkey ugrave
 set $tombkey egrave
-set $webkey backslash
-set $gamingkey apostrophe
-set $commkey igrave
+set $zkey backslash
+set $prevkey apostrophe
+set $nextkey igrave
 set $scratchkey minus
 set $stickykey period
 # }}}
