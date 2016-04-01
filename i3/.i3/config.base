@@ -298,7 +298,7 @@ bindsym $mod+n workspace next_on_output
 
 # assign web browsers to workspace web
 assign [class="chromium"] $WS00
-assign [class="Firefox"] $WSw00
+assign [class="Firefox"] $WS00
 assign [class="Midori"] $WS00
 
 # windows title
