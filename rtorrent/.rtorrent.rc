@@ -86,4 +86,7 @@ dht_port = 6881
 #
 peer_exchange = yes
 
-scgi_port = 127.0.0.1:5000
+# For Rutorrent
+execute_notrow = rm,/tmp/rpc.socket
+scgi_local = /tmp/rpc.socket
+schedule = chmod,0,0,"execute=chmod,777,/tmp/rpc.socket"
