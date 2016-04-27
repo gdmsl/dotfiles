@@ -18,9 +18,10 @@ grid.linewidth : 1.0
 grid.color     : cbcbcb
 
 font.size           : 11.0
-font.serif          : computer modern roamn, Roboto Slab, Bitstream Vera Serif
-font.sans-serif     : computer modern sans serif, Roboto, Bitstream Vera Sans
-font.monospace      : computer modern typewriter, Hack, Bitstream Vera Sans Mono
+font.famili         : serif
+font.serif          : Roboto Slab, Bitstream Vera Serif, Computer Modern Roman
+font.sans-serif     : Roboto, Bitstream Vera Sans, Computer Modern Sans serif
+font.monospace      : Hack, Bitstream Vera Sans Mono, Computer Modern Typewriter
 
 text.antialiased    : True
 text.hinting        : auto
@@ -35,7 +36,15 @@ axes.linewidth   : 2.0
 axes.titlesize   : x-large
 axes.labelsize   : large
 axes.labelcolor  : 424242
-axes.color_cycle : 2196F3, F44336, 9C27B0, 4CAF50, CDDC39, 607D8B, FF9800, 009688, E91E63, 795548
+axes.prop_cycle: cycler('color', ['E24A33', '348ABD', '988ED5', '777777', 'FBC15E', '8EBA42', 'FFB5B8'])
+                   # E24A33 : red
+                   # 348ABD : blue
+                   # 988ED5 : purple
+                   # 777777 : gray
+                   # FBC15E : yellow
+                   # 8EBA42 : green
+                   # FFB5B8 : pink
+
 axes.formatter.use_mathtext : False
 
 legend.fancybox : True
@@ -58,7 +67,7 @@ ytick.direction  : out
 figure.facecolor : f0f0f0
 figure.edgecolor : 0.50
 #figure.figsize   : 6,8
-figure.dpi       : 96
+#figure.dpi       : 96
 
 figure.subplot.left: 0.08
 figure.subplot.right: 0.95
