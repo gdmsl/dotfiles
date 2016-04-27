@@ -5,9 +5,10 @@
 lines.linewidth      : 2
 lines.solid_capstyle : butt
 lines.antialiased : True
-lines.markersize : 10
+lines.markersize : 9.1
+lines.markeredgewidth : 0
 
-patch.linewidth   : 0.5
+patch.linewidth   : 0.39
 patch.facecolor   : 2196F3
 patch.edgecolor   : 424242
 patch.antialiased : True
@@ -15,13 +16,14 @@ patch.antialiased : True
 svg.fonttype : path
 
 grid.linestyle : -
-grid.linewidth : 1.0
+grid.linewidth : 1.3
 grid.color     : cbcbcb
 
 font.size           : 11.0
-font.serif          : computer modern roamn, Roboto Slab, Bitstream Vera Serif
-font.sans-serif     : computer modern sans serif, Roboto, Bitstream Vera Sans
-font.monospace      : computer modern typewriter, Hack, Bitstream Vera Sans Mono
+font.famili         : serif
+font.serif          : Roboto Slab, Bitstream Vera Serif, Computer Modern Roman
+font.sans-serif     : Roboto, Bitstream Vera Sans, Computer Modern Sans serif
+font.monospace      : Hack, Bitstream Vera Sans Mono, Computer Modern Typewriter
 
 text.antialiased    : True
 text.hinting        : auto
@@ -32,15 +34,24 @@ axes.facecolor   : f0f0f0
 axes.edgecolor   : e0e0e0
 axes.axisbelow   : True
 axes.grid        : True
-axes.linewidth   : 2.0
-axes.titlesize   : 24
-axes.labelsize   : 20
+axes.linewidth   : 1.3
+axes.titlesize   : 15.6
+axes.labelsize   : 14.3
 axes.labelcolor  : 424242
-axes.color_cycle : 2196F3, F44336, 9C27B0, 4CAF50, CDDC39, 607D8B, FF9800, 009688, E91E63, 795548
+axes.prop_cycle: cycler('color', ['E24A33', '348ABD', '988ED5', '777777', 'FBC15E', '8EBA42', 'FFB5B8'])
+                   # E24A33 : red
+                   # 348ABD : blue
+                   # 988ED5 : purple
+                   # 777777 : gray
+                   # FBC15E : yellow
+                   # 8EBA42 : green
+                   # FFB5B8 : pink
+
 axes.formatter.use_mathtext : False
 
 legend.fancybox : True
 legend.shadow   : True
+legend.fontsize : 13
 
 savefig.edgecolor : f0f0f0
 savefig.facecolor : f0f0f0
@@ -51,17 +62,23 @@ xtick.major.size : 0
 xtick.minor.size : 0
 ytick.major.size : 0
 ytick.minor.size : 0
+xtick.major.width : 1.3
+xtick.minor.width : 0.65
+ytick.major.width : 1.3
+ytick.minor.width : 0.65
+xtick.major.pad   : 9.1
+ytick.major.pad   : 9.1
 xtick.color      : 424242
 ytick.color      : 424242
 xtick.direction  : out
 ytick.direction  : out
-ytick.labelsize : 16
-xtick.labelsize : 16
+ytick.labelsize : 13
+xtick.labelsize : 13
 
 figure.facecolor : f0f0f0
 figure.edgecolor : 0.50
-#figure.figsize   : 6,8
-figure.dpi       : 96
+figure.figsize   : 10.4,7.15
+#figure.dpi       : 96
 
 figure.subplot.left: 0.08
 figure.subplot.right: 0.95
