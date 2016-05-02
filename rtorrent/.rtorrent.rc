@@ -18,7 +18,7 @@ download_rate = 700
 upload_rate = 35
 
 # Default directory to save the downloaded torrents.
-directory = /mnt/torrent0/rtorrent/downloads
+directory = /mnt/barracuda/rtorrent/downloads
 
 # Default session directory. Make sure you don't run multiple instance
 # of rtorrent using the same session directory. Perhaps using a
@@ -27,7 +27,7 @@ session = ~/.rtorrent.session
 
 # Watch a directory for new torrents, and stop those that have been
 # deleted.
-#schedule = watch_directory,5,5,load_start=/mnt/torrent0/rtorrent/watch/*.torrent
+#schedule = watch_directory,5,5,load_start=/mnt/barracuda/rtorrent/watch/*.torrent
 #schedule = untied_directory,5,5,stop_untied=
 #schedule = tied_directory,5,5,start_tied=
 
@@ -87,6 +87,8 @@ dht_port = 6881
 peer_exchange = yes
 
 # For Rutorrent
-execute_notrow = rm,/tmp/rpc.socket
 scgi_local = /tmp/rpc.socket
 schedule = chmod,0,0,"execute=chmod,777,/tmp/rpc.socket"
+
+# Encoding
+encoding_list = UTF-8

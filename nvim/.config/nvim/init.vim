@@ -41,10 +41,11 @@ Plug 'justmao945/vim-clang'
 Plug 'mhinz/vim-startify'
 Plug 'airblade/vim-gitgutter'
 Plug 'rust-lang/rust.vim'
+Plug 'xolox/vim-notes'
+Plug 'xolox/vim-misc'
 
 call plug#end()
 " }}}
-
 
 " Plugin Configurations ------------------------------------------------------
 
@@ -208,6 +209,13 @@ augroup END
 " RustLang {{{
 augroup rust_config
     autocmd!
+augroup END
+" }}}
+
+" VimNotes {{{
+augroup notes_config
+    autocmd!
+    let g:notes_directories = ['~/Documents/Notes']
 augroup END
 " }}}
 
