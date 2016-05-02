@@ -196,6 +196,8 @@ bindsym $mod+r mode "resize"
 
 # WORKSPACES {{{
 
+workspace_auto_back_and_forth yes
+
 # Defining workspace variables
 set $WS00 "0:"
 set $WS01 "1: 1"
@@ -216,14 +218,9 @@ set $WSf5 "15: f5"
 set $WSf6 "16: f6"
 set $WSf7 "17: f7"
 set $WSf8 "18: f8"
-set $WSweb $WS00
-set $WSgaming $WS09
-set $WScomm $WS01
-set $WSgame $WS10
 
 # Putting workspaces on screens
-# .. 10 workspaces on LVDS1 (internal laptop monitor)
-# .. 3 workpaces on VGA1
+workspace $WS00 output $O1
 workspace $WS01 output $O1
 workspace $WS02 output $O1
 workspace $WS03 output $O1
@@ -299,7 +296,6 @@ bindsym $mod+n workspace next_on_output
 # assign web browsers to workspace web
 assign [class="chromium"] $WS00
 assign [class="Firefox"] $WS00
-assign [class="Midori"] $WS00
 
 # windows title
 #for_window [class=".*"] title_format " <b>%title</b>"
