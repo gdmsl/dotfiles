@@ -1,22 +1,22 @@
 ! Base16 One
-! Scheme: 
+! Scheme: Guido Masella (https://github.com/gdmsl/)
 
-#define base00 #282a2e
-#define base01 #373a40
-#define base02 #5c5f66
-#define base03 #747880
-#define base04 #80848c
-#define base05 #9ca4b5
-#define base06 #a6afbf
-#define base07 #b1bbcc
-#define base08 #a63a43
-#define base09 #9c7048
-#define base0A #b0873a
-#define base0B #7b9e62
-#define base0C #4a858c
-#define base0D #1e6aa8
-#define base0E #9344ab
-#define base0F #824944
+#define base00 #282c34
+#define base01 #2f343d
+#define base02 #3c424e
+#define base03 #5c6370
+#define base04 #828997
+#define base05 #abb2bf
+#define base06 #ced6e6
+#define base07 #d9e2f2
+#define base08 #e06c75
+#define base09 #d19a66
+#define base0A #e5c07b
+#define base0B #98c379
+#define base0C #56b6c2
+#define base0D #4e8cbf
+#define base0E #c678dd
+#define base0F #be5046
 
 *foreground:   base05
 *background:   base00

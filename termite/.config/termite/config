@@ -42,34 +42,35 @@ cursor_shape = block
 
 [colors]
 # Base16 One
+# Scheme: Guido Masella (https://github.com/gdmsl/)
 
-foreground      = #9ca4b5
-foreground_bold = #9ca4b5
-cursor          = #9ca4b5
-background      = #282a2e
+foreground      = #abb2bf
+foreground_bold = #abb2bf
+cursor          = #abb2bf
+background      = #282c34
 
 # 16 color space
-color0  = #282a2e
-color1  = #a63a43
-color2  = #7b9e62
-color3  = #b0873a
-color4  = #1e6aa8
-color5  = #9344ab
-color6  = #4a858c
-color7  = #9ca4b5
-color8  = #747880
-color9  = #a63a43
-color10 = #7b9e62
-color11 = #b0873a
-color12 = #1e6aa8
-color13 = #9344ab
-color14 = #4a858c
-color15 = #b1bbcc
+color0  = #282c34
+color1  = #e06c75
+color2  = #98c379
+color3  = #e5c07b
+color4  = #4e8cbf
+color5  = #c678dd
+color6  = #56b6c2
+color7  = #abb2bf
+color8  = #5c6370
+color9  = #e06c75
+color10 = #98c379
+color11 = #e5c07b
+color12 = #4e8cbf
+color13 = #c678dd
+color14 = #56b6c2
+color15 = #d9e2f2
 
 # 256 color space
-color16 = #9c7048
-color17 = #824944
-color18 = #373a40
-color19 = #5c5f66
-color20 = #80848c
-color21 = #a6afbf
+color16 = #d19a66
+color17 = #be5046
+color18 = #2f343d
+color19 = #3c424e
+color20 = #828997
+color21 = #ced6e6

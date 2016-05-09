@@ -56,7 +56,7 @@ bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pulse set Master 5%
 bindsym $mod+m exec "xterm -e alsamixer; pkill -RTMIN+10 i3blocks"
 
 # Locker
-bindsym $mod+$lockkey exec "i3lock -d -e -f -c 262626 -i ~/Pictures/Wallpapers/mine/glider.png"
+bindsym $mod+$lockkey exec "i3lock -d -e -f -c 282c34 -i ~/Pictures/Wallpapers/mine/glider.png"
 
 # Shutdown menu
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown, (Shift+h) hybrid-sleep
@@ -342,11 +342,10 @@ for_window [class="dota2"] fullscreen
 font pango:Hack, Source Code Pro, DejaVu Sans Mono, FontAwesome, Icons 10
 
 # Colors
-# class                 border  backgr. text    indicator
-client.focused          #282a2e #1e6aa8 #b1bbcc #b1bbcc
-client.focused_inactive #282a2e #373a40 #b1bbcc #b1bbcc
-client.unfocused        #282a2e #373a40 #b1bbcc #b1bbcc
-client.urgent           #282a2e #a63a43 #b1bbcc #b1bbcc
+client.focused $base0D $base0D $base00 $base01
+client.focused_inactive $base02 $base02 $base03 $base01
+client.unfocused $base01 $base01 $base03 $base01
+client.urgent $base02 $base08 $base07 $base08
 
 # Keybindings to change border style
 bindsym $mod+t border normal
