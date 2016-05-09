@@ -9,4 +9,5 @@ sshargs = -C
 path=Documents
 path=Pictures
 path=Library
+path=Bookshelf
 path=Music

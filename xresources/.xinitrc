@@ -17,7 +17,7 @@ fi
 eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
 export GPG_AGENT_INFO SSH_AUTH_SOCK
 
-xrandr --output LVDS1 --gamma 0.8:0.9:0.7 --primary
+#xrandr --output LVDS1 --gamma 0.8:0.9:0.7 --primary
 
 export MOZ_USE_OMTC=1
 

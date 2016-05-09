@@ -77,7 +77,7 @@ xtick.labelsize : 13
 
 figure.facecolor : f0f0f0
 figure.edgecolor : 0.50
-figure.figsize   : 10.4,7.15
+figure.figsize   : 8.7,6.0
 #figure.dpi       : 96
 
 figure.subplot.left: 0.08
