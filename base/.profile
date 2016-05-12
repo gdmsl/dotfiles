@@ -8,10 +8,12 @@ export PATH="$HOME/.local/bin:/usr/local/texlive/2015/bin/x86_64-linux:$HOME/.lo
 # Experience tell me that it's rather impossible to make vdpau
 # .. work with my discrete nvidia with OPTIMUS. So maybe i can make use
 # .. of hardware acceleration with my Intel card
-if [ "$HOST" = "razor" ]; then
+if [ "$HOST" = "rubick" ]; then
     export VDPAU_DRIVER=va_gl
-elif [ "$HOST" = "alchemist" ]; then
+elif [ "$HOST" = "spectre" ]; then
     export VDPAU_DRIVER=nvidia
+elif [ "$HOST" = "qop" ]; then
+    export VDPAU_DRIVER=va_gl
 fi
 
 # I dunno.... :)
@@ -25,7 +27,7 @@ export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswi
 export EDITOR="nvim"
 
 # Default browser
-export BROWSER="chromium"
+export BROWSER="firefox"
 
 # Default terminal emulator
 export TERMINAL="termite"
@@ -34,7 +36,7 @@ export TERMINAL="termite"
 export SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass
 
 # QT5 style
-QT_STYLE_OVERRIDE=GTK+
+export QT_STYLE_OVERRIDE=GTK+
 
 # Ruby
 export GEM_HOME=$(ruby -e 'print Gem.user_dir')

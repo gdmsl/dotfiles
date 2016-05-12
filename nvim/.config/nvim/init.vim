@@ -38,11 +38,8 @@ Plug 'kien/rainbow_parentheses.vim'
 Plug 'majutsushi/tagbar'
 Plug 'vim-scripts/loremipsum'
 Plug 'justmao945/vim-clang'
-Plug 'mhinz/vim-startify'
 Plug 'airblade/vim-gitgutter'
 Plug 'rust-lang/rust.vim'
-Plug 'xolox/vim-notes'
-Plug 'xolox/vim-misc'
 
 call plug#end()
 " }}}
@@ -189,17 +186,6 @@ augroup easymotion_config
 augroup END
 " }}}
 
-" Startify {{{
-augroup startify_config
-    autocmd!
-    let g:startify_session_dir = '~/.cache/nvim/session'
-    let g:startify_change_to_vcs_root = 1
-    let g:startify_custom_header =
-      \ map(split(system('fortune | cowsay'), '\n'), '"   ". v:val') + ['','']
-    let g:startify_relative_path = 1
-augroup END
-" }}}
-
 " GitGutter {{{
 augroup gitgutter_config
     autocmd!
@@ -209,13 +195,6 @@ augroup END
 " RustLang {{{
 augroup rust_config
     autocmd!
-augroup END
-" }}}
-
-" VimNotes {{{
-augroup notes_config
-    autocmd!
-    let g:notes_directories = ['~/Documents/Notes']
 augroup END
 " }}}
 
