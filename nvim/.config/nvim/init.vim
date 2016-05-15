@@ -30,9 +30,6 @@ Plug 'benekastah/neomake'
 Plug 'tpope/vim-markdown', {'for' : 'markdown'}
 "Plug 'scrooloose/syntastic'
 Plug 'sudar/vim-arduino-syntax'
-Plug 'google/vim-maktaba'
-Plug 'google/vim-glaive'
-Plug 'google/vim-codefmt'
 Plug 'easymotion/vim-easymotion'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'majutsushi/tagbar'
@@ -157,26 +154,6 @@ augroup END
 augroup tagbar_config
     autocmd!
     nmap <F8> :TagbarToggle<CR>
-augroup END
-" }}}
-
-" Maktba {{{
-augroup maktba_config
-    autocmd!
-    call maktaba#json#python#Disable()
-augroup END
-" }}}
-
-" Glaive {{{
-augroup glaive_config
-    autocmd!
-    call glaive#Install()
-augroup END
-" }}}
-
-" Codefmt {{{
-augroup codefmt_config
-    autocmd!
 augroup END
 " }}}
 
