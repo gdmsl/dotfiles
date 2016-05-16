@@ -182,10 +182,10 @@ let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 " }}}
 
-" Local Directories {{{
-set backupdir=~/.cache/nvim/backups
-set directory=~/.cache/nvim/swaps
-set undodir=~/.cache/nvim/undo
+" Backups and Swap files {{{
+set backupdir=/tmp/neovim//
+set directory=/tmp/neovim//
+set undodir=/tmp/neovim//
 " }}}
 
 " Mapleader {{{
