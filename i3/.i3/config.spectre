@@ -47,4 +47,24 @@ bar {
         urgent_workspace $base08 $base08 $base07
     }
 }
+
+bar {
+	output            $O2
+	status_command    i3blocks -c ~/.i3blocks/spectre.conf
+	position          bottom
+	workspace_buttons yes
+    strip_workspace_numbers yes
+
+	font pango:Hack, Source Code Pro, FontAwesome, Icons 10
+
+    colors {
+        separator $base03
+        background $base01
+        statusline $base05
+        focused_workspace $base0C $base0D $base00
+        active_workspace $base02 $base02 $base07
+        inactive_workspace $base01 $base01 $base03
+        urgent_workspace $base08 $base08 $base07
+    }
+}
 # }}}

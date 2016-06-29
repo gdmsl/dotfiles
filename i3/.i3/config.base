@@ -53,7 +53,7 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer -D pulse set Master 5%
 bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pulse set Master 5%- unmute; pkill -RTMIN+10 i3blocks; ogg123 /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
 
 # Alsamixer
-bindsym $mod+m exec "xterm -e alsamixer; pkill -RTMIN+10 i3blocks"
+#bindsym $mod+m exec "xterm -e alsamixer; pkill -RTMIN+10 i3blocks"
 
 # Locker
 bindsym $mod+$lockkey exec "i3lock -d -e -f -c 282c34 -i ~/Pictures/Wallpapers/mine/glider.png"
@@ -239,6 +239,10 @@ workspace $WSf5 output $O3
 workspace $WSf6 output $O3
 workspace $WSf7 output $O3
 workspace $WSf8 output $O3
+
+# move workspace to next monitor
+bindsym $mod+m move workspace to output right
+bindsym $mod+Shift+m move workspace to output left
 
 # switch to workspace
 bindsym $mod+$zkey workspace $WS00

@@ -10,3 +10,9 @@
 [submodule "nvim/.config/nvim/vim-plug"]
 	path = nvim/.config/nvim/vim-plug
 	url = https://github.com/junegunn/vim-plug.git
+[submodule "unigine-sanctuary"]
+	path = unigine-sanctuary
+	url = aur:unigine-sanctuary
+[submodule "unigine-tropics"]
+	path = unigine-tropics
+	url = aur:unigine-tropics
