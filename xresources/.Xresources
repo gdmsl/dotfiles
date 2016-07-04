@@ -8,7 +8,7 @@ xterm*locale:		true
 xterm*utf8:		2
 
 ! fonts and colors
-xterm*faceName:		Hack::size=10
+xterm*faceName:		Source Code Pro::size=10
 xterm*font:		6x13
 xterm*dynamicColors:	true
 xterm*eightBitInput:	true
@@ -20,7 +20,7 @@ xterm*toolBar:		false
 
 ! urxvt settings --------------------------------------------------------------
 URxvt*scrollBar:            false
-URxvt.font:                 xft:Hack:size=10
+URxvt.font:                 xft:Source Code Pro:size=10
 URxvt.letterSpace:          -2
 URxvt.perl-ext-common:      default,matcher,clipboard,selection-to-clipboard
 URxvt.url-select.launcher:  firefox
@@ -42,15 +42,14 @@ Xft.hinting:    true
 Xft.hintstyle:  slight
 
 ! rofi -----------------------------------------------------------------------
-rofi.color-window: #373a40
-rofi.color-normal: #373a40,#9ca4b5,#373a40,#1e6aa8,#b1bbcc
-rofi.color-active: #1e6aa8,#b1bbcc,#373a40,#1e6aa8,#b1bbcc
-rofi.font:  Hack 10
+rofi.color-window: #282a2e,#282a2e
+rofi.color-normal: #282a2e,#b4b7b4,#282a2e,#81a2be,#282a2e
+rofi.color-active: #282a2e,#b4b7b4,#282a2e,#81a2be,#282a2e
+rofi.font:  Source Code Pro 10
 rofi.bw:    2
 rofi.o:     85
 rofi.terminal:  xterm
 rofi.location:  2
-!rofi.dpi: 120
 
 ! colorscheme
 #include "/home/gdmsl/.xrdb/base16-tomorrow.dark.256.xresources"
