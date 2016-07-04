@@ -1,7 +1,7 @@
 ! Base16 One
 ! Scheme: Guido Masella (https://github.com/gdmsl/)
 
-#define base00 #282c34
+#define base00 #21252b
 #define base01 #2f343d
 #define base02 #3c424e
 #define base03 #5c6370

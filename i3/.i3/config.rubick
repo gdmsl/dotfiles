@@ -41,16 +41,18 @@ bar {
     tray_output $O1
     strip_workspace_numbers yes
 
-	font pango:Hack, Source Code Pro, FontAwesome, Icons 10
+	font pango:Source Code Pro, Hack, FontAwesome, Icons 10
 
     colors {
-        separator $base03
-        background $base01
+        # class    color
+        separator  $base03
+        background $base00
         statusline $base05
-        focused_workspace $base0C $base0D $base00
-        active_workspace $base02 $base02 $base07
-        inactive_workspace $base01 $base01 $base03
-        urgent_workspace $base08 $base08 $base07
+        # class              border  background text
+        focused_workspace    $base0D $base0D    $base00
+        active_workspace     $base04 $base04    $base00
+        inactive_workspace   $base00 $base00    $base03
+        urgent_workspace     $base08 $base08    $base07
     }
 }
 
@@ -62,16 +64,18 @@ bar {
     tray_output $O1
     strip_workspace_numbers yes
 
-	font pango:Hack, Source Code Pro, FontAwesome, Icons 10
+	font pango:Source Code Pro, Hack, FontAwesome, Icons 10
 
     colors {
-        separator $base03
-        background $base01
+        # class    color
+        separator  $base03
+        background $base00
         statusline $base05
-        focused_workspace $base0C $base0D $base00
-        active_workspace $base02 $base02 $base07
-        inactive_workspace $base01 $base01 $base03
-        urgent_workspace $base08 $base08 $base07
+        # class              border  background text
+        focused_workspace    $base0D $base0D    $base00
+        active_workspace     $base04 $base04    $base00
+        inactive_workspace   $base00 $base00    $base03
+        urgent_workspace     $base08 $base08    $base07
     }
 }
 # }}}

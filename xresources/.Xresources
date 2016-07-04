@@ -53,5 +53,5 @@ rofi.location:  2
 !rofi.dpi: 120
 
 ! colorscheme
-#include "/home/gdmsl/.xrdb/base16-one.dark.256.xresources"
+#include "/home/gdmsl/.xrdb/base16-tomorrow.dark.256.xresources"
 
