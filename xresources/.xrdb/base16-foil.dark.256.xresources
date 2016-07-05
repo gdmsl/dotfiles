@@ -1,0 +1,50 @@
+! Base16 foil
+! Scheme: Guido Masella (https://github.com/gdmsl)
+
+#define base00 #212121
+#define base01 #3f3f3f
+#define base02 #5d5d5d
+#define base03 #7b7b7b
+#define base04 #9a9a9a
+#define base05 #b8b8b8
+#define base06 #d6d6d6
+#define base07 #f5f5f5
+#define base08 #ff5252
+#define base09 #ff9800
+#define base0A #ffc107
+#define base0B #8bc34a
+#define base0C #00bcd4
+#define base0D #03a9f4
+#define base0E #e040fb
+#define base0F #ff5722
+
+*foreground:   base05
+*background:   base00
+*cursorColor:  base05
+
+*color0:       base00
+*color1:       base08
+*color2:       base0B
+*color3:       base0A
+*color4:       base0D
+*color5:       base0E
+*color6:       base0C
+*color7:       base05
+
+*color8:       base03
+*color9:       base08
+*color10:      base0B
+*color11:      base0A
+*color12:      base0D
+*color13:      base0E
+*color14:      base0C
+*color15:      base07
+
+! Note: colors beyond 15 might not be loaded (e.g., xterm, urxvt),
+! use 'shell' template to set these if necessary
+*color16:      base09
+*color17:      base0F
+*color18:      base01
+*color19:      base02
+*color20:      base04
+*color21:      base06

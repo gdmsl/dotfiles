@@ -330,8 +330,6 @@ for_window [title="scratchmonitor"] move scratchpad
 for_window [class="Pavucontrol"] move scratchpad
 
 # GAMES
-assign [class="Borderlands2"] $WS10
-for_window [class="Borderlands2"] fullscreen
 assign [class="dota_linux"] $WS10
 assign [class="dota2"] $WS10
 for_window [class="dota_linux"] fullscreen
@@ -347,19 +345,19 @@ font pango:Source Code Pro, Hack, DejaVu Sans Mono, FontAwesome, Icons 10
 
 # Colors
 # class                 border  backgr. text    indicator child_border
-client.focused          $base0D $base0D $base00 $base06   $base0D
+client.focused          $base0A $base0A $base00 $base06   $base0A
 client.focused_inactive $base03 $base03 $base05 $base02   $base03
 client.unfocused        $base01 $base01 $base05 $base01   $base01
 client.urgent           $base0F $base0F $base07 $base06   $base0F
 
 # Keybindings to change border style
 bindsym $mod+t border normal
-bindsym $mod+y border pixel 2
+bindsym $mod+y border pixel 1
 bindsym $mod+u border none
 
 # New windows are titleless and with 2 pixel border
-new_window pixel 2
-new_float pixel 2
+new_window pixel 1
+new_float pixel 1
 
 # }}}
 

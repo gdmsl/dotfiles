@@ -1,4 +1,4 @@
-" Base16 One (https://github.com/chriskempson/base16)
+" Base16 foil (https://github.com/chriskempson/base16)
 " Scheme: Guido Masella (https://github.com/gdmsl)
 
 " This enables the coresponding base16-shell script to run so that
@@ -7,27 +7,27 @@
 "   let g:base16_shell_path=base16-builder/output/shell/
 if !has('gui_running')
   if exists("g:base16_shell_path")
-    execute "silent !/bin/sh ".g:base16_shell_path."/base16-one.".&background.".sh"
+    execute "silent !/bin/sh ".g:base16_shell_path."/base16-foil.".&background.".sh"
   endif
 endif
 
 " GUI color definitions
-let s:gui00 = "21252b"
-let s:gui01 = "2f343d"
-let s:gui02 = "3c424e"
-let s:gui03 = "5c6370"
-let s:gui04 = "828997"
-let s:gui05 = "abb2bf"
-let s:gui06 = "ced6e6"
-let s:gui07 = "d9e2f2"
-let s:gui08 = "e06c75"
-let s:gui09 = "d19a66"
-let s:gui0A = "e5c07b"
-let s:gui0B = "98c379"
-let s:gui0C = "56b6c2"
-let s:gui0D = "528bff"
-let s:gui0E = "c678dd"
-let s:gui0F = "be5046"
+let s:gui00 = "212121"
+let s:gui01 = "3f3f3f"
+let s:gui02 = "5d5d5d"
+let s:gui03 = "7b7b7b"
+let s:gui04 = "9a9a9a"
+let s:gui05 = "b8b8b8"
+let s:gui06 = "d6d6d6"
+let s:gui07 = "f5f5f5"
+let s:gui08 = "ff5252"
+let s:gui09 = "ff9800"
+let s:gui0A = "ffc107"
+let s:gui0B = "8bc34a"
+let s:gui0C = "00bcd4"
+let s:gui0D = "03a9f4"
+let s:gui0E = "e040fb"
+let s:gui0F = "ff5722"
 
 " Terminal color definitions
 let s:cterm00 = "00"
@@ -59,7 +59,7 @@ endif
 " Theme setup
 hi clear
 syntax reset
-let g:colors_name = "base16-one"
+let g:colors_name = "base16-foil"
 
 " Highlighting function
 fun <sid>hi(group, guifg, guibg, ctermfg, ctermbg, attr, guisp)
@@ -261,14 +261,14 @@ call <sid>hi("javaScriptBraces",  s:gui05, "", s:cterm05, "", "", "")
 call <sid>hi("javaScriptNumber",  s:gui09, "", s:cterm09, "", "", "")
 
 " Mail highlighting
-call <sid>hi("mailQuoted1",  s:gui0A, "", s:cterm0A, "", "")
-call <sid>hi("mailQuoted2",  s:gui0B, "", s:cterm0B, "", "")
-call <sid>hi("mailQuoted3",  s:gui0E, "", s:cterm0E, "", "")
-call <sid>hi("mailQuoted4",  s:gui0C, "", s:cterm0C, "", "")
-call <sid>hi("mailQuoted5",  s:gui0D, "", s:cterm0D, "", "")
-call <sid>hi("mailQuoted6",  s:gui0A, "", s:cterm0A, "", "")
-call <sid>hi("mailURL",      s:gui0D, "", s:cterm0D, "", "")
-call <sid>hi("mailEmail",    s:gui0D, "", s:cterm0D, "", "")
+"call <sid>hi("mailQuoted1",  s:gui0A, "", s:cterm0A, "", "")
+"call <sid>hi("mailQuoted2",  s:gui0B, "", s:cterm0B, "", "")
+"call <sid>hi("mailQuoted3",  s:gui0E, "", s:cterm0E, "", "")
+"call <sid>hi("mailQuoted4",  s:gui0C, "", s:cterm0C, "", "")
+"call <sid>hi("mailQuoted5",  s:gui0D, "", s:cterm0D, "", "")
+"call <sid>hi("mailQuoted6",  s:gui0A, "", s:cterm0A, "", "")
+"call <sid>hi("mailURL",      s:gui0D, "", s:cterm0D, "", "")
+"call <sid>hi("mailEmail",    s:gui0D, "", s:cterm0D, "", "")
 
 " Markdown highlighting
 call <sid>hi("markdownCode",              s:gui0B, "", s:cterm0B, "", "", "")

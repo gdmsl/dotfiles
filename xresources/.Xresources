@@ -42,9 +42,9 @@ Xft.hinting:    true
 Xft.hintstyle:  slight
 
 ! rofi -----------------------------------------------------------------------
-rofi.color-window: #282828,#282828
-rofi.color-normal: #282828,#b8b8b8,#282828,#7cafc2,#282828
-rofi.color-active: #282828,#b8b8b8,#282828,#7cafc2,#282828
+rofi.color-window: #3f3f3f,#3f3f3f
+rofi.color-normal: #3f3f3f,#b8b8b8,#3f3f3f,#5d5d5d,#ffc107
+rofi.color-active: #3f3f3f,#b8b8b8,#3f3f3f,#5d5d5d,#ffc107
 rofi.font:  Source Code Pro 10
 rofi.bw:    2
 rofi.o:     85
@@ -52,5 +52,5 @@ rofi.terminal:  xterm
 rofi.location:  2
 
 ! colorscheme
-#include "/home/gdmsl/.xrdb/base16-default.dark.256.xresources"
+#include "/home/gdmsl/.xrdb/base16-foil.dark.256.xresources"
 

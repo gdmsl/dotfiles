@@ -8,20 +8,20 @@
 # Base16 One by Guido Masella (https://github.com/gdmsl/)
 # template by Matt Parnell, @parnmatt
 
-set $base00 #181818
-set $base01 #282828
-set $base02 #383838
-set $base03 #585858
-set $base04 #b8b8b8
-set $base05 #d8d8d8
-set $base06 #e8e8e8
-set $base07 #f8f8f8
-set $base08 #ab4642
-set $base09 #dc9656
-set $base0A #f7ca88
-set $base0B #a1b56c
-set $base0C #86c1b9
-set $base0D #7cafc2
-set $base0E #ba8baf
-set $base0F #a16946
+set $base00 #212121
+set $base01 #3f3f3f
+set $base02 #5d5d5d
+set $base03 #7b7b7b
+set $base04 #9a9a9a
+set $base05 #b8b8b8
+set $base06 #d6d6d6
+set $base07 #f5f5f5
+set $base08 #ff5252
+set $base09 #ff9800
+set $base0A #ffc107
+set $base0B #8bc34a
+set $base0C #00bcd4
+set $base0D #03a9f4
+set $base0E #e040fb
+set $base0F #ff5722
 
