@@ -52,5 +52,5 @@ rofi.terminal:  xterm
 rofi.location:  2
 
 ! colorscheme
-#include "/home/gdmsl/.xrdb/base16-default.dark.256.xresources"
+#include "/home/gdmsl/.xrdb/base16-monokai.dark.256.xresources"
 
