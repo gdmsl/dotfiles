@@ -12,7 +12,11 @@ path=Documents/DyINO
 path=Documents/SECURE
 path=Documents/Wiki
 path=Documents/AbstractOliver
+path=Documents/BEC
+path=Documents/Docs
+path=Documents/Utenze
 
+path=Pictures/Archlinux
 path=Pictures/Avatars
 path=Pictures/Fun
 path=Pictures/Posts
@@ -22,5 +26,8 @@ path=Pictures/Screenshot
 path=Pictures/Mine
 path=Pictures/Gore
 path=Pictures/DoTA2
+path=Pictures/TombRaider
+path=Pictures/DotaWTF
+path=Pictures/Wallpapers
 
 path=Bookshelf
