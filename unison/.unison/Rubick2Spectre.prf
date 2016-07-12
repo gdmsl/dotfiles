@@ -10,7 +10,6 @@ path=Documents/Identity
 path=Documents/CurriculumVitae
 path=Documents/DyINO
 path=Documents/SECURE
-path=Documents/Wiki
 path=Documents/AbstractOliver
 path=Documents/BEC
 path=Documents/Docs
@@ -31,3 +30,12 @@ path=Pictures/DotaWTF
 path=Pictures/Wallpapers
 
 path=Bookshelf
+
+ignore = Path {Documents/Wiki/.git/COMMIT_EDITMSG}
+ignore = Path {Documents/Wiki/.git/index}
+ignore = Path {Documents/Wiki/.git/logs/HEAD}
+ignore = Path {Documents/Wiki/.git/logs/refs/heads/master}
+ignore = Path {Documents/Wiki/.git/logs/refs/remotes/origin/master}
+ignore = Path {Documents/Wiki/.git/refs/heads/master}
+ignore = Path {Documents/Wiki/.git/refs/remotes/origin/master}
+ignore = Path {Documents/Wiki/Dysprosium.md}
