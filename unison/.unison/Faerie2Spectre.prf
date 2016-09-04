@@ -1,12 +1,13 @@
 label = Sync rubick via ssh to the archive on grepublic.no-ip.biz
 
 root = /run/media/gdmsl/FaerieSafe/gdmsl
-root = ssh://gdmsl@192.168.1.100//mnt/archive0/gdmsl
+root = /mnt/archive0/gdmsl
 
 sshargs = -C
 
 # directories
 path=Documents
+path=Brothel
 path=Pictures
 path=Library
 path=Bookshelf
