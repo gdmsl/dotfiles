@@ -36,7 +36,7 @@ export TERMINAL="termite"
 export SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass
 
 # QT5 style
-export QT_STYLE_OVERRIDE=GTK+
+export QT_STYLE_OVERRIDE='gtk2'
 
 # Ruby
 export GEM_HOME=$(ruby -e 'print Gem.user_dir')
@@ -46,4 +46,3 @@ export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
 # usefull paths
 export TOOLSPATH=$HOME/Develop/tools
 export I3SESSIONS=$HOME/Arch/i3sessions
-
