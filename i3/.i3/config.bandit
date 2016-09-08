@@ -35,7 +35,7 @@ set $O3 HDMI1
 
 bar {
 	output            $O1
-	status_command    i3blocks -c ~/.i3blocks/qop.conf
+	status_command    i3blocks -c ~/.i3blocks/bandit.conf
 	position          bottom
 	workspace_buttons yes
     tray_output $O1
@@ -58,7 +58,7 @@ bar {
 
 bar {
 	output            $O3
-	status_command    i3blocks -c ~/.i3blocks/qop.conf
+	status_command    i3blocks -c ~/.i3blocks/bandit.conf
 	position          bottom
 	workspace_buttons yes
     tray_output $O1
