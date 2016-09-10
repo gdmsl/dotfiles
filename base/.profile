@@ -3,7 +3,7 @@
 #
 
 # setting the PATH envirorment variable
-export PATH="$HOME/.local/bin:/usr/local/texlive/2015/bin/x86_64-linux:$HOME/.local/bin:/usr/local/texlive/2014/bin/x86_64-linux:$HOME/.cabal/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/texlive/2015/bin/x86_64-linux:$HOME/.cabal/bin:$PATH"
 
 # Experience tell me that it's rather impossible to make vdpau
 # .. work with my discrete nvidia with OPTIMUS. So maybe i can make use
@@ -44,5 +44,4 @@ export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
 
 
 # usefull paths
-export TOOLSPATH=$HOME/Develop/tools
-export I3SESSIONS=$HOME/Arch/i3sessions
+export I3SESSIONS=$HOME/var/i3sessions
