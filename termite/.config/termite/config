@@ -41,33 +41,31 @@ cursor_shape = block
 #roundness = 2.0
 
 [colors]
-foreground = #a3a3a3
-foreground_bold = #a3a3a3
-background = #1f2022
-cursor = #a3a3a3
+foreground  = #CDD3DE
+background  = #263238
+cursorColor = #CDD3DE
 
-color0 = #1f2022
-color1 = #f2241f
-color2 = #67b11d
-color3 = #b1951d
-color4 = #4f97d7
-color5 = #a31db1
-color6 = #2d9574
-color7 = #a3a3a3
+color0  = #263238
+color1  = #EC5F67
+color2  = #8BD649
+color3  = #FFCC00
+color4  = #89DDFF
+color5  = #82AAFF
+color6  = #80CBC4
+color7  = #CDD3DE
 
-color8 = #585858
-color9 = #f2241f
-color10 = #67b11d
-color11 = #b1951d
-color12 = #4f97d7
-color13 = #a31db1
-color14 = #2d9574
-color15 = #f8f8f8
+color8  = #707880
+color9  = #EC5F67
+color10 = #8BD649
+color11 = #FFCC00
+color12 = #89DDFF
+color13 = #82AAFF
+color14 = #80CBC4
+color15 = #FFFFFF
 
-# 256 color space
-color16 = #ffa500
-color17 = #b03060
-color18 = #282828
-color19 = #444155
-color20 = #b8b8b8
-color21 = #e8e8e8
+color16 = #EA9560
+color17 = #EC5F67
+color18 = #2c393f
+color19 = #37474F
+color20 = #C9CCD3
+color21 = #D5DBE5

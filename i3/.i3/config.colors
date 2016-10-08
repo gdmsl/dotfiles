@@ -8,20 +8,20 @@
 # Base16 spacemacs
 # template by Matt Parnell, @parnmatt
 
-set $base00 #1f2022
-set $base01 #282828
-set $base02 #444155
-set $base03 #585858
-set $base04 #b8b8b8
-set $base05 #a3a3a3
-set $base06 #e8e8e8
-set $base07 #f8f8f8
-set $base08 #f2241f
-set $base09 #ffa500
-set $base0A #b1951d
-set $base0B #67b11d
-set $base0C #2d9574
-set $base0D #4f97d7
-set $base0E #a31db1
-set $base0F #b03060
+set $base00 #263238
+set $base01 #2C393F
+set $base02 #37474F
+set $base03 #707880
+set $base04 #C9CCD3
+set $base05 #CDD3DE
+set $base06 #D5DBE5
+set $base07 #FFFFFF
+set $base08 #EC5F67
+set $base09 #EA9560
+set $base0A #FFCC00
+set $base0B #8BD649
+set $base0C #80CBC4
+set $base0D #89DDFF
+set $base0E #82AAFF
+set $base0F #EC5F67
 
