@@ -3,7 +3,7 @@
 #
 
 # setting the PATH envirorment variable
-export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/texlive/2015/bin/x86_64-linux:$HOME/.cabal/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/texlive/2016/bin/x86_64-linux:$HOME/.cabal/bin:$PATH"
 
 # Experience tell me that it's rather impossible to make vdpau
 # .. work with my discrete nvidia with OPTIMUS. So maybe i can make use
