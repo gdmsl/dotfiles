@@ -345,7 +345,7 @@ font pango:Hack, DejaVu Sans Mono, FontAwesome, Icons 10
 
 # Colors
 # class                 border  backgr. text    indicator child_border
-client.focused          $base0D $base0D $base05 $base07   $base0D
+client.focused          $base0D $base0D $base01 $base07   $base0D
 client.focused_inactive $base03 $base03 $base05 $base02   $base03
 client.unfocused        $base01 $base01 $base05 $base01   $base01
 client.urgent           $base0F $base0F $base07 $base06   $base0F
