@@ -1,0 +1,16 @@
+{
+  "linewrap": 79,
+  "editor": "nvim",
+  "default_hour": 9,
+  "journals": {
+    "default": "/home/gdmsl/log/jrnl/jrnl.txt",
+    "arch": "/home/gdmsl/log/jrnl/arch.txt",
+    "bandit": "/home/gdmsl/log/jrnl/bandit.txt",
+    "spectre": "/home/gdmsl/log/jrnl/spectre.txt"
+  },
+  "timeformat": "%Y-%m-%d %H:%M",
+  "highlight": true,
+  "tagsymbols": "@",
+  "default_minute": 0,
+  "encrypt": true
+}

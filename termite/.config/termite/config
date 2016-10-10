@@ -9,7 +9,7 @@ allow_bold = true
 dynamic_title = true
 urgent_on_bell = true
 clickable_url = true
-font = Source Code Pro 10
+font = Hack 10
 scrollback_lines = 10000
 search_wrap = true
 #icon_name = terminal
@@ -41,36 +41,31 @@ cursor_shape = block
 #roundness = 2.0
 
 [colors]
-# Base16 foil
-# Scheme: Guido Masella (https://github.com/gdmsl)
+foreground  = #CDD3DE
+background  = #263238
+cursorColor = #CDD3DE
 
-foreground      = #b8b8b8
-foreground_bold = #b8b8b8
-cursor          = #b8b8b8
-background      = #212121
+color0  = #263238
+color1  = #EC5F67
+color2  = #8BD649
+color3  = #FFCC00
+color4  = #89DDFF
+color5  = #82AAFF
+color6  = #80CBC4
+color7  = #CDD3DE
 
-# 16 color space
-color0  = #212121
-color1  = #ff5252
-color2  = #8bc34a
-color3  = #ffc107
-color4  = #2196f3
-color5  = #e040fb
-color6  = #00bcd4
-color7  = #b8b8b8
-color8  = #7b7b7b
-color9  = #ff5252
-color10 = #8bc34a
-color11 = #ffc107
-color12 = #2196f3
-color13 = #e040fb
-color14 = #00bcd4
-color15 = #f5f5f5
+color8  = #707880
+color9  = #EC5F67
+color10 = #8BD649
+color11 = #FFCC00
+color12 = #89DDFF
+color13 = #82AAFF
+color14 = #80CBC4
+color15 = #FFFFFF
 
-# 256 color space
-color16 = #ff9800
-color17 = #ff5722
-color18 = #3f3f3f
-color19 = #5d5d5d
-color20 = #9a9a9a
-color21 = #d6d6d6
+color16 = #EA9560
+color17 = #EC5F67
+color18 = #2c393f
+color19 = #37474F
+color20 = #C9CCD3
+color21 = #D5DBE5

@@ -22,7 +22,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'flazz/vim-colorschemes'
 Plug 'spf13/vim-autoclose'
 Plug 'scrooloose/nerdcommenter'
-Plug 'jcf/vim-latex'
+Plug 'lervag/vimtex'
 Plug 'edkolev/tmuxline.vim'
 Plug 'JuliaLang/julia-vim'
 Plug 'chriskempson/base16-vim'
@@ -78,8 +78,7 @@ augroup END
 " LaTeX {{{
 augroup latex_config
     autocmd!
-    let g:tex_flavor = 'latex'
-    let g:tex_conceal = ''
+    let g:vimtex_fold_enabled = 1
 augroup END
 " }}}
 
@@ -197,7 +196,7 @@ set undodir=/tmp/neovim//
 set t_Co=256
 set background=dark
 syntax on
-colorscheme base16-foil
+colorscheme base16-materia
 " }}}
 
 "Folding {{{
