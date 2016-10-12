@@ -383,9 +383,6 @@ exec copyq
 # Screen off after 5 minutes
 exec --no-startup-id xset dpms 600
 
-# Solid Color Background
-exec --no-startup-id xsetroot -solid "#21252b"
-
 # set the $O1 as default (primary)
 exec xrandr --output $O1 --primary
 
