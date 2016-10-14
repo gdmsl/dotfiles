@@ -97,10 +97,10 @@ augroup END
 " }}}
 
 " Base16 {{{
-"augroup base16_config
-    "let base16colorspace=256
+augroup base16_config
+    let base16colorspace=256
     "let g:base16_shell_path="~/.base16/"
-"augroup END
+augroup END
 " }}}
 
 " Fugitive {{{
