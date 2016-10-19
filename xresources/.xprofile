@@ -18,6 +18,8 @@ if [ "$HOSTNAME" = "rubick" ]; then
     xrdb -merge ~/.xrdb/fullhd.xresources
 fi
 
+[[ -f ~/.screenlayout/default.sh ]] && ~/.screenlayout/default.sh
+
 #wallpaper
 nitrogen --restore &
 
