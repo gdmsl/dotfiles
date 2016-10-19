@@ -92,3 +92,6 @@ schedule = chmod,0,0,"execute=chmod,777,/tmp/rpc.socket"
 
 # Encoding
 encoding_list = UTF-8
+
+# start scheduler from rutorrent
+execute = {sh,-c,/usr/bin/php /usr/share/webapps/rutorrent/php/initplugins.php gdmsl &}
