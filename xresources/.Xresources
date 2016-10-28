@@ -42,7 +42,7 @@ Xft.hinting:    true
 Xft.hintstyle:  slight
 
 ! colorscheme
-#include "/home/gdmsl/.xrdb/base16-onedark-256.Xresources"
+#include "/home/gdmsl/.xrdb/base16-default-dark-256.Xresources"
 
 ! rofi -----------------------------------------------------------------------
 rofi.color-window: base01,base01

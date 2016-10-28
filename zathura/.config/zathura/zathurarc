@@ -1,39 +1,39 @@
 # zathura configuration file
 
-set default-bg                  "#282c34"
-set default-fg                  "#353b45"
+set default-bg                  "#181818"
+set default-fg                  "#d8d8d8"
 
-set statusbar-fg                "#565c64"
-set statusbar-bg                "#353b45"
+set statusbar-bg                "#383838"
+set statusbar-fg                "#d8d8d8"
 
-set inputbar-bg                 "#282c34"
-set inputbar-fg                 "#cdd3de"
+set inputbar-bg                 "#181818"
+set inputbar-fg                 "#b8b8b8"
 
-set notification-error-bg       "#be5046"
-set notification-error-fg       "#282c34"
+set notification-error-bg       "#ab4642"
+set notification-error-fg       "#181818"
 
-set notification-warning-bg     "#be5046"
-set notification-warning-fg     "#282c34"
+set notification-warning-bg     "#dc9656"
+set notification-warning-fg     "#181818"
 
-set highlight-color             "#e5c07b"
-set highlight-active-color      "#61afef"
+set highlight-color             "#585858"
+set highlight-active-color      "#a1b56c"
 
-set completion-highlight-fg     "#3e4451"
-set completion-highlight-bg     "#56b6c2"
+set completion-highlight-bg     "#7cafc2"
+set completion-highlight-fg     "#d8d8d8"
 
-set completion-bg               "#3e4451"
-set completion-fg               "#56b6c2"
+set completion-bg               "#383838"
+set completion-fg               "#d8d8d8"
 
-set notification-bg             "#8bd649"
-set notification-fg             "#282c34"
+set notification-bg             "#a1b56c"
+set notification-fg             "#181818"
 
-set recolor-lightcolor          "#282c34"
-set recolor-darkcolor           "#b6bdca"
+set recolor-lightcolor          "#181818"
+set recolor-darkcolor           "#d8d8d8"
 set recolor                     "true"
 
 # setting recolor-keep true will keep any color your pdf has.
 # if it is false, it'll just be black and white
-# set recolor-keephue             "true"
+set recolor-keephue             "true"
 
 # Rest of your configs go here:
 set font "Hack 10"
