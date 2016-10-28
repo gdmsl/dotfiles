@@ -13,3 +13,6 @@
 [submodule "unigine-tropics"]
 	path = unigine-tropics
 	url = aur:unigine-tropics
+[submodule "tmux/.tmux"]
+	path = tmux/.tmux
+	url = https://github.com/gpakosz/.tmux.git
