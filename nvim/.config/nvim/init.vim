@@ -23,7 +23,7 @@ Plug 'flazz/vim-colorschemes'
 Plug 'spf13/vim-autoclose'
 Plug 'scrooloose/nerdcommenter'
 Plug 'lervag/vimtex'
-Plug 'edkolev/tmuxline.vim'
+"Plug 'edkolev/tmuxline.vim'
 Plug 'JuliaLang/julia-vim'
 Plug 'chriskempson/base16-vim'
 Plug 'benekastah/neomake'
@@ -37,6 +37,7 @@ Plug 'vim-scripts/loremipsum'
 Plug 'justmao945/vim-clang'
 Plug 'airblade/vim-gitgutter'
 Plug 'rust-lang/rust.vim'
+Plug 'kana/vim-arpeggio'
 
 call plug#end()
 " }}}
@@ -53,7 +54,7 @@ augroup airline_config
   let g:airline#extensions#tabline#enabled = 1
   let g:airline#extensions#tabline#fnamecollapse = 0
   let g:airline#extensions#tabline#fnamemod = ':t'
-  let g:airline#extensions#tmuxline#enabled = 0
+  "let g:airline#extensions#tmuxline#enabled = 0
   let g:airline_theme = 'base16'
 augroup END
 " }}}
@@ -83,10 +84,10 @@ augroup END
 " }}}
 
 " Tmuxline {{{
-augroup tmuxline_config
-    autocmd!
-    let g:tmuxline_preset = 'minimal'
-augroup END
+"augroup tmuxline_config
+    "autocmd!
+    "let g:tmuxline_preset = 'minimal'
+"augroup END
 " }}}
 
 " Pandoc {{{
@@ -174,6 +175,14 @@ augroup rust_config
 augroup END
 " }}}
 
+" RustLang {{{
+augroup arpeggio_config
+    autocmd!
+    call arpeggio#map('i', '', 0, 'jk', '<Esc>')
+    "let g:arpeggio_timeoutlen=20
+augroup END
+" }}}
+
 " Settings -------------------------------------------------------------------
 
 " NeoVim {{{
@@ -196,7 +205,7 @@ set undodir=/tmp/neovim//
 set t_Co=256
 set background=dark
 syntax on
-colorscheme base16-materia
+colorscheme base16-onedark
 " }}}
 
 "Folding {{{
@@ -273,8 +282,8 @@ onoremap <right> <nop>
 " }}}
 
 " FastSwitches {{{
-ino jj <esc>
-cno jj <c-c>
+"ino jj <esc>
+"cno jj <c-c>
 vno v <esc>
 " }}}
 
