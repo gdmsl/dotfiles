@@ -1,34 +1,34 @@
 # zathura configuration file
 
-set default-bg                  "#263238"
-set default-fg                  "#2c393f"
+set default-bg                  "#282c34"
+set default-fg                  "#353b45"
 
-set statusbar-fg                "#c9cdd3"
-set statusbar-bg                "#2c393f"
+set statusbar-fg                "#565c64"
+set statusbar-bg                "#353b45"
 
-set inputbar-bg                 "#263238"
+set inputbar-bg                 "#282c34"
 set inputbar-fg                 "#cdd3de"
 
-set notification-error-bg       "#ec5f67"
-set notification-error-fg       "#263238"
+set notification-error-bg       "#be5046"
+set notification-error-fg       "#282c34"
 
-set notification-warning-bg     "#ec5f67"
-set notification-warning-fg     "#263238"
+set notification-warning-bg     "#be5046"
+set notification-warning-fg     "#282c34"
 
-set highlight-color             "#ffcc00"
-set highlight-active-color      "#89ddff"
+set highlight-color             "#e5c07b"
+set highlight-active-color      "#61afef"
 
-set completion-highlight-fg     "#37474f"
-set completion-highlight-bg     "#80cbc4"
+set completion-highlight-fg     "#3e4451"
+set completion-highlight-bg     "#56b6c2"
 
-set completion-bg               "#37474g"
-set completion-fg               "#80cbc4"
+set completion-bg               "#3e4451"
+set completion-fg               "#56b6c2"
 
 set notification-bg             "#8bd649"
-set notification-fg             "#263238"
+set notification-fg             "#282c34"
 
-set recolor-lightcolor          "#263238"
-set recolor-darkcolor           "#d5dbe5"
+set recolor-lightcolor          "#282c34"
+set recolor-darkcolor           "#b6bdca"
 set recolor                     "true"
 
 # setting recolor-keep true will keep any color your pdf has.
