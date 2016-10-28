@@ -298,13 +298,13 @@ bindsym $mod+n workspace next_on_output
 # WINDOWS RULES {{{
 
 # assign web browsers to workspace web
-assign [class="chromium"] $WS00
+assign [class="Chromium"] $WS00
 assign [class="Firefox"] $WS00
 
 # windows title
 #for_window [class=".*"] title_format " <b>%title</b>"
 for_window [class=".*"] title_format " 3  <b>%title</b> "
-for_window [class="chromium"] title_format "   <b>%title</b> "
+for_window [class="Chromium"] title_format "   <b>%title</b> "
 for_window [class="Firefox"] title_format "   <b>%title</b> "
 
 # force apps to go in floating mode
