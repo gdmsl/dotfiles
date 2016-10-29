@@ -205,7 +205,7 @@ set undodir=/tmp/neovim//
 set t_Co=256
 set background=dark
 syntax on
-colorscheme base16-default-dark
+colorscheme base16-onedark
 " }}}
 
 "Folding {{{
