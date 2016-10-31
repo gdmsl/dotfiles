@@ -44,13 +44,13 @@ bindsym XF86MonBrightnessUp exec "xbacklight -inc 20"
 
 # Volume ALSA
 #bindsym XF86AudioMute exec --no-startup-id "amixer set Master toggle; pkill -RTMIN+10 i3blocks"
-#bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer set Master 5%+ unmute; pkill -RTMIN+10 i3blocks; ogg123 /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
-#bindsym XF86AudioLowerVolume exec --no-startup-id "amixer set Master 5%- unmute; pkill -RTMIN+10 i3blocks; ogg123 /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
+#bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer set Master 5%+ unmute; pkill -RTMIN+10 i3blocks; paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
+#bindsym XF86AudioLowerVolume exec --no-startup-id "amixer set Master 5%- unmute; pkill -RTMIN+10 i3blocks; paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
 
 # Volume PULSE
 bindsym XF86AudioMute exec --no-startup-id "amixer -D pulse set Master toggle; pkill -RTMIN+10 i3blocks"
-bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer -D pulse set Master 5%+ unmute; pkill -RTMIN+10 i3blocks; ogg123 /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
-bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pulse set Master 5%- unmute; pkill -RTMIN+10 i3blocks; ogg123 /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
+bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer -D pulse set Master 5%+ unmute; pkill -RTMIN+10 i3blocks; paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
+bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pulse set Master 5%- unmute; pkill -RTMIN+10 i3blocks; paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
 
 # Alsamixer
 #bindsym $mod+m exec "xterm -e alsamixer; pkill -RTMIN+10 i3blocks"
@@ -83,7 +83,7 @@ bindsym $mod+Shift+$tombkey exec --no-startup-id tomb slam all
 bindsym $mod+$tombkey exec "i3-nagbar -t warning -m 'Do you want to slam all opened tombs?' -b 'Slamm All!' 'tomb slam all'"
 
 # take screenshots
-bindcode 107 exec --no-startup-id "maim ~/Pictures/Screenshots/$(date +%F-%T).png && ogg123 /usr/share/sounds/freedesktop/stereo/screen-capture.oga"
+bindcode 107 exec --no-startup-id "maim ~/usr/pictures/screenshots/$(date +%F-%T).png && paplay /usr/share/sounds/freedesktop/stereo/screen-capture.oga"
 
 
 # common actions
@@ -402,7 +402,7 @@ exec --no-startup-id "dunst"
 exec --no-startup-id "redshift-gtk"
 
 # Sound
-#exec --no-startup-id "ogg123 /usr/share/sounds/freedesktop/stereo/service-login.oga"
+#exec --no-startup-id "paplay /usr/share/sounds/freedesktop/stereo/service-login.oga"
 
 # weather
 # exec --no-startup-id weather
