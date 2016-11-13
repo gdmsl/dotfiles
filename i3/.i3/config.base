@@ -344,11 +344,11 @@ for_window [class="dota2"] fullscreen
 font pango:Hack, DejaVu Sans Mono, FontAwesome, Icons 10
 
 # Colors
-# class                 border  backgr. text    indicator child_border
-client.focused          $base0D $base0D $base01 $base07   $base0D
-client.focused_inactive $base03 $base03 $base05 $base02   $base03
-client.unfocused        $base01 $base01 $base05 $base01   $base01
-client.urgent           $base0F $base0F $base07 $base06   $base0F
+# class                 border   backgr.  text     indicator  child_border
+client.focused          $color4  $color4  $color18 $color15   $color4
+client.focused_inactive $color8  $color8  $color7  $color19   $color8
+client.unfocused        $color18 $color18 $color7  $color18   $color18
+client.urgent           $color17 $color17 $color15 $color21   $color17
 
 # Keybindings to change border style
 bindsym $mod+t border normal
@@ -402,7 +402,7 @@ exec --no-startup-id "dunst"
 exec --no-startup-id "redshift-gtk"
 
 # Sound
-#exec --no-startup-id "paplay /usr/share/sounds/freedesktop/stereo/service-login.oga"
+exec --no-startup-id "paplay /usr/share/sounds/freedesktop/stereo/service-login.oga"
 
 # weather
 # exec --no-startup-id weather
@@ -414,7 +414,7 @@ exec "LD_PRELOAD=/usr/lib/mumble/libmumble.so compton --config ~/.config/compton
 exec --no-startup-id pavucontrol
 
 # system monitor
-exec --no-startup-id xterm -T scratchmonitor -e zsh -c "glances"
+exec --no-startup-id termite --name=scratchmonitor -e "zsh -c glances"
 
 # file manager
 exec --no-startup-id "pcmanfm -d"

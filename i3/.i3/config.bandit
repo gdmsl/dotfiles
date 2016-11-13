@@ -45,14 +45,14 @@ bar {
 
     colors {
         # class    color
-        separator  $base03
-        background $base00
-        statusline $base05
-        # class              border  background text
-        focused_workspace    $base0D $base0D    $base00
-        active_workspace     $base04 $base04    $base00
-        inactive_workspace   $base00 $base00    $base03
-        urgent_workspace     $base08 $base08    $base07
+        separator  $color8
+        background $color0
+        statusline $color7
+        # class              border   background text
+        focused_workspace    $color4  $color4    $color0
+        active_workspace     $color20 $color20   $color20
+        inactive_workspace   $color0  $color0    $color8
+        urgent_workspace     $color1  $color1    $color15
     }
 }
 
@@ -68,14 +68,14 @@ bar {
 
     colors {
         # class    color
-        separator  $base03
-        background $base00
-        statusline $base05
-        # class              border  background text
-        focused_workspace    $base0D $base0D    $base00
-        active_workspace     $base04 $base04    $base00
-        inactive_workspace   $base00 $base00    $base03
-        urgent_workspace     $base08 $base08    $base07
+        separator  $color8
+        background $color0
+        statusline $color7
+        # class              border   background text
+        focused_workspace    $color4  $color4    $color0
+        active_workspace     $color20 $color20   $color20
+        inactive_workspace   $color0  $color0    $color8
+        urgent_workspace     $color1  $color1    $color15
     }
 }
 # }}}
