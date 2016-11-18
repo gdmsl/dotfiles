@@ -414,7 +414,7 @@ exec "LD_PRELOAD=/usr/lib/mumble/libmumble.so compton --config ~/.config/compton
 exec --no-startup-id pavucontrol
 
 # system monitor
-exec --no-startup-id termite --name=scratchmonitor -e "zsh -c glances"
+exec --no-startup-id termite --title=scratchmonitor -e "zsh -c glances"
 
 # file manager
 exec --no-startup-id "pcmanfm -d"
