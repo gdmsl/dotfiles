@@ -12,7 +12,7 @@ status_backend = sqlite
 
 [Repository gmail-local]
 type = Maildir
-localfolders = ~/Mail/gmail
+localfolders = ~/var/mail/gmail
 nametrans = lambda s: {  'starred' : '[Gmail]/Starred',
                         'trash' : '[Gmail]/Trash',
                         'spam' : '[Gmail]/Spam',
