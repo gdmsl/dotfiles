@@ -12,6 +12,7 @@ status_backend = sqlite
 
 [Repository gmail-local]
 type = Maildir
+sep = /
 localfolders = ~/var/mail/gmail
 nametrans = lambda s: { 'starred'   : '[Gmail]/Starred',
                         'trash'     : '[Gmail]/Trash',
@@ -26,6 +27,7 @@ nametrans = lambda s: { 'starred'   : '[Gmail]/Starred',
 [Repository gmail-remote]
 type = Gmail
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+realdelete = no
 remoteuser = guido.masella@gmail.com
 remotepasseval = get_pass()
 auth_mechanisms = LOGIN
@@ -42,3 +44,12 @@ folderfilter = lambda folder: folder not in ['[Gmail]/All Mail',
                                              '[Gmail]/Important',
                                              '[Gmail]/Starred',
 											]
+
+[mbnames]
+enabled = yes
+filename = ~/.mutt/mailboxes
+header = "mailboxes "
+peritem = "+%(accountname)s/%(foldername)s"
+sep = " "
+footer = "\n"
+

@@ -17,61 +17,83 @@ function main()
     account['[Gmail]/Trash']:check_status()
     account['[Gmail]/Spam']:check_status()
 
-    -- Get all mail from INBOX
-    mails = account.INBOX:select_all()
-
     -- Move mailing lists from INBOX to correct folders
-    move_mailing_lists(account, mails)
-
-    -- Delete some trash
-    -- delete_mail_from(account, mails, "enews@rockabilia.com");
-    -- delete_mail_if_subject_contains(account, mails, "[CSSeminars] ");
-
-    -- Get all mail from trash
-    mails = account['[Gmail]/Trash']:select_all()
-
-    -- Move mailing lists from trash to correct folders
-    move_mailing_lists(account, mails)
-
-    -- Get all mail from spam
-    mails = account['[Gmail]/Spam']:select_all()
+    print("Moving Mailing Lists from INBOX")
+    move_mailing_lists(account, "INBOX")
 
     -- Move mailing lists from spam to correct folders
-    move_mailing_lists(account, mails)
+    print("Moving Mailing Lists from Spam")
+    move_mailing_lists(account, "[Gmail]/Spam")
 
-    -- move_if_from_contains(account, mails, "edarling.ch", "INBOX")
+    -- Move mailing lists from trash to correct folders
+    print("Moving Mailing Lists from Trash")
+    move_mailing_lists(account, "[Gmail]/Trash")
+
+    -- Delete steam wishlist mails older than 8 days
+    print("Moving Steam Sales notifications older than 8 days to Trash")
+    move_if_from_subject_older(account, "INBOX", "An item on your Steam wishlist is on sale!", "noreply@steampowered.com", 8, "[Gmail]/Trash")
+
+    -- Move older calendar items
+    print("Removing calendar messages older than 30 days.")
+    move_if_from_older(account, "INBOX", "calendar-notification@google.com", 30, "[Gmail]/Trash")
+
+    -- Cleanup of older mails
+    print("Cleaning up older mails")
+    move_if_older(account, "INBOX", 90, "cleanup")
 end
 
-function move_mailing_lists(account, mails)
+function move_mailing_lists(account, mailbox)
     -- arch linux mailing lists
-    move_if_subject_contains(account, mails, "[arch-general]", "ml/arch-general")
-    move_if_subject_contains(account, mails, "[arch-security]", "ml/arch-security")
-    move_if_subject_contains(account, mails, "[arch-announce]", "ml/arch-announce")
+    move_if_subject(account, mailbox, "[arch-general]", "ml/arch-general")
+    move_if_subject(account, mailbox, "[arch-security]", "ml/arch-security")
+    move_if_subject(account, mailbox, "[arch-announce]", "ml/arch-announce")
+
+    -- studentifisica2004 mailing lists
+    move_if_subject(account, mailbox, "[Studentifisica2004]", "ml/studentifisica2004")
 end
 
-function move_if_subject_contains(account, mails, subject, mailbox)
-    filtered = mails:contain_subject(subject)
-    filtered:move_messages(account[mailbox]);
+function move_if_subject(account, mailbox, subject, tomailbox)
+    filtered = account[mailbox]:contain_subject(subject)
+    filtered:move_messages(account[tomailbox]);
 end
 
-function move_if_to_contains(account, mails, to, mailbox)
-    filtered = mails:contain_to(to)
-    filtered:move_messages(account[mailbox]);
+function move_if_to(account, mailbox, to, tomailbox)
+    filtered = account[mailbox]:contain_to(to)
+    filtered:move_messages(account[tomailbox]);
 end
 
-function move_if_from_contains(account, mails, from, mailbox)
-    filtered = mails:contain_from(from)
-    filtered:move_messages(account[mailbox]);
+function move_if_from(account, mailbox, from, tomailbox)
+    filtered = account[mailbox]:contain_from(from)
+    filtered:move_messages(account[tomailbox]);
 end
 
-function delete_mail_from(account, mails, from)
-    filtered = mails:contain_from(from)
+function delete_if_from(account, mailbox, from)
+    filtered = account[mailbox]:contain_from(from)
     filtered:delete_messages()
 end
 
-function delete_mail_if_subject_contains(account, mails, subject)
-    filtered = mails:contain_subject(subject)
+function delete_if_subject(account, mailbox, subject)
+    filtered = account[mailbox]:contain_subject(subject)
     filtered:delete_messages()
+end
+
+function move_if_from_subject_older(account, mailbox, from, subject, olderthan, tomailbox)
+    mails = account[mailbox]:select_all()
+    filtered = account[mailbox]:contain_subject(subject) *
+        account[mailbox]:contain_from(from) *
+        account[mailbox]:is_older(olderthan)
+    filtered:move_messages(account[tomailbox])
+end
+
+function move_if_from_older(account, mailbox, from, olderthan, tomailbox)
+    filtered = account[mailbox]:contain_from(from) *
+        account[mailbox]:is_older(olderthan)
+    filtered:move_messages(account[tomailbox])
+end
+
+function move_if_older(account, mailbox, olderthan, tomailbox)
+    filtered = account[mailbox]:is_older(olderthan)
+    filtered:move_messages(account[tomailbox])
 end
 
 -- Utility function to get IMAP password from file
