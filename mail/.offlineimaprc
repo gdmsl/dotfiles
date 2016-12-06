@@ -13,16 +13,15 @@ status_backend = sqlite
 [Repository gmail-local]
 type = Maildir
 localfolders = ~/var/mail/gmail
-nametrans = lambda s: {  'starred' : '[Gmail]/Starred',
-                        'trash' : '[Gmail]/Trash',
-                        'spam' : '[Gmail]/Spam',
-                        'sent' : '[Gmail]/Sent Mail',
+nametrans = lambda s: { 'starred'   : '[Gmail]/Starred',
+                        'trash'     : '[Gmail]/Trash',
+                        'spam'      : '[Gmail]/Spam',
+                        'sent'      : '[Gmail]/Sent Mail',
                         'important' : '[Gmail]/Important',
-                        'drafts' : '[Gmail]/Drafts',
-                        'archive' : '[Gmail]/All Mail',
-                        'inbox' : 'INBOX',
+                        'drafts'    : '[Gmail]/Drafts',
+                        'archive'   : '[Gmail]/All Mail',
+                        'inbox'     : 'INBOX',
                       }.get (s, s)
-
 
 [Repository gmail-remote]
 type = Gmail
@@ -30,20 +29,16 @@ sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 remoteuser = guido.masella@gmail.com
 remotepasseval = get_pass()
 auth_mechanisms = LOGIN
-nametrans = lambda s: {  '[Gmail]/Starred' : 'flagged',
-                         '[Gmail]/Trash'   : 'trash',
-                         '[Gmail]/Spam'    : 'spam',
-                         '[Gmail]/Sent Mail' : 'sent',
-                         '[Gmail]/Important' : 'important',
-                         '[Gmail]/Drafts'    : 'drafts',
-                         '[Gmail]/All Mail'  : 'archive',
-                         'INBOX'             : 'inbox',
+nametrans = lambda s: { '[Gmail]/Starred'   : 'flagged',
+                        '[Gmail]/Trash'     : 'trash',
+                        '[Gmail]/Spam'      : 'spam',
+                        '[Gmail]/Sent Mail' : 'sent',
+                        '[Gmail]/Important' : 'important',
+                        '[Gmail]/Drafts'    : 'drafts',
+                        '[Gmail]/All Mail'  : 'archive',
+                        'INBOX'             : 'inbox',
                       }.get (s, s)
-folderfilter = lambda folder: folder in ['[Gmail]/All Mail',
-                                         '[Gmail]/Sent Mail',
-                                         '[Gmail]/Drafts',
-                                         '[Gmail]/Important',
-                                         '[Gmail]/Trash',
-                                         '[Gmail]/Spam',
-                                         '[Gmail]/Starred',
-                                         'INBOX']
+folderfilter = lambda folder: folder not in ['[Gmail]/All Mail',
+                                             '[Gmail]/Important',
+                                             '[Gmail]/Starred',
+											]
