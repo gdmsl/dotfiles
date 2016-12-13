@@ -1,0 +1,39 @@
+# vim: set filetype=muttrc :
+#
+# ~/.mutt/bindings
+#
+
+# Sidebar
+bind index,pager \Ck sidebar-prev
+bind index,pager \Cj sidebar-next
+bind index,pager \Cl sidebar-open
+bind index,pager \Cn sidebar-page-up
+bind index,pager \Cv sidebar-page-down
+bind index,pager \Ct sidebar-toggle-visible
+
+# Index
+bind index l display-message
+bind index gg first-entry
+bind index G last-entry
+bind index h noop               # Disable h
+
+# Pager
+bind pager h exit
+bind pager gg top
+bind pager G bottom
+bind pager J next-line
+bind pager K previous-line
+bind pager gr group-reply
+
+# Browser
+bind browser l select-entry
+bind browser L view-file
+bind browser gg first-entry
+bind browser G last-entry
+bind browser h exit
+
+# Attach
+bind attach h exit
+bind attach e edit-type # Edit MIME Types
+bind attach l view-attach
+

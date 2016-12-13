@@ -1,0 +1,34 @@
+# vim: set filetype=muttrc :
+#
+# ~/.mutt/macros
+#
+
+# OfflineIMAP ----------------------------------------------------------------
+macro index O "<shell-escape>offlineimap<enter>"     "run offlineimap"
+macro index o "<shell-escape>offlineimap -qf<enter>" "run offlineimap"
+
+
+# Ctrl + R --> mark all as read
+macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
+
+# u + t --> only show current thread
+macro index,pager ut <tag-thread><limit>~T<enter><tag-thread> "show only current thread"
+
+# u + a --> show everything
+macro index,pager ua <limit>all<enter> "show everything"
+
+# # --> Sync mailbox
+macro index "#" '<sync-mailbox><change-folder>^<enter>' "Sync mailbox".
+
+# C + y --> limit view to label
+macro index Cy " ~y " "Limit view to label"
+
+# Ctrl + c --> Follow links in w3m
+macro pager \Cb <pipe-entry>'w3m'<enter> 'Follow links in w3m'
+
+# Ctrl + i --> Follow links in urlview
+macro pager \Ci <pipe-entry>'urlview'<enter> 'Follow links with urlview'
+
+# Ctrl + u --> Call urlview to extract URLs out of a message
+macro pager \Cu ":set pipe_decode\n|urlview\n:unset pipe_decode\n"\
+                 "call urlview to extract URLs out of a message"

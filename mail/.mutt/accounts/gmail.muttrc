@@ -1,0 +1,15 @@
+set   mbox_type   = Maildir
+set   sendmail    = /usr/bin/msmtp
+
+set   spoolfile   = "+gmail/inbox"
+set   postponed   = "+gmail/draft"
+set   from        = "guido.masella@gmail.com"
+set   record      = "+gmail/sent"
+
+macro index D \
+    "<save-message>+gmail/trash<enter>" \
+        "move message to the trash"
+
+macro index S \
+    "<save-message>+gmail/spam<enter>" \
+        "mark message as spam"
