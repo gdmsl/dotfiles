@@ -98,7 +98,7 @@ end
 
 -- Utility function to get IMAP password from file
 function get_imap_password()
-	local cmd = io.popen('gpg --no-tty --use-agent -q -d ~/usr/documents/id/msmtp-gmail.gpg', 'r')
+	local cmd = io.popen('gpg --no-tty --use-agent -q -d ~/usr/documents/id/mail-gmail.gpg', 'r')
 	local out = cmd:read('*a')
 	local pass = string.gsub(out, '[\n\r]+', '')
     return pass;
