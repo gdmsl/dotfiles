@@ -1,11 +1,9 @@
 [general]
-accounts = gmail
+accounts = gmail,outlook
 ui = ttyui
 pythonfile = ~/.local/bin/offlineimap.py
 
 [Account gmail]
-autorefresh=10
-quick=5
 localrepository = gmail-local
 remoterepository = gmail-remote
 status_backend = sqlite
@@ -29,7 +27,7 @@ type = Gmail
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 realdelete = no
 remoteuser = guido.masella@gmail.com
-remotepasseval = get_pass()
+remotepasseval = get_pass("mail-gmail.gpg")
 auth_mechanisms = LOGIN
 nametrans = lambda s: { '[Gmail]/Starred'   : 'flagged',
                         '[Gmail]/Trash'     : 'trash',
@@ -44,6 +42,27 @@ folderfilter = lambda folder: folder not in ['[Gmail]/All Mail',
                                              '[Gmail]/Important',
                                              '[Gmail]/Starred',
 											]
+
+[Account outlook]
+localrepository = outlook-local
+remoterepository = outlook-remote
+status_backend = sqlite
+
+[Repository outlook-local]
+type = Maildir
+sep = /
+localfolders = ~/var/mail/outlook
+nametrans = lambda s: re.sub (' ', '_', s.capitalize())
+
+[Repository outlook-remote]
+type = IMAP
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+realdelete = no
+remotehost = imap-mail.outlook.com
+remoteuser = guido.masella@live.com
+remotepasseval = get_pass("mail-outlook.gpg")
+auth_mechanisms = LOGIN
+nametrans = lambda s: re.sub (' ', '_', s.lower())
 
 [mbnames]
 enabled = yes
