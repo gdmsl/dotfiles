@@ -4,8 +4,8 @@
 #
 
 # OfflineIMAP ----------------------------------------------------------------
-macro index O "<shell-escape>offlineimap<enter>"     "run offlineimap"
-macro index o "<shell-escape>offlineimap -qf<enter>" "run offlineimap"
+macro index O "<shell-escape>imapfilter<enter>" "run imapfilter"
+macro index o "<shell-escape>offlineimap<enter>" "run offlineimap"
 
 
 # Ctrl + R --> mark all as read
