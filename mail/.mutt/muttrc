@@ -19,6 +19,7 @@ source ~/.mutt/macros.muttrc
 source ~/.mutt/bindings.muttrc
 source ~/.mutt/auto_views.muttrc
 source ~/.mutt/notmuch.muttrc
+source ~/.mutt/gpg.muttrc
 
 # accounts
 folder-hook 'gmail' 'source ~/.mutt/accounts/gmail.muttrc'

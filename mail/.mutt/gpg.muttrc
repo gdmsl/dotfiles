@@ -1,0 +1,14 @@
+#
+# ~/.mutt/gpg.muttrc
+#
+
+# pgp_*
+set pgp_use_gpg_agent = yes
+set pgp_timeout = 3600
+set pgp_ignore_subkeys = no
+
+# crypt_*
+set crypt_use_gpgme=yes
+set crypt_autosign = yes
+set crypt_replyencrypt = yes
+
