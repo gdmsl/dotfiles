@@ -26,6 +26,9 @@ set   quit                            # don't ask, just do!!
 unset mark_old                        # do not mark messages old when passing
                                       # .. over them
 
+# Goobook --------------------------------------------------------------------
+set query_command="goobook query '%s'"
+
 # View options ---------------------------------------------------------------
 set   tilde
 unset markers

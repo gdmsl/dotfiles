@@ -4,7 +4,8 @@ set   sendmail    = /usr/bin/msmtp
 set   spoolfile   = "+gmail/inbox"
 set   postponed   = "+gmail/draft"
 set   from        = "guido.masella@gmail.com"
-set   record      = "+gmail/sent"
+
+folder-hook . 'set record=^'
 
 macro index D \
     "<save-message>+gmail/trash<enter>" \

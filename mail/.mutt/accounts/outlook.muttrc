@@ -7,7 +7,7 @@ set   from        = "guido.masella@live.com"
 set   record      = "+outlook/sent"
 
 macro index D \
-    "<save-message>+outlook/trash<enter>" \
+    "<save-message>+outlook/deleted<enter>" \
         "move message to the trash"
 
 macro index S \

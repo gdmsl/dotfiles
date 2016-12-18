@@ -21,7 +21,7 @@ macro index,pager ua <limit>all<enter> "show everything"
 macro index "#" '<sync-mailbox><change-folder>^<enter>' "Sync mailbox".
 
 # C + y --> limit view to label
-macro index Cy " ~y " "Limit view to label"
+macro index \Cy " ~y " "Limit view to label"
 
 # Ctrl + c --> Follow links in w3m
 macro pager \Cb <pipe-entry>'w3m'<enter> 'Follow links in w3m'
@@ -32,3 +32,7 @@ macro pager \Ci <pipe-entry>'urlview'<enter> 'Follow links with urlview'
 # Ctrl + u --> Call urlview to extract URLs out of a message
 macro pager \Cu ":set pipe_decode\n|urlview\n:unset pipe_decode\n"\
                  "call urlview to extract URLs out of a message"
+
+# a - add sender to gmail contacts via goobook
+macro index,pager a "<pipe-message>goobook add<return>" "add the sender address to Google contacts"
+

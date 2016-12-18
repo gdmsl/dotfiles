@@ -16,6 +16,8 @@ bind index l display-message
 bind index gg first-entry
 bind index G last-entry
 bind index h noop               # Disable h
+bind index uu undelete-message
+bind index uc copy-message
 
 # Pager
 bind pager h exit
@@ -37,3 +39,5 @@ bind attach h exit
 bind attach e edit-type # Edit MIME Types
 bind attach l view-attach
 
+# Goobook entry
+bind editor <Tab> complete-query
