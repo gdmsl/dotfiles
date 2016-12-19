@@ -12,7 +12,7 @@ bind index,pager \Cv sidebar-page-down
 bind index,pager \Ct sidebar-toggle-visible
 
 # Index
-bind index l display-message
+#bind index l display-message
 bind index gg first-entry
 bind index G last-entry
 bind index h noop               # Disable h
