@@ -39,7 +39,7 @@ function main()
 
     -- Cleanup of older mails
     print("Cleaning up older mails")
-    move_if_older(account, "INBOX", 90, "cleanup")
+    move_if_older(account, "INBOX", 60, "cleanup")
 end
 
 function move_mailing_lists(account, mailbox)
