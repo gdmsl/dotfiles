@@ -1,5 +1,5 @@
 [general]
-accounts = gmail,outlook
+accounts = gmail,outlook,uds,uds-etu
 ui = ttyui
 pythonfile = ~/.local/bin/offlineimap.py
 
@@ -63,6 +63,56 @@ remoteuser = guido.masella@live.com
 remotepasseval = get_pass("mail-outlook.gpg")
 auth_mechanisms = LOGIN
 nametrans = lambda s: re.sub (' ', '_', s.lower())
+
+[Account uds]
+localrepository = uds-local
+remoterepository = uds-remote
+status_backend = sqlite
+
+[Repository uds-local]
+type = Maildir
+sep = /
+localfolders = ~/var/mail/uds
+nametrans = lambda s: { 'trash'   : 'INBOX/Trash',
+                        'inbox'   : 'INBOX',
+                      }.get (s, s)
+
+[Repository uds-remote]
+type = IMAP
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+realdelete = no
+remotehost = mailserver.u-strasbg.fr
+remoteuser = masella
+remotepasseval = get_pass("mail-uds.gpg")
+auth_mechanisms = LOGIN
+nametrans = lambda s: { 'INBOX/Trash'   : 'trash',
+                        'INBOX'   : 'inbox',
+                      }.get (s, s)
+
+[Account uds-etu]
+localrepository = uds-etu-local
+remoterepository = uds-etu-remote
+status_backend = sqlite
+
+[Repository uds-etu-local]
+type = Maildir
+sep = /
+localfolders = ~/var/mail/uds-etu
+nametrans = lambda s: { 'trash'   : 'INBOX/Trash',
+                        'inbox'   : 'INBOX',
+                      }.get (s, s)
+
+[Repository uds-etu-remote]
+type = IMAP
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+realdelete = no
+remotehost = mailserver.u-strasbg.fr
+remoteuser = gmasella
+remotepasseval = get_pass("mail-uds-etu.gpg")
+auth_mechanisms = LOGIN
+nametrans = lambda s: { 'INBOX/Trash'   : 'trash',
+                        'INBOX'   : 'inbox',
+                      }.get (s, s)
 
 [mbnames]
 enabled = yes

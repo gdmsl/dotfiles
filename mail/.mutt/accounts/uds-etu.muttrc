@@ -1,0 +1,15 @@
+set   mbox_type   = Maildir
+set   sendmail    = /usr/bin/msmtp
+
+set   spoolfile   = "+uds-etu/inbox"
+set   postponed   = "+uds-etu/draft"
+set   from        = "guido.masella@etu.unistra.fr"
+set   record      = "+uds-etu/sent"
+
+macro index D \
+    "<save-message>+uds-etu/deleted<enter>" \
+        "move message to the trash"
+
+macro index S \
+    "<save-message>+uds-etu/spam<enter>" \
+        "mark message as spam"
