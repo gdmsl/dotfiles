@@ -8,9 +8,19 @@ function main()
     local account = IMAP {
         server = 'imap.gmail.com',
         username = 'guido.masella@gmail.com',
-        password = get_imap_password(),
+        password = get_imap_password('mail-gmail.gpg'),
         ssl = 'tls1',
     }
+
+    local uds_account = IMAP {
+        server = 'mailservr.u-strasbg.fr',
+        username = 'masella',
+        password = get_imap_password('mail-uds.gpg'),
+        ssl = 'tls1',
+    }
+    -- Make sure the account is configured properly
+    uds_account.INBOX:check_status()
+    uds_account['INBOX/Trash']:check_status()
 
     -- Make sure the account is configured properly
     account.INBOX:check_status()
@@ -40,6 +50,8 @@ function main()
     -- Cleanup of older mails
     print("Cleaning up older mails")
     move_if_older(account, "INBOX", 60, "cleanup")
+    move_if_older(uds_account, "INBOX", 60, "cleanup")
+
 end
 
 function move_mailing_lists(account, mailbox)
@@ -97,8 +109,8 @@ function move_if_older(account, mailbox, olderthan, tomailbox)
 end
 
 -- Utility function to get IMAP password from file
-function get_imap_password()
-	local cmd = io.popen('gpg --no-tty --use-agent -q -d ~/usr/documents/id/mail-gmail.gpg', 'r')
+function get_imap_password(filename)
+	local cmd = io.popen('gpg --no-tty --use-agent -q -d ~/usr/documents/id/' .. filename, 'r')
 	local out = cmd:read('*a')
 	local pass = string.gsub(out, '[\n\r]+', '')
     return pass;
