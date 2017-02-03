@@ -74,7 +74,12 @@ type = Maildir
 sep = /
 localfolders = ~/var/mail/uds
 nametrans = lambda s: { 'trash'   : 'INBOX/Trash',
+                        'sent'    : 'INBOX/Sent',
+                        'drafts'  : 'INBOX/Drafts',
                         'inbox'   : 'INBOX',
+                        'ml/unistra-personnels' : 'INBOX/ml/unistra-personnels',
+                        'ml/formation-continue' : 'INBOX/ml/formation-continue',
+                        'ml/infos-syndicats' : 'INBOX/ml/infos-syndicats',
                       }.get (s, s)
 
 [Repository uds-remote]
@@ -86,7 +91,12 @@ remoteuser = masella
 remotepasseval = get_pass("mail-uds.gpg")
 auth_mechanisms = LOGIN
 nametrans = lambda s: { 'INBOX/Trash'   : 'trash',
+                        'INBOX/Sent'   : 'sent',
+                        'INBOX/Drafts'   : 'drafts',
                         'INBOX'   : 'inbox',
+                        'INBOX/ml/unistra-personnels' : 'ml/unistra-personnels',
+                        'INBOX/ml/formation-continue' : 'ml/formation-continue',
+                        'INBOX/ml/infos-syndicats' : 'ml/infos-syndicats',
                       }.get (s, s)
 
 [Account uds-etu]
@@ -100,6 +110,8 @@ sep = /
 localfolders = ~/var/mail/uds-etu
 nametrans = lambda s: { 'trash'   : 'INBOX/Trash',
                         'inbox'   : 'INBOX',
+                        'sent'    : 'INBOX/Sent',
+                        'drafts'  : 'INBOX/Drafts',
                       }.get (s, s)
 
 [Repository uds-etu-remote]
@@ -112,6 +124,8 @@ remotepasseval = get_pass("mail-uds-etu.gpg")
 auth_mechanisms = LOGIN
 nametrans = lambda s: { 'INBOX/Trash'   : 'trash',
                         'INBOX'   : 'inbox',
+                        'INBOX/Sent'   : 'sent',
+                        'INBOX/Drafts'   : 'drafts',
                       }.get (s, s)
 
 [mbnames]

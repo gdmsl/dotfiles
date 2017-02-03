@@ -13,10 +13,10 @@ function main()
     }
 
     local uds_account = IMAP {
-        server = 'mailservr.u-strasbg.fr',
+        server = 'mailserver.u-strasbg.fr',
         username = 'masella',
         password = get_imap_password('mail-uds.gpg'),
-        ssl = 'tls1',
+        ssl = 'ssl23',
     }
     -- Make sure the account is configured properly
     uds_account.INBOX:check_status()
@@ -30,6 +30,7 @@ function main()
     -- Move mailing lists from INBOX to correct folders
     print("Moving Mailing Lists from INBOX")
     move_mailing_lists(account, "INBOX")
+    move_mailing_lists_uds(uds_account, "INBOX")
 
     -- Move mailing lists from spam to correct folders
     print("Moving Mailing Lists from Spam")
@@ -38,6 +39,7 @@ function main()
     -- Move mailing lists from trash to correct folders
     print("Moving Mailing Lists from Trash")
     move_mailing_lists(account, "[Gmail]/Trash")
+    move_mailing_lists_uds(uds_account, "Trash")
 
     -- Delete steam wishlist mails older than 8 days
     print("Moving Steam Sales notifications older than 8 days to Trash")
@@ -62,6 +64,12 @@ function move_mailing_lists(account, mailbox)
 
     -- studentifisica2004 mailing lists
     move_if_subject(account, mailbox, "[Studentifisica2004]", "ml/studentifisica2004")
+end
+
+function move_mailing_lists_uds(account, mailbox)
+    move_if_subject(account, mailbox, "[unistra-personnels]", "ml/unistra-personnels")
+    move_if_subject(account, mailbox, "[unistra-personnels-offre-formation-continue]", "ml/formation-continue")
+    move_if_subject(account, mailbox, "[unistra-personnel-infos-syndicats]", "ml/infos-syndicats")
 end
 
 function move_if_subject(account, mailbox, subject, tomailbox)
