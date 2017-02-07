@@ -25,38 +25,22 @@ application/x-tex; nvim %s
 text/*;                             cat; copiousoutput; edit=$VISUAL %s
 message/rfc822;                     cat; copiousoutput; edit=$VISUAL %s
 
-# The following Microsoft application MIME attachments are viewed from
-# the attachment menu using QuickView Plus for UNIX. 
+application/msword;                 mutt_bgrun libreoffice %s; test=runningx
+application/vnd.msword;             mutt_bgrun libreoffice %s; test=runningx
 #
-application/msword;                 mutt_bgrun antiword %s; test=runningx
-application/msword;                 word2text %s; copiousoutput
-application/vnd.msword;             mutt_bgrun antiword %s; test=runningx
-application/vnd.msword;             word2text %s; copiousoutput
+application/excel;                  mutt_bgrun libreoffice %s; test=runningx
+application/msexcel;                mutt_bgrun libreoffice %s; test=runningx
+application/vnd.ms-excel;           mutt_bgrun libreoffice %s; test=runningx
+application/x-excel;                mutt_bgrun libreoffice %s; test=runningx
+application/x-msexcel;              mutt_bgrun libreoffice %s; test=runningx
+application/ms-Excel;               mutt_bgrun libreoffice %s; test=runningx
 #
-application/excel;                  mutt_bgrun antiword %s; test=runningx
-application/excel;                  excel2text %s; copiousoutput
-application/msexcel;                mutt_bgrun antiword %s; test=runningx
-application/msexcel;                excel2text %s; copiousoutput
-application/vnd.ms-excel;           mutt_bgrun antiword %s; test=runningx
-application/vnd.ms-excel;           excel2text %s; copiousoutput
-application/x-excel;                mutt_bgrun antiword %s; test=runningx
-application/x-excel;                excel2text %s; copiousoutput
-application/x-msexcel;              mutt_bgrun antiword %s; test=runningx
-application/x-msexcel;              excel2text %s; copiousoutput
-application/ms-Excel;               mutt_bgrun antiword %s; test=runningx
-application/ms-Excel;               excel2text %s; copiousoutput
-#
-application/vnd.ms-powerpoint;      mutt_bgrun antiword %s; test=runningx
-application/vnd.ms-powerpoint;      ppt2text %s; copiousoutput
-application/x-mspowerpoint;         mutt_bgrun antiword %s; test=runningx
-application/x-mspowerpoint;         ppt2text %s; copiousoutput
-application/ppt;                    mutt_bgrun antiword %s; test=runningx
-application/ppt;                    ppt2text %s; copiousoutput
-application/pdf;                    mutt_bgrun xpdf +useFrontEndProgram %s; test=runningx
-application/pdf;                    pdftotext %s -; copiousoutput
-application/postscript;             mutt_bgrun ghostview %s; test=runningx
-application/rtf;                    mutt_bgrun antiword %s; test=runningx
-application/rtf;                    rtf2text %s; copiousoutput
+application/vnd.ms-powerpoint;      mutt_bgrun libreoffice %s; test=runningx
+application/x-mspowerpoint;         mutt_bgrun libreoffice %s; test=runningx
+application/ppt;                    mutt_bgrun libreoffice %s; test=runningx
+application/pdf;                    mutt_bgrun zathura %s; test=runningx
+application/postscript;             mutt_bgrun zathura %s; test=runningx
+application/rtf;                    mutt_bgrun libreoffice %s; test=runningx
 application/ms-tnef;                tnef -w %s
 #
 application/octet-stream;           mutt.octet.filter -x %s; test=runningx
