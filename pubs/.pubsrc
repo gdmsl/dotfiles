@@ -79,6 +79,8 @@ active = alias,
 
 # shell commands can also be defined, by prefixing them with a bang `!`, e.g:
 # count = !pubs list -k | wc -l
+#
+annotate = doc open --with myxournal.sh
 
 [internal]
 # The version of this configuration file. Do not edit.
