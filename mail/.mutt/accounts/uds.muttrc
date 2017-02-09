@@ -7,7 +7,7 @@ set   from        = "masella@unistra.fr"
 set   record      = "+uds/sent"
 
 macro index D \
-    "<save-message>+uds/deleted<enter>" \
+    "<save-message>+uds/trash<enter>" \
         "move message to the trash"
 
 macro index S \
