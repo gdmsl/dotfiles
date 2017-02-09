@@ -191,9 +191,9 @@ set termguicolors
 " }}}
 
 " Backups and Swap files {{{
-set backupdir=/tmp/neovim/
-set directory=/tmp/neovim/
-set undodir=/tmp/neovim/
+set backupdir=/tmp/neovim///
+set directory=/tmp/neovim//
+set undodir=/tmp/neovim//
 " }}}
 
 " Mapleader {{{
