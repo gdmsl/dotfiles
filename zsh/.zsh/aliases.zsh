@@ -30,4 +30,6 @@ alias downclip='wget $(xsel -b)'
 alias videoclip='youtube-dl "$(xsel -b)"'
 
 alias yolo='pacaur -Syua'
-alias today='nvim ~/Documents/Wiki/$(date +%Y)/$(date +%Y%m%d).md'
+
+# jrnl skyp history
+alias jrnl=' jrnl'
