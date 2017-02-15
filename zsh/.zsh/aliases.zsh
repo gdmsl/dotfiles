@@ -33,3 +33,6 @@ alias yolo='pacaur -Syua'
 
 # jrnl skyp history
 alias jrnl=' jrnl'
+
+# neovim diff
+alias nvimdiff='nvim -d'
