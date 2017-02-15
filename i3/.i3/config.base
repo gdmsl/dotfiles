@@ -200,24 +200,24 @@ workspace_auto_back_and_forth yes
 
 # Defining workspace variables
 set $WS00 "0:"
-set $WS01 "1: 1"
+set $WS01 "1: 1"
 set $WS02 "2: 2"
-set $WS03 "3: 3"
-set $WS04 "4: 4"
-set $WS05 "5: 5"
-set $WS06 "6: 6"
-set $WS07 "7: 7"
-set $WS08 "8: 8"
-set $WS09 "9: 9"
-set $WS10 "10: 0"
-set $WSf1 "11: f1"
-set $WSf2 "12: f2"
-set $WSf3 "13: f3"
-set $WSf4 "14: f4"
-set $WSf5 "15: f5"
-set $WSf6 "16: f6"
-set $WSf7 "17: f7"
-set $WSf8 "18: f8"
+set $WS03 "3: 3"
+set $WS04 "4: 4"
+set $WS05 "5: 5"
+set $WS06 "6: 6"
+set $WS07 "7: 7"
+set $WS08 "8: 8"
+set $WS09 "9: 9"
+set $WS10 "10: 0"
+set $WSf1 "11: f1"
+set $WSf2 "12: f2"
+set $WSf3 "13: f3"
+set $WSf4 "14: f4"
+set $WSf5 "15: f5"
+set $WSf6 "16: f6"
+set $WSf7 "17: f7"
+set $WSf8 "18: f8"
 
 # Putting workspaces on screens
 workspace $WS00 output $O1
@@ -233,12 +233,12 @@ workspace $WS09 output $O1
 workspace $WS10 output $O1
 workspace $WSf1 output $O2
 workspace $WSf2 output $O2
-workspace $WSf3 output $O2
-workspace $WSf4 output $O2
-workspace $WSf5 output $O3
-workspace $WSf6 output $O3
-workspace $WSf7 output $O3
-workspace $WSf8 output $O3
+workspace $WSf3 output $O3
+workspace $WSf4 output $O3
+workspace $WSf5 output $O1
+workspace $WSf6 output $O1
+workspace $WSf7 output $O1
+workspace $WSf8 output $O1
 
 # move workspace to next monitor
 bindsym $mod+m move workspace to output right
@@ -287,11 +287,15 @@ bindsym $mod+Shift+F7 move container to workspace $WSf7
 bindsym $mod+Shift+F8 move container to workspace $WSf8
 
 # switch workspace back and forth
-bindsym $mod+b workspace back_and_forth
+bindsym $mod+Tab workspace back_and_forth
 
 # switch to prev or next workspace
 bindsym $mod+p workspace prev_on_output
 bindsym $mod+n workspace next_on_output
+
+# load special workspaces
+bindsym $mod+Control+F5 exec --no-startup-id "~/.local/bin/i3-load-wscomm.sh"
+bindsym $mod+Control+F6 exec --no-startup-id termite --class=mutt -e "zsh -c mutt"
 
 # }}}
 
@@ -321,7 +325,7 @@ for_window [window_role="gimp-dock"] floating disable
 
 # Steam goes float on workspace gaming
 #for_window [class="Steam"] floating enable
-assign [class="Steam"] $WS09
+assign [class="Steam"] $WSf8
 
 
 # Scratchpad
@@ -330,10 +334,14 @@ for_window [title="scratchmonitor"] move scratchpad
 for_window [class="Pavucontrol"] move scratchpad
 
 # GAMES
-assign [class="dota_linux"] $WS10
-assign [class="dota2"] $WS10
+assign [class="dota_linux"] "19: dota"
+assign [class="dota2"] "19: dota"
 for_window [class="dota_linux"] fullscreen
 for_window [class="dota2"] fullscreen
+
+# other
+assign [class="TelegramDesktop"] $WSf5
+assign [class="mutt"] $WSf6
 
 # }}}
 
