@@ -44,7 +44,7 @@ bar {
         statusline $color7
         # class              border   background text
         focused_workspace    $color4  $color4    $color0
-        active_workspace     $color20 $color20   $color20
+        active_workspace     $color8  $color8    $color0
         inactive_workspace   $color0  $color0    $color8
         urgent_workspace     $color1  $color1    $color15
     }
@@ -66,7 +66,7 @@ bar {
         statusline $color7
         # class              border   background text
         focused_workspace    $color4  $color4    $color0
-        active_workspace     $color20 $color20   $color20
+        active_workspace     $color8  $color8    $color0
         inactive_workspace   $color0  $color0    $color8
         urgent_workspace     $color1  $color1    $color15
     }

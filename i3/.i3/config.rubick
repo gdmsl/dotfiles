@@ -26,8 +26,8 @@ bindsym Shift*XF86KbdBrightnessUp exec "xbacklight -inc 20"
 
 # outputs
 set $O1 eDP1
-set $O3 DP1
-set $O2 HDMI1
+set $O2 DP1
+set $O3 HDMI1
 
 # }}}
 
@@ -50,14 +50,14 @@ bar {
         statusline $color7
         # class              border   background text
         focused_workspace    $color4  $color4    $color0
-        active_workspace     $color20 $color20   $color20
+        active_workspace     $color8  $color8    $color0
         inactive_workspace   $color0  $color0    $color8
         urgent_workspace     $color1  $color1    $color15
     }
 }
 
 bar {
-	output            $O3
+	output            $O2
 	status_command    i3blocks -c ~/.i3blocks/rubick.conf
 	position          bottom
 	workspace_buttons yes
@@ -73,7 +73,7 @@ bar {
         statusline $color7
         # class              border   background text
         focused_workspace    $color4  $color4    $color0
-        active_workspace     $color20 $color20   $color20
+        active_workspace     $color8  $color8    $color0
         inactive_workspace   $color0  $color0    $color8
         urgent_workspace     $color1  $color1    $color15
     }
