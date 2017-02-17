@@ -336,8 +336,10 @@ for_window [class="Pavucontrol"] move scratchpad
 # GAMES
 assign [class="dota_linux"] "19: dota"
 assign [class="dota2"] "19: dota"
+assign [class="Civ5XP"] "19: civ"
 for_window [class="dota_linux"] fullscreen
 for_window [class="dota2"] fullscreen
+for_window [class="Civ5XP"] fullscreen
 
 # other
 assign [class="TelegramDesktop"] $WSf5

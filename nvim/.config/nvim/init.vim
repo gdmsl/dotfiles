@@ -10,7 +10,7 @@ call plug#begin('~/.config/nvim/plugged')
 
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tpope/vim-fugitive'
@@ -38,6 +38,7 @@ Plug 'justmao945/vim-clang'
 Plug 'airblade/vim-gitgutter'
 Plug 'rust-lang/rust.vim'
 Plug 'kana/vim-arpeggio'
+Plug 'mileszs/ack.vim'
 
 call plug#end()
 " }}}
@@ -66,6 +67,7 @@ augroup ctrlp_config
   let g:ctrlp_cmd = 'CtrlP'
   let g:ctrlp_working_path_mode = 'ra'
   set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+  let g:ctrlp_custom_tag_files = '.git/tags'
 augroup END
 " }}}
 
@@ -147,6 +149,10 @@ augroup nerdtree_config
 " NeoMake {{{
 augroup neomake_config
     autocmd! BufWritePost * Neomake
+    let g:neomake_cpp_enabled_makers = ['clangtidy']
+    let g:neomake_cpp_clangtidy_args = ['-checks="*"', '--', '-std=c++14', '-Isrc', '-I.']
+    let g:neomake_c_enabled_makers = ['clangtidy']
+    let g:neomake_c_clangtidy_args = ['-checks="*"', '--', '-Isrc', '-I.']
 augroup END
 " }}}
 
@@ -175,13 +181,27 @@ augroup rust_config
 augroup END
 " }}}
 
-" RustLang {{{
+" Arpeggio {{{
 augroup arpeggio_config
     autocmd!
     call arpeggio#map('i', '', 0, 'jk', '<Esc>')
     "let g:arpeggio_timeoutlen=20
 augroup END
 " }}}
+
+" Clang {{{
+augroup clang_config
+    autocmd!
+augroup END
+" }}}
+
+" Ack {{{
+augroup ack_config
+    autocmd!
+    let g:ackprg = 'ag --nogroup --nocolor --column'
+augroup END
+" }}}
+
 
 " Settings -------------------------------------------------------------------
 
@@ -287,12 +307,31 @@ onoremap <right> <nop>
 vno v <esc>
 " }}}
 
+" Use The Silver Searcher {{{
+if executable('ag')
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag -Q -l --nocolor --hidden -g "" %s'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+
+  if !exists(":Ag")
+    command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+    nnoremap \ :Ag<SPACE>
+  endif
+endif
+" }}}
+
 
 " File Types -----------------------------------------------------------------
 
 " General {{{
 filetype plugin on
 filetype indent on
+
 " }}}
 
 " TextFiles {{{
