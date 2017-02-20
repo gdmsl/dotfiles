@@ -1,10 +1,10 @@
 [Unit]
-Description=my personal wiki
+Description=Gitit wiki
 
 [Service]
 Type=simple
 WorkingDirectory=%h/.gitit
-ExecStart=/home/gdmsl/.cabal/bin/gitit -f %h/.gitit/gitit.conf
+ExecStart=/home/gdmsl/.cabal/bin/gitit -f %h/.gitit/wiki.conf
 Restart=no
 
 [Install]
