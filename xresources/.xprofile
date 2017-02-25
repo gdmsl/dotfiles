@@ -20,6 +20,8 @@ fi
 
 [[ -f ~/.screenlayout/default.sh ]] && ~/.screenlayout/default.sh
 
+[[ -f ~/.xbindkeysrc ]] && xbindkeys
+
 #wallpaper
 nitrogen --restore &
 
