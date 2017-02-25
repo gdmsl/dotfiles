@@ -1,6 +1,6 @@
 [general]
 accounts = gmail,outlook,uds,uds-etu
-ui = ttyui
+ui = basic
 pythonfile = ~/.local/bin/offlineimap.py
 
 [Account gmail]

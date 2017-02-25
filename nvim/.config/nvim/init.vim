@@ -68,6 +68,7 @@ augroup ctrlp_config
   let g:ctrlp_working_path_mode = 'ra'
   set wildignore+=*/tmp/*,*.so,*.swp,*.zip
   let g:ctrlp_custom_tag_files = '.git/tags'
+  noremap <silent> <leader>b :CtrlPBuffer<CR>
 augroup END
 " }}}
 
