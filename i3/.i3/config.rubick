@@ -6,12 +6,12 @@
 # AUTHOR: Guido Masella <guido.masella@gmail.com>
 
 # KEYS {{{
-set $lockkey ugrave
-set $tombkey egrave
-set $zkey backslash
-set $prevkey apostrophe
-set $nextkey igrave
-set $scratchkey minus
+set $lockkey backslash
+set $tombkey bracketright
+set $zkey dead_grave
+set $prevkey minus
+set $nextkey equal
+set $scratchkey slash
 set $stickykey period
 # }}}
 

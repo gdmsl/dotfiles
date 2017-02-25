@@ -241,8 +241,8 @@ workspace $WSf7 output $O1
 workspace $WSf8 output $O1
 
 # move workspace to next monitor
-bindsym $mod+m move workspace to output right
-bindsym $mod+Shift+m move workspace to output left
+bindsym $mod+m move workspace to output $O1
+bindsym $mod+Shift+m move workspace to output $O2
 
 # switch to workspace
 bindsym $mod+$zkey workspace $WS00
