@@ -15,7 +15,7 @@ DEFAULT_USER="gdmsl"
 
 HIST_STAMPS="yyyy-mm-dd"
 
-plugins=(jump git archlinux cp tmux github history history-substring-search)
+plugins=(jump git archlinux cp tmux github history history-substring-search vi-mode)
 
 
 source $ZSH/oh-my-zsh.sh
