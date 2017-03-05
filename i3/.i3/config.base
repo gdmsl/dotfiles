@@ -56,7 +56,7 @@ bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pulse set Master 5%
 #bindsym $mod+m exec "xterm -e alsamixer; pkill -RTMIN+10 i3blocks"
 
 # Locker
-bindsym $mod+$lockkey exec "i3lock -d -e -f -c 282c34 -i ~/Pictures/Wallpapers/mine/glider.png"
+bindsym $mod+comma exec "i3lock -d -e -f -c 282c34 -i ~/Pictures/Wallpapers/mine/glider.png"
 
 # Shutdown menu
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown, (Shift+h) hybrid-sleep
@@ -75,33 +75,12 @@ mode "$mode_system" {
 }
 bindsym $mod+z mode "$mode_system"
 
-# add todo with todo.sh
-bindsym $mod+i exec i3-input -F 'exec --no-startup-id todo.sh add "%s"' -P 'Add Todo: '
-
 # slam all opened tombs
-bindsym $mod+Shift+$tombkey exec --no-startup-id tomb slam all
-bindsym $mod+$tombkey exec "i3-nagbar -t warning -m 'Do you want to slam all opened tombs?' -b 'Slamm All!' 'tomb slam all'"
+bindsym $mod+Shift+i exec --no-startup-id tomb slam all
+bindsym $mod+i exec "i3-nagbar -t warning -m 'Do you want to slam all opened tombs?' -b 'Slamm All!' 'tomb slam all'"
 
 # take screenshots
 bindcode 107 exec --no-startup-id "maim ~/usr/pictures/screenshots/$(date +%F-%T).png && paplay /usr/share/sounds/freedesktop/stereo/screen-capture.oga"
-
-
-# common actions
-set $mode_actions Actions (z)Downclip, (x)RP, (c)RPP, (v)BT, (b)RTG, (a)Videoclip
-mode "$mode_actions" {
-	bindsym z exec --no-startup-id "wget -P ~/Downloads/ $(xsel -b)", exec notify-send -t 2000 "Downloaded $(xsel -b) in ~/Downloads", mode "default"
-	bindsym x exec --no-startup-id "wget -P ~/.marks/rp $(xsel -b)", exec notify-send -t 2000 "Downloaded $(xsel -b) in RP", mode "default"
-	bindsym c exec --no-startup-id "wget -P ~/.marks/rpp $(xsel -b)", exec notify-send -t 2000 "Downloaded $(xsel -b) in RPP", mode "default"
-	bindsym v exec --no-startup-id "wget -P ~/.marks/bt $(xsel -b)", exec notify-send -t 2000 "Downloaded $(xsel -b) in BT", mode "default"
-	bindsym v exec --no-startup-id "wget -P ~/.marks/rtg $(xsel -b)", exec notify-send -t 2000 "Downloaded $(xsel -b) in RTG", mode "default"
-	bindsym a exec --no-startup-id "youtube-dl  -o '~/Downloads/youtube-dl/%(title)s-%(id)s.%(ext)s' $(xsel -b)", exec notify-send -t 2000 "Downloaded $(xsel -b) in ~/Downloads/youtube-dl", mode "default"
-
-	# back to normal: Enter or Escape
-	bindsym Return mode "default"
-	bindsym Escape mode "default"
-}
-bindsym $mod+Shift+z mode "$mode_actions"
-
 
 # turn off the screen
 bindsym $mod+g exec "sleep 2; xset dpms force off"
@@ -199,28 +178,25 @@ bindsym $mod+r mode "resize"
 workspace_auto_back_and_forth yes
 
 # Defining workspace variables
-set $WS00 "0:"
-set $WS01 "1: 1"
+set $WS01 "1: 1"
 set $WS02 "2: 2"
-set $WS03 "3: 3"
+set $WS03 "3: 3"
 set $WS04 "4: 4"
-set $WS05 "5: 5"
+set $WS05 "5: 5"
 set $WS06 "6: 6"
-set $WS07 "7: 7"
+set $WS07 "7: 7"
 set $WS08 "8: 8"
 set $WS09 "9: 9"
-set $WS10 "10: 0"
-set $WSf1 "11: f1"
-set $WSf2 "12: f2"
-set $WSf3 "13: f3"
-set $WSf4 "14: f4"
-set $WSf5 "15: f5"
-set $WSf6 "16: f6"
-set $WSf7 "17: f7"
-set $WSf8 "18: f8"
+set $WS10 "10: 0"
+set $WS11 "11: -"
+set $WS12 "12: ="
+set $WS13 "13: ["
+set $WS14 "14: ]"
+set $WS15 "15: /"
+set $WS16 "16: ;"
+set $WS17 "17: '"
 
 # Putting workspaces on screens
-workspace $WS00 output $O1
 workspace $WS01 output $O1
 workspace $WS02 output $O1
 workspace $WS03 output $O1
@@ -231,21 +207,21 @@ workspace $WS07 output $O1
 workspace $WS08 output $O1
 workspace $WS09 output $O1
 workspace $WS10 output $O1
-workspace $WSf1 output $O2
-workspace $WSf2 output $O2
-workspace $WSf3 output $O3
-workspace $WSf4 output $O3
-workspace $WSf5 output $O1
-workspace $WSf6 output $O1
-workspace $WSf7 output $O1
-workspace $WSf8 output $O1
+workspace $WS11 output $O1
+workspace $WS12 output $O1
+workspace $WS13 output $O2
+workspace $WS14 output $O2
+workspace $WS15 output $O2
+workspace $WS16 output $O3
+workspace $WS17 output $O3
 
 # move workspace to next monitor
-bindsym $mod+m move workspace to output $O1
-bindsym $mod+Shift+m move workspace to output $O2
+bindsym $mod+Control+h move workspace to output left
+bindsym $mod+Control+j move workspace to output down
+bindsym $mod+Control+k move workspace to output up
+bindsym $mod+Control+l move workspace to output right
 
 # switch to workspace
-bindsym $mod+$zkey workspace $WS00
 bindsym $mod+1 workspace $WS01
 bindsym $mod+2 workspace $WS02
 bindsym $mod+3 workspace $WS03
@@ -256,17 +232,15 @@ bindsym $mod+7 workspace $WS07
 bindsym $mod+8 workspace $WS08
 bindsym $mod+9 workspace $WS09
 bindsym $mod+0 workspace $WS10
-bindsym $mod+F1 workspace $WSf1
-bindsym $mod+F2 workspace $WSf2
-bindsym $mod+F3 workspace $WSf3
-bindsym $mod+F4 workspace $WSf4
-bindsym $mod+F5 workspace $WSf5
-bindsym $mod+F6 workspace $WSf6
-bindsym $mod+F7 workspace $WSf7
-bindsym $mod+F8 workspace $WSf8
+bindsym $mod+minus workspace $WS11
+bindsym $mod+equal workspace $WS12
+bindsym $mod+bracketleft workspace $WS13
+bindsym $mod+bracketright workspace $WS14
+bindsym $mod+backslash workspace $WS15
+bindsym $mod+semicolon workspace $WS16
+bindsym $mod+dead_acute workspace $WS17
 
 # move focused container to workspace
-bindsym $mod+Shift+$zkey move container to workspace $WS00
 bindsym $mod+Shift+1 move container to workspace $WS01
 bindsym $mod+Shift+2 move container to workspace $WS02
 bindsym $mod+Shift+3 move container to workspace $WS03
@@ -277,14 +251,13 @@ bindsym $mod+Shift+7 move container to workspace $WS07
 bindsym $mod+Shift+8 move container to workspace $WS08
 bindsym $mod+Shift+9 move container to workspace $WS09
 bindsym $mod+Shift+0 move container to workspace $WS10
-bindsym $mod+Shift+F1 move container to workspace $WSf1
-bindsym $mod+Shift+F2 move container to workspace $WSf2
-bindsym $mod+Shift+F3 move container to workspace $WSf3
-bindsym $mod+Shift+F4 move container to workspace $WSf4
-bindsym $mod+Shift+F5 move container to workspace $WSf5
-bindsym $mod+Shift+F6 move container to workspace $WSf6
-bindsym $mod+Shift+F7 move container to workspace $WSf7
-bindsym $mod+Shift+F8 move container to workspace $WSf8
+bindsym $mod+Shift+minus move container to workspace $WS11
+bindsym $mod+Shift+equal move container to workspace $WS12
+bindsym $mod+braceleft move container to workspace $WS13
+bindsym $mod+braceright move container to workspace $WS14
+bindsym $mod+Shift+backslash move container to workspace $WS15
+bindsym $mod+Shift+semicolon move container to workspace $WS16
+bindsym $mod+Shift+dead_acute move container to workspace $WS17
 
 # switch workspace back and forth
 bindsym $mod+Tab workspace back_and_forth
@@ -294,16 +267,16 @@ bindsym $mod+p workspace prev_on_output
 bindsym $mod+n workspace next_on_output
 
 # load special workspaces
-bindsym $mod+Control+F5 exec --no-startup-id "~/.local/bin/i3-load-wscomm.sh"
-bindsym $mod+Control+F6 exec --no-startup-id termite --class=mutt -e "zsh -c mutt"
+bindsym $mod+Control+minus exec --no-startup-id "~/.local/bin/i3-load-wscomm.sh"
+bindsym $mod+Control+equal exec --no-startup-id termite --class=mutt -e "zsh -c mutt"
 
 # }}}
 
 # WINDOWS RULES {{{
 
 # assign web browsers to workspace web
-assign [class="Chromium"] $WS00
-assign [class="Firefox"] $WS00
+assign [class="Chromium"] $WS01
+assign [class="Firefox"] $WS01
 
 # windows title
 #for_window [class=".*"] title_format " <b>%title</b>"
@@ -325,7 +298,7 @@ for_window [window_role="gimp-dock"] floating disable
 
 # Steam goes float on workspace gaming
 #for_window [class="Steam"] floating enable
-assign [class="Steam"] $WSf8
+assign [class="Steam"] $WS10
 
 
 # Scratchpad
@@ -342,8 +315,8 @@ for_window [class="dota2"] fullscreen
 for_window [class="Civ5XP"] fullscreen
 
 # other
-assign [class="TelegramDesktop"] $WSf5
-assign [class="mutt"] $WSf6
+assign [class="TelegramDesktop"] $WS11
+assign [class="mutt"] $WS12
 
 # }}}
 
@@ -375,10 +348,10 @@ new_float pixel 2
 
 # Scratchpad
 # Make the currently focused window a scratchpad
-bindsym $mod+Shift+$scratchkey move scratchpad
+bindsym $mod+Shift+slash move scratchpad
 
 # Show the first scratchpad window
-bindsym $mod+$scratchkey scratchpad show
+bindsym $mod+slash scratchpad show
 
 # }}}
 

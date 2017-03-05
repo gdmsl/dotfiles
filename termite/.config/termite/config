@@ -41,31 +41,50 @@ cursor_shape = block
 #roundness = 2.0
 
 [colors]
-foreground  = #abb2bf
-background  = #282c34
-cursorColor = #565c64
+# Base16 Eighties
+# Author: Chris Kempson (http://chriskempson.com)
 
-color0  = #282c34
-color1  = #e06c75
-color2  = #98c379
-color3  = #e5c07b
-color4  = #61afef
-color5  = #c678dd
-color6  = #56b6c2
-color7  = #abb2bf
+foreground      = #d3d0c8
+foreground_bold = #e8e6df
+cursor          = #e8e6df
+background      = #2d2d2d
 
-color8  = #545862
-color9  = #e06c75
-color10 = #98c379
-color11 = #e5c07b
-color12 = #61afef
-color13 = #c678dd
-color14 = #56b6c2
-color15 = #c8cdd4
+# 16 color space
 
-color16 = #d19a66
-color17 = #be5046
-color18 = #353b45
-color19 = #3e4451
-color20 = #565c64
-color21 = #b6bdca
+# Black, Gray, Silver, White
+color0  = #2d2d2d
+color8  = #747369
+color7  = #d3d0c8
+color15 = #f2f0ec
+
+# Red
+color1  = #f2777a
+color9  = #f2777a
+
+# Green
+color2  = #99cc99
+color10 = #99cc99
+
+# Yellow
+color3  = #ffcc66
+color11 = #ffcc66
+
+# Blue
+color4  = #6699cc
+color12 = #6699cc
+
+# Purple
+color5  = #cc99cc
+color13 = #cc99cc
+
+# Teal
+color6  = #66cccc
+color14 = #66cccc
+
+# Extra colors
+color16 = #f99157
+color17 = #d27b53
+color18 = #393939
+color19 = #515151
+color20 = #a09f93
+color21 = #e8e6df
