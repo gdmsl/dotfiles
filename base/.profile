@@ -14,8 +14,8 @@ export GOPATH="$HOME/var/go"
 if [ "$HOST" = "rubick" ]; then
     export VDPAU_DRIVER=va_gl
 elif [ "$HOST" = "spectre" ]; then
-    export VDPAU_DRIVER=nvidia
-elif [ "$HOST" = "qop" ]; then
+    export VDPAU_DRIVER=va_gl
+elif [ "$HOST" = "tachanka" ]; then
     export VDPAU_DRIVER=va_gl
 fi
 

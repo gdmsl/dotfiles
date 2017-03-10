@@ -5,22 +5,12 @@
 
 # AUTHOR: Guido Masella <guido.masella@gmail.com>
 
-# KEYS {{{
-set $lockkey backslash
-set $tombkey bracketright
-set $zkey dead_grave
-set $prevkey minus
-set $nextkey equal
-set $scratchkey slash
-set $stickykey period
-# }}}
-
 # WORKSPACES {{{
 
 # outputs
-set $O2 VGA-0
-set $O1 DVI-D-0
-set $O3 HDMI-0
+set $O1 HDMI-1
+set $O2 HDMI-2
+set $O3 DP-1
 
 # }}}
 
