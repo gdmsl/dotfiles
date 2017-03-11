@@ -2,4 +2,6 @@
 @import url("hk-pyg.css"); /* for syntax highlighting */
 
 /* Put your custom style modifications here: */
-
+img {
+    max-width:70%;
+}

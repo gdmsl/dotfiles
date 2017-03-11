@@ -1,0 +1,70 @@
+// vim:ts=4:sw=4:et
+{
+    "border": "pixel",
+    "current_border_width": 3,
+    "floating": "auto_off",
+    "geometry": {
+       "height": 506,
+       "width": 882,
+       "x": 0,
+       "y": 0
+    },
+    "name": "WeeChat",
+    "percent": 0.7,
+    "swallows": [
+       {
+       "class": "^WeeChat$"
+       }
+    ],
+    "type": "con"
+}
+
+{
+    // stacked split container with 2 children
+    "border": "pixel",
+    "floating": "auto_off",
+    "layout": "stacked",
+    "percent": 0.3,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 3,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 1051,
+               "width": 959,
+               "x": 961,
+               "y": 2
+            },
+            "name": "Skype",
+            "percent": 0.5,
+            "swallows": [
+               {
+               "class": "^skypeforlinux$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "pixel",
+            "current_border_width": 3,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 1048,
+               "width": 1914,
+               "x": 1267,
+               "y": 1083
+            },
+            "name": "Telegram",
+            "percent": 0.5,
+            "swallows": [
+               {
+               "class": "^TelegramDesktop$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}
+
