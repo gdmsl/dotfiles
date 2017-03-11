@@ -9,6 +9,6 @@ fi
 
 
 if [ "$HOSTNAME" = "rubick" ]; then
-    xrandr --dpi 120
+    xrandr --dpi 110
 fi
 
