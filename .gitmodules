@@ -13,3 +13,6 @@
 [submodule "unigine-tropics"]
 	path = unigine-tropics
 	url = aur:unigine-tropics
+[submodule "bash/.bash-it"]
+	path = bash/.bash-it
+	url = https://github.com/Bash-it/bash-it.git
