@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+PATH="/usr/local/bin:$PATH"
+dir="$(git rev-parse --git-dir)"
+trap 'rm -f "$dir/$$.tags"' EXIT
+git ls-files | \
+  "${CTAGS:-ctags}" --tag-relative -L - -f"$dir/$$.tags" --c-kinds=+pxfvtcdeglmnsu --c++-kinds=+pxfvtcdeglmnsu --languages=C,C++,julia --langmap=C:.c.h --langmap=C++:.C.h.c.cpp.hpp.c++.cc.cp.cxx.h++.hh.hp.hxx --langmap=julia:.jl --fields=+iaSm --extra=+qf
+mv "$dir/$$.tags" "$dir/tags"
