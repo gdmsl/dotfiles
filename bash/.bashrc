@@ -47,3 +47,9 @@ source $BASH_IT/bash_it.sh
 
 # Load local bash file
 [ -f "$HOME/.bashrc.$HOSTNAME" ] && source "$HOME/.bashrc.$HOSTNAME"
+
+# disable SCM check in the cluster front
+if [ "$HOSTNAME" == "hpc-login" ]; then
+    export SCM_CHECK=false
+fi
+
