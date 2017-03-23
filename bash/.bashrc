@@ -5,7 +5,10 @@ export BASH_IT="$HOME/.bash_it"
 
 # Lock and Load a custom theme file
 # location /.bash_it/themes/
-export BASH_IT_THEME='powerline-multiline'
+export BASH_IT_THEME='nwinkler'
+
+# git minimal info in prompt
+export SCM_GIT_SHOW_MINIMAL_INFO=true
 
 # (Advanced): Change this to the name of your remote repo if you
 # cloned bash-it with a remote other than origin such as `bash-it`.
