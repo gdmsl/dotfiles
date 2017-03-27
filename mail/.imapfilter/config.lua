@@ -39,7 +39,6 @@ function main()
     -- Move mailing lists from trash to correct folders
     print("Moving Mailing Lists from Trash")
     move_mailing_lists(account, "[Gmail]/Trash")
-    move_mailing_lists_uds(uds_account, "Trash")
 
     -- Delete steam wishlist mails older than 8 days
     print("Moving Steam Sales notifications older than 8 days to Trash")
@@ -48,6 +47,18 @@ function main()
     -- Move older calendar items
     print("Removing calendar messages older than 30 days.")
     move_if_from_older(account, "INBOX", "calendar-notification@google.com", 30, "[Gmail]/Trash")
+
+    -- Moving conferences/seminar messages to the trash
+    print("Removing event messages older than 5 days.")
+    move_if_subject_older(uds_account, "INBOX", "Séminaire", 5, "Trash")
+    move_if_subject_older(uds_account, "INBOX", "Conférence", 5, "Trash")
+    move_if_subject_older(uds_account, "INBOX", "SEMINAIRE", 5, "Trash")
+    move_if_subject_older(uds_account, "ml/isis", "Séminaire", 5, "Trash")
+    move_if_subject_older(uds_account, "ml/isis", "Conférence", 5, "Trash")
+    move_if_subject_older(uds_account, "ml/isis", "SEMINAIRE", 5, "Trash")
+    move_if_subject_older(uds_account, "ml/chimie", "Séminaire", 5, "Trash")
+    move_if_subject_older(uds_account, "ml/chimie", "Conférence", 5, "Trash")
+    move_if_subject_older(uds_account, "ml/chimie", "SEMINAIRE", 5, "Trash")
 
     -- Cleanup of older mails
     print("Cleaning up older mails")
@@ -70,6 +81,9 @@ function move_mailing_lists_uds(account, mailbox)
     move_if_subject(account, mailbox, "[unistra-personnels]", "ml/unistra-personnels")
     move_if_subject(account, mailbox, "[unistra-personnels-offre-formation-continue]", "ml/formation-continue")
     move_if_subject(account, mailbox, "[unistra-personnel-infos-syndicats]", "ml/infos-syndicats")
+    move_if_to(account, mailbox, "isis@unistra.fr", "ml/isis")
+    move_if_to(account, mailbox, "chimie@unistra.fr", "ml/chimie")
+    move_if_to(account, mailbox, "ipcms1@unistra.fr", "ml/chimie")
 end
 
 function move_if_subject(account, mailbox, subject, tomailbox)
@@ -101,6 +115,13 @@ function move_if_from_subject_older(account, mailbox, from, subject, olderthan, 
     mails = account[mailbox]:select_all()
     filtered = account[mailbox]:contain_subject(subject) *
         account[mailbox]:contain_from(from) *
+        account[mailbox]:is_older(olderthan)
+    filtered:move_messages(account[tomailbox])
+end
+
+function move_if_subject_older(account, mailbox,subject, olderthan, tomailbox)
+    mails = account[mailbox]:select_all()
+    filtered = account[mailbox]:contain_subject(subject) *
         account[mailbox]:is_older(olderthan)
     filtered:move_messages(account[tomailbox])
 end
