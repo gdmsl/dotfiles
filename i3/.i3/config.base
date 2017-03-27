@@ -56,7 +56,7 @@ bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pulse set Master 5%
 #bindsym $mod+m exec "xterm -e alsamixer; pkill -RTMIN+10 i3blocks"
 
 # Locker
-bindsym $mod+comma exec "i3lock -d -e -f -c 282c34 -i ~/Pictures/Wallpapers/mine/glider.png"
+bindsym $mod+comma exec "blurlock"
 
 # Shutdown menu
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown, (Shift+h) hybrid-sleep
@@ -253,8 +253,8 @@ bindsym $mod+Shift+9 move container to workspace $WS09
 bindsym $mod+Shift+0 move container to workspace $WS10
 bindsym $mod+Shift+minus move container to workspace $WS11
 bindsym $mod+Shift+equal move container to workspace $WS12
-bindsym $mod+braceleft move container to workspace $WS13
-bindsym $mod+braceright move container to workspace $WS14
+bindsym $mod+Shift+bracketleft move container to workspace $WS13
+bindsym $mod+Shift+bracketright move container to workspace $WS14
 bindsym $mod+Shift+backslash move container to workspace $WS15
 bindsym $mod+Shift+semicolon move container to workspace $WS16
 bindsym $mod+Shift+dead_acute move container to workspace $WS17

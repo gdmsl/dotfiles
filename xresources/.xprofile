@@ -18,9 +18,16 @@ if [ "$HOSTNAME" = "rubick" ]; then
     xrdb -merge ~/.xrdb/fullhd.xresources
 fi
 
+# disable mouse acceleration
+if [ "$HOSTNAME" = "spectre" ]; then
+    xset m 0 0
+fi
+
 [[ -f ~/.screenlayout/default.sh ]] && ~/.screenlayout/default.sh
 
 [[ -f ~/.xbindkeysrc ]] && xbindkeys
+
+
 
 #wallpaper
 nitrogen --restore &
