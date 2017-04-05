@@ -1,5 +1,5 @@
 [general]
-accounts = gmail,outlook,uds,uds-etu
+accounts = gmail,uds,uds-etu
 ui = basic
 pythonfile = ~/.local/bin/offlineimap.py
 

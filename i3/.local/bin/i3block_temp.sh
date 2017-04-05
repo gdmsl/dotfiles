@@ -4,6 +4,9 @@
 #
 
 temp=`sensors coretemp-isa-0000 | awk '/Physical/ { print $4 }' | grep -m 1 --color=none -o "[0-9]\{1,\}" - | head -n 1`
+if [ $HOSTNAME = "rubick" ]; then
+    temp=`sensors coretemp-isa-0000 | awk '/Package id 0/ { print $4 }' | grep -m 1 --color=none -o "[0-9]\{1,\}" - | head -n 1`
+fi
 
 bef='<span  letter_spacing="-4800" rise="00">'
 aft='</span>'

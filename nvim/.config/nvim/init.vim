@@ -19,7 +19,7 @@ Plug 'bronson/vim-trailing-whitespace'
 Plug 'myusuf3/numbers.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'flazz/vim-colorschemes'
+"Plug 'flazz/vim-colorschemes'
 Plug 'spf13/vim-autoclose'
 Plug 'scrooloose/nerdcommenter'
 Plug 'lervag/vimtex'
@@ -34,8 +34,11 @@ Plug 'easymotion/vim-easymotion'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'majutsushi/tagbar'
 Plug 'vim-scripts/loremipsum'
-Plug 'justmao945/vim-clang'
-Plug 'airblade/vim-gitgutter'
+"Plug 'justmao945/vim-clang'
+Plug 'roxma/clang_complete'
+Plug 'roxma/nvim-completion-manager'
+"Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
 Plug 'rust-lang/rust.vim'
 Plug 'kana/vim-arpeggio'
 Plug 'mileszs/ack.vim'
@@ -150,10 +153,12 @@ augroup nerdtree_config
 " NeoMake {{{
 augroup neomake_config
     autocmd! BufWritePost * Neomake
-    let g:neomake_cpp_enabled_makers = ['clangtidy']
-    let g:neomake_cpp_clangtidy_args = ['-checks="*"', '--', '-std=c++14', '-Isrc', '-I.']
-    let g:neomake_c_enabled_makers = ['clangtidy']
-    let g:neomake_c_clangtidy_args = ['-checks="*"', '--', '-Isrc', '-I.']
+    let g:neomake_cpp_enabled_makers = ['clang']
+	let g:neomake_c_enabled_makers = ['clang']
+    "let g:neomake_cpp_enabled_makers = ['clangtidy']
+    "let g:neomake_cpp_clangtidy_args = ['-checks="*"', '--', '-std=c++14', '-Isrc', '-I.']
+    "let g:neomake_c_enabled_makers = ['clangtidy']
+    "let g:neomake_c_clangtidy_args = ['-checks="*"', '--', '-Isrc', '-I.']
 augroup END
 " }}}
 
@@ -170,12 +175,6 @@ augroup easymotion_config
 augroup END
 " }}}
 
-" GitGutter {{{
-augroup gitgutter_config
-    autocmd!
-augroup END
-" }}}
-
 " RustLang {{{
 augroup rust_config
     autocmd!
@@ -187,12 +186,6 @@ augroup arpeggio_config
     autocmd!
     call arpeggio#map('i', '', 0, 'jk', '<Esc>')
     "let g:arpeggio_timeoutlen=20
-augroup END
-" }}}
-
-" Clang {{{
-augroup clang_config
-    autocmd!
 augroup END
 " }}}
 
