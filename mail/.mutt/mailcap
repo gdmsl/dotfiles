@@ -22,7 +22,7 @@ application/x-tex; nvim %s
 # environment variable such as $VISUAL or $EDITOR is as close as we can
 # get.
 #
-text/*;                             iconv -t UTF-8; copiousoutput; edit=$VISUAL %s
+text/*;                             cat; copiousoutput; edit=$VISUAL %s
 message/rfc822;                     cat; copiousoutput; edit=$VISUAL %s
 
 application/msword;                 mutt_bgrun libreoffice %s; test=runningx
