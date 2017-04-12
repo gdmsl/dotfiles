@@ -8,5 +8,5 @@ ExecStart=/home/gdmsl/.cabal/bin/gitit -f %h/.gitit/wiki.conf
 Restart=no
 
 [Install]
-WantedBy=console.target
+WantedBy=default.target
 
