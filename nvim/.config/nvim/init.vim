@@ -42,6 +42,7 @@ Plug 'mhinz/vim-signify'
 Plug 'rust-lang/rust.vim'
 Plug 'kana/vim-arpeggio'
 Plug 'mileszs/ack.vim'
+Plug 'rhysd/vim-clang-format'
 
 call plug#end()
 " }}}
@@ -196,6 +197,20 @@ augroup ack_config
 augroup END
 " }}}
 
+" ClangFormat {{{
+augroup clangformat_config
+    autocmd!
+    " map to <Leader>cf in C++ code
+    autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+    autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+    " if you install vim-operator-user
+    " autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
+    " Toggle auto formatting:
+    " nmap <Leader>C :ClangFormatAutoToggle<CR>
+    autocmd FileType c,cpp,objc ClangFormatAutoEnable
+    let g:clang_format#code_style = 'mozilla'
+augroup END
+" }}}
 
 " Settings -------------------------------------------------------------------
 
