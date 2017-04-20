@@ -13,14 +13,11 @@ HIST_STAMPS="yyyy-mm-dd"
 
 plugins=(jump git archlinux cp tmux github history history-substring-search vi-mode)
 
-
 source $ZSH/oh-my-zsh.sh
 source $HOME/.zsh/aliases.zsh
 source $HOME/.zsh/functions.zsh
 source $HOME/.profile
 source $ZSH/plugins/history-substring-search/history-substring-search.zsh
-export AURREPO=/srv/aur/aurshield.db.tar.gz
-export AURREPODIR=/srv/aur/
 
 # completition system
 autoload -Uz compinit zcalc
@@ -32,6 +29,9 @@ zstyle ':completion:*:warnings' format '%BSorry, no matches for: %d%b'
 zstyle ':completion:*' file-sort modification reverse
 autoload -U colors && colors
 zstyle ':completion:*' list-colors "=(#b) #([0-9]#)*=31=36"
+
+# tmuxinator completion
+source /usr/lib/ruby/gems/2.4.0/gems/tmuxinator-0.9.0/completion/tmuxinator.zsh
 
 eval $(dircolors ~/.dircolors)
 
