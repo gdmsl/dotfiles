@@ -8,9 +8,9 @@
 # WORKSPACES {{{
 
 # outputs
-set $O1 HDMI-1
-set $O2 HDMI-2
-set $O3 DP-1
+set $O1 DVI-D-0
+set $O2 DVI-D-1
+set $O3 HDMI-1
 
 # }}}
 
