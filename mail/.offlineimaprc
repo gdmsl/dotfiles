@@ -6,7 +6,6 @@ pythonfile = ~/.local/bin/offlineimap.py
 [Account gmail]
 localrepository = gmail-local
 remoterepository = gmail-remote
-status_backend = sqlite
 
 [Repository gmail-local]
 type = Maildir
@@ -46,7 +45,6 @@ folderfilter = lambda folder: folder not in ['[Gmail]/All Mail',
 [Account outlook]
 localrepository = outlook-local
 remoterepository = outlook-remote
-status_backend = sqlite
 
 [Repository outlook-local]
 type = Maildir
@@ -67,7 +65,6 @@ nametrans = lambda s: re.sub (' ', '_', s.lower())
 [Account uds]
 localrepository = uds-local
 remoterepository = uds-remote
-status_backend = sqlite
 
 [Repository uds-local]
 type = Maildir
@@ -110,7 +107,6 @@ nametrans = lambda s: { 'INBOX/Trash'   : 'trash',
 [Account uds-etu]
 localrepository = uds-etu-local
 remoterepository = uds-etu-remote
-status_backend = sqlite
 
 [Repository uds-etu-local]
 type = Maildir

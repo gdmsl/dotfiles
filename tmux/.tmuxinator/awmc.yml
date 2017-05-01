@@ -33,9 +33,15 @@ root: ~/src/awmc
 windows:
   - editor: nvim src/*
   - testing:
+      layout: main-vertical
       root: ~/src/awmc/build
+      panes:
+          -
+          - julia
+          - nvim config.yaml
   - beagletools:
       layout: main-vertical
       root: ~/src/beagletools
       panes:
         - nvim src/*
+
