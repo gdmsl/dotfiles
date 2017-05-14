@@ -317,6 +317,8 @@ for_window [class="Civ5XP"] fullscreen
 # other
 assign [class="TelegramDesktop"] $WS11
 assign [class="mutt"] $WS12
+assign [class="nylas mail"] $WS12
+assign [class="Nylas Mail"] $WS12
 
 # }}}
 

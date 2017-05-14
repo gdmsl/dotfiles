@@ -39,6 +39,14 @@ windows:
           -
           - julia
           - nvim config.yaml
+  - cluster:
+      layout: main-vertical
+      root: ~/src/awmc
+      panes:
+          - ssh -XY gmasella@cluster
+          - ssh -XY gmasella@cluster
+          - ssh -XY gmasella@cluster
+          - ssh -XY gmasella@cluster -c ssh hpc-n523
   - beagletools:
       layout: main-vertical
       root: ~/src/beagletools
