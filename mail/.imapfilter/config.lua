@@ -75,6 +75,12 @@ function move_mailing_lists(account, mailbox)
 
     -- studentifisica2004 mailing lists
     move_if_subject(account, mailbox, "[Studentifisica2004]", "ml/studentifisica2004")
+
+    -- fedora-classroom
+    move_if_subject(account, mailbox, "[fedora-classroom]", "ml/fedora-classroom")
+
+    -- github
+    move_if_from(account, mailbox, "notifications@github.com", "ml/github")
 end
 
 function move_mailing_lists_uds(account, mailbox)
@@ -98,6 +104,11 @@ end
 
 function move_if_from(account, mailbox, from, tomailbox)
     filtered = account[mailbox]:contain_from(from)
+    filtered:move_messages(account[tomailbox]);
+end
+
+function move_if_match_from(account, mailbox, from, tomailbox)
+    filtered = account[mailbox]:match_from(from)
     filtered:move_messages(account[tomailbox]);
 end
 

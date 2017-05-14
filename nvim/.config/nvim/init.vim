@@ -207,7 +207,7 @@ augroup clangformat_config
     " autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
     " Toggle auto formatting:
     " nmap <Leader>C :ClangFormatAutoToggle<CR>
-    autocmd FileType c,cpp,objc ClangFormatAutoEnable
+    " autocmd FileType c,cpp,objc ClangFormatAutoEnable
     let g:clang_format#code_style = 'mozilla'
 augroup END
 " }}}
