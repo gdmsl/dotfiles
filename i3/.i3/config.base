@@ -326,7 +326,7 @@ assign [class="Nylas Mail"] $WS12
 
 # Font used to display widows titles, and other i3 stuffs
 # .. not used for i3bar
-font pango:Inconsolata 11, DejaVu Sans Mono 10, FontAwesome 10, Icons 10
+font pango:Hack 10, DejaVu Sans Mono 10, FontAwesome 10, Icons 10
 
 # Colors
 # class                 border   backgr.  text     indicator  child_border
