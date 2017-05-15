@@ -8,7 +8,7 @@ xterm*locale:		true
 xterm*utf8:		2
 
 ! fonts and colors
-xterm*faceName:		Inconsolata::size=11
+xterm*faceName:		Hack::size=10
 xterm*font:		6x13
 xterm*dynamicColors:	true
 xterm*eightBitInput:	true
@@ -20,10 +20,10 @@ xterm*toolBar:		false
 
 ! urxvt settings --------------------------------------------------------------
 URxvt*scrollBar:            false
-URxvt.font:                 xft:Inconsolata:size=11
+URxvt.font:                 xft:Hack:size=10
 URxvt.letterSpace:          -2
 URxvt.perl-ext-common:      default,matcher,clipboard,selection-to-clipboard
-URxvt.url-select.launcher:  firefox
+URxvt.url-select.launcher:  chromium
 URxvt.url-select.underline: true
 URxvt.keysym.M-c:           perl:clipboard:copy
 URxvt.keysym.M-v:           perl:clipboard:paste
@@ -48,7 +48,7 @@ Xft.hintstyle:  slight
 rofi.color-window: base01,base01
 rofi.color-normal: base01,base04,base01,base0D,base01
 rofi.color-active: base01,bsae04,base01,base0D,base01
-rofi.font:  Inconsolata 11
+rofi.font:  Hack 10
 rofi.bw:    2
 rofi.o:     85
 rofi.terminal:  xterm

@@ -35,7 +35,7 @@ bar {
     tray_output $O1
     strip_workspace_numbers yes
 
-	font pango:Inconsolata 11, FontAwesome 10, Icons 10
+	font pango:Hack 10, FontAwesome 10, Icons 10
 
     colors {
         # class    color
@@ -57,7 +57,7 @@ bar {
 	workspace_buttons yes
     strip_workspace_numbers yes
 
-	font pango:Inconsolata 11, FontAwesome 10, Icons 10
+	font pango:Hack 10, FontAwesome 10, Icons 10
 
     colors {
         # class    color
