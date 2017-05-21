@@ -40,10 +40,14 @@ if [ -n "$DESKTOP_SESSION" ];then
     export SSH_AUTH_SOCK
 fi
 
+# connsole theme
 if [ "$TERM" = "linux" ]; then
     source $HOME/.vconsole_theme
     clear
 fi
+
+#fasd
+eval "$(fasd --init auto)"
 
 # Startup message
 echo -n "$fg[yellow]"
