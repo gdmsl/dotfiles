@@ -45,12 +45,13 @@ Xft.hintstyle:  slight
 #include "/home/gdmsl/.xrdb/base16-onedark-256.Xresources"
 
 ! rofi -----------------------------------------------------------------------
-rofi.color-window: base01,base01
-rofi.color-normal: base01,base04,base01,base0D,base01
-rofi.color-active: base01,bsae04,base01,base0D,base01
+rofi.color-window: base01,base0D
+rofi.color-normal: base01,base05,base01,base0D,base01
+rofi.color-active: base01,bsae05,base01,base0D,base01
 rofi.font:  Hack 10
-rofi.bw:    2
+rofi.bw:    1
 rofi.o:     85
-rofi.terminal:  xterm
-rofi.location:  2
+rofi.terminal:  termite
+rofi.location:  0
+rofi.separator-style: solid
 

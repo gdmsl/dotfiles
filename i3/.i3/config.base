@@ -178,20 +178,20 @@ bindsym $mod+r mode "resize"
 workspace_auto_back_and_forth yes
 
 # Defining workspace variables
-set $WS01 "1: 1"
-set $WS02 "2: 2"
+set $WS01 "1: 1"
+set $WS02 "2: 2"
 set $WS03 "3: 3"
 set $WS04 "4: 4"
-set $WS05 "5: 5"
-set $WS06 "6: 6"
-set $WS07 "7: 7"
-set $WS08 "8: 8"
+set $WS05 "5: 5"
+set $WS06 "6: 6"
+set $WS07 "7: 7"
+set $WS08 "8: 8"
 set $WS09 "9: 9"
 set $WS10 "10: 0"
 set $WS11 "11: -"
 set $WS12 "12: ="
-set $WS13 "13: ["
-set $WS14 "14: ]"
+set $WS13 "13: ["
+set $WS14 "14: ]"
 set $WS15 "15: /"
 set $WS16 "16: ;"
 set $WS17 "17: '"
@@ -275,8 +275,8 @@ bindsym $mod+Control+equal exec --no-startup-id termite --class=mutt -e "zsh -c 
 # WINDOWS RULES {{{
 
 # assign web browsers to workspace web
-assign [class="Chromium"] $WS01
-assign [class="Firefox"] $WS01
+assign [class="Chromium"] $WS02
+assign [class="Firefox"] $WS02
 
 # windows title
 #for_window [class=".*"] title_format " <b>%title</b>"
@@ -286,10 +286,7 @@ for_window [class="Firefox"] title_format "   <b>%title</b> "
 
 # force apps to go in floating mode
 for_window [class="Nautilus" instance="file_progress"] floating enable
-for_window [class="Gnome-clocks"] floating enable
-for_window [class="XClock"] floating enable
 for_window [class="Xfce4-notifyd"] floating enable
-for_window [title="fehslide"] floating enable
 
 # force apps to not go in floating mode
 for_window [class="gimp"] floating disable
@@ -299,7 +296,6 @@ for_window [window_role="gimp-dock"] floating disable
 # Steam goes float on workspace gaming
 #for_window [class="Steam"] floating enable
 assign [class="Steam"] $WS10
-
 
 # Scratchpad
 for_window [title="scratchpadweather"] move scratchpad
@@ -337,12 +333,12 @@ client.urgent           $color17 $color17 $color15 $color21   $color17
 
 # Keybindings to change border style
 bindsym $mod+t border normal
-bindsym $mod+y border pixel 2
+bindsym $mod+y border pixel 1
 bindsym $mod+u border none
 
 # New windows are titleless and with 2 pixel border
-new_window pixel 2
-new_float pixel 2
+new_window pixel 1
+new_float pixel 1
 
 # }}}
 
