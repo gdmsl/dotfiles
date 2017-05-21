@@ -216,7 +216,7 @@ augroup END
 
 " NeoVim {{{
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-set termguicolors
+"set termguicolors
 " }}}
 
 " Backups and Swap files {{{
