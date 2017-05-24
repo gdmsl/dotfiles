@@ -72,7 +72,8 @@ sep = /
 localfolders = ~/var/mail/uds
 nametrans = lambda s: { 'trash'   : 'INBOX/Trash',
                         'sent'    : 'INBOX/Sent',
-                        'drafts'  : 'INBOX/Bozze',
+                        'drafts'  : 'INBOX/Drafts',
+                        'cleanup'  : 'INBOX/cleanup',
                         'spam'  : 'INBOX/Spam',
                         'inbox'   : 'INBOX',
                         'events'   : 'INBOX/events',
@@ -93,10 +94,11 @@ remotepasseval = get_pass("mail-uds.gpg")
 auth_mechanisms = LOGIN
 nametrans = lambda s: { 'INBOX/Trash'   : 'trash',
                         'INBOX/Sent'   : 'sent',
-                        'INBOX/Bozze'   : 'drafts',
+                        'INBOX/Drafts'   : 'drafts',
                         'INBOX'   : 'inbox',
                         'INBOX/Spam'   : 'spam',
                         'INBOX/events'   : 'events',
+                        'INBOX/cleanup'   : 'cleanup',
                         'INBOX/ml/isis'   : 'ml/isis',
                         'INBOX/ml/chimie'   : 'ml/chimie',
                         'INBOX/ml/unistra-personnels' : 'ml/unistra-personnels',
