@@ -46,6 +46,11 @@ if [ "$TERM" = "linux" ]; then
     clear
 fi
 
+# tilix fix
+if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+        source /etc/profile.d/vte.sh
+fi
+
 #fasd
 eval "$(fasd --init auto)"
 
