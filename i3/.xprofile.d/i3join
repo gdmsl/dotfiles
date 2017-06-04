@@ -9,3 +9,9 @@
     cat ~/.i3/config.colors > ~/.i3/config && \
     cat ~/.i3/config.$HOSTNAME >> ~/.i3/config && \
     cat ~/.i3/config.base >> ~/.i3/config
+
+# copy the i3 configuration to sway
+[[ -f ~/.i3/config ]] && cp ~/.i3/config ~/.config/sway/config
+
+[[ -f ~/.config/sway/swayadd ]] &&\
+    cat ~/.config/sway/swayadd >> ~/.config/sway/config
