@@ -18,9 +18,9 @@ set $stickykey period
 # WORKSPACES {{{
 
 # outputs
-set $O2 HDMI2
-set $O1 HDMI1
-set $O3 VGA1
+set $O2 HDMI-2
+set $O1 HDMI-1
+set $O3 VGA-1
 
 # }}}
 
