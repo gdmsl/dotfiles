@@ -31,7 +31,9 @@ autoload -U colors && colors
 zstyle ':completion:*' list-colors "=(#b) #([0-9]#)*=31=36"
 
 # tmuxinator completion
-source /usr/lib/ruby/gems/2.4.0/gems/tmuxinator-0.9.0/completion/tmuxinator.zsh
+if which tmuxinator &> /dev/null; then
+    source /usr/lib/ruby/gems/2.4.0/gems/tmuxinator-0.9.0/completion/tmuxinator.zsh
+fi
 
 eval $(dircolors ~/.dircolors)
 
@@ -46,17 +48,20 @@ if [ "$TERM" = "linux" ]; then
     clear
 fi
 
-# tilix fix
-if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-        source /etc/profile.d/vte.sh
+#fasd
+if which fasd &> /dev/null; then
+    eval "$(fasd --init auto)"
 fi
 
-#fasd
-eval "$(fasd --init auto)"
-
 # Startup message
-echo -n "$fg[yellow]"
-fortune -a -s
-echo -n "$reset_color"
-echo "$fg[red]Last -Syu:$reset_color $(grep "pacman -Syu" /var/log/pacman.log | tail -n1 | cut -c 2- | cut -c-16)"
-echo ""
+if which fortune &> /dev/null; then
+    echo -n "$fg[yellow]"
+    fortune -a -s
+    echo -n "$reset_color"
+    echo "$fg[red]Last -Syu:$reset_color $(grep "pacman -Syu" /var/log/pacman.log | tail -n1 | cut -c 2- | cut -c-16)"
+    echo ""
+else
+    echo -n "$fg[blue]"
+    echo -n "This place is boring"
+    echo -n "$reset_color"
+fi
