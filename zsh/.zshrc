@@ -19,6 +19,9 @@ source $HOME/.zsh/functions.zsh
 source $HOME/.profile
 source $ZSH/plugins/history-substring-search/history-substring-search.zsh
 
+# Ignore hystory
+export HISTORY_IGNORE="cd:cd ..:ls:la:make"
+
 # completition system
 autoload -Uz compinit zcalc
 compinit

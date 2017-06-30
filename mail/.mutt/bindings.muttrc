@@ -13,6 +13,7 @@ bind index,pager \Ct sidebar-toggle-visible
 
 # Index
 #bind index l display-message
+bind index g noop
 bind index gg first-entry
 bind index G last-entry
 bind index h noop               # Disable h
@@ -21,6 +22,7 @@ bind index uc copy-message
 
 # Pager
 bind pager h exit
+bind pager g noop
 bind pager gg top
 bind pager G bottom
 bind pager J next-line

@@ -6,10 +6,10 @@ set   postponed   = "+uds/draft"
 set   from        = "masella@unistra.fr"
 set   record      = "+uds/sent"
 
-macro index D \
+macro index,pager D \
     "<save-message>+uds/trash<enter>" \
         "move message to the trash"
 
-macro index S \
+macro index,pager S \
     "<save-message>+uds/spam<enter>" \
         "mark message as spam"

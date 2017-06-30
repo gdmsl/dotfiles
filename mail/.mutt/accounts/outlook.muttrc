@@ -6,10 +6,10 @@ set   postponed   = "+outlook/draft"
 set   from        = "guido.masella@live.com"
 set   record      = "+outlook/sent"
 
-macro index D \
+macro index,pager D \
     "<save-message>+outlook/deleted<enter>" \
         "move message to the trash"
 
-macro index S \
+macro index,pager S \
     "<save-message>+outlook/spam<enter>" \
         "mark message as spam"
