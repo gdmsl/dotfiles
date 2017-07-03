@@ -16,3 +16,9 @@
 [submodule "bash/.bash-it"]
 	path = bash/.bash_it
 	url = https://github.com/Bash-it/bash-it.git
+[submodule ".auxiliary/gnuplot-configs"]
+	path = .auxiliary/gnuplot-configs
+	url = https://github.com/Gnuplotting/gnuplot-configs.git
+[submodule ".auxiliary/gnuplot-palettes"]
+	path = .auxiliary/gnuplot-palettes
+	url = https://github.com/Gnuplotting/gnuplot-palettes.git
