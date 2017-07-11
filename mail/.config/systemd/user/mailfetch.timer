@@ -1,0 +1,10 @@
+[Unit]
+Description=Imapfilter and Offlineimap Query Timer
+
+[Timer]
+OnStartupSec=5m
+OnUnitInactiveSec=10m
+Unit=mailfetch.service
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,15 @@
+[Unit]
+Description=Imapfilter and Offlineimap Service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/imapfilter
+ExecStart=/usr/bin/offlineimap -o -u syslog
+# Give 40 seconds for imapfilter and offlineimap to gracefully stop before hard
+# killing it.
+TimeoutStopSec=40
+#Restart=on-watchdog
+#WatchdogSec=300
+
+[Install]
+WantedBy=default.target
