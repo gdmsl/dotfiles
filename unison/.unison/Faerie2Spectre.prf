@@ -6,9 +6,4 @@ root = /mnt/archive0/gdmsl
 sshargs = -C
 
 # directories
-path=Documents
-path=Brothel
-path=Pictures
-path=Library
-path=Bookshelf
-path=Music
+path=usr
