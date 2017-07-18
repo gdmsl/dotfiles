@@ -56,6 +56,9 @@ if which fasd &> /dev/null; then
     eval "$(fasd --init auto)"
 fi
 
+# show time for every program which run for more than 10 seconds
+export REPORTTIME=10
+
 # Startup message
 if which fortune &> /dev/null; then
     echo -n "$fg[yellow]"

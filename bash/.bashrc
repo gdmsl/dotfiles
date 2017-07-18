@@ -45,6 +45,9 @@ export SCM_CHECK=true
 # Load Bash It
 source $BASH_IT/bash_it.sh
 
+#
+export PATH="$PATH:$HOME/.local/bin"
+
 # Load local bash file
 [ -f "$HOME/.bashrc.$HOSTNAME" ] && source "$HOME/.bashrc.$HOSTNAME"
 
