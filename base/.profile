@@ -2,6 +2,8 @@
 # ~/.profile
 #
 
+source /etc/profile
+
 # setting the PATH envirorment variable
 export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/texlive/2016/bin/x86_64-linux:$HOME/.cabal/bin:$PATH:$HOME/var/go/bin"
 
