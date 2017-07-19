@@ -1,3 +1,5 @@
+source $HOME/.profile
+
 # oh-my-zsh
 export ZSH=$HOME/.oh-my-zsh
 ZSH_CUSTOM=$HOME/.my-oh-my-zsh
@@ -16,7 +18,6 @@ plugins=(jump git archlinux cp tmux github history history-substring-search vi-m
 source $ZSH/oh-my-zsh.sh
 source $HOME/.zsh/aliases.zsh
 source $HOME/.zsh/functions.zsh
-source $HOME/.profile
 source $ZSH/plugins/history-substring-search/history-substring-search.zsh
 
 # Ignore hystory
