@@ -7,10 +7,10 @@ function avestc {
     ave --delimiter " " --noheaders $@ | column -s, -t
 }
 
-export -f avestc
+export avestc
 
 function aveez {
     ave $@ | column -s, -t
 }
 
-export -f aveez
+export aveez
