@@ -48,6 +48,9 @@ source $BASH_IT/bash_it.sh
 #
 export PATH="$PATH:$HOME/.local/bin"
 
+# Load functions
+[ -f "$HOME/.bash/functions.bash" ] && source "$HOME/.bash/functions.bash"
+
 # Load local bash file
 [ -f "$HOME/.bashrc.$HOSTNAME" ] && source "$HOME/.bashrc.$HOSTNAME"
 

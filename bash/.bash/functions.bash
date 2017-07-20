@@ -1,5 +1,5 @@
 #
-# ~/.zsh/functions.zsh
+# ~/.bash/functions.bash
 #
 # User defined functions
 
@@ -14,3 +14,4 @@ function aveez {
 }
 
 export -f aveez
+
