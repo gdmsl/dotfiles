@@ -30,8 +30,8 @@ export TODO="t"
 export SCM_CHECK=true
 
 # History management
-export HISTFILESIZE=-1
-export HISTSIZE=-1
+export HISTFILESIZE=
+export HISTSIZE=
 export HISTFILE=~/.bash_eternal_history
 export HISTCONTROL=erasedups
 
