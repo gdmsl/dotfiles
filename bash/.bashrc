@@ -32,7 +32,6 @@ export SCM_CHECK=true
 # History management
 export HISTFILESIZE=-1
 export HISTSIZE=-1
-export HISTTIMEFORMAT="[%F %T] "
 export HISTFILE=~/.bash_eternal_history
 export HISTCONTROL=erasedups
 
@@ -61,3 +60,5 @@ export PATH="$PATH:$HOME/.local/bin"
 # Load local bash file
 [ -f "$HOME/.bashrc.$HOSTNAME" ] && source "$HOME/.bashrc.$HOSTNAME"
 
+# force to write history after every command
+PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
