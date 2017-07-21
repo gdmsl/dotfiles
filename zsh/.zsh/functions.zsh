@@ -4,7 +4,7 @@
 # User defined functions
 
 function avestc {
-    ave --delimiter " " --noheaders $@ | column -s, -t
+    ave -s " " -k $@ | column -s, -t
 }
 
 export avestc
