@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Load local bash file
+[ -f "$HOME/.bashrc.$HOSTNAME" ] && source "$HOME/.bashrc.$HOSTNAME"
+
 # Path to the bash it configuration
 export BASH_IT="$HOME/.bash_it"
 
@@ -34,9 +37,6 @@ export HISTFILESIZE=
 export HISTSIZE=
 export HISTFILE=~/.bash_eternal_history
 export HISTCONTROL=erasedups
-
-# Load local bash file
-[ -f "$HOME/.bashrc.$HOSTNAME" ] && source "$HOME/.bashrc.$HOSTNAME"
 
 # Set Xterm/screen/Tmux title with only a short hostname.
 # Uncomment this (or set SHORT_HOSTNAME to something else),
