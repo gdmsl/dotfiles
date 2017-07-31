@@ -65,6 +65,9 @@ function main()
     move_if_older(account, "INBOX", 60, "cleanup")
     move_if_older(uds_account, "INBOX", 60, "cleanup")
 
+    -- Cleaning older slurm mails
+    move_if_older(account, "work/udshpc", 5, "[Gmail]/Trash")
+
 end
 
 function move_mailing_lists(account, mailbox)
