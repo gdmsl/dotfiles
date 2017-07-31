@@ -35,6 +35,9 @@ export HISTSIZE=
 export HISTFILE=~/.bash_eternal_history
 export HISTCONTROL=erasedups
 
+# Load local bash file
+[ -f "$HOME/.bashrc.$HOSTNAME" ] && source "$HOME/.bashrc.$HOSTNAME"
+
 # Set Xterm/screen/Tmux title with only a short hostname.
 # Uncomment this (or set SHORT_HOSTNAME to something else),
 # Will otherwise fall back on $HOSTNAME.
@@ -56,9 +59,6 @@ export PATH="$PATH:$HOME/.local/bin"
 
 # Load functions
 [ -f "$HOME/.bash/functions.bash" ] && source "$HOME/.bash/functions.bash"
-
-# Load local bash file
-[ -f "$HOME/.bashrc.$HOSTNAME" ] && source "$HOME/.bashrc.$HOSTNAME"
 
 # force to write history after every command
 PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
