@@ -1,3 +1,4 @@
+
 [main]
 
 # Where the pubs repository files (bibtex, metadata, notes) are located
@@ -17,7 +18,12 @@ open_cmd = xdg-open
 # if using a graphical editor, use the --wait or --block option, i.e.:
 # "atom --wait"
 # "kate --block"
-edit_cmd = "nvim"
+# If set to an empty string (default) pubs uses the value of the environment
+# variable $EDITOR.
+edit_cmd = nvim
+
+# Which default extension to use when creating a note file.
+note_extension = txt
 
 # If true debug mode is on which means exceptions are not catched and
 # the full python stack is printed.
@@ -81,8 +87,14 @@ active = alias,
 # count = !pubs list -k | wc -l
 #
 annotate = doc open --with myxournal.sh
+# new subcommands can be defined, e.g.:
+# print = open --with lp
+# evince = open --with evince
+
+# shell commands can also be defined, by prefixing them with a bang `!`, e.g:
+# count = !pubs list -k | wc -l
 
 [internal]
 # The version of this configuration file. Do not edit.
-version = 0.6.0
+version = 0.7.0
 
