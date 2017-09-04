@@ -315,6 +315,8 @@ assign [class="TelegramDesktop"] $WS11
 assign [class="mutt"] $WS12
 assign [class="nylas mail"] $WS12
 assign [class="Nylas Mail"] $WS12
+assign [class="Thunderbird"] $WS12
+assign [class="Mail"] $WS12
 
 # }}}
 
