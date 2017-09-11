@@ -55,6 +55,12 @@ bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pulse set Master 5%
 # Alsamixer
 #bindsym $mod+m exec "xterm -e alsamixer; pkill -RTMIN+10 i3blocks"
 
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+slash move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+slash scratchpad show
+
 # Locker
 bindsym $mod+comma exec "blurlock"
 
@@ -75,15 +81,8 @@ mode "$mode_system" {
 }
 bindsym $mod+z mode "$mode_system"
 
-# slam all opened tombs
-bindsym $mod+Shift+i exec --no-startup-id tomb slam all
-bindsym $mod+i exec "i3-nagbar -t warning -m 'Do you want to slam all opened tombs?' -b 'Slamm All!' 'tomb slam all'"
-
 # take screenshots
 bindcode 107 exec --no-startup-id "maim ~/usr/pictures/screenshots/$(date +%F-%T).png && paplay /usr/share/sounds/freedesktop/stereo/screen-capture.oga"
-
-# turn off the screen
-bindsym $mod+g exec "sleep 2; xset dpms force off"
 
 # }}}
 
@@ -128,7 +127,7 @@ bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
-bindsym $mod+$stickykey sticky toggle
+bindsym $mod+period sticky toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
@@ -140,9 +139,18 @@ bindsym $mod+a focus parent
 bindsym $mod+c focus child
 
 # Mark/unmark window and move to marker
-bindsym $mod+KP_7 exec i3-input -F 'mark %s' -P 'Mark: '
-bindsym $mod+KP_8 exec i3-input -F '[con_mark="%s"] focus' -P 'Go to: '
-bindsym $mod+KP_9 exec i3-input -F 'unmark %s' -P 'Unmark: '
+set $mode_manage Workspace (w), Mark (m), Unmark (u), Go to mark (g)
+mode "$mode_manage" {
+    bindsym m exec i3-input -F 'mark %s' -P 'Mark: '
+    bindsym g exec i3-input -F '[con_mark="%s"] focus' -P 'Go to: '
+    bindsym u exec i3-input -F 'unmark %s' -P 'Unmark: '
+    bindsym w exec i3-input -F 'workspace %s' -P 'Workspace: '
+
+	# back to normal: Enter or Escape
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+m mode "$mode_manage"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -167,7 +175,6 @@ mode "resize" {
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
-
 bindsym $mod+r mode "resize"
 
 
@@ -175,26 +182,21 @@ bindsym $mod+r mode "resize"
 
 # WORKSPACES {{{
 
-workspace_auto_back_and_forth yes
+workspace_auto_back_and_forth no
 
 # Defining workspace variables
-set $WS01 "1: 1"
-set $WS02 "2: 2"
-set $WS03 "3: 3"
-set $WS04 "4: 4"
-set $WS05 "5: 5"
-set $WS06 "6: 6"
-set $WS07 "7: 7"
-set $WS08 "8: 8"
-set $WS09 "9: 9"
-set $WS10 "10: 0"
-set $WS11 "11: -"
-set $WS12 "12: ="
-set $WS13 "13: ["
-set $WS14 "14: ]"
-set $WS15 "15: /"
-set $WS16 "16: ;"
-set $WS17 "17: '"
+set $WS01 "1: Home"
+set $WS02 "2: Web"
+set $WS03 "3: Term"
+set $WS04 "4: Coding"
+set $WS05 "5: Testing"
+set $WS06 "6: SSH"
+set $WS07 "7: Logging"
+set $WS08 "8: Maintenance"
+set $WS09 "9: Fun"
+set $WS10 "10: Gaming"
+set $WS11 "11: IM"
+set $WS12 "12: Mail"
 
 # Putting workspaces on screens
 workspace $WS01 output $O1
@@ -209,11 +211,6 @@ workspace $WS09 output $O1
 workspace $WS10 output $O1
 workspace $WS11 output $O1
 workspace $WS12 output $O1
-workspace $WS13 output $O2
-workspace $WS14 output $O2
-workspace $WS15 output $O2
-workspace $WS16 output $O3
-workspace $WS17 output $O3
 
 # move workspace to next monitor
 bindsym $mod+Control+h move workspace to output left
@@ -234,11 +231,6 @@ bindsym $mod+9 workspace $WS09
 bindsym $mod+0 workspace $WS10
 bindsym $mod+minus workspace $WS11
 bindsym $mod+equal workspace $WS12
-bindsym $mod+bracketleft workspace $WS13
-bindsym $mod+bracketright workspace $WS14
-bindsym $mod+backslash workspace $WS15
-bindsym $mod+semicolon workspace $WS16
-bindsym $mod+dead_acute workspace $WS17
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $WS01
@@ -253,11 +245,6 @@ bindsym $mod+Shift+9 move container to workspace $WS09
 bindsym $mod+Shift+0 move container to workspace $WS10
 bindsym $mod+Shift+minus move container to workspace $WS11
 bindsym $mod+Shift+equal move container to workspace $WS12
-bindsym $mod+Shift+bracketleft move container to workspace $WS13
-bindsym $mod+Shift+bracketright move container to workspace $WS14
-bindsym $mod+Shift+backslash move container to workspace $WS15
-bindsym $mod+Shift+semicolon move container to workspace $WS16
-bindsym $mod+Shift+dead_acute move container to workspace $WS17
 
 # switch workspace back and forth
 bindsym $mod+Tab workspace back_and_forth
@@ -284,10 +271,6 @@ for_window [class=".*"] title_format " 3  <b>%title</b> "
 for_window [class="Chromium"] title_format "   <b>%title</b> "
 for_window [class="Firefox"] title_format "   <b>%title</b> "
 
-# force apps to go in floating mode
-for_window [class="Nautilus" instance="file_progress"] floating enable
-for_window [class="Xfce4-notifyd"] floating enable
-
 # force apps to not go in floating mode
 for_window [class="gimp"] floating disable
 for_window [window_role="gimp-toolbox"] floating disable
@@ -298,15 +281,12 @@ for_window [window_role="gimp-dock"] floating disable
 assign [class="Steam"] $WS10
 
 # Scratchpad
-for_window [title="scratchpadweather"] move scratchpad
 for_window [title="scratchmonitor"] move scratchpad
 for_window [class="Pavucontrol"] move scratchpad
 
 # GAMES
-assign [class="dota_linux"] "19: dota"
-assign [class="dota2"] "19: dota"
-assign [class="Civ5XP"] "19: civ"
-for_window [class="dota_linux"] fullscreen
+assign [class="dota2"] "13: dota"
+assign [class="Civ5XP"] "13: civ"
 for_window [class="dota2"] fullscreen
 for_window [class="Civ5XP"] fullscreen
 
@@ -335,32 +315,27 @@ client.urgent           $color17 $color17 $color15 $color21   $color17
 
 # Keybindings to change border style
 bindsym $mod+t border normal
-bindsym $mod+y border pixel 1
+bindsym $mod+y border pixel 2
 bindsym $mod+u border none
 
 # New windows are titleless and with 2 pixel border
-new_window pixel 1
-new_float pixel 1
+new_window pixel 2
+new_float pixel 2
 
 # }}}
 
 # SCRATCHPAD {{{
 
 # Scratchpad
-# Make the currently focused window a scratchpad
-bindsym $mod+Shift+slash move scratchpad
-
-# Show the first scratchpad window
-bindsym $mod+slash scratchpad show
 
 # }}}
 
 # AUTOSTART {{{
 
-# Network Manager Applet
+# Network Manager Applet (applet to manage connections)
 exec /usr/bin/nm-applet
 
-# Parcellite
+# Copyq
 exec copyq
 
 # Screen off after 5 minutes
@@ -369,37 +344,32 @@ exec --no-startup-id xset dpms 600
 # set the $O1 as default (primary)
 exec xrandr --output $O1 --primary
 
-# conky
-#exec --no-startup-id "conky -c .conkyrc-$HOST"
-
-# gnome-keyring
-# exec --no-startup-id "/usr/bin/gnome-keyring-daemon --start"
-
-# MEGA
+# MegaSync. Client for automatic syncing with Mega.co.nz
 exec --no-startup-id "megasync"
 
-# DUNST
+# DUNST. A notification daemon
 exec --no-startup-id "dunst"
 
-# Redshift
+# Redshift, a software to change color temperature according to the
+# time of the day
 exec --no-startup-id "redshift-gtk"
 
-# Sound
+# Startup sound
 exec --no-startup-id "paplay /usr/share/sounds/freedesktop/stereo/service-login.oga"
 
-# weather
-# exec --no-startup-id weather
-
-# compositor
+# Compositor with libmumble preloaded (for the overlay)
 exec "LD_PRELOAD=/usr/lib/mumble/libmumble.so compton --config ~/.config/compton/compton-i3.conf -b"
 
-# volume control for pulseaudio
+# PulseAudio volume control
 exec --no-startup-id pavucontrol
 
-# system monitor
+# System monior running in the scratchpad
 exec --no-startup-id termite --title=scratchmonitor -e "zsh -c glances"
 
-# file manager
+# File manager daemon to identify plugged devices
 exec --no-startup-id "pcmanfm -d"
+
+# Mail software
+exec --no-startup-id "nylas-mail"
 
 # }}}

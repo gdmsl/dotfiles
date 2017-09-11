@@ -5,16 +5,6 @@
 
 # AUTHOR: Guido Masella <guido.masella@gmail.com>
 
-# KEYS {{{
-set $lockkey backslash
-set $tombkey bracketright
-set $zkey dead_grave
-set $prevkey minus
-set $nextkey equal
-set $scratchkey slash
-set $stickykey period
-# }}}
-
 # WORKSPACES {{{
 
 # outputs

@@ -41,7 +41,7 @@
             "percent": 0.5,
             "swallows": [
                {
-               "class": "^skypeforlinux$"
+               "class": "^Skype Preview$"
                }
             ],
             "type": "con"
