@@ -20,7 +20,7 @@ set $O3 VGA-1
 bar {
 	output            $O1
 	status_command    i3blocks -c ~/.i3blocks/tachanka.conf
-	position          bottom
+	position          top
 	workspace_buttons yes
     tray_output $O1
     strip_workspace_numbers yes
@@ -43,7 +43,7 @@ bar {
 bar {
 	output            $O2
 	status_command    i3blocks -c ~/.i3blocks/tachanka.conf
-	position          bottom
+	position          top
 	workspace_buttons yes
     strip_workspace_numbers yes
 
