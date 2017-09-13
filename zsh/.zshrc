@@ -60,15 +60,7 @@ fi
 # show time for every program which run for more than 10 seconds
 export REPORTTIME=10
 
-# Startup message
-if which fortune &> /dev/null; then
-    echo -n "$fg[yellow]"
-    fortune -a -s
-    echo -n "$reset_color"
-    echo "$fg[red]Last -Syu:$reset_color $(grep "pacman -Syu" /var/log/pacman.log | tail -n1 | cut -c 2- | cut -c-16)"
-    echo ""
-else
-    echo -n "$fg[blue]"
-    echo -n "This place is boring"
-    echo -n "$reset_color"
-fi
+curl wttr.in/\?0
+echo
+echo "$fg[red]Last -Syu:$reset_color $(grep "pacman -Syu" /var/log/pacman.log | tail -n1 | cut -c 2- | cut -c-16)"
+echo "$reset_color"
