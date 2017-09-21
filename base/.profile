@@ -47,6 +47,9 @@ export QT_STYLE_OVERRIDE='gtk2'
 export GEM_HOME=$(ruby -e 'print Gem.user_dir')
 export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
 
-
 # usefull paths
 export I3SESSIONS=$HOME/var/i3sessions
+
+# Rust Path, if any
+[ -e "$HOME/.cargo/env" ] && source $HOME/.cargo/env
+
