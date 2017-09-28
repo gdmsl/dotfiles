@@ -28,15 +28,16 @@ bar {
 	font pango:Hack 10, FontAwesome 10, Icons 10
 
     colors {
-        # class    color
-        separator  $color8
-        background $color0
-        statusline $color7
-        # class              border   background text
-        focused_workspace    $color4  $color4    $color0
-        active_workspace     $color8  $color8    $color0
-        inactive_workspace   $color0  $color0    $color8
-        urgent_workspace     $color1  $color1    $color15
+        background $base00
+        separator  $base01
+        statusline $base04
+
+        # State             Border  BG      Text
+        focused_workspace   $base05 $base0D $base00
+        active_workspace    $base05 $base03 $base00
+        inactive_workspace  $base03 $base01 $base05
+        urgent_workspace    $base08 $base08 $base00
+        binding_mode        $base00 $base0A $base00
     }
 }
 
@@ -50,15 +51,16 @@ bar {
 	font pango:Hack 10, FontAwesome 10, Icons 10
 
     colors {
-        # class    color
-        separator  $color8
-        background $color0
-        statusline $color7
-        # class              border   background text
-        focused_workspace    $color4  $color4    $color0
-        active_workspace     $color8  $color8    $color0
-        inactive_workspace   $color0  $color0    $color8
-        urgent_workspace     $color1  $color1    $color15
+        background $base00
+        separator  $base01
+        statusline $base04
+
+        # State             Border  BG      Text
+        focused_workspace   $base05 $base0D $base00
+        active_workspace    $base05 $base03 $base00
+        inactive_workspace  $base03 $base01 $base05
+        urgent_workspace    $base08 $base08 $base00
+        binding_mode        $base00 $base0A $base00
     }
 }
 # }}}

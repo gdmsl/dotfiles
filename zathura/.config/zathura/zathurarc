@@ -1,51 +1,45 @@
 # zathura configuration file
 
-# setting recolor-keep true will keep any color your pdf has.
-# if it is false, it'll just be black and white
-set recolor-keephue             "false"
-
-# Rest of your configs go here:
 set font "Hack 10"
 set smooth-scroll "true"
 set window-title-home-tilde "true"
 set statusbar-home-tilde "true"
 set guioptions "sc"
 set page-padding 5
-
-# selection
 set selection-clipboard clipboard
 
-# Base16 Eighties
-# Author: Chris Kempson (http://chriskempson.com)
+# Base16 Materia
+# Author: Defman21
 
-set default-bg                  "#2d2d2d"
-set default-fg                  "#393939"
+set default-bg                  "#263238"
+set default-fg                  "#2C393F"
 
-set statusbar-fg                "#a09f93"
-set statusbar-bg                "#515151"
+set statusbar-fg                "#C9CCD3"
+set statusbar-bg                "#37474F"
 
-set inputbar-bg                 "#2d2d2d"
-set inputbar-fg                 "#f2f0ec"
+set inputbar-bg                 "#263238"
+set inputbar-fg                 "#FFFFFF"
 
-set notification-bg             "#2d2d2d" 
-set notification-fg             "#f2f0ec"
+set notification-bg             "#263238"
+set notification-fg             "#FFFFFF"
 
-set notification-error-bg       "#2d2d2d"
-set notification-error-fg       "#f2777a"
+set notification-error-bg       "#263238"
+set notification-error-fg       "#EC5F67"
 
-set notification-warning-bg     "#2d2d2d"
-set notification-warning-fg     "#f2777a"
+set notification-warning-bg     "#263238"
+set notification-warning-fg     "#EC5F67"
 
-set highlight-color             "#ffcc66"
-set highlight-active-color      "#6699cc"
+set highlight-color             "#FFCC00"
+set highlight-active-color      "#89DDFF"
 
-set completion-bg               "#393939"
-set completion-fg               "#6699cc"
+set completion-bg               "#2C393F"
+set completion-fg               "#89DDFF"
 
-set completion-highlight-fg     "#f2f0ec"
-set completion-highlight-bg     "#6699cc"
+set completion-highlight-fg     "#FFFFFF"
+set completion-highlight-bg     "#89DDFF"
 
-set recolor-lightcolor          "#2d2d2d"
-set recolor-darkcolor           "#e8e6df"
+set recolor-lightcolor          "#263238"
+set recolor-darkcolor           "#D5DBE5"
 
 set recolor                     "false"
+set recolor-keephue             "false"

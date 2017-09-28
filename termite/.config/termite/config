@@ -41,50 +41,50 @@ cursor_shape = block
 #roundness = 2.0
 
 [colors]
-# Base16 OneDark
-# Author: Lalit Magant (http://github.com/tilal6991)
+# Base16 Materia
+# Author: Defman21
 
-foreground      = #abb2bf
-foreground_bold = #b6bdca
-cursor          = #b6bdca
-background      = #282c34
+foreground      = #CDD3DE
+foreground_bold = #D5DBE5
+cursor          = #D5DBE5
+background      = #263238
 
 # 16 color space
 
 # Black, Gray, Silver, White
-color0  = #282c34
-color8  = #545862
-color7  = #abb2bf
-color15 = #c8ccd4
+color0  = #263238
+color8  = #707880
+color7  = #CDD3DE
+color15 = #FFFFFF
 
 # Red
-color1  = #e06c75
-color9  = #e06c75
+color1  = #EC5F67
+color9  = #EC5F67
 
 # Green
-color2  = #98c379
-color10 = #98c379
+color2  = #8BD649
+color10 = #8BD649
 
 # Yellow
-color3  = #e5c07b
-color11 = #e5c07b
+color3  = #FFCC00
+color11 = #FFCC00
 
 # Blue
-color4  = #61afef
-color12 = #61afef
+color4  = #89DDFF
+color12 = #89DDFF
 
 # Purple
-color5  = #c678dd
-color13 = #c678dd
+color5  = #82AAFF
+color13 = #82AAFF
 
 # Teal
-color6  = #56b6c2
-color14 = #56b6c2
+color6  = #80CBC4
+color14 = #80CBC4
 
 # Extra colors
-color16 = #d19a66
-color17 = #be5046
-color18 = #353b45
-color19 = #3e4451
-color20 = #565c64
-color21 = #b6bdca
+color16 = #EA9560
+color17 = #EC5F67
+color18 = #2C393F
+color19 = #37474F
+color20 = #C9CCD3
+color21 = #D5DBE5
