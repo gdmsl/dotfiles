@@ -53,3 +53,8 @@ export I3SESSIONS=$HOME/var/i3sessions
 # Rust Path, if any
 [ -e "$HOME/.cargo/env" ] && source $HOME/.cargo/env
 
+# FASD
+if which fasd &> /dev/null; then
+    eval "$(fasd --init auto)"
+fi
+

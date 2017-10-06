@@ -3,7 +3,7 @@ source $HOME/.profile
 # oh-my-zsh
 export ZSH=$HOME/.oh-my-zsh
 ZSH_CUSTOM=$HOME/.my-oh-my-zsh
-ZSH_THEME="agnoster"
+ZSH_THEME="avit"
 
 if [ "$TERM" = "linux" ]; then
     ZSH_THEME="robbyrussel"
@@ -13,7 +13,7 @@ DEFAULT_USER="gdmsl"
 
 HIST_STAMPS="yyyy-mm-dd"
 
-plugins=(jump git archlinux cp tmux github history history-substring-search vi-mode)
+plugins=(jump git archlinux cp tmux github history history-substring-search vi-mode fasd sudo)
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.zsh/aliases.zsh
@@ -50,11 +50,6 @@ fi
 if [ "$TERM" = "linux" ]; then
     source $HOME/.vconsole_theme
     clear
-fi
-
-#fasd
-if which fasd &> /dev/null; then
-    eval "$(fasd --init auto)"
 fi
 
 # show time for every program which run for more than 10 seconds
