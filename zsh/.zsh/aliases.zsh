@@ -36,3 +36,7 @@ alias jrnl=' jrnl'
 
 # neovim diff
 alias nvimdiff='nvim -d'
+
+# pqiv
+alias pqiv="pqiv --bind-key='d { command(mkdir -p .pqiv-trash; mv \$1 .pqiv-trash); goto_earlier_file(); goto_file_relative(1) }'"
+
