@@ -47,7 +47,7 @@ Xft.hintstyle:  slight
 ! rofi -----------------------------------------------------------------------
 rofi.color-window: base01,base0D
 rofi.color-normal: base01,base05,base01,base0D,base01
-rofi.color-active: base01,bsae05,base01,base0D,base01
+rofi.color-active: base01,base05,base01,base0D,base01
 rofi.font:  Hack 10
 rofi.bw:    1
 rofi.o:     85
