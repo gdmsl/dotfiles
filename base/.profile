@@ -7,6 +7,8 @@ source /etc/profile
 # setting the PATH envirorment variable
 export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/texlive/2016/bin/x86_64-linux:$HOME/.cabal/bin:$PATH:$HOME/var/go/bin"
 
+export LD_LIBRARY_PATH="$HOME/.local/lib64:$HOME/.local/lib:$LD_LIBRARYPATH"
+
 # go path
 export GOPATH="$HOME/var/go"
 
