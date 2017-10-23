@@ -8,7 +8,7 @@ xterm*locale:		true
 xterm*utf8:		2
 
 ! fonts and colors
-xterm*faceName:		Hack::size=10
+xterm*faceName:		Fira Code::size=10
 xterm*font:		6x13
 xterm*dynamicColors:	true
 xterm*eightBitInput:	true
@@ -20,7 +20,7 @@ xterm*toolBar:		false
 
 ! urxvt settings --------------------------------------------------------------
 URxvt*scrollBar:            false
-URxvt.font:                 xft:Hack:size=10
+URxvt.font:                 xft:Fira Code:size=10
 URxvt.letterSpace:          -2
 URxvt.perl-ext-common:      default,matcher,clipboard,selection-to-clipboard
 URxvt.url-select.launcher:  chromium
@@ -48,7 +48,7 @@ Xft.hintstyle:  slight
 rofi.color-window: base01,base0D
 rofi.color-normal: base01,base05,base01,base0D,base01
 rofi.color-active: base01,base05,base01,base0D,base01
-rofi.font:  Hack 10
+rofi.font:  Fira Code 10
 rofi.bw:    1
 rofi.o:     85
 rofi.terminal:  termite

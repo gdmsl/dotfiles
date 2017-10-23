@@ -24,8 +24,6 @@ bindsym $mod+Shift+x exec thunar
 # start dmenu (a program launcher) with Super+d and
 # .. a modified version (which reads only .desktop files) with
 # .. Super+Shift+d
-#bindsym $mod+d exec dmenu_run -b -l 15  -fn 'Hack-10' -nb '#262626' -nf '#ebdbb2' -sb '#484848' -sf '#ebdbb2'
-#bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -l 15 -i -fn 'Hack-10' -nb '#262626' -nf '#ebdbb2' -sb '#484848' -sf '#ebdbb2'"
 bindsym $mod+d exec --no-startup-id "rofi -modi 'run,ssh,window' -show run"
 bindsym $mod+Shift+d exec --no-startup-id "rofi-filefinder.sh"
 
@@ -305,7 +303,7 @@ assign [class="Mail"] $WS12
 
 # Font used to display widows titles, and other i3 stuffs
 # .. not used for i3bar
-font pango:Hack 10, DejaVu Sans Mono 10, FontAwesome 10, Icons 10
+font pango:Fira Code, FontAwesome, Icons 10
 
 # Colors
 # class                 border   backgr.  text     indicator  child_border
