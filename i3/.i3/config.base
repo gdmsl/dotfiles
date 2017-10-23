@@ -303,7 +303,7 @@ assign [class="Mail"] $WS12
 
 # Font used to display widows titles, and other i3 stuffs
 # .. not used for i3bar
-font pango:Fira Code, FontAwesome, Icons 10
+font pango:Fira Mono for Powerline, FontAwesome, Icons 10
 
 # Colors
 # class                 border   backgr.  text     indicator  child_border
