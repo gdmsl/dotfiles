@@ -266,9 +266,9 @@ assign [class="Firefox"] $WS02
 
 # windows title
 #for_window [class=".*"] title_format " <b>%title</b>"
-for_window [class=".*"] title_format " 3  <b>%title</b> "
-for_window [class="Chromium"] title_format "   <b>%title</b> "
-for_window [class="Firefox"] title_format "   <b>%title</b> "
+for_window [class=".*"] title_format "<b>%title</b>"
+for_window [class="Chromium"] title_format "  <b>%title</b>"
+for_window [class="Firefox"] title_format "  <b>%title</b>"
 
 # force apps to not go in floating mode
 for_window [class="gimp"] floating disable
@@ -303,7 +303,7 @@ assign [class="Mail"] $WS12
 
 # Font used to display widows titles, and other i3 stuffs
 # .. not used for i3bar
-font pango:FuraMono Nerd Font, FontAwesome, Icons 10
+font pango:Source Code Pro, FontAwesome 10
 
 # Colors
 # class                 border   backgr.  text     indicator  child_border
