@@ -306,20 +306,20 @@ assign [class="Mail"] $WS12
 font pango:Source Code Pro, FontAwesome 10
 
 # Colors
-# class                 border   backgr.  text     indicator  child_border
-client.focused          $color4  $color4  $color18 $color15   $color4
-client.focused_inactive $color8  $color8  $color7  $color19   $color8
-client.unfocused        $color18 $color18 $color7  $color18   $color18
-client.urgent           $color17 $color17 $color15 $color21   $color17
+# class                 border   background text     indicator child_border
+client.focused          $color7  $color7    $color0  $color11  $color7
+client.focused_inactive $color8  $color8    $color20 $color8   $color8
+client.unfocused        $color18 $color18   $color20 $color18  $color18
+client.urgent           $color1  $color1    $color0  $color5   $color1
 
 # Keybindings to change border style
 bindsym $mod+t border normal
-bindsym $mod+y border pixel 2
+bindsym $mod+y border pixel 5
 bindsym $mod+u border none
 
 # New windows are titleless and with 2 pixel border
-new_window pixel 2
-new_float pixel 2
+new_window pixel 5
+new_float pixel 5
 
 # }}}
 

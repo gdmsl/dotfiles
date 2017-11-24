@@ -2,6 +2,7 @@
 application/pdf=zathura.desktop
 image/png=gpicview.desktop
 application/vnd.djvu=zathura.desktop
+image/vnd.djvu=zathura.desktop
 x-scheme-handler/tg=telegramdesktop.desktop
 x-scheme-handler/mailto=nylas.desktop
 x-scheme-handler/nylas=nylas.desktop

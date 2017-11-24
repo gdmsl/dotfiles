@@ -41,7 +41,7 @@
             "percent": 0.5,
             "swallows": [
                {
-               "class": "^Skype Preview$"
+               "class": "(?i)skype*"
                }
             ],
             "type": "con"
