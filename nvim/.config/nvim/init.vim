@@ -19,24 +19,22 @@ Plug 'bronson/vim-trailing-whitespace'
 Plug 'myusuf3/numbers.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-"Plug 'flazz/vim-colorschemes'
 Plug 'spf13/vim-autoclose'
 Plug 'scrooloose/nerdcommenter'
 Plug 'lervag/vimtex'
-"Plug 'edkolev/tmuxline.vim'
 Plug 'JuliaLang/julia-vim'
 Plug 'chriskempson/base16-vim'
 Plug 'benekastah/neomake'
 Plug 'tpope/vim-markdown', {'for' : 'markdown'}
-"Plug 'scrooloose/syntastic'
 Plug 'sudar/vim-arduino-syntax'
 Plug 'easymotion/vim-easymotion'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'majutsushi/tagbar'
 Plug 'vim-scripts/loremipsum'
 "Plug 'justmao945/vim-clang'
-Plug 'roxma/clang_complete'
-Plug 'roxma/nvim-completion-manager'
+"Plug 'roxma/clang_complete'
+"Plug 'roxma/nvim-completion-manager'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "Plug 'airblade/vim-gitgutter'
 Plug 'mhinz/vim-signify'
 Plug 'rust-lang/rust.vim'
@@ -59,7 +57,6 @@ augroup airline_config
   let g:airline#extensions#tabline#enabled = 1
   let g:airline#extensions#tabline#fnamecollapse = 0
   let g:airline#extensions#tabline#fnamemod = ':t'
-  "let g:airline#extensions#tmuxline#enabled = 0
   let g:airline_theme = 'base16'
 augroup END
 " }}}
@@ -88,13 +85,6 @@ augroup latex_config
     autocmd!
     let g:vimtex_fold_enabled = 1
 augroup END
-" }}}
-
-" Tmuxline {{{
-"augroup tmuxline_config
-    "autocmd!
-    "let g:tmuxline_preset = 'minimal'
-"augroup END
 " }}}
 
 " Pandoc {{{
@@ -140,15 +130,6 @@ augroup nerdtree_config
     let NERDTreeShowHidden = 1
     let NERDTreeKeepTreeInNewTab = 1
     let g:nerdtree_tabs_open_on_gui_startup = 0
-" }}}
-
-" Syntastic {{{
-"augroup syntastic_config
-"  autocmd!
-"  let g:syntastic_error_symbol = '✗'
-"  let g:syntastic_warning_symbol = '⚠'
-"  let g:syntastic_cpp_compiler_options = '-std=c++11'
-"augroup END
 " }}}
 
 " NeoMake {{{
