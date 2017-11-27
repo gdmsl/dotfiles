@@ -29,14 +29,14 @@ bar {
 
     colors {
         # class    color
-        separator  $color8
-        background $color0
-        statusline $color7
-        # class              border   background text
-        focused_workspace    $color4  $color4    $color0
-        active_workspace     $color8  $color8    $color0
-        inactive_workspace   $color0  $color0    $color8
-        urgent_workspace     $color1  $color1    $color15
+        separator  $c_separator
+        background $c_bg
+        statusline $c_fg
+        # class              border      background  text
+        focused_workspace    $c_focused  $c_focused  $c_focused_t
+        active_workspace     $c_active   $c_active   $c_active_t
+        inactive_workspace   $c_inactive $c_inactive $c_inactive_t
+        urgent_workspace     $c_urgent   $c_urgent   $c_urgent_t
     }
 }
 
@@ -51,14 +51,14 @@ bar {
 
     colors {
         # class    color
-        separator  $color8
-        background $color0
-        statusline $color7
-        # class              border   background text
-        focused_workspace    $color4  $color4    $color0
-        active_workspace     $color8  $color8    $color0
-        inactive_workspace   $color0  $color0    $color8
-        urgent_workspace     $color1  $color1    $color15
+        separator  $c_separator
+        background $c_bg
+        statusline $c_fg
+        # class              border      background  text
+        focused_workspace    $c_focused  $c_focused  $c_focused_t
+        active_workspace     $c_active   $c_active   $c_active_t
+        inactive_workspace   $c_inactive $c_inactive $c_inactive_t
+        urgent_workspace     $c_urgent   $c_urgent   $c_urgent_t
     }
 }
 # }}}
