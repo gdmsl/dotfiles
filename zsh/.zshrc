@@ -36,7 +36,7 @@ zstyle ':completion:*' list-colors "=(#b) #([0-9]#)*=31=36"
 
 # tmuxinator completion
 if which tmuxinator &> /dev/null; then
-    source /usr/lib/ruby/gems/2.4.0/gems/tmuxinator-0.9.0/completion/tmuxinator.zsh
+    source /usr/lib/ruby/gems/2.4.0/gems/tmuxinator-0.10.0/completion/tmuxinator.zsh
 fi
 
 eval $(dircolors ~/.dircolors)
