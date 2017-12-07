@@ -1,0 +1,17 @@
+#! /usr/bin/env julia
+#
+# AUTHOR: Guido Masella (guido.masella@gmail.com)
+#
+
+Pkg.update()
+
+packages = String["PyPlot", "Plots", "StatPlots", "DifferentialEquations",
+                  "Lint", "DataFrames", "PlotlyJS", "PyPlot", "GR",
+                  "UnicodePlots", "PGFPlots", "PlotRecipes", "HDF5", "JLD",
+                  "JLD2", "IJulia", "JSON", "YAML", "CSV", "ArgParse", "LsqFit"]
+
+for package in packages
+    Pkg.add(package)
+end
+
+# vim: set ft=julia : #
