@@ -19,7 +19,8 @@ Plug 'bronson/vim-trailing-whitespace'
 Plug 'myusuf3/numbers.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'spf13/vim-autoclose'
+"Plug 'spf13/vim-autoclose'
+Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/nerdcommenter'
 Plug 'lervag/vimtex'
 Plug 'JuliaLang/julia-vim'
@@ -31,11 +32,9 @@ Plug 'easymotion/vim-easymotion'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'majutsushi/tagbar'
 Plug 'vim-scripts/loremipsum'
-"Plug 'justmao945/vim-clang'
-"Plug 'roxma/clang_complete'
-"Plug 'roxma/nvim-completion-manager'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"Plug 'airblade/vim-gitgutter'
+Plug 'roxma/nvim-completion-manager'
+Plug 'roxma/ncm-clang'
+Plug 'roxma/nvim-cm-racer'
 Plug 'mhinz/vim-signify'
 Plug 'rust-lang/rust.vim'
 Plug 'kana/vim-arpeggio'
@@ -74,10 +73,10 @@ augroup END
 " }}}
 
 " Autoclose {{{
-augroup autoclose_config
-    autocmd!
-    let g:autoclose_vim_commentmode = 1
-augroup END
+"augroup autoclose_config
+    "autocmd!
+    "let g:autoclose_vim_commentmode = 1
+"augroup END
 " }}}
 
 " LaTeX {{{
@@ -190,6 +189,25 @@ augroup clangformat_config
     " nmap <Leader>C :ClangFormatAutoToggle<CR>
     " autocmd FileType c,cpp,objc ClangFormatAutoEnable
     let g:clang_format#code_style = 'mozilla'
+augroup END
+" }}}
+
+" NCM-clang {{{
+augroup ncmclang_config
+    autocmd FileType cpp let g:neomake_cpp_clang_args = join(ncm_clang#compilation_info()['args'], ' ')
+    autocmd FileType c let g:neomake_c_clang_args = join(ncm_clang#compilation_info()['args'], ' ')
+augroup END
+
+" }}}
+
+" NCM {{{
+augroup ncm_config
+    autocmd!
+    inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+    " don't give |ins-completion-menu| messages.  For example,
+    " '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
+    set shortmess+=c
 augroup END
 " }}}
 

@@ -303,7 +303,7 @@ assign [class="Mail"] $WS12
 
 # Font used to display widows titles, and other i3 stuffs
 # .. not used for i3bar
-font pango:Source Code Pro, FontAwesome 10
+font pango:Hack, FontAwesome 10
 
 # Colors
 # class                 border      background  text          indicator    child_border
