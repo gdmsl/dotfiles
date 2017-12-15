@@ -7,4 +7,4 @@ OnUnitInactiveSec=10m
 Unit=mailfetch.service
 
 [Install]
-WantedBy=default.target
+WantedBy=timers.target

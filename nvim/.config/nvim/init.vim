@@ -40,6 +40,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'kana/vim-arpeggio'
 Plug 'mileszs/ack.vim'
 Plug 'rhysd/vim-clang-format'
+Plug 'chrisbra/csv.vim'
 
 call plug#end()
 " }}}

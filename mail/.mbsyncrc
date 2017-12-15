@@ -1,0 +1,259 @@
+#
+# mbsync (isync) configuration
+# by Guido Masella
+#
+
+# GMAIL {{{
+
+# Account Settings
+IMAPAccount gmail
+Host imap.gmail.com
+User guido.masella@gmail.com
+PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/usr/documents/id/mail-gmail.gpg"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+# Remote Storage
+IMAPStore gmail-remote
+Account gmail
+
+# Local Storage
+MaildirStore gmail-local
+Path ~/var/mail/gmail/
+Inbox ~/var/mail/gmail/inbox
+SubFolders Verbatim
+
+Channel gmail-inbox
+Master :gmail-remote:"INBOX"
+Slave :gmail-local:"inbox"
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-trash
+Master :gmail-remote:"[Gmail]/Trash"
+Slave :gmail-local:"trash"
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-sent
+Master :gmail-remote:"[Gmail]/Sent Mail"
+Slave :gmail-local:"sent"
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-all
+Master :gmail-remote:"[Gmail]/All Mail"
+Slave :gmail-local:"allmail"
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-starred
+Master :gmail-remote:"[Gmail]/Starred"
+Slave :gmail-local:"starred"
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-drafts
+Master :gmail-remote:"[Gmail]/Drafts"
+Slave :gmail-local:"drafts"
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-spam
+Master :gmail-remote:"[Gmail]/Spam"
+Slave :gmail-local:"Spam"
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-folders
+Master :gmail-remote:
+Slave :gmail-local:
+Pattern * ![Gmail]* !INBOX !trash !sent !spam !starred !drafts
+Create Both
+Expunge Both
+SyncState *
+
+
+# GROUPS PUT TOGETHER CHANNELS, SO THAT WE CAN INVOKE
+# MBSYNC ON A GROUP TO SYNC ALL CHANNELS
+#
+# FOR INSTANCE: "mbsync gmail" GETS MAIL FROM
+# "gmail-inbox", "gmail-sent", and "gmail-trash"
+#
+Group gmail
+Channel gmail-inbox
+Channel gmail-sent
+Channel gmail-trash
+Channel gmail-drafts
+Channel gmail-spam
+Channel gmail-starred
+Channel gmail-folders
+
+# }}}
+
+# UDS {{{
+
+# Account Settings
+IMAPAccount uds
+Host mailserver.u-strasbg.fr
+User masella
+PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/usr/documents/id/mail-uds.gpg"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+# Remote Storage
+IMAPStore uds-remote
+Account uds
+
+# Local Storage
+MaildirStore uds-local
+Path ~/var/mail/uds/
+Inbox ~/var/mail/uds/inbox
+SubFolders Verbatim
+
+Channel uds-inbox
+Master :uds-remote:"INBOX"
+Slave :uds-local:"inbox"
+Create Both
+Expunge Both
+SyncState *
+
+Channel uds-trash
+Master :uds-remote:"INBOX/Trash"
+Slave :uds-local:"trash"
+Create Both
+Expunge Both
+SyncState *
+
+Channel uds-sent
+Master :uds-remote:"INBOX/Sent"
+Slave :uds-local:"sent"
+Create Both
+Expunge Both
+SyncState *
+
+Channel uds-drafts
+Master :uds-remote:"INBOX/Drafts"
+Slave :uds-local:"drafts"
+Create Both
+Expunge Both
+SyncState *
+
+Channel uds-spam
+Master :uds-remote:"INBOX/Spam"
+Slave :uds-local:"spam"
+Create Both
+Expunge Both
+SyncState *
+
+Channel uds-folders
+Master :uds-remote:
+Slave :uds-local:
+Pattern * !Trash !Sent !Drafts !Spam !INBOX !trash !sent !drafts !spam !inbox
+Create Both
+Expunge Both
+SyncState *
+
+# GROUPS PUT TOGETHER CHANNELS, SO THAT WE CAN INVOKE
+# MBSYNC ON A GROUP TO SYNC ALL CHANNELS
+#
+# FOR INSTANCE: "mbsync gmail" GETS MAIL FROM
+# "gmail-inbox", "gmail-sent", and "gmail-trash"
+#
+Group uds
+Channel uds-inbox
+Channel uds-sent
+Channel uds-trash
+Channel uds-spam
+Channel uds-drafts
+Channel uds-folders
+
+# }}}
+
+# UDS-ETU {{{
+
+# Account Settings
+IMAPAccount uds-etu
+Host mailserver.u-strasbg.fr
+User gmasella
+PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/usr/documents/id/mail-uds-etu.gpg"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+# Remote Storage
+IMAPStore uds-etu-remote
+Account uds-etu
+
+# Local Storage
+MaildirStore uds-etu-local
+Path ~/var/mail/uds-etu/
+Inbox ~/var/mail/uds-etu/inbox
+SubFolders Verbatim
+
+Channel uds-etu-inbox
+Master :uds-etu-remote:"INBOX"
+Slave :uds-etu-local:"inbox"
+Create Both
+Expunge Both
+SyncState *
+
+Channel uds-etu-trash
+Master :uds-etu-remote:"INBOX/Trash"
+Slave :uds-etu-local:"trash"
+Create Both
+Expunge Both
+SyncState *
+
+Channel uds-etu-sent
+Master :uds-etu-remote:"INBOX/Sent"
+Slave :uds-etu-local:"sent"
+Create Both
+Expunge Both
+SyncState *
+
+Channel uds-etu-drafts
+Master :uds-etu-remote:"INBOX/Drafts"
+Slave :uds-etu-local:"drafts"
+Create Both
+Expunge Both
+SyncState *
+
+Channel uds-etu-spam
+Master :uds-etu-remote:"INBOX/Spam"
+Slave :uds-etu-local:"spam"
+Create Both
+Expunge Both
+SyncState *
+
+Channel uds-etu-folders
+Master :uds-etu-remote:
+Slave :uds-etu-local:
+Pattern * !Trash !Sent !Drafts !Spam !INBOX !trash !sent !drafts !spam !inbox
+Create Both
+Expunge Both
+SyncState *
+
+# GROUPS PUT TOGETHER CHANNELS, SO THAT WE CAN INVOKE
+# MBSYNC ON A GROUP TO SYNC ALL CHANNELS
+#
+# FOR INSTANCE: "mbsync gmail" GETS MAIL FROM
+# "gmail-inbox", "gmail-sent", and "gmail-trash"
+#
+Group uds-etu
+Channel uds-etu-inbox
+Channel uds-etu-sent
+Channel uds-etu-trash
+Channel uds-etu-spam
+Channel uds-etu-drafts
+Channel uds-etu-folders
+
+# }}}
+
+# vim: set ft=conf sw=4 ts=4 sts=4 et tw=78 fdm=marker fdl=0 foldmarker={{{,}}} : #
