@@ -4,8 +4,8 @@ Description=Imapfilter and Isync Service
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/imapfilter
-ExecStart=/usr/bin/mbsync -Va
-# Give 40 seconds for imapfilter and mbsync to gracefully stop before hard
+ExecStart=/usr/bin/mbsync -V fast
+# Give 60 seconds for imapfilter and mbsync to gracefully stop before hard
 # killing it.
 TimeoutStopSec=60
 #Restart=on-watchdog

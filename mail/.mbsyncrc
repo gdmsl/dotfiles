@@ -67,7 +67,7 @@ SyncState *
 
 Channel gmail-spam
 Master :gmail-remote:"[Gmail]/Spam"
-Slave :gmail-local:"Spam"
+Slave :gmail-local:"spam"
 Create Both
 Expunge Both
 SyncState *
@@ -255,5 +255,14 @@ Channel uds-etu-drafts
 Channel uds-etu-folders
 
 # }}}
+
+# Channels
+Group fast
+Channel gmail-inbox
+Channel gmail-sent
+Channel uds-inbox
+Channel uds-sent
+Channel uds-etu-inbox
+Channel uds-etu-sent
 
 # vim: set ft=conf sw=4 ts=4 sts=4 et tw=78 fdm=marker fdl=0 foldmarker={{{,}}} : #

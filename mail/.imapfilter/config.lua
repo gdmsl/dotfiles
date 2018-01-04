@@ -40,6 +40,15 @@ function main()
     print("Moving Mailing Lists from Trash")
     move_mailing_lists(account, "[Gmail]/Trash")
 
+    -- Move recurring bills to their folder
+    print("Moving recurring bills to their folder")
+    move_if_subject(account, "INBOX", "Facture du mobile", "finances/bills/recurring")
+    move_if_subject(account, "[Gmail]/Trash", "Facture du mobile", "finances/bills/recurring")
+    move_if_subject(account, "[Gmail]/Spam", "Facture du mobile", "finances/bills/recurring")
+    move_if_subject(account, "INBOX", "Ricevuta del tuo pagamento a Netflix", "finances/bills/recurring")
+    move_if_subject(account, "[Gmail]/Trash", "Ricevuta del tuo pagamento a Netflix", "finances/bills/recurring")
+    move_if_subject(account, "[Gmail]/Spam", "Ricevuta del tuo pagamento a Netflix", "finances/bills/recurring")
+
     -- Delete steam wishlist mails older than 8 days
     print("Moving Steam Sales notifications older than 8 days to Trash")
     move_if_from_subject_older(account, "INBOX", "An item on your Steam wishlist is on sale!", "noreply@steampowered.com", 8, "[Gmail]/Trash")
@@ -74,6 +83,7 @@ function move_mailing_lists(account, mailbox)
     -- arch linux mailing lists
     move_if_subject(account, mailbox, "[arch-general]", "ml/arch-general")
     move_if_subject(account, mailbox, "[arch-security]", "ml/arch-security")
+    move_if_subject(account, mailbox, "[ASA-", "ml/arch-security")
     move_if_subject(account, mailbox, "[arch-announce]", "ml/arch-announce")
 
     -- studentifisica2004 mailing lists
