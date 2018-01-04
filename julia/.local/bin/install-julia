@@ -8,7 +8,8 @@ Pkg.update()
 packages = String["PyPlot", "Plots", "StatPlots", "DifferentialEquations",
                   "Lint", "DataFrames", "PlotlyJS", "PyPlot", "GR",
                   "UnicodePlots", "PGFPlots", "PlotRecipes", "HDF5", "JLD",
-                  "JLD2", "IJulia", "JSON", "YAML", "CSV", "ArgParse", "LsqFit"]
+                  "JLD2", "IJulia", "JSON", "YAML", "CSV", "ArgParse", "LsqFit",
+                  "Query", "Iterators"]
 
 for package in packages
     Pkg.add(package)
