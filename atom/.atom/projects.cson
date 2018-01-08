@@ -1,0 +1,24 @@
+[
+  {
+    title: "Worm Next"
+    group: "work"
+    paths: [
+      "/home/gdmsl/src/worm-next"
+      "/home/gdmsl/src/awmc"
+    ]
+  }
+  {
+    title: "AWMC"
+    group: "work"
+    paths: [
+      "/home/gdmsl/src/awmc"
+    ]
+  }
+  {
+    title: "ALPS"
+    group: "work"
+    paths: [
+      "/home/gdmsl/src/alps"
+    ]
+  }
+]
