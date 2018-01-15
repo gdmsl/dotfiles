@@ -20,4 +20,11 @@
       "/home/gdmsl/src/alps"
     ]
   }
+  {
+    title: "Wiki"
+    group: "docs"
+    paths: [
+      "/home/gdmsl/log/wiki"
+    ]
+  }
 ]
