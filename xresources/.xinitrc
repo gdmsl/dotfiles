@@ -11,13 +11,9 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
   unset f
 fi
 
-[[ -f ~/.Xresources ]] && xrdb ~/.Xresources
-
 # start gnome-keyring
 eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
 export GPG_AGENT_INFO SSH_AUTH_SOCK
-
-#xrandr --output LVDS1 --gamma 0.8:0.9:0.7 --primary
 
 export MOZ_USE_OMTC=1
 
@@ -25,6 +21,32 @@ if [ "$HOSTNAME" = "spectre" ]; then
     cat ~/.xbindkeys.d/m1.xbind > ~/.xbindkeysrc
     xbindkeys
 fi
+
+# load the Xresources
+[[ -f ~/.Xresources ]] && xrdb ~/.Xresources
+
+if [ "$HOSTNAME" = "rubick" ]; then
+    xrdb -merge ~/.xrdb/fullhd.xresources
+fi
+
+# disable mouse acceleration
+if [ "$HOSTNAME" = "spectre" ]; then
+    xset m 0 0
+fi
+
+[[ -f ~/.screenlayout/default.sh ]] && ~/.screenlayout/default.sh
+
+[[ -f ~/.xbindkeysrc ]] && xbindkeys
+
+#wallpaper
+nitrogen --restore &
+
+#polkit agent
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
+export MOZ_USE_OMTC=1
+
+export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 
 # exec gnome-session
 # exec startkde

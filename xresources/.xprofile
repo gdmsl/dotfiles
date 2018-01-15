@@ -27,18 +27,11 @@ fi
 
 [[ -f ~/.xbindkeysrc ]] && xbindkeys
 
-
-
 #wallpaper
 nitrogen --restore &
 
 #polkit agent
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-
-#if [ "$HOSTNAME" = "alchemist" ]; then
-#    cat ~/.xbindkeys.d/m1.xbind > ~/.xbindkeysrc
-#    exec xbindkeys
-#fi
 
 export MOZ_USE_OMTC=1
 
