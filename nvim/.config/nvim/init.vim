@@ -41,6 +41,7 @@ Plug 'kana/vim-arpeggio'
 Plug 'mileszs/ack.vim'
 Plug 'rhysd/vim-clang-format'
 Plug 'chrisbra/csv.vim'
+Plug 'uplus/vim-clang-rename'
 
 call plug#end()
 " }}}
