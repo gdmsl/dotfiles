@@ -5,8 +5,7 @@
   "journals": {
     "default": "/home/gdmsl/log/jrnl/jrnl.txt",
     "arch": "/home/gdmsl/log/jrnl/arch.txt",
-    "bandit": "/home/gdmsl/log/jrnl/bandit.txt",
-    "spectre": "/home/gdmsl/log/jrnl/spectre.txt"
+    "work": "/home/gdmsl/log/jrnl/work.txt"
   },
   "timeformat": "%Y-%m-%d %H:%M",
   "highlight": true,
