@@ -1,0 +1,45 @@
+[global]
+
+[SpamFilter]
+spam_tag = spam
+[KillThreadsFilter]
+[ListMailsFilter]
+[ArchiveSentMailsFilter]
+sent_tag = sent
+
+#[Filter.urgent]
+#query = 'subject:URGENT'
+#tags = +urgent;+inbox;-new
+#message = Urgent mails
+
+#[Filter.1]
+#query = 'folder:gmail/trash'
+#tags = +trashed;-new;
+#message = Tag email in gmail/trash as trashed
+
+#[Filter.2]
+#query = 'folder:uds/trash'
+#tags = +trashed;-new;
+#message = Tag email in uds-etu/trash as trashed
+
+#[Filter.3]
+#query = 'folder:uds-etu/trash'
+#tags = +trashed;-new
+#message = Tag email in uds/trash as trashed
+
+#[Filter.1]
+#query = 'from:"SLURM SLURM"'
+#tags = +notification;+inbox;-new
+#message = Manage slurm notifications
+#
+#[InboxFilter]
+#
+[MailMover]
+folders = gmail/inbox gmail/spam uds/inbox uds/spam uds-etu/inbox uds-etu/spam
+gmail/inbox = 'tag:spam':gmail/spam '-tag:inbox OR -tag:new':gmail/archive
+gmail/spam = 'NOT tag:spam AND tag:inbox':gmail/inbox 'NOT tag:spam':gmail/archive
+uds/inbox = 'tag:spam':uds/spam '-tag:inbox OR -tag:new':uds/archive
+uds/spam = 'NOT tag:spam AND tag:inbox':uds/inbox 'NOT tag:spam':uds/archive
+uds-etu/inbox = 'tag:spam':uds-etu/spam '-tag:inbox OR -tag:new':uds-etu/archive
+uds-etu/spam = 'NOT tag:spam AND tag:inbox':uds-etu/inbox 'NOT tag:spam':uds-etu/archive
+

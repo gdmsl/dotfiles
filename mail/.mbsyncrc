@@ -26,57 +26,65 @@ SubFolders Verbatim
 Channel gmail-inbox
 Master :gmail-remote:"INBOX"
 Slave :gmail-local:"inbox"
-Create Both
+Create Slave
+Remove Slave
 Expunge Both
 SyncState *
 
 Channel gmail-trash
 Master :gmail-remote:"[Gmail]/Trash"
 Slave :gmail-local:"trash"
-Create Both
+Create Slave
+Remove Slave
 Expunge Both
 SyncState *
 
 Channel gmail-sent
 Master :gmail-remote:"[Gmail]/Sent Mail"
 Slave :gmail-local:"sent"
-Create Both
+Create Slave
+Remove Slave
 Expunge Both
 SyncState *
 
-Channel gmail-all
+Channel gmail-archive
 Master :gmail-remote:"[Gmail]/All Mail"
-Slave :gmail-local:"allmail"
-Create Both
+Slave :gmail-local:"archive"
+Create Slave
+Remove Slave
 Expunge Both
 SyncState *
 
 Channel gmail-starred
 Master :gmail-remote:"[Gmail]/Starred"
 Slave :gmail-local:"starred"
-Create Both
+Create Slave
+Remove Slave
 Expunge Both
 SyncState *
 
 Channel gmail-drafts
 Master :gmail-remote:"[Gmail]/Drafts"
 Slave :gmail-local:"drafts"
-Create Both
+Create Slave
+Remove Slave
 Expunge Both
 SyncState *
 
 Channel gmail-spam
 Master :gmail-remote:"[Gmail]/Spam"
 Slave :gmail-local:"spam"
-Create Both
+Create Slave
+Remove Slave
 Expunge Both
 SyncState *
 
 Channel gmail-folders
 Master :gmail-remote:
 Slave :gmail-local:
-Pattern * ![Gmail]* !INBOX !trash !sent !spam !starred !drafts
-Create Both
+Pattern * ![Gmail]* !INBOX !trash !sent !spam !starred !drafts !archive
+Create Slave
+Remove Slave
 Expunge Both
 SyncState *
 
@@ -94,6 +102,16 @@ Channel gmail-trash
 Channel gmail-drafts
 Channel gmail-spam
 Channel gmail-starred
+Channel gmail-archive
+
+Group gmail-complete
+Channel gmail-inbox
+Channel gmail-sent
+Channel gmail-trash
+Channel gmail-drafts
+Channel gmail-spam
+Channel gmail-starred
+Channel gmail-archive
 Channel gmail-folders
 
 # }}}
@@ -121,43 +139,57 @@ SubFolders Verbatim
 Channel uds-inbox
 Master :uds-remote:"INBOX"
 Slave :uds-local:"inbox"
-Create Both
+Create Slave
+Remove Slave
 Expunge Both
 SyncState *
 
 Channel uds-trash
 Master :uds-remote:"INBOX/Trash"
 Slave :uds-local:"trash"
-Create Both
+Create Slave
+Remove Slave
 Expunge Both
 SyncState *
 
 Channel uds-sent
 Master :uds-remote:"INBOX/Sent"
 Slave :uds-local:"sent"
-Create Both
+Create Slave
+Remove Slave
 Expunge Both
 SyncState *
 
 Channel uds-drafts
 Master :uds-remote:"INBOX/Drafts"
 Slave :uds-local:"drafts"
-Create Both
+Create Slave
+Remove Slave
 Expunge Both
 SyncState *
 
 Channel uds-spam
 Master :uds-remote:"INBOX/Spam"
 Slave :uds-local:"spam"
-Create Both
+Create Slave
+Remove Slave
+Expunge Both
+SyncState *
+
+Channel uds-archive
+Master :uds-remote:"INBOX/Archive"
+Slave :uds-local:"archive"
+Create Slave
+Remove Slave
 Expunge Both
 SyncState *
 
 Channel uds-folders
 Master :uds-remote:
 Slave :uds-local:
-Pattern * !Trash !Sent !Drafts !Spam !INBOX !trash !sent !drafts !spam !inbox
-Create Both
+Pattern * !Trash !Sent !Drafts !Spam !Archive !INBOX !trash !sent !drafts !spam !inbox !archive
+Create Slave
+Remove Slave
 Expunge Both
 SyncState *
 
@@ -173,6 +205,15 @@ Channel uds-sent
 Channel uds-trash
 Channel uds-spam
 Channel uds-drafts
+Channel uds-archive
+
+Group uds-complete
+Channel uds-inbox
+Channel uds-sent
+Channel uds-trash
+Channel uds-spam
+Channel uds-drafts
+Channel uds-archive
 Channel uds-folders
 
 # }}}
@@ -200,43 +241,57 @@ SubFolders Verbatim
 Channel uds-etu-inbox
 Master :uds-etu-remote:"INBOX"
 Slave :uds-etu-local:"inbox"
-Create Both
+Create Slave
+Remove Slave
 Expunge Both
 SyncState *
 
 Channel uds-etu-trash
 Master :uds-etu-remote:"INBOX/Trash"
 Slave :uds-etu-local:"trash"
-Create Both
+Create Slave
+Remove Slave
 Expunge Both
 SyncState *
 
 Channel uds-etu-sent
 Master :uds-etu-remote:"INBOX/Sent"
 Slave :uds-etu-local:"sent"
-Create Both
+Create Slave
+Remove Slave
 Expunge Both
 SyncState *
 
 Channel uds-etu-drafts
 Master :uds-etu-remote:"INBOX/Drafts"
 Slave :uds-etu-local:"drafts"
-Create Both
+Create Slave
+Remove Slave
 Expunge Both
 SyncState *
 
 Channel uds-etu-spam
 Master :uds-etu-remote:"INBOX/Spam"
 Slave :uds-etu-local:"spam"
-Create Both
+Create Slave
+Remove Slave
+Expunge Both
+SyncState *
+
+Channel uds-etu-archive
+Master :uds-etu-remote:"INBOX/Archive"
+Slave :uds-etu-local:"archive"
+Create Slave
+Remove Slave
 Expunge Both
 SyncState *
 
 Channel uds-etu-folders
 Master :uds-etu-remote:
 Slave :uds-etu-local:
-Pattern * !Trash !Sent !Drafts !Spam !INBOX !trash !sent !drafts !spam !inbox
-Create Both
+Pattern * !Trash !Sent !Drafts !Spam !Archive !INBOX !trash !sent !drafts !spam !inbox !archive
+Create Slave
+Remove Slave
 Expunge Both
 SyncState *
 
@@ -252,11 +307,19 @@ Channel uds-etu-sent
 Channel uds-etu-trash
 Channel uds-etu-spam
 Channel uds-etu-drafts
+Channel uds-etu-archive
+
+Group uds-etu-complete
+Channel uds-etu-inbox
+Channel uds-etu-sent
+Channel uds-etu-trash
+Channel uds-etu-spam
+Channel uds-etu-drafts
+Channel uds-etu-archive
 Channel uds-etu-folders
 
 # }}}
 
-# Channels
 Group fast
 Channel gmail-inbox
 Channel gmail-sent

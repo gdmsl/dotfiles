@@ -1,4 +1,9 @@
 {
     "saved": "",
-    "history": ""
+    "history": {
+        "none": "tag:replied",
+        "none": "tag:work",
+        "none": "from:cinti",
+        "none": "to:cinti"
+    }
 }
