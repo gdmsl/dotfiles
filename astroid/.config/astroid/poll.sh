@@ -26,6 +26,9 @@ if [ ! -d $MAILDIR ]; then
     exit
 fi
 
+# move the email
+afew --move --all -v
+
 # Fetch new mail.
 mbsync -a
 
@@ -33,7 +36,7 @@ mbsync -a
 notmuch new
 
 # Run afew tag
-afew --new
+afew --tag --new -v
 
 # Here you can process the mail in any way you see fit. See the following link
 # for examples:

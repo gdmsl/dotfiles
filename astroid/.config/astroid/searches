@@ -4,6 +4,8 @@
         "none": "tag:replied",
         "none": "tag:work",
         "none": "from:cinti",
-        "none": "to:cinti"
+        "none": "to:cinti",
+        "none": "from:cinti",
+        "none": "from:cinti OR to:cinti"
     }
 }

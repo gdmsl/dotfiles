@@ -7,39 +7,47 @@ spam_tag = spam
 [ArchiveSentMailsFilter]
 sent_tag = sent
 
-#[Filter.urgent]
-#query = 'subject:URGENT'
-#tags = +urgent;+inbox;-new
-#message = Urgent mails
+[Filter.0]
+query = subject:URGENT AND -tag:urgent
+tags = +urgent;+inbox;-new
+message = Urgent mails
 
-#[Filter.1]
-#query = 'folder:gmail/trash'
-#tags = +trashed;-new;
-#message = Tag email in gmail/trash as trashed
+[Filter.1]
+query = 'folder:"gmail/trash"'
+tags = +killed;-new;-inbox
+message = Tag email in gmail/trash as trashed
 
-#[Filter.2]
-#query = 'folder:uds/trash'
-#tags = +trashed;-new;
-#message = Tag email in uds-etu/trash as trashed
+[Filter.2]
+query = 'folder:"uds/trash"'
+tags = +killed;-new;-inbox
+message = Tag email in uds-etu/trash as trashed
 
-#[Filter.3]
-#query = 'folder:uds-etu/trash'
-#tags = +trashed;-new
-#message = Tag email in uds/trash as trashed
+[Filter.3]
+query = 'folder:"uds-etu/trash"'
+tags = +killed;-new;-inbox
+message = Tag email in uds/trash as trashed
 
-#[Filter.1]
-#query = 'from:"SLURM SLURM"'
-#tags = +notification;+inbox;-new
-#message = Manage slurm notifications
-#
-#[InboxFilter]
-#
+[Filter.4]
+query = from:"SLURM SLURM" AND -tag:killed
+tags = +notification;+inbox;-new
+message = Manage slurm notifications
+
+[Filter.5]
+query = subject:reminder OR subject:rappel
+tags = +reminder;-new
+message = Reminders
+
+[InboxFilter]
+
 [MailMover]
-folders = gmail/inbox gmail/spam uds/inbox uds/spam uds-etu/inbox uds-etu/spam
-gmail/inbox = 'tag:spam':gmail/spam '-tag:inbox OR -tag:new':gmail/archive
-gmail/spam = 'NOT tag:spam AND tag:inbox':gmail/inbox 'NOT tag:spam':gmail/archive
-uds/inbox = 'tag:spam':uds/spam '-tag:inbox OR -tag:new':uds/archive
-uds/spam = 'NOT tag:spam AND tag:inbox':uds/inbox 'NOT tag:spam':uds/archive
-uds-etu/inbox = 'tag:spam':uds-etu/spam '-tag:inbox OR -tag:new':uds-etu/archive
-uds-etu/spam = 'NOT tag:spam AND tag:inbox':uds-etu/inbox 'NOT tag:spam':uds-etu/archive
-
+rename = True
+folders = gmail/inbox gmail/spam uds/inbox uds/spam uds-etu/inbox uds-etu/spam gmail/trash uds/trash uds-etu/trash
+gmail/inbox = 'tag:spam':"gmail/spam" '-tag:inbox AND -tag:killed AND -tag:spam':"gmail/archive" 'tag:killed AND -tag:spam':"gmail/trash"
+gmail/spam = '-tag:spam AND tag:inbox':"gmail/inbox" '-tag:spam':"gmail/archive"
+gmail/trash = '-tag:killed AND tag:inbox':"gmail/inbox" '-tag:killed AND -tag:inbox':gmail/archie
+uds/inbox = 'tag:spam':"uds/spam" '-tag:inbox AND -tag:killed AND -tag:spam':"uds/archive" 'tag:killed AND -tag:spam':"uds/trash"
+uds/spam = '-tag:spam AND tag:inbox':"uds/inbox" '-tag:spam':"uds/archive"
+uds/trash = '-tag:killed AND tag:inbox':"uds/inbox" '-tag:killed AND -tag:inbox':uds/archie
+uds-etu/inbox = 'tag:spam':"uds-etu/spam" '-tag:inbox AND -tag:killed AND -tag:spam':"uds-etu/archive" 'tag:killed AND -tag:spam':"uds-etu/trash"
+uds-etu/spam = '-tag:spam AND tag:inbox':"uds-etu/inbox" '-tag:spam':"uds-etu/archive"
+uds-etu/trash = '-tag:killed AND tag:inbox':"uds-etu/inbox" '-tag:killed AND -tag:inbox':uds-etu/archie

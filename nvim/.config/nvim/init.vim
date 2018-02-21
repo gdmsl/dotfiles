@@ -233,6 +233,7 @@ if (empty($TMUX))
   endif
 endif
 if &term =~ '256color'
+    set t_Co=256
     " Disable Background Color Erase (BCE) so that color schemes
     " work properly when Vim is used inside tmux and GNU screen.
     set t_ut=
@@ -251,9 +252,9 @@ set undodir=/tmp/neovim//
 " }}}
 
 " Colorscheme {{{
-set t_Co=256
 set background=dark
 syntax on
+let base16colorspace=256  " Access colors present in 256 colorspace
 colorscheme base16-materia
 " }}}
 

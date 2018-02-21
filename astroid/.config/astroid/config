@@ -40,8 +40,8 @@
         }
     },
     "editor": {
-        "cmd": "urxvt -embed %3 -e nvim %1",
-        "external_editor": "false",
+        "cmd": "termite -e \"nvim %1\"",
+        "external_editor": "true",
         "charset": "utf-8",
         "save_draft_on_force_quit": "true",
         "attachment_words": "attach",
@@ -61,7 +61,8 @@
         "message_id_fqdn": "",
         "message_id_user": "",
         "user_agent": "default",
-        "send_delay": "2"
+        "send_delay": "2",
+        "format_flowed": "true"
     },
     "poll": {
         "interval": "-1",
