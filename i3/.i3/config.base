@@ -82,6 +82,9 @@ bindsym $mod+z mode "$mode_system"
 # take screenshots
 bindcode 107 exec --no-startup-id "maim ~/usr/pictures/screenshots/$(date +%F-%T).png && paplay /usr/share/sounds/freedesktop/stereo/screen-capture.oga"
 
+# avoid nosy people to sniff on your screen
+bindsym $mod+Delete exec --no-startup-id "~/.local/bin/i3-contain_nosy_people.sh"
+
 # }}}
 
 # LAYOUT/WINDOWS KEYBINDINGS {{{
