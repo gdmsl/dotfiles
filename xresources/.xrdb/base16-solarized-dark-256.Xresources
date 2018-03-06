@@ -1,22 +1,22 @@
-! Base16 OneDark
-! Scheme: Lalit Magant (http:&#x2F;&#x2F;github.com&#x2F;tilal6991)
+! Base16 Solarized Dark
+! Scheme: Ethan Schoonover (http:&#x2F;&#x2F;ethanschoonover.com&#x2F;solarized)
 
-#define base00 #282c34
-#define base01 #353b45
-#define base02 #3e4451
-#define base03 #545862
-#define base04 #565c64
-#define base05 #abb2bf
-#define base06 #b6bdca
-#define base07 #c8ccd4
-#define base08 #e06c75
-#define base09 #d19a66
-#define base0A #e5c07b
-#define base0B #98c379
-#define base0C #56b6c2
-#define base0D #61afef
-#define base0E #c678dd
-#define base0F #be5046
+#define base00 #002b36
+#define base01 #073642
+#define base02 #586e75
+#define base03 #657b83
+#define base04 #839496
+#define base05 #93a1a1
+#define base06 #eee8d5
+#define base07 #fdf6e3
+#define base08 #dc322f
+#define base09 #cb4b16
+#define base0A #b58900
+#define base0B #859900
+#define base0C #2aa198
+#define base0D #268bd2
+#define base0E #6c71c4
+#define base0F #d33682
 
 *foreground:   base05
 #ifdef background_opacity

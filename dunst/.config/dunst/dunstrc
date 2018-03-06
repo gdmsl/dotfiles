@@ -149,7 +149,7 @@
 
 [frame]
     width = 0
-    color = "#373a40"
+    color = "#CDD3DE"
 
 [shortcuts]
 
@@ -236,6 +236,7 @@
 #    summary = *twitter.com*
 #    urgency = normal
 #
+
 [base16_low]
     msg_urgency = low
     background = "#2C393F"
