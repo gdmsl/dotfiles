@@ -65,7 +65,7 @@
         "format_flowed": "true"
     },
     "poll": {
-        "interval": "-1",
+        "interval": "180",
         "always_full_refresh": "false"
     },
     "attachment": {
