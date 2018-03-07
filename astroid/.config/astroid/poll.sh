@@ -35,11 +35,11 @@ mbsync -a
 # Import new mail into the notmuch database.
 notmuch new
 
-# Desktop notifications
-notifymuch
-
 # Run afew tag
 afew --tag --new -v
+
+# Desktop notifications
+notifymuch
 
 # Here you can process the mail in any way you see fit. See the following link
 # for examples:
