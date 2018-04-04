@@ -34,8 +34,18 @@ message = Manage slurm notifications
 
 [Filter.5]
 query = subject:reminder OR subject:rappel
-tags = +reminder;-new
+tags = +reminder
 message = Reminders
+
+[Filter.6]
+query = from:pupillo
+tags = +work
+message = Emails from work
+
+[Filter.7]
+query = from:pupillo and -to:angelone
+tags = +work;+confidential
+message = Avoid nosy coworkers
 
 [InboxFilter]
 

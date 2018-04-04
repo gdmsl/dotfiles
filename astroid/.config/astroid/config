@@ -158,7 +158,8 @@
     },
     "startup": {
         "queries": {
-            "inbox": "tag:inbox"
+            "inbox": "tag:inbox and -tag:confidential",
+            "FMEO": "tag:inbox and tag:confidential"
         }
     }
 }
