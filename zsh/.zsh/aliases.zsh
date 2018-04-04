@@ -43,3 +43,5 @@ alias pqiv="pqiv --bind-key='d { command(mkdir -p .pqiv-trash; mv \$1 .pqiv-tras
 # config mimeapps.list
 alias mimeconfig="nvim ~/.config/mimeapps.list ~/.local/share/applications/mimeapps.list"
 
+# julia with colors
+alias julia="julia --color yes"
