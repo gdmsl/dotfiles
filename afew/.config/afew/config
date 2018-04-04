@@ -29,7 +29,7 @@ message = Tag email in uds/trash as trashed
 
 [Filter.4]
 query = from:"SLURM SLURM" AND -tag:killed
-tags = +notification;+inbox;-new
+tags = +notification;-inbox;-new;+clusters/udsjobs
 message = Manage slurm notifications
 
 [Filter.5]
