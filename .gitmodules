@@ -22,3 +22,6 @@
 [submodule ".auxiliary/gnuplot-palettes"]
 	path = .auxiliary/gnuplot-palettes
 	url = https://github.com/Gnuplotting/gnuplot-palettes.git
+[submodule "zsh/.my-oh-my-zsh/themes/powerlevel9k"]
+	path = zsh/.my-oh-my-zsh/themes/powerlevel9k
+	url = https://github.com/bhilburn/powerlevel9k.git
