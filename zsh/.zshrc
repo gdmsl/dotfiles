@@ -1,54 +1,20 @@
-source $HOME/.profile
 
-# oh-my-zsh
-export ZSH=$HOME/.oh-my-zsh
-ZSH_CUSTOM=$HOME/.my-oh-my-zsh
-ZSH_THEME="powerlevel9k/powerlevel9k"
-
-if [ "$TERM" = "linux" ]; then
-    ZSH_THEME="robbyrussel"
-fi
-
+# username to hide for themes
 DEFAULT_USER="gdmsl"
 
-HIST_STAMPS="yyyy-mm-dd"
-
-plugins=(jump git archlinux cp tmux github history history-substring-search vi-mode fasd sudo)
-
-source $ZSH/oh-my-zsh.sh
-source $HOME/.zsh/aliases.zsh
-source $HOME/.zsh/functions.zsh
-source $ZSH/plugins/history-substring-search/history-substring-search.zsh
-
-# Ignore hystory
+# ignore certain commands from history
 export HISTORY_IGNORE="cd:cd ..:ls:la:make"
 
-# completition system
-autoload -Uz compinit zcalc
-compinit
-zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==02=01}:${(s.:.)LS_COLORS}")'
-zstyle ':completion:*' menu select
-zstyle '*:processes-names' command 'ps -e -o comm='
-zstyle ':completion:*:warnings' format '%BSorry, no matches for: %d%b'
-zstyle ':completion:*' file-sort modification reverse
-autoload -U colors && colors
-zstyle ':completion:*' list-colors "=(#b) #([0-9]#)*=31=36"
-
-# tmuxinator completion
-if which tmuxinator &> /dev/null; then
-    # Please find an alternative.
-    # Just don't want to modify this for every ruby or tmuxinator update.
-    source /usr/lib/ruby/gems/2.5.0/gems/tmuxinator-0.10.1/completion/tmuxinator.zsh
-fi
-
+# eval dircolors for ls
 eval $(dircolors ~/.dircolors)
 
+# start gnome keyring for ssh auth
 if [ -n "$DESKTOP_SESSION" ];then
     eval $(gnome-keyring-daemon --start)
     export SSH_AUTH_SOCK
 fi
 
-# connsole theme
+# color scheme for console theme
 if [ "$TERM" = "linux" ]; then
     source $HOME/.vconsole_theme
     clear
@@ -57,7 +23,41 @@ fi
 # show time for every program which run for more than 10 seconds
 export REPORTTIME=10
 
+# init screen
 curl wttr.in/\?0
 echo
 echo "$fg[red]Last -Syu:$reset_color $(grep "pacman -Syu" /var/log/pacman.log | tail -n1 | cut -c 2- | cut -c-16)"
 echo "$reset_color"
+
+# include files in zsh folder
+for file in `ls $HOME/.zsh/`; do
+    [ -f $file ] && source $file
+done
+
+source /usr/share/zsh/share/antigen.zsh
+
+# Load the oh-my-zsh's library.
+antigen use oh-my-zsh
+
+# Bundles from the default repo (robbyrussell's oh-my-zsh).
+antigen bundle jump
+antigen bundle git
+antigen bundle archlinux
+antigen bundle cp
+antigen bundle tmux
+antigen bundle github
+antigen bundle history-substring-search
+antigen bundle vi-mode
+antigen bundle fasd
+antigen bundle sudo
+antigen bundle pip
+antigen bundle command-not-found
+
+# Syntax highlighting bundle.
+antigen bundle zsh-users/zsh-syntax-highlighting
+
+# Load the theme.
+antigen theme bhilburn/powerlevel9k powerlevel9k
+
+# Tell Antigen that you're done.
+antigen apply
