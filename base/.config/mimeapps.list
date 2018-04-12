@@ -1,6 +1,6 @@
 [Default Applications]
 inode/directory=pcmanfm.desktop
-application/pdf=zathura.desktop
+application/pdf=org.pwmt.zathura.desktop
 image/png=gpicview.desktop
 application/vnd.djvu=zathura.desktop
 image/vnd.djvu=zathura.desktop
