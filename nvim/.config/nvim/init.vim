@@ -42,6 +42,7 @@ Plug 'mileszs/ack.vim'
 Plug 'rhysd/vim-clang-format'
 Plug 'chrisbra/csv.vim'
 Plug 'uplus/vim-clang-rename'
+Plug 'cespare/vim-toml'
 
 call plug#end()
 " }}}
