@@ -43,6 +43,7 @@ Plug 'rhysd/vim-clang-format'
 Plug 'chrisbra/csv.vim'
 Plug 'uplus/vim-clang-rename'
 Plug 'cespare/vim-toml'
+Plug 'vimwiki/vimwiki'
 
 call plug#end()
 " }}}
@@ -214,6 +215,13 @@ augroup ncm_config
 augroup END
 " }}}
 
+" VimWiki {{{
+augroup vimwiki_config
+    autocmd!
+    let g:vimwiki_list = [{'path': '~/log/bwiki/', 'syntax': 'markdown', 'ext': '.md'}, {'path': '~/log/mswiki/', 'syntax': 'markdown', 'ext': '.md'}]
+augroup END
+" }}}
+
 " Settings -------------------------------------------------------------------
 
 " NeoVim {{{
@@ -355,7 +363,6 @@ if executable('ag')
   endif
 endif
 " }}}
-
 
 " File Types -----------------------------------------------------------------
 
