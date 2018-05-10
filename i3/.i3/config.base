@@ -370,5 +370,11 @@ exec --no-startup-id termite --title=scratchmonitor -e "zsh -c glances"
 
 # File manager daemon to identify plugged devices
 exec --no-startup-id "pcmanfm -d"
+#
+#wallpaper
+exec --no-startup-id "nitrogen --restore"
+
+#polkit agent
+exec --no-startup-id "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 
 # }}}
