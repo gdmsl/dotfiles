@@ -11,6 +11,7 @@ Host imap.gmail.com
 User guido.masella@gmail.com
 PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/usr/documents/id/mail-gmail.gpg"
 SSLType IMAPS
+AuthMechs PLAIN
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 # Remote Storage
