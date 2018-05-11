@@ -8,8 +8,6 @@
 " LoadPlugins {{{
 call plug#begin('~/.config/nvim/plugged')
 
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
@@ -87,13 +85,6 @@ augroup END
 augroup latex_config
     autocmd!
     let g:vimtex_fold_enabled = 1
-augroup END
-" }}}
-
-" Pandoc {{{
-augroup pandoc_config
-    autocmd!
-    let g:pandoc#syntax#conceal#use = 0
 augroup END
 " }}}
 
