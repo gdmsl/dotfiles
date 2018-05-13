@@ -17,7 +17,6 @@ Plug 'bronson/vim-trailing-whitespace'
 Plug 'myusuf3/numbers.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-"Plug 'spf13/vim-autoclose'
 Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/nerdcommenter'
 Plug 'lervag/vimtex'
@@ -42,6 +41,7 @@ Plug 'chrisbra/csv.vim'
 Plug 'uplus/vim-clang-rename'
 Plug 'cespare/vim-toml'
 Plug 'vimwiki/vimwiki'
+Plug 'mhinz/vim-startify'
 
 call plug#end()
 " }}}
