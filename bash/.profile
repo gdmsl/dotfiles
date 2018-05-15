@@ -2,11 +2,13 @@
 # ~/.profile
 #
 
+# source global profile
 source /etc/profile
 
 # setting the PATH envirorment variable
 export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/texlive/2016/bin/x86_64-linux:$HOME/.cabal/bin:$PATH:$HOME/var/go/bin"
 
+# library path
 export LD_LIBRARY_PATH="$HOME/.local/lib64:$HOME/.local/lib:$LD_LIBRARYPATH"
 
 # go path
@@ -40,10 +42,11 @@ export BROWSER="chromium"
 export TERMINAL="termite"
 
 # SSH Askpass
-export SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass
-
-# QT5 style
-export QT_STYLE_OVERRIDE='gtk2'
+if which ksshaskpass &> /dev/null; then
+    export SSH_ASKPASS=/usr/bin/ksshaskpass
+else
+    export SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass
+fi
 
 # Ruby
 export GEM_HOME=$(ruby -e 'print Gem.user_dir')
