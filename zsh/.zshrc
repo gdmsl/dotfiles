@@ -8,12 +8,6 @@ export HISTORY_IGNORE="cd:cd ..:ls:la:make"
 # eval dircolors for ls
 eval $(dircolors ~/.dircolors)
 
-# start gnome keyring for ssh auth
-if [ -n "$DESKTOP_SESSION" ];then
-    eval $(gnome-keyring-daemon --start)
-    export SSH_AUTH_SOCK
-fi
-
 # color scheme for console theme
 if [ "$TERM" = "linux" ]; then
     source $HOME/.vconsole_theme
