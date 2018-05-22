@@ -14,6 +14,14 @@ if [ "$TERM" = "linux" ]; then
     clear
 fi
 
+# start ssh agent
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+    ssh-agent > ~/.ssh-agent-thing
+fi
+if [[ "$SSH_AGENT_PID" == "" ]]; then
+    eval "$(<~/.ssh-agent-thing)" > /dev/null
+fi
+
 # show time for every program which run for more than 10 seconds
 export REPORTTIME=10
 
