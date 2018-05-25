@@ -1,0 +1,9 @@
+label = Sync usrshare between the ExtenalHD and Rubick
+
+root = /run/media/gdmsl/FaerieSafe/gdmsl
+root = /home/gdmsl
+
+sshargs = -C
+
+# directories
+path=usr/share
