@@ -1,0 +1,7 @@
+label = Sync Between Spectre and Faerie
+
+root = /run/media/gdmsl/FaerieSafe/gdmsl/src
+root = /home/gdmsl/src
+
+# directories
+path=share

@@ -1,9 +1,7 @@
-label = Sync rubick via ssh to the archive on grepublic.no-ip.biz
+label = Sync Between Spectre and Faerie
 
 root = /run/media/gdmsl/FaerieSafe/gdmsl
 root = /mnt/archive0/gdmsl
-
-sshargs = -C
 
 # directories
 path=usr
