@@ -1,8 +1,0 @@
-#
-# ~/.mutt/notmuch.muttrc
-#
-
-# Configure Notmuch
-set nm_default_uri = "notmuch://$HOME/var/mail/"
-virtual-mailboxes   "UNREAD" "notmuch://?query=tag:unread and not folder:spam and not folder:trash"   \
-                    "ML" "notmuch://?query=folder:ML"
