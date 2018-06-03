@@ -39,7 +39,7 @@ export EDITOR="nvim"
 export BROWSER="firefox"
 
 # Default terminal emulator
-export TERMINAL="termite"
+export TERMINAL="konsole"
 
 # SSH Askpass
 if which ksshaskpass &> /dev/null; then

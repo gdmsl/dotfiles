@@ -14,13 +14,8 @@ if [ "$TERM" = "linux" ]; then
     clear
 fi
 
-# start ssh agent
-if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-    ssh-agent > ~/.ssh-agent-thing
-fi
-if [[ "$SSH_AGENT_PID" == "" ]]; then
-    eval "$(<~/.ssh-agent-thing)" > /dev/null
-fi
+# Default SSH_ASKPASS
+export SSH_ASKPASS="/usr/bin/ksshaskpass"
 
 # show time for every program which run for more than 10 seconds
 export REPORTTIME=10
@@ -54,6 +49,10 @@ antigen bundle fasd
 antigen bundle sudo
 antigen bundle pip
 antigen bundle command-not-found
+
+# Load the ssh agent
+zstyle :omz:plugins:ssh-agent agent-forwarding on
+antigen bundle ssh-agent
 
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting
