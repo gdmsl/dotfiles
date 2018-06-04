@@ -380,7 +380,7 @@ axes.formatter.use_mathtext : True # When True, use mathtext for scientific
 #xtick.minor.pad      : 3.4      # distance to the minor tick label in points
 #xtick.color          : k      # color of the tick labels
 xtick.labelsize      : 8 # fontsize of the tick labels
-xtick.direction      : out    # direction: in, out, or inout
+xtick.direction      : in    # direction: in, out, or inout
 #xtick.minor.visible  : False  # visibility of minor ticks on x-axis
 #xtick.major.top      : True   # draw x axis top major ticks
 #xtick.major.bottom   : True   # draw x axis bottom major ticks
@@ -397,7 +397,7 @@ xtick.direction      : out    # direction: in, out, or inout
 #ytick.minor.pad      : 3.4      # distance to the minor tick label in points
 #ytick.color          : k      # color of the tick labels
 ytick.labelsize      : 8 # fontsize of the tick labels
-ytick.direction      : out    # direction: in, out, or inout
+ytick.direction      : in # direction: in, out, or inout
 #ytick.minor.visible  : False  # visibility of minor ticks on y-axis
 #ytick.major.left     : True   # draw y axis left major ticks
 #ytick.major.right    : True   # draw y axis right major ticks
