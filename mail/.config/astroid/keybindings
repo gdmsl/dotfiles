@@ -1,0 +1,3 @@
+# toggle killed (this command is its own inverse)
+thread_index.run(hooks::toggle killed %1, hooks::toggle killed %1)=D
+
