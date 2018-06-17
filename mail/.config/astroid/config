@@ -158,10 +158,8 @@
     },
     "startup": {
         "queries": {
-            "inbox": "tag:inbox and -tag:confidential",
-            "Work": "tag:inbox and tag:work and -tag:confidential",
-            "Work FMEO": "tag:inbox and tag:confidential and tag:work",
-            "FMEO": "tag:inbox and tag:confidential and -tag:work",
+            "inbox": "tag:inbox",
+            "Work": "tag:inbox and tag:work",
             "UDS Jobs": "tag:clusters/udsjobs"
         }
     }

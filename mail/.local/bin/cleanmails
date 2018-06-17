@@ -1,0 +1,13 @@
+#!/bin/bash
+
+datestring="cleanup/$(date +%Y%m%d.%H%M)"
+
+notreplied="-tag:passed and -tag:replied"
+notevent="-tag:attending and -tag:attended"
+notuseful="-tag:save and -tag:todo and $notreplied and $notevent and -tag:followup"
+notoklists="-tag:lists/arch-general and -tag:lists/arch-announce and -tag:lists/arch-security"
+
+# cleanup mailing lists
+notmuch tag +$datestring -inbox "tag:lists and $notoklists and $notuseful and date:..90days"
+
+# vim: set ft=sh #
