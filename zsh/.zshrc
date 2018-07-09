@@ -21,8 +21,12 @@ export SSH_ASKPASS="/usr/bin/ksshaskpass"
 export REPORTTIME=10
 
 # init screen
-curl wttr.in/\?0
-echo
+if ! timeout 5s ping -w 1 -W 1 -c 1 mail.google.com &> /dev/null; then
+    fortune -s
+else
+    timeout 5s curl wttr.in/\?0
+fi
+
 echo "$fg[red]Last -Syu:$reset_color $(grep "pacman -Syu" /var/log/pacman.log | tail -n1 | cut -c 2- | cut -c-16)"
 echo "$reset_color"
 
