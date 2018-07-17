@@ -1,3 +1,5 @@
+# needed because of leaking emulate -L sh on the cluster
+emulate -R zsh
 
 # username to hide for themes
 DEFAULT_USER="gdmsl"

@@ -6,44 +6,53 @@
 " Plugins --------------------------------------------------------------------
 
 " LoadPlugins {{{
-call plug#begin('~/.config/nvim/plugged')
+" Add the dein installation directory into runtimepath
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
-Plug 'bronson/vim-trailing-whitespace'
-Plug 'myusuf3/numbers.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'jiangmiao/auto-pairs'
-Plug 'scrooloose/nerdcommenter'
-Plug 'lervag/vimtex'
-Plug 'JuliaLang/julia-vim'
-Plug 'chriskempson/base16-vim'
-Plug 'benekastah/neomake'
-Plug 'tpope/vim-markdown', {'for' : 'markdown'}
-Plug 'sudar/vim-arduino-syntax'
-Plug 'easymotion/vim-easymotion'
-Plug 'kien/rainbow_parentheses.vim'
-Plug 'majutsushi/tagbar'
-Plug 'vim-scripts/loremipsum'
-Plug 'roxma/nvim-completion-manager'
-Plug 'roxma/ncm-clang'
-Plug 'roxma/nvim-cm-racer'
-Plug 'mhinz/vim-signify'
-Plug 'rust-lang/rust.vim'
-Plug 'kana/vim-arpeggio'
-Plug 'mileszs/ack.vim'
-Plug 'rhysd/vim-clang-format'
-Plug 'chrisbra/csv.vim'
-Plug 'uplus/vim-clang-rename'
-Plug 'cespare/vim-toml'
-Plug 'vimwiki/vimwiki'
-Plug 'mhinz/vim-startify'
+if dein#load_state('~/.cache/dein')
+    call dein#begin('~/.cache/dein')
 
-call plug#end()
+    call dein#add('~/.cache/dein')
+
+    call dein#add('wsdjeg/dein-ui.vim')
+    call dein#add('ctrlpvim/ctrlp.vim')
+    call dein#add('scrooloose/nerdtree')
+    call dein#add('jistr/vim-nerdtree-tabs')
+    call dein#add('tpope/vim-fugitive')
+    call dein#add('tpope/vim-surround')
+    call dein#add('bronson/vim-trailing-whitespace')
+    call dein#add('myusuf3/numbers.vim')
+    call dein#add('vim-airline/vim-airline')
+    call dein#add('vim-airline/vim-airline-themes')
+    call dein#add('jiangmiao/auto-pairs')
+    call dein#add('scrooloose/nerdcommenter')
+    call dein#add('lervag/vimtex')
+    call dein#add('JuliaLang/julia-vim')
+    call dein#add('chriskempson/base16-vim')
+    call dein#add('benekastah/neomake')
+    call dein#add('tpope/vim-markdown')
+    call dein#add('sudar/vim-arduino-syntax')
+    call dein#add('easymotion/vim-easymotion')
+    call dein#add('kien/rainbow_parentheses.vim')
+    call dein#add('majutsushi/tagbar')
+    call dein#add('vim-scripts/loremipsum')
+    call dein#add('roxma/nvim-completion-manager')
+    call dein#add('roxma/ncm-clang')
+    call dein#add('roxma/nvim-cm-racer')
+    call dein#add('mhinz/vim-signify')
+    call dein#add('rust-lang/rust.vim')
+    call dein#add('kana/vim-arpeggio')
+    call dein#add('mileszs/ack.vim')
+    call dein#add('rhysd/vim-clang-format')
+    call dein#add('chrisbra/csv.vim')
+    call dein#add('uplus/vim-clang-rename')
+    call dein#add('cespare/vim-toml')
+    call dein#add('vimwiki/vimwiki')
+    call dein#add('mhinz/vim-startify')
+
+    call dein#end()
+    call dein#save_state()
+endif
 " }}}
 
 " Plugin Configurations ------------------------------------------------------
