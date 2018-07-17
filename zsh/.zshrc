@@ -35,42 +35,54 @@ for file in `ls $HOME/.zsh/`; do
     [ -f $file ] && source $file
 done
 
-if [ -f "/usr/share/zsh/share/antigen.zsh" ]; then
-    source /usr/share/zsh/share/antigen.zsh
-else
-    if [ ! -f "$HOME/.local/share/zsh/share/antigen.zsh" ]; then
-        mkdir -p $HOME/.local/share/zsh/share
-        curl -L git.io/antigen > $HOME/.local/share/zsh/share/antigen.zsh
-    fi
-    source $HOME/.local/share/zsh/share/antigen.zsh
+################################## zplug ######################################
+
+# Check if zplug is installed
+if [[ ! -d ~/.zplug ]]; then
+  git clone https://github.com/zplug/zplug ~/.zplug
+  source ~/.zplug/init.zsh && zplug update --self
 fi
 
-# Load the oh-my-zsh's library.
-antigen use oh-my-zsh
+# use zplug
+source ~/.zplug/init.zsh
 
-# Bundles from the default repo (robbyrussell's oh-my-zsh).
-antigen bundle jump
-antigen bundle git
-antigen bundle archlinux
-antigen bundle cp
-antigen bundle tmux
-antigen bundle github
-antigen bundle history-substring-search
-antigen bundle vi-mode
-antigen bundle fasd
-antigen bundle sudo
-antigen bundle pip
-antigen bundle command-not-found
 
-# Load the ssh agent
+# PACKAGES
+
+# Oh my zsh
+zplug "lib/completion", from:oh-my-zsh
+zplug "plugins/git", from:oh-my-zsh
+zplug "plugins/jump", from:oh-my-zsh
+zplug "plugins/archlinux", from:oh-my-zsh
+zplug "plugins/cp", from:oh-my-zsh
+zplug "plugins/sudo", from:oh-my-zsh
+zplug "plugins/fasd", from:oh-my-zsh
+zplug "plugins/tmux", from:oh-my-zsh
+zplug "plugins/github", from:oh-my-zsh
+zplug "plugins/vi-mode", from:oh-my-zsh
+
 zstyle :omz:plugins:ssh-agent agent-forwarding on
-antigen bundle ssh-agent
+zplug "plugins/ssh-agent", from:oh-my-zsh
 
-# Syntax highlighting bundle.
-antigen bundle zsh-users/zsh-syntax-highlighting
+# Async for zsh, used by pure
+zplug "mafredri/zsh-async", from:github, defer:0
 
-# Load the theme.
-antigen theme bhilburn/powerlevel9k powerlevel9k
+# Theme!
+zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 
-# Tell Antigen that you're done.
-antigen apply
+# Syntax highlighting for commands, load last
+zplug "zsh-users/zsh-history-substring-search", from:github
+zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:3
+
+
+# Install packages that have not been installed yet
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    else
+        echo
+    fi
+fi
+
+zplug load
