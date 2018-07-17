@@ -67,6 +67,7 @@ zplug "plugins/vagrant", from:oh-my-zsh, if:"which vagrant"
 zplug "plugins/rsync", from:oh-my-zsh, if:"which rsync"
 zplug "plugins/command-not-found", from:oh-my-zsh
 zplug "plugins/common-aliases", from:oh-my-zsh
+zplug "plugins/history", from:oh-my-zsh
 zplug "plugins/jump", from:oh-my-zsh
 zplug "plugins/cp", from:oh-my-zsh
 zplug "plugins/sudo", from:oh-my-zsh
@@ -83,9 +84,8 @@ zplug "mafredri/zsh-async", from:github, defer:0
 zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 
 # Syntax highlighting for commands, load last
-zplug "zsh-users/zsh-history-substring-search", from:github
+zplug "plugins/history-substring-search", from:oh-my-zsh, defer:2
 zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:3
-zplug "zsh-users/zsh-history-substring-search", from:github
 
 # Install packages that have not been installed yet
 if ! zplug check --verbose; then
