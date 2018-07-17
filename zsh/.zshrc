@@ -35,7 +35,14 @@ for file in `ls $HOME/.zsh/`; do
     [ -f $file ] && source $file
 done
 
-source /usr/share/zsh/share/antigen.zsh
+if [ -f "/usr/share/zsh/share/antigen.zsh" ]; then
+    source /usr/share/zsh/share/antigen.zsh
+elif [ -f "$HOME/.local/share/zsh/share/antigen.zsh" ]; then
+    source $HOME/.local/share/zsh/share/antigen.zsh
+else
+    mkdir -p $HOME/.local/share/zsh/share
+    curl -L git.io/antigen > $HOME/.local/share/zsh/share/antigen.zsh
+fi
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
