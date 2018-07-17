@@ -4,7 +4,6 @@
 # User defined aliases
 
 alias feh='feh --draw-tinted --force-aliasing --image-bg black --scale-down'
-alias twitter="ttytter -ssl -dostream -readline -ansi -newline -exts=$HOME/.ttytter/ttytter-extension/oxhak_ttytter_output.pl"
 alias :q='exit'
 
 # Pacnam ehm.... Pamcan ..... ok.... pacman aliases
@@ -29,7 +28,7 @@ alias gg='systemctl reboot'
 alias downclip='wget $(xsel -b)'
 alias videoclip='youtube-dl "$(xsel -b)"'
 
-alias yolo='pacaur -Syua'
+alias yolo='yay -Syu'
 
 # jrnl skyp history
 alias jrnl=' jrnl'

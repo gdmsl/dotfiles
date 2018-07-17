@@ -1,14 +1,14 @@
 # needed because of leaking emulate -L sh on the cluster
 emulate -R zsh
 
-# username to hide for themes
-DEFAULT_USER="gdmsl"
+# source local definitions
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
 
 # ignore certain commands from history
 export HISTORY_IGNORE="cd:cd ..:ls:la:make"
+export HISTFILE="$HOME/.zsh_history"
 
-# eval dircolors for ls
-eval $(dircolors ~/.dircolors)
+eval "$(dircolors ~/.dircolors)"
 
 # color scheme for console theme
 if [ "$TERM" = "linux" ]; then
@@ -33,8 +33,10 @@ echo "$fg[red]Last -Syu:$reset_color $(grep "pacman -Syu" /var/log/pacman.log | 
 echo "$reset_color"
 
 # include files in zsh folder
-for file in `ls $HOME/.zsh/`; do
-    [ -f $file ] && source $file
+for file in $HOME/.zsh/*; do
+    if [ -e "$file" ]; then
+        source $file
+    fi
 done
 
 ################################## zplug ######################################
@@ -51,15 +53,23 @@ source ~/.zplug/init.zsh
 
 # PACKAGES
 
-# Oh my zsh
-zplug "lib/completion", from:oh-my-zsh
-zplug "plugins/git", from:oh-my-zsh
+# Oh my zsh libs
+zplug "lib/*", from:oh-my-zsh
+
+# oh my zsh plugins
+zplug "plugins/git", from:oh-my-zsh, if:"which git"
+zplug "plugins/git-extras", from:oh-my-zsh, if:"which git"
+zplug "plugins/tmux", from:oh-my-zsh, if:"which tmux"
+zplug "plugins/fasd", from:oh-my-zsh, if:"which fasd"
+zplug "plugins/archlinux", from:oh-my-zsh, if:"which pacman"
+zplug "plugins/cargo", from:oh-my-zsh, if:"which cargo"
+zplug "plugins/vagrant", from:oh-my-zsh, if:"which vagrant"
+zplug "plugins/rsync", from:oh-my-zsh, if:"which rsync"
+zplug "plugins/command-not-found", from:oh-my-zsh
+zplug "plugins/common-aliases", from:oh-my-zsh
 zplug "plugins/jump", from:oh-my-zsh
-zplug "plugins/archlinux", from:oh-my-zsh
 zplug "plugins/cp", from:oh-my-zsh
 zplug "plugins/sudo", from:oh-my-zsh
-zplug "plugins/fasd", from:oh-my-zsh
-zplug "plugins/tmux", from:oh-my-zsh
 zplug "plugins/github", from:oh-my-zsh
 zplug "plugins/vi-mode", from:oh-my-zsh
 
@@ -75,7 +85,7 @@ zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 # Syntax highlighting for commands, load last
 zplug "zsh-users/zsh-history-substring-search", from:github
 zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:3
-
+zplug "zsh-users/zsh-history-substring-search", from:github
 
 # Install packages that have not been installed yet
 if ! zplug check --verbose; then
