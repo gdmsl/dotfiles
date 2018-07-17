@@ -37,11 +37,12 @@ done
 
 if [ -f "/usr/share/zsh/share/antigen.zsh" ]; then
     source /usr/share/zsh/share/antigen.zsh
-elif [ -f "$HOME/.local/share/zsh/share/antigen.zsh" ]; then
-    source $HOME/.local/share/zsh/share/antigen.zsh
 else
-    mkdir -p $HOME/.local/share/zsh/share
-    curl -L git.io/antigen > $HOME/.local/share/zsh/share/antigen.zsh
+    if [ ! -f "$HOME/.local/share/zsh/share/antigen.zsh" ]; then
+        mkdir -p $HOME/.local/share/zsh/share
+        curl -L git.io/antigen > $HOME/.local/share/zsh/share/antigen.zsh
+    fi
+    source $HOME/.local/share/zsh/share/antigen.zsh
 fi
 
 # Load the oh-my-zsh's library.
