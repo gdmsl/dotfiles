@@ -17,7 +17,7 @@ if [ "$TERM" = "linux" ]; then
 fi
 
 # Default SSH_ASKPASS
-if which ksshaskpass; then
+if which ksshaskpass &> /dev/null; then
     export SSH_ASKPASS="$(which ksshaskpass)"
 fi
 
@@ -31,7 +31,7 @@ else
     timeout 5s curl wttr.in/\?0
 fi
 
-if which pacman; then
+if which pacman &> /dev/null; then
     echo "$fg[red]Last -Syu:$reset_color $(grep "pacman -Syu" /var/log/pacman.log | tail -n1 | cut -c 2- | cut -c-16)"
     echo "$reset_color"
 fi
