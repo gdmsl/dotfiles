@@ -17,7 +17,9 @@ if [ "$TERM" = "linux" ]; then
 fi
 
 # Default SSH_ASKPASS
-export SSH_ASKPASS="/usr/bin/ksshaskpass"
+if which ksshaskpass; then
+    export SSH_ASKPASS="$(which ksshaskpass)"
+fi
 
 # show time for every program which run for more than 10 seconds
 export REPORTTIME=10
@@ -29,8 +31,10 @@ else
     timeout 5s curl wttr.in/\?0
 fi
 
-echo "$fg[red]Last -Syu:$reset_color $(grep "pacman -Syu" /var/log/pacman.log | tail -n1 | cut -c 2- | cut -c-16)"
-echo "$reset_color"
+if which pacman; then
+    echo "$fg[red]Last -Syu:$reset_color $(grep "pacman -Syu" /var/log/pacman.log | tail -n1 | cut -c 2- | cut -c-16)"
+    echo "$reset_color"
+fi
 
 # include files in zsh folder
 for file in $HOME/.zsh/*; do

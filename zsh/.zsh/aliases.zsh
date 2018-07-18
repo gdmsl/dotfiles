@@ -46,5 +46,6 @@ alias mimeconfig="nvim ~/.config/mimeapps.list ~/.local/share/applications/mimea
 alias julia="julia --color yes"
 
 # SLURM
-alias squeue='squeue -u gmasella -o "%.12i %.9P %.20j %.8u %.2t %.10M %.6D %.3C %R"'
-alias sqm="squeue -u $USER -o \"%.12i %.9P %.20j %.8u %.2t %.10M %.6D %.3C %R\""
+alias squeue='squeue -o "%.12i %.9P %.20j %.8u %.2t %.10M %.6D %.3C %R"'
+alias sqm="squeue -u $USER"
+
