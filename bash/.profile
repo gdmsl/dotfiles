@@ -39,7 +39,7 @@ export EDITOR="nvim"
 export BROWSER="firefox"
 
 # Default terminal emulator
-export TERMINAL="konsole"
+export TERMINAL="termite"
 
 # Start gnome keyring
 if [ -n "$DESKTOP_SESSION" ]; then
