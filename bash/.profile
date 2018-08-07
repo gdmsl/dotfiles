@@ -6,7 +6,7 @@
 source /etc/profile
 
 # setting the PATH envirorment variable
-export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/texlive/2016/bin/x86_64-linux:$HOME/.cabal/bin:$PATH:$HOME/var/go/bin"
+export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.cabal/bin:$PATH:$HOME/var/go/bin"
 
 # library path
 export LD_LIBRARY_PATH="$HOME/.local/lib64:$HOME/.local/lib:$LD_LIBRARYPATH"
@@ -41,11 +41,11 @@ export BROWSER="firefox"
 # Default terminal emulator
 export TERMINAL="konsole"
 
-# SSH Askpass
-if which ksshaskpass &> /dev/null; then
-    export SSH_ASKPASS=/usr/bin/ksshaskpass
-else
-    export SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass
+# Start gnome keyring
+if [ -n "$DESKTOP_SESSION" ]; then
+    eval $(gnome-keyring-daemon --start)
+    echo "STARTING GNOME KEYRING"
+    export SSH_AUTH_SOCK
 fi
 
 # Ruby

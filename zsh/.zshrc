@@ -16,11 +16,6 @@ if [ "$TERM" = "linux" ]; then
     clear
 fi
 
-# Default SSH_ASKPASS
-if which ksshaskpass &> /dev/null; then
-    export SSH_ASKPASS="$(which ksshaskpass)"
-fi
-
 # show time for every program which run for more than 10 seconds
 export REPORTTIME=10
 
@@ -54,7 +49,6 @@ fi
 # use zplug
 source ~/.zplug/init.zsh
 
-
 # PACKAGES
 
 # Oh my zsh libs
@@ -77,9 +71,6 @@ zplug "plugins/cp", from:oh-my-zsh
 zplug "plugins/sudo", from:oh-my-zsh
 zplug "plugins/github", from:oh-my-zsh
 zplug "plugins/vi-mode", from:oh-my-zsh
-
-zstyle :omz:plugins:ssh-agent agent-forwarding on
-zplug "plugins/ssh-agent", from:oh-my-zsh
 
 # Async for zsh, used by pure
 zplug "mafredri/zsh-async", from:github, defer:0
