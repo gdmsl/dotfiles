@@ -29,16 +29,24 @@ if dein#load_state('~/.cache/dein')
     call dein#add('lervag/vimtex')
     call dein#add('JuliaLang/julia-vim')
     call dein#add('chriskempson/base16-vim')
-    call dein#add('benekastah/neomake')
+    "linting
+    "call dein#add('benekastah/neomake')
+    call dein#add('w0rp/ale')
     call dein#add('tpope/vim-markdown')
     call dein#add('sudar/vim-arduino-syntax')
     call dein#add('easymotion/vim-easymotion')
     call dein#add('kien/rainbow_parentheses.vim')
     call dein#add('majutsushi/tagbar')
     call dein#add('vim-scripts/loremipsum')
-    call dein#add('roxma/nvim-completion-manager')
-    call dein#add('roxma/ncm-clang')
-    call dein#add('roxma/nvim-cm-racer')
+    " BEGIN completition manager
+    call dein#add('ncm2/ncm2')
+    call dein#add('roxma/nvim-yarp')
+    call dein#add('ncm2/ncm2-path')
+    call dein#add('ncm2/ncm2-bufword')
+    call dein#add('ncm2/ncm2-racer')
+    call dein#add('ncm2/ncm2-pyclang')
+    call dein#add('ncm2/ncm2-jedi')
+    " END completition manager
     call dein#add('mhinz/vim-signify')
     call dein#add('rust-lang/rust.vim')
     call dein#add('kana/vim-arpeggio')
@@ -135,22 +143,49 @@ augroup nerdtree_config
     let g:nerdtree_tabs_open_on_gui_startup = 0
 " }}}
 
-" NeoMake {{{
-augroup neomake_config
-    autocmd! BufWritePost * Neomake
-    let g:neomake_cpp_enabled_makers = ['clang']
-	let g:neomake_c_enabled_makers = ['clang']
-    "let g:neomake_cpp_enabled_makers = ['clangtidy']
-    "let g:neomake_cpp_clangtidy_args = ['-checks="*"', '--', '-std=c++14', '-Isrc', '-I.']
-    "let g:neomake_c_enabled_makers = ['clangtidy']
-    "let g:neomake_c_clangtidy_args = ['-checks="*"', '--', '-Isrc', '-I.']
+" Ale {{{
+augroup ale_config
+    autocmd!
+    let g:ale_c_parse_compile_commands = 1
+    let g:ale_linters = { 'cpp': ['clangtidy'] }
+    let g:ale_c_build_dir_names = ['build', 'release', 'debug']
 augroup END
+" }}}
+" NeoMake {{{
+"augroup neomake_config
+    "autocmd! BufWritePost * Neomake
+    "let g:neomake_cpp_enabled_makers = ['clang']
+    ""let g:neomake_cpp_clang_args = ['-std=c++17', '-Iinclude', '-I.']
+	"let g:neomake_c_enabled_makers = ['clang']
+    ""let g:neomake_cpp_enabled_makers = ['clangtidy']
+    ""let g:neomake_cpp_clangtidy_args = ['-checks="*"', '--', '-std=c++17', '-Iinclude', '-I.']
+    ""let g:neomake_c_enabled_makers = ['clangtidy']
+    ""let g:neomake_c_clangtidy_args = ['-checks="*"', '--', '-Iinclude', '-I.']
+"augroup END
 " }}}
 
 " Tagbar {{{
 augroup tagbar_config
     autocmd!
     nmap <F8> :TagbarToggle<CR>
+    let g:tagbar_type_julia = {
+        \ 'ctagstype' : 'julia',
+        \ 'kinds'     : [
+        \ 't:struct', 'f:function', 'm:macro', 'c:const']
+        \ }
+    let g:tagbar_type_rust = {
+        \ 'ctagstype' : 'rust',
+        \ 'kinds' : [
+            \'T:types,type definitions',
+            \'f:functions,function definitions',
+            \'g:enum,enumeration names',
+            \'s:structure names',
+            \'m:modules,module names',
+            \'c:consts,static constants',
+            \'t:traits',
+            \'i:impls,trait implementations',
+            \]
+        \}
 augroup END
 " }}}
 
@@ -196,22 +231,34 @@ augroup clangformat_config
 augroup END
 " }}}
 
-" NCM-clang {{{
-augroup ncmclang_config
-    autocmd FileType cpp let g:neomake_cpp_clang_args = join(ncm_clang#compilation_info()['args'], ' ')
-    autocmd FileType c let g:neomake_c_clang_args = join(ncm_clang#compilation_info()['args'], ' ')
-augroup END
-
-" }}}
-
-" NCM {{{
-augroup ncm_config
+" NCM2 {{{
+augroup ncm2_config
     autocmd!
+
+    " enable ncm2 for all buffers
+    autocmd BufEnter * call ncm2#enable_for_buffer()
+
+    " IMPORTANTE: :help Ncm2PopupOpen for more information
+    set completeopt=noinsert,menuone,noselect
+
+    " suppress the annoying 'match x of y', 'The only match' and 'Pattern not
+    " found' messages
+    set shortmess+=c
+
+    " CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
+    inoremap <c-c> <ESC>
+
+    " When the <Enter> key is pressed while the popup menu is visible, it only
+    " hides the menu. Use this mapping to close the menu and also start a new
+    " line.
+    inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+
+    " Use <TAB> to select the popup menu:
     inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
     inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-    " don't give |ins-completion-menu| messages.  For example,
-    " '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
-    set shortmess+=c
+
+    " a list of relative paths looking for .clang_complete
+    let g:ncm2_pyclang#args_file_path = ['.clang_complete']
 augroup END
 " }}}
 
