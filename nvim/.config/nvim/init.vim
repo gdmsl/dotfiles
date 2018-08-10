@@ -151,6 +151,7 @@ augroup ale_config
     let g:ale_c_build_dir_names = ['build', 'release', 'debug']
 augroup END
 " }}}
+"
 " NeoMake {{{
 "augroup neomake_config
     "autocmd! BufWritePost * Neomake
@@ -265,7 +266,7 @@ augroup END
 " VimWiki {{{
 augroup vimwiki_config
     autocmd!
-    let g:vimwiki_list = [{'path': '~/log/bwiki/', 'syntax': 'markdown', 'ext': '.md'}, {'path': '~/log/mswiki/', 'syntax': 'markdown', 'ext': '.md'}]
+    let g:vimwiki_list = [{'path': '~/log/bwiki/', 'template_path' : '~/log/bwiki/templates'}]
 augroup END
 " }}}
 
@@ -414,6 +415,8 @@ endif
 " File Types -----------------------------------------------------------------
 
 " General {{{
+set exrc
+set secure
 filetype plugin on
 filetype indent on
 

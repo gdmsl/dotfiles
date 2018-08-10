@@ -8,38 +8,38 @@ set guioptions "sc"
 set page-padding 5
 set selection-clipboard clipboard
 
-# Base16 Materia
-# Author: Defman21
+# Base16 OneDark
+# Author: Lalit Magant (http:&#x2F;&#x2F;github.com&#x2F;tilal6991)
 
-set default-bg                  "#263238"
-set default-fg                  "#2C393F"
+set default-bg                  "#282c34"
+set default-fg                  "#353b45"
 
-set statusbar-fg                "#C9CCD3"
-set statusbar-bg                "#37474F"
+set statusbar-fg                "#565c64"
+set statusbar-bg                "#3e4451"
 
-set inputbar-bg                 "#263238"
-set inputbar-fg                 "#FFFFFF"
+set inputbar-bg                 "#282c34"
+set inputbar-fg                 "#c8ccd4"
 
-set notification-bg             "#263238"
-set notification-fg             "#FFFFFF"
+set notification-bg             "#282c34"
+set notification-fg             "#c8ccd4"
 
-set notification-error-bg       "#263238"
-set notification-error-fg       "#EC5F67"
+set notification-error-bg       "#282c34"
+set notification-error-fg       "#e06c75"
 
-set notification-warning-bg     "#263238"
-set notification-warning-fg     "#EC5F67"
+set notification-warning-bg     "#282c34"
+set notification-warning-fg     "#e06c75"
 
-set highlight-color             "#FFCC00"
-set highlight-active-color      "#89DDFF"
+set highlight-color             "#e5c07b"
+set highlight-active-color      "#61afef"
 
-set completion-bg               "#2C393F"
-set completion-fg               "#89DDFF"
+set completion-bg               "#353b45"
+set completion-fg               "#61afef"
 
-set completion-highlight-fg     "#FFFFFF"
-set completion-highlight-bg     "#89DDFF"
+set completion-highlight-fg     "#c8ccd4"
+set completion-highlight-bg     "#61afef"
 
-set recolor-lightcolor          "#263238"
-set recolor-darkcolor           "#D5DBE5"
+set recolor-lightcolor          "#282c34"
+set recolor-darkcolor           "#b6bdca"
 
 set recolor                     "false"
 set recolor-keephue             "false"
