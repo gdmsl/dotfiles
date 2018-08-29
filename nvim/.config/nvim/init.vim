@@ -151,19 +151,6 @@ augroup ale_config
     let g:ale_c_build_dir_names = ['build', 'release', 'debug']
 augroup END
 " }}}
-"
-" NeoMake {{{
-"augroup neomake_config
-    "autocmd! BufWritePost * Neomake
-    "let g:neomake_cpp_enabled_makers = ['clang']
-    ""let g:neomake_cpp_clang_args = ['-std=c++17', '-Iinclude', '-I.']
-	"let g:neomake_c_enabled_makers = ['clang']
-    ""let g:neomake_cpp_enabled_makers = ['clangtidy']
-    ""let g:neomake_cpp_clangtidy_args = ['-checks="*"', '--', '-std=c++17', '-Iinclude', '-I.']
-    ""let g:neomake_c_enabled_makers = ['clangtidy']
-    ""let g:neomake_c_clangtidy_args = ['-checks="*"', '--', '-Iinclude', '-I.']
-"augroup END
-" }}}
 
 " Tagbar {{{
 augroup tagbar_config
@@ -260,6 +247,9 @@ augroup ncm2_config
 
     " a list of relative paths looking for .clang_complete
     let g:ncm2_pyclang#args_file_path = ['.clang_complete']
+
+    " goto declaration
+    autocmd FileType c,cpp nnoremap <buffer> gd :<c-u>call ncm2_pyclang#goto_declaration()<cr>
 augroup END
 " }}}
 
