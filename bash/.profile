@@ -62,3 +62,8 @@ if which fasd &> /dev/null; then
     eval "$(fasd --init auto)"
 fi
 
+# linux brew
+if [ -d $HOME/.linuxbrew ]; then
+    export PATH="$PATH:$HOME/.linuxbrew"
+fi
+
