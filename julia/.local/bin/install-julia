@@ -8,11 +8,10 @@ using Pkg
 Pkg.update()
 
 packages = String["PyPlot", "Plots", "StatPlots", "DifferentialEquations",
-                  "Lint", "DataFrames", "PlotlyJS", "PyPlot", "GR",
-                  "PlotRecipes", "IJulia", "JSON", "YAML", "CSV", "ArgParse",
-                  "LsqFit", "Query", "Iterators", "uCSV", "ArgParse",
-                  "Unitful", "Interact", "RDatasets", "Interact",
-                  "InteractBulma"]
+                  "Lint", "DataFrames", "PyPlot", "GR", "PlotRecipes",
+                  "IJulia", "JSON", "YAML", "CSV", "ArgParse", "LsqFit",
+                  "Query", "Iterators", "uCSV", "ArgParse", "Unitful",
+                  "Interact", "RDatasets", "Interact", "InteractBulma"]
 
 for package in packages
     Pkg.add(package)
