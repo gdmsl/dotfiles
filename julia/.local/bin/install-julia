@@ -3,14 +3,16 @@
 # AUTHOR: Guido Masella (guido.masella@gmail.com)
 #
 
+using Pkg
+
 Pkg.update()
 
 packages = String["PyPlot", "Plots", "StatPlots", "DifferentialEquations",
                   "Lint", "DataFrames", "PlotlyJS", "PyPlot", "GR",
-                  "UnicodePlots", "PGFPlots", "PlotRecipes", "HDF5", "JLD",
-                  "JLD2", "IJulia", "JSON", "YAML", "CSV", "ArgParse",
+                  "PlotRecipes", "IJulia", "JSON", "YAML", "CSV", "ArgParse",
                   "LsqFit", "Query", "Iterators", "uCSV", "ArgParse",
-                  "Unitful", "Interact", "RDatasets", "InteractBulma", "Atom"]
+                  "Unitful", "Interact", "RDatasets", "Interact",
+                  "InteractBulma"]
 
 for package in packages
     Pkg.add(package)
