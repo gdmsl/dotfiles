@@ -41,13 +41,13 @@ message = Reminders
 
 [MailMover]
 rename = True
-folders = gmail/inbox gmail/spam uds/inbox uds/spam uds-etu/inbox uds-etu/spam gmail/trash uds/trash uds-etu/trash
+folders = gmail/inbox uds/inbox uds/spam uds-etu/inbox uds-etu/spam uds/trash uds-etu/trash uds/archive uds-etu/archive
 gmail/inbox = 'tag:spam':"gmail/spam" '-tag:inbox AND -tag:trash AND -tag:spam':"gmail/archive" 'tag:trash AND -tag:spam':"gmail/trash"
-gmail/spam = '-tag:spam AND tag:inbox':"gmail/inbox" '-tag:spam':"gmail/archive"
-gmail/trash = '-tag:trash AND tag:inbox':"gmail/inbox" '-tag:trash AND -tag:inbox':"gmail/archive"
 uds/inbox = 'tag:spam':"uds/spam" '-tag:inbox AND -tag:trash AND -tag:spam':"uds/archive" 'tag:trash AND -tag:spam':"uds/trash"
 uds/spam = '-tag:spam AND tag:inbox':"uds/inbox" '-tag:spam':"uds/archive"
 uds/trash = '-tag:trash AND tag:inbox':"uds/inbox" '-tag:trash AND -tag:inbox':"uds/archive"
+uds/archive = 'tag:trash':"uds/trash" 'tag:inbox and -tag:trash and -tag:spam':"uds/inbox" 'tag:spam':"uds/spam"
 uds-etu/inbox = 'tag:spam':"uds-etu/spam" '-tag:inbox AND -tag:trash AND -tag:spam':"uds-etu/archive" 'tag:trash AND -tag:spam':"uds-etu/trash"
 uds-etu/spam = '-tag:spam AND tag:inbox':"uds-etu/inbox" '-tag:spam':"uds-etu/archive"
 uds-etu/trash = '-tag:trash AND tag:inbox':"uds-etu/inbox" '-tag:trash AND -tag:inbox':"uds-etu/archive"
+uds-etu/archive = 'tag:trash':"uds-etu/trash" 'tag:inbox and -tag:trash and -tag:spam':"uds-etu/inbox" 'tag:spam':"uds-etu/spam"

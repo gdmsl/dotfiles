@@ -39,13 +39,19 @@ if dein#load_state('~/.cache/dein')
     call dein#add('majutsushi/tagbar')
     call dein#add('vim-scripts/loremipsum')
     " BEGIN completition manager
-    call dein#add('ncm2/ncm2')
-    call dein#add('roxma/nvim-yarp')
-    call dein#add('ncm2/ncm2-path')
-    call dein#add('ncm2/ncm2-bufword')
-    call dein#add('ncm2/ncm2-racer')
-    call dein#add('ncm2/ncm2-pyclang')
-    call dein#add('ncm2/ncm2-jedi')
+    "call dein#add('ncm2/ncm2')
+    "call dein#add('roxma/nvim-yarp')
+    "call dein#add('ncm2/ncm2-path')
+    "call dein#add('ncm2/ncm2-bufword')
+    "call dein#add('ncm2/ncm2-racer')
+    "call dein#add('ncm2/ncm2-pyclang')
+    "call dein#add('ncm2/ncm2-jedi')
+    call dein#add('prabirshrestha/asyncomplete.vim')
+    call dein#add('prabirshrestha/async.vim')
+    call dein#add('prabirshrestha/vim-lsp')
+    call dein#add('prabirshrestha/asyncomplete-lsp.vim')
+    call dein#add('prabirshrestha/asyncomplete-file.vim')
+    call dein#add('prabirshrestha/asyncomplete-buffer.vim')
     " END completition manager
     call dein#add('mhinz/vim-signify')
     call dein#add('rust-lang/rust.vim')
@@ -220,36 +226,67 @@ augroup END
 " }}}
 
 " NCM2 {{{
-augroup ncm2_config
+"augroup ncm2_config
+    "autocmd!
+
+    "" enable ncm2 for all buffers
+    "autocmd BufEnter * call ncm2#enable_for_buffer()
+
+    "" IMPORTANTE: :help Ncm2PopupOpen for more information
+    "set completeopt=noinsert,menuone,noselect
+
+    "" suppress the annoying 'match x of y', 'The only match' and 'Pattern not
+    "" found' messages
+    "set shortmess+=c
+
+    "" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
+    "inoremap <c-c> <ESC>
+
+    "" When the <Enter> key is pressed while the popup menu is visible, it only
+    "" hides the menu. Use this mapping to close the menu and also start a new
+    "" line.
+    "inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+
+    "" Use <TAB> to select the popup menu:
+    "inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+    "inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+    "" libclang library path
+    "let g:ncm2_pyclang#library_path = "/usr/lib/libclang.so"
+
+    "" a list of relative paths looking for .clang_complete
+    "let g:ncm2_pyclang#args_file_path = ['.clang_complete']
+
+    "" goto declaration
+    "autocmd FileType c,cpp nnoremap <buffer> gd :<c-u>call ncm2_pyclang#goto_declaration()<cr>
+"augroup END
+" }}}
+
+" ASYNCOMPLETE {{{
+augroup asyncomplete_config
     autocmd!
 
-    " enable ncm2 for all buffers
-    autocmd BufEnter * call ncm2#enable_for_buffer()
+    if executable('clangd')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'clangd',
+        \ 'cmd': {server_info->['clangd']},
+        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+        \ })
+    endif
 
-    " IMPORTANTE: :help Ncm2PopupOpen for more information
-    set completeopt=noinsert,menuone,noselect
+    au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+        \ 'name': 'buffer',
+        \ 'whitelist': ['*'],
+        \ 'blacklist': ['go'],
+        \ 'completor': function('asyncomplete#sources#buffer#completor'),
+        \ }))
 
-    " suppress the annoying 'match x of y', 'The only match' and 'Pattern not
-    " found' messages
-    set shortmess+=c
-
-    " CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
-    inoremap <c-c> <ESC>
-
-    " When the <Enter> key is pressed while the popup menu is visible, it only
-    " hides the menu. Use this mapping to close the menu and also start a new
-    " line.
-    inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-
-    " Use <TAB> to select the popup menu:
-    inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-    " a list of relative paths looking for .clang_complete
-    let g:ncm2_pyclang#args_file_path = ['.clang_complete']
-
-    " goto declaration
-    autocmd FileType c,cpp nnoremap <buffer> gd :<c-u>call ncm2_pyclang#goto_declaration()<cr>
+    au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+        \ 'name': 'file',
+        \ 'whitelist': ['*'],
+        \ 'priority': 10,
+        \ 'completor': function('asyncomplete#sources#file#completor')
+        \ }))
 augroup END
 " }}}
 
