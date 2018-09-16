@@ -1,7 +1,0 @@
-label = Sync Between Spectre and Faerie
-
-root = /run/media/gdmsl/FaerieSafe/gdmsl
-root = /mnt/archive0/gdmsl
-
-# directories
-path=usr

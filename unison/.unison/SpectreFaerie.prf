@@ -1,0 +1,18 @@
+label = Sync Between Spectre and Faerie
+
+root = /mnt/archive0/gdmsl
+root = /run/media/gdmsl/FaerieSafe/gdmsl
+
+# directories
+path=Archives
+path=Brothel
+path=Desktop
+path=Documents
+path=Libraries
+path=Music
+path=Notebooks
+path=Shared
+path=Software
+path=Vaults
+path=Videos
+path=Public/Zotero
