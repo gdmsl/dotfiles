@@ -43,7 +43,7 @@ done
 # Check if zplug is installed
 if [[ ! -d ~/.zplug ]]; then
   git clone https://github.com/zplug/zplug ~/.zplug
-  source ~/.zplug/init.zsh && zplug update --self
+  source ~/.zplug/init.zsh && zplug update
 fi
 
 # use zplug
@@ -65,7 +65,7 @@ zplug "plugins/vagrant", from:oh-my-zsh, if:"which vagrant"
 zplug "plugins/rsync", from:oh-my-zsh, if:"which rsync"
 zplug "plugins/command-not-found", from:oh-my-zsh
 zplug "plugins/common-aliases", from:oh-my-zsh
-zplug "plugins/history", from:oh-my-zsh
+zplug "plugins/history", from:oh-my-zsh, defer:1
 zplug "plugins/jump", from:oh-my-zsh
 zplug "plugins/cp", from:oh-my-zsh
 zplug "plugins/sudo", from:oh-my-zsh
@@ -93,3 +93,8 @@ if ! zplug check --verbose; then
 fi
 
 zplug load
+
+# bindkeys
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
