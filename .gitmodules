@@ -16,6 +16,3 @@
 [submodule "zsh/.my-oh-my-zsh/themes/powerlevel9k"]
 	path = zsh/.my-oh-my-zsh/themes/powerlevel9k
 	url = https://github.com/bhilburn/powerlevel9k.git
-[submodule ".auxiliary/bash-it"]
-	path = .auxiliary/bash-it
-	url = https://github.com/Bash-it/bash-it.git

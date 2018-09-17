@@ -51,7 +51,10 @@ export HISTCONTROL=erasedups
 # after enabling or disabling aliases, plugins, and completions.
 # export BASH_IT_AUTOMATIC_RELOAD_AFTER_CONFIG_CHANGE=1
 
-# Load Bash It
+# check if bashit is installed
+if [[ ! -d $BASH_IT ]]; then
+  git clone https://github.com/Bash-it/bash-it $BASH_IT
+fi
 source $BASH_IT/bash_it.sh
 
 #
