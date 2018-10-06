@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+
+drymode=false
+
+usage() {
+    echo "$0 [-h] [-n] sourcedir"
+    echo
+    echo "OPTIONS:"
+    echo "    -h Show this message"
+    echo "    -a Running in dry mode"
+    echo
+}
+
+while getopts ":nh" opt; do
+  case $opt in
+    n)
+        drymode=true
+        echo "Running in dry mode"
+        ;;
+    h)
+        usage
+        exit
+        ;;
+    \?)
+        echo "Invalid option: -$OPTARG" >&2
+        exit
+        ;;
+  esac
+done
+
+shift $((OPTIND-1))
+
+containsElement () {
+  local e match="$1"
+  shift
+  for e; do [[ "$e" == "$match" ]] && return 0; done
+  return 1
+}
+
+src=$1
+ignore=("Notebooks")
+
+if [ ! -d $src ]; then
+    echo "$src: no such directory" >&2
+    exit 1
+fi
+
+start=$(pwd)
+
+dirs=$(cd $src && ls -1 -d * && cd $start)
+
+for dir in $dirs; do
+    if containsElement $dir "${ignore[@]}"; then
+        continue
+    fi
+    if $drymode; then
+        echo "Creating $HOME/$dir"
+    else
+        mkdir -p $HOME/$dir;
+    fi
+done
+
+for dir in $dirs; do
+    if containsElement $dir "${ignore[@]}"; then
+        continue
+    fi
+    if [ ! -d $src/$dir ]; then
+        echo "$src: no such directory" >&2
+        exit 1
+    fi
+
+    cd $src/$dir
+
+    for x in $(ls ./); do
+        if $drymode; then
+            echo "Linking $src/$dir/$x into $HOME/$dir"
+        else
+            ln -svr $x $HOME/$dir/$x
+        fi
+    done
+
+    cd $start
+done
+
