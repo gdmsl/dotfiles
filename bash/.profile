@@ -6,13 +6,19 @@
 source /etc/profile
 
 # setting the PATH envirorment variable
-export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.cabal/bin:$PATH:$HOME/var/go/bin"
+export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.cabal/bin:$PATH"
 
 # library path
 export LD_LIBRARY_PATH="$HOME/.local/lib64:$HOME/.local/lib:$LD_LIBRARYPATH"
 
 # go path
-export GOPATH="$HOME/var/go"
+export GOPATH="$GOPATH:$HOME/var/go"
+export PATH="$PATH:$GOPATH/bin"
+
+# python path
+export PYTHONUSERBASE="$HOME/Variable/python3"
+export PYTHONPATH="$PYTHONPATH:$PYTHONUSERBASE/lib/python3.7/site-packages"
+export PATH="$PATH:$PYTHONUSERBASE/bin"
 
 # Experience tell me that it's rather impossible to make vdpau
 # .. work with my discrete nvidia with OPTIMUS. So maybe i can make use
