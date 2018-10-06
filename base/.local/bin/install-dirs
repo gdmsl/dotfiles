@@ -72,6 +72,10 @@ for dir in $dirs; do
     cd $src/$dir
 
     for x in $(ls ./); do
+        if [ -e "$HOME/$dir/$x" ]; then
+            echo "$x: directory already exists in $dir" >&2
+            continue
+        fi
         if $drymode; then
             echo "Linking $src/$dir/$x into $HOME/$dir"
         else
