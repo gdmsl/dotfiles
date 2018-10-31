@@ -3,8 +3,8 @@ Description=Gitit wiki
 
 [Service]
 Type=simple
-WorkingDirectory=%h/.gitit
-ExecStart=/home/gdmsl/.cabal/bin/gitit -f %h/.gitit/wiki.conf
+WorkingDirectory=%h/Public/BeagleWiki
+ExecStart=/home/gdmsl/.local/bin/gitit -f wiki.conf
 Restart=no
 
 [Install]
