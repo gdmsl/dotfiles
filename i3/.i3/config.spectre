@@ -1,5 +1,5 @@
 #
-# ~/.i3/config.alchemist
+# ~/.i3/config.spectre
 #
 # vim: set ft=conf sw=4 ts=4 sts=4 et tw=78 fdm=marker fdl=0 foldmarker={{{,}}} :
 
@@ -12,53 +12,4 @@ set $O1 DVI-D-0
 set $O2 DVI-D-1
 set $O3 HDMI-1
 
-# }}}
-
-# BARS {{{
-
-# Alchemist BAR on DVI-1
-bar {
-	output            $O1
-	status_command    i3blocks -c ~/.i3blocks/spectre.conf
-	position          top
-	workspace_buttons yes
-    tray_output $O1
-    strip_workspace_numbers yes
-
-	font pango:Hack, FontAwesome 10
-
-    colors {
-        # class    color
-        separator  $c_separator
-        background $c_bg
-        statusline $c_fg
-        # class              border      background  text
-        focused_workspace    $c_focused  $c_focused  $c_focused_t
-        active_workspace     $c_active   $c_active   $c_active_t
-        inactive_workspace   $c_inactive $c_inactive $c_inactive_t
-        urgent_workspace     $c_urgent   $c_urgent   $c_urgent_t
-    }
-}
-
-bar {
-	output            $O2
-	status_command    i3blocks -c ~/.i3blocks/spectre.conf
-	position          top
-	workspace_buttons yes
-    strip_workspace_numbers yes
-
-	font pango:Hack, FontAwesome 10
-
-    colors {
-        # class    color
-        separator  $c_separator
-        background $c_bg
-        statusline $c_fg
-        # class              border      background  text
-        focused_workspace    $c_focused  $c_focused  $c_focused_t
-        active_workspace     $c_active   $c_active   $c_active_t
-        inactive_workspace   $c_inactive $c_inactive $c_inactive_t
-        urgent_workspace     $c_urgent   $c_urgent   $c_urgent_t
-    }
-}
 # }}}
