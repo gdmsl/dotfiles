@@ -340,30 +340,17 @@ exec --no-startup-id xset dpms 600
 # set the $O1 as default (primary)
 exec xrandr --output $O1 --primary
 
+# Compositor with libmumble preloaded (for the overlay)
+exec "LD_PRELOAD=/usr/lib/mumble/libmumble.so compton --config ~/.config/compton/compton-i3.conf -b"
+
 # the bar
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-
-# Network Manager Applet (applet to manage connections)
-exec /usr/bin/nm-applet
-
-# Copyq
-exec copyq
-
-# MegaSync. Client for automatic syncing with Mega.co.nz
-exec --no-startup-id "megasync"
 
 # DUNST. A notification daemon
 exec --no-startup-id "dunst"
 
-# Redshift, a software to change color temperature according to the
-# time of the day
-exec --no-startup-id "redshift-gtk"
-
 # Startup sound
 exec --no-startup-id "paplay /usr/share/sounds/freedesktop/stereo/service-login.oga"
-
-# Compositor with libmumble preloaded (for the overlay)
-exec "LD_PRELOAD=/usr/lib/mumble/libmumble.so compton --config ~/.config/compton/compton-i3.conf -b"
 
 # PulseAudio volume control
 exec --no-startup-id pavucontrol
@@ -379,5 +366,18 @@ exec --no-startup-id "nitrogen --restore"
 
 #polkit agent
 exec --no-startup-id "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+
+# Network Manager Applet (applet to manage connections)
+exec --no-startup-id /usr/bin/nm-applet
+
+# Copyq
+exec --no-startup-id copyq
+
+# MegaSync. Client for automatic syncing with Mega.co.nz
+exec --no-startup-id "megasync"
+
+# Redshift, a software to change color temperature according to the
+# time of the day
+exec --no-startup-id "redshift-gtk"
 
 # }}}
