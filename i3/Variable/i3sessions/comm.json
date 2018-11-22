@@ -1,22 +1,32 @@
 // vim:ts=4:sw=4:et
 {
+    // splitv split container with 1 children
     "border": "pixel",
-    "current_border_width": 3,
     "floating": "auto_off",
-    "geometry": {
-       "height": 506,
-       "width": 882,
-       "x": 0,
-       "y": 0
-    },
-    "name": "WeeChat",
+    "layout": "splitv",
     "percent": 0.7,
-    "swallows": [
-       {
-       "class": "^WeeChat$"
-       }
-    ],
-    "type": "con"
+    "type": "con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 3,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 410,
+               "width": 654,
+               "x": 0,
+               "y": 0
+            },
+            "name": "zsh -c weechat",
+            "percent": 1,
+            "swallows": [
+               {
+                  "class": "^WeeChat$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
 }
 
 {
@@ -32,16 +42,16 @@
             "current_border_width": 3,
             "floating": "auto_off",
             "geometry": {
-               "height": 1051,
-               "width": 959,
-               "x": 961,
-               "y": 2
+               "height": 1038,
+               "width": 570,
+               "x": 1347,
+               "y": 443
             },
-            "name": "Skype",
+            "name": "Telegram",
             "percent": 0.5,
             "swallows": [
                {
-               "class": "(?i)skype*"
+                  "class": "^TelegramDesktop$"
                }
             ],
             "type": "con"
@@ -51,16 +61,16 @@
             "current_border_width": 3,
             "floating": "auto_off",
             "geometry": {
-               "height": 1048,
-               "width": 1914,
-               "x": 1267,
-               "y": 1083
+               "height": 997,
+               "width": 570,
+               "x": 1347,
+               "y": 484
             },
-            "name": "Telegram",
+            "name": "Skype",
             "percent": 0.5,
             "swallows": [
                {
-               "class": "^TelegramDesktop$"
+                  "class": "^Skype$"
                }
             ],
             "type": "con"
