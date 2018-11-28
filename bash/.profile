@@ -17,8 +17,8 @@ export PATH="$PATH:$GOPATH/bin"
 
 # python path
 export PYTHONUSERBASE="$HOME/Variable/python3"
-export PYTHONPATH="$PYTHONPATH:$PYTHONUSERBASE/lib/python3.7/site-packages"
-export PATH="$PATH:$PYTHONUSERBASE/bin"
+export PYTHONPATH="$PYTHONUSERBASE/lib/python3.7/site-packages:$PYTHONPATH"
+export PATH="$PYTHONUSERBASE/bin:$PATH"
 
 # Experience tell me that it's rather impossible to make vdpau
 # .. work with my discrete nvidia with OPTIMUS. So maybe i can make use

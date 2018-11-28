@@ -4,7 +4,7 @@ Description=Gitit wiki
 [Service]
 Type=simple
 WorkingDirectory=%h/Public/BeagleWiki
-ExecStart=/home/gdmsl/.local/bin/gitit -f wiki.conf
+ExecStart=/home/gdmsl/.local/bin/gitit -f gitit.conf
 Restart=no
 
 [Install]

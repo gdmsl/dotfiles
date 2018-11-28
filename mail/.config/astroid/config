@@ -107,17 +107,17 @@
         "history_lines": "1000"
     },
     "accounts": {
-        "gmail": {
+        "GMail": {
             "name": "Guido Masella",
             "email": "guido.masella@gmail.com",
             "gpgkey": "",
             "always_gpg_sign": "false",
-            "sendmail": "msmtp -a gmail -i -t",
+            "sendmail": "msmtp -a GMail -i -t",
             "default": "true",
             "save_sent": "true",
-            "save_sent_to": "\/home\/gdmsl\/var\/mail\/gmail\/sent\/cur\/",
+            "save_sent_to": "\/home\/gdmsl\/Mail\/GMail\/sent\/cur\/",
             "additional_sent_tags": "",
-            "save_drafts_to": "\/home\/gdmsl\/var\/mail\/gmail\/drafts\/cur\/",
+            "save_drafts_to": "\/home\/gdmsl\/Mail\/GMail\/drafts\/cur\/",
             "signature_separate": "false",
             "signature_file": "",
             "signature_file_markdown": "",
@@ -125,17 +125,17 @@
             "signature_attach": "false",
             "select_query": ""
         },
-        "uds": {
+        "UDS": {
             "name": "Guido Masella",
             "email": "masella@unistra.fr",
             "gpgkey": "",
             "always_gpg_sign": "false",
-            "sendmail": "msmtp -a uds -i -t",
+            "sendmail": "msmtp -a UDS -i -t",
             "default": "true",
             "save_sent": "true",
-            "save_sent_to": "\/home\/gdmsl\/var\/mail\/uds\/sent\/cur\/",
+            "save_sent_to": "\/home\/gdmsl\/Mail\/UDS\/sent\/cur\/",
             "additional_sent_tags": "",
-            "save_drafts_to": "\/home\/gdmsl\/var\/mail\/uds\/drafts\/cur\/",
+            "save_drafts_to": "\/home\/gdmsl\/Mail\/UDS\/drafts\/cur\/",
             "signature_separate": "false",
             "signature_file": "",
             "signature_file_markdown": "",
@@ -143,17 +143,17 @@
             "signature_attach": "false",
             "select_query": ""
         },
-        "uds-etu": {
+        "UDS-ETU": {
             "name": "Guido Masella",
             "email": "guido.masella@etu.unistra.fr",
             "gpgkey": "",
             "always_gpg_sign": "false",
-            "sendmail": "msmtp -a uds-etu -i -t",
+            "sendmail": "msmtp -a UDS-ETU -i -t",
             "default": "true",
             "save_sent": "true",
-            "save_sent_to": "\/home\/gdmsl\/var\/mail\/uds-etu\/sent\/cur\/",
+            "save_sent_to": "\/home\/gdmsl\/Mail\/UDS-ETU\/sent\/cur\/",
             "additional_sent_tags": "",
-            "save_drafts_to": "\/home\/gdmsl\/var\/mail\/uds-etu\/drafts\/cur\/",
+            "save_drafts_to": "\/home\/gdmsl\/Mail\/UDS-ETU\/drafts\/cur\/",
             "signature_separate": "false",
             "signature_file": "",
             "signature_file_markdown": "",

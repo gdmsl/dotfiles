@@ -3,86 +3,86 @@
 # by Guido Masella
 #
 
-# GMAIL {{{
+# GMail {{{
 
 # Account Settings
-IMAPAccount gmail
+IMAPAccount GMail
 Host imap.gmail.com
 User guido.masella@gmail.com
-PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/usr/documents/id/mail-gmail.gpg"
+PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/Documents/Identity/mail-gmail.gpg"
 SSLType IMAPS
 AuthMechs PLAIN
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 # Remote Storage
-IMAPStore gmail-remote
-Account gmail
+IMAPStore GMail-remote
+Account GMail
 
 # Local Storage
-MaildirStore gmail-local
-Path ~/var/mail/gmail/
-Inbox ~/var/mail/gmail/inbox
+MaildirStore GMail-local
+Path ~/Mail/GMail/
+Inbox ~/Mail/GMail/inbox
 SubFolders Verbatim
 
-Channel gmail-inbox
-Master :gmail-remote:"INBOX"
-Slave :gmail-local:"inbox"
+Channel GMail-inbox
+Master :GMail-remote:"INBOX"
+Slave :GMail-local:"inbox"
 Create Slave
 Remove Slave
 Expunge Both
 SyncState *
 
-Channel gmail-trash
-Master :gmail-remote:"[Gmail]/Trash"
-Slave :gmail-local:"trash"
+Channel GMail-trash
+Master :GMail-remote:"[Gmail]/Trash"
+Slave :GMail-local:"trash"
 Create Slave
 Remove Slave
 Expunge Both
 SyncState *
 
-Channel gmail-sent
-Master :gmail-remote:"[Gmail]/Sent Mail"
-Slave :gmail-local:"sent"
+Channel GMail-sent
+Master :GMail-remote:"[Gmail]/Sent Mail"
+Slave :GMail-local:"sent"
 Create Slave
 Remove Slave
 Expunge Both
 SyncState *
 
-Channel gmail-archive
-Master :gmail-remote:"[Gmail]/All Mail"
-Slave :gmail-local:"archive"
+Channel GMail-archive
+Master :GMail-remote:"[Gmail]/All Mail"
+Slave :GMail-local:"archive"
 Create Slave
 Remove Slave
 Expunge Both
 SyncState *
 
-Channel gmail-starred
-Master :gmail-remote:"[Gmail]/Starred"
-Slave :gmail-local:"starred"
+Channel GMail-starred
+Master :GMail-remote:"[Gmail]/Starred"
+Slave :GMail-local:"starred"
 Create Slave
 Remove Slave
 Expunge Both
 SyncState *
 
-Channel gmail-drafts
-Master :gmail-remote:"[Gmail]/Drafts"
-Slave :gmail-local:"drafts"
+Channel GMail-drafts
+Master :GMail-remote:"[Gmail]/Drafts"
+Slave :GMail-local:"drafts"
 Create Slave
 Remove Slave
 Expunge Both
 SyncState *
 
-Channel gmail-spam
-Master :gmail-remote:"[Gmail]/Spam"
-Slave :gmail-local:"spam"
+Channel GMail-spam
+Master :GMail-remote:"[Gmail]/Spam"
+Slave :GMail-local:"spam"
 Create Slave
 Remove Slave
 Expunge Both
 SyncState *
 
-Channel gmail-folders
-Master :gmail-remote:
-Slave :gmail-local:
+Channel GMail-folders
+Master :GMail-remote:
+Slave :GMail-local:
 Pattern * ![Gmail]* !INBOX !trash !sent !spam !starred !drafts !archive
 Create Slave
 Remove Slave
@@ -93,101 +93,101 @@ SyncState *
 # GROUPS PUT TOGETHER CHANNELS, SO THAT WE CAN INVOKE
 # MBSYNC ON A GROUP TO SYNC ALL CHANNELS
 #
-# FOR INSTANCE: "mbsync gmail" GETS MAIL FROM
-# "gmail-inbox", "gmail-sent", and "gmail-trash"
+# FOR INSTANCE: "mbsync GMail" GETS MAIL FROM
+# "GMail-inbox", "GMail-sent", and "GMail-trash"
 #
-Group gmail
-Channel gmail-inbox
-Channel gmail-sent
-Channel gmail-trash
-Channel gmail-drafts
-Channel gmail-spam
-Channel gmail-starred
-Channel gmail-archive
+Group GMail
+Channel GMail-inbox
+Channel GMail-sent
+Channel GMail-trash
+Channel GMail-drafts
+Channel GMail-spam
+Channel GMail-starred
+Channel GMail-archive
 
-Group gmail-complete
-Channel gmail-inbox
-Channel gmail-sent
-Channel gmail-trash
-Channel gmail-drafts
-Channel gmail-spam
-Channel gmail-starred
-Channel gmail-archive
-Channel gmail-folders
+Group GMail-complete
+Channel GMail-inbox
+Channel GMail-sent
+Channel GMail-trash
+Channel GMail-drafts
+Channel GMail-spam
+Channel GMail-starred
+Channel GMail-archive
+Channel GMail-folders
 
 # }}}
 
 # UDS {{{
 
 # Account Settings
-IMAPAccount uds
+IMAPAccount UDS
 Host mailserver.u-strasbg.fr
 User masella
-PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/usr/documents/id/mail-uds.gpg"
+PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/Documents/Identity/mail-uds.gpg"
 SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 # Remote Storage
-IMAPStore uds-remote
-Account uds
+IMAPStore UDS-remote
+Account UDS
 
 # Local Storage
-MaildirStore uds-local
-Path ~/var/mail/uds/
-Inbox ~/var/mail/uds/inbox
+MaildirStore UDS-local
+Path ~/Mail/UDS/
+Inbox ~/Mail/UDS/inbox
 SubFolders Verbatim
 
-Channel uds-inbox
-Master :uds-remote:"INBOX"
-Slave :uds-local:"inbox"
+Channel UDS-inbox
+Master :UDS-remote:"INBOX"
+Slave :UDS-local:"inbox"
 Create Slave
 Remove Slave
 Expunge Both
 SyncState *
 
-Channel uds-trash
-Master :uds-remote:"INBOX/Trash"
-Slave :uds-local:"trash"
+Channel UDS-trash
+Master :UDS-remote:"INBOX/Trash"
+Slave :UDS-local:"trash"
 Create Slave
 Remove Slave
 Expunge Both
 SyncState *
 
-Channel uds-sent
-Master :uds-remote:"INBOX/Sent"
-Slave :uds-local:"sent"
+Channel UDS-sent
+Master :UDS-remote:"INBOX/Sent"
+Slave :UDS-local:"sent"
 Create Slave
 Remove Slave
 Expunge Both
 SyncState *
 
-Channel uds-drafts
-Master :uds-remote:"INBOX/Drafts"
-Slave :uds-local:"drafts"
+Channel UDS-drafts
+Master :UDS-remote:"INBOX/Drafts"
+Slave :UDS-local:"drafts"
 Create Slave
 Remove Slave
 Expunge Both
 SyncState *
 
-Channel uds-spam
-Master :uds-remote:"INBOX/Spam"
-Slave :uds-local:"spam"
+Channel UDS-spam
+Master :UDS-remote:"INBOX/Spam"
+Slave :UDS-local:"spam"
 Create Slave
 Remove Slave
 Expunge Both
 SyncState *
 
-Channel uds-archive
-Master :uds-remote:"INBOX/Archive"
-Slave :uds-local:"archive"
+Channel UDS-archive
+Master :UDS-remote:"INBOX/Archive"
+Slave :UDS-local:"archive"
 Create Slave
 Remove Slave
 Expunge Both
 SyncState *
 
-Channel uds-folders
-Master :uds-remote:
-Slave :uds-local:
+Channel UDS-folders
+Master :UDS-remote:
+Slave :UDS-local:
 Pattern * !Trash !Sent !Drafts !Spam !Archive !INBOX !trash !sent !drafts !spam !inbox !archive
 Create Slave
 Remove Slave
@@ -197,99 +197,99 @@ SyncState *
 # GROUPS PUT TOGETHER CHANNELS, SO THAT WE CAN INVOKE
 # MBSYNC ON A GROUP TO SYNC ALL CHANNELS
 #
-# FOR INSTANCE: "mbsync gmail" GETS MAIL FROM
-# "gmail-inbox", "gmail-sent", and "gmail-trash"
+# FOR INSTANCE: "mbsync GMail" GETS MAIL FROM
+# "GMail-inbox", "GMail-sent", and "GMail-trash"
 #
-Group uds
-Channel uds-inbox
-Channel uds-sent
-Channel uds-trash
-Channel uds-spam
-Channel uds-drafts
-Channel uds-archive
+Group UDS
+Channel UDS-inbox
+Channel UDS-sent
+Channel UDS-trash
+Channel UDS-spam
+Channel UDS-drafts
+Channel UDS-archive
 
-Group uds-complete
-Channel uds-inbox
-Channel uds-sent
-Channel uds-trash
-Channel uds-spam
-Channel uds-drafts
-Channel uds-archive
-Channel uds-folders
+Group UDS-complete
+Channel UDS-inbox
+Channel UDS-sent
+Channel UDS-trash
+Channel UDS-spam
+Channel UDS-drafts
+Channel UDS-archive
+Channel UDS-folders
 
 # }}}
 
 # UDS-ETU {{{
 
 # Account Settings
-IMAPAccount uds-etu
+IMAPAccount UDS-ETU
 Host mailserver.u-strasbg.fr
 User gmasella
-PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/usr/documents/id/mail-uds-etu.gpg"
+PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/Documents/Identity/mail-uds-etu.gpg"
 SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 # Remote Storage
-IMAPStore uds-etu-remote
-Account uds-etu
+IMAPStore UDS-ETU-remote
+Account UDS-ETU
 
 # Local Storage
-MaildirStore uds-etu-local
-Path ~/var/mail/uds-etu/
-Inbox ~/var/mail/uds-etu/inbox
+MaildirStore UDS-ETU-local
+Path ~/Mail/UDS-ETU/
+Inbox ~/Mail/UDS-ETU/inbox
 SubFolders Verbatim
 
-Channel uds-etu-inbox
-Master :uds-etu-remote:"INBOX"
-Slave :uds-etu-local:"inbox"
+Channel UDS-ETU-inbox
+Master :UDS-ETU-remote:"INBOX"
+Slave :UDS-ETU-local:"inbox"
 Create Slave
 Remove Slave
 Expunge Both
 SyncState *
 
-Channel uds-etu-trash
-Master :uds-etu-remote:"INBOX/Trash"
-Slave :uds-etu-local:"trash"
+Channel UDS-ETU-trash
+Master :UDS-ETU-remote:"INBOX/Trash"
+Slave :UDS-ETU-local:"trash"
 Create Slave
 Remove Slave
 Expunge Both
 SyncState *
 
-Channel uds-etu-sent
-Master :uds-etu-remote:"INBOX/Sent"
-Slave :uds-etu-local:"sent"
+Channel UDS-ETU-sent
+Master :UDS-ETU-remote:"INBOX/Sent"
+Slave :UDS-ETU-local:"sent"
 Create Slave
 Remove Slave
 Expunge Both
 SyncState *
 
-Channel uds-etu-drafts
-Master :uds-etu-remote:"INBOX/Drafts"
-Slave :uds-etu-local:"drafts"
+Channel UDS-ETU-drafts
+Master :UDS-ETU-remote:"INBOX/Drafts"
+Slave :UDS-ETU-local:"drafts"
 Create Slave
 Remove Slave
 Expunge Both
 SyncState *
 
-Channel uds-etu-spam
-Master :uds-etu-remote:"INBOX/Spam"
-Slave :uds-etu-local:"spam"
+Channel UDS-ETU-spam
+Master :UDS-ETU-remote:"INBOX/Spam"
+Slave :UDS-ETU-local:"spam"
 Create Slave
 Remove Slave
 Expunge Both
 SyncState *
 
-Channel uds-etu-archive
-Master :uds-etu-remote:"INBOX/Archive"
-Slave :uds-etu-local:"archive"
+Channel UDS-ETU-archive
+Master :UDS-ETU-remote:"INBOX/Archive"
+Slave :UDS-ETU-local:"archive"
 Create Slave
 Remove Slave
 Expunge Both
 SyncState *
 
-Channel uds-etu-folders
-Master :uds-etu-remote:
-Slave :uds-etu-local:
+Channel UDS-ETU-folders
+Master :UDS-ETU-remote:
+Slave :UDS-ETU-local:
 Pattern * !Trash !Sent !Drafts !Spam !Archive !INBOX !trash !sent !drafts !spam !inbox !archive
 Create Slave
 Remove Slave
@@ -299,34 +299,34 @@ SyncState *
 # GROUPS PUT TOGETHER CHANNELS, SO THAT WE CAN INVOKE
 # MBSYNC ON A GROUP TO SYNC ALL CHANNELS
 #
-# FOR INSTANCE: "mbsync gmail" GETS MAIL FROM
-# "gmail-inbox", "gmail-sent", and "gmail-trash"
+# FOR INSTANCE: "mbsync GMail" GETS MAIL FROM
+# "GMail-inbox", "GMail-sent", and "GMail-trash"
 #
-Group uds-etu
-Channel uds-etu-inbox
-Channel uds-etu-sent
-Channel uds-etu-trash
-Channel uds-etu-spam
-Channel uds-etu-drafts
-Channel uds-etu-archive
+Group UDS-ETU
+Channel UDS-ETU-inbox
+Channel UDS-ETU-sent
+Channel UDS-ETU-trash
+Channel UDS-ETU-spam
+Channel UDS-ETU-drafts
+Channel UDS-ETU-archive
 
-Group uds-etu-complete
-Channel uds-etu-inbox
-Channel uds-etu-sent
-Channel uds-etu-trash
-Channel uds-etu-spam
-Channel uds-etu-drafts
-Channel uds-etu-archive
-Channel uds-etu-folders
+Group UDS-ETU-complete
+Channel UDS-ETU-inbox
+Channel UDS-ETU-sent
+Channel UDS-ETU-trash
+Channel UDS-ETU-spam
+Channel UDS-ETU-drafts
+Channel UDS-ETU-archive
+Channel UDS-ETU-folders
 
 # }}}
 
 Group fast
-Channel gmail-inbox
-Channel gmail-sent
-Channel uds-inbox
-Channel uds-sent
-Channel uds-etu-inbox
-Channel uds-etu-sent
+Channel GMail-inbox
+Channel GMail-sent
+Channel UDS-inbox
+Channel UDS-sent
+Channel UDS-ETU-inbox
+Channel UDS-ETU-sent
 
 # vim: set ft=conf sw=4 ts=4 sts=4 et tw=78 fdm=marker fdl=0 foldmarker={{{,}}} : #

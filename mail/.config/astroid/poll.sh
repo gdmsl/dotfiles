@@ -9,7 +9,7 @@
 # located at ~/.config/astroid/poll.sh
 #
 
-MAILDIR="$HOME/var/mail"
+MAILDIR="$HOME/Mail"
 
 # Exit as soon as one of the commands fail.
 set -e

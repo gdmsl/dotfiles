@@ -13,23 +13,23 @@ tags = +urgent;+inbox;-new
 message = Urgent mails
 
 [Filter.1]
-query = 'folder:"gmail/trash"'
+query = 'folder:"GMail/trash"'
 tags = +trash;-new;-inbox
-message = Tag email in gmail/trash as trashed
+message = Tag email in GMail/trash as trashed
 
 [Filter.2]
-query = 'folder:"uds/trash"'
+query = 'folder:"UDS/trash"'
 tags = +trash;-new;-inbox
-message = Tag email in uds-etu/trash as trashed
+message = Tag email in UDS-ETU/trash as trashed
 
 [Filter.3]
-query = 'folder:"uds-etu/trash"'
+query = 'folder:"UDS-ETU/trash"'
 tags = +trash;-new;-inbox
-message = Tag email in uds/trash as trashed
+message = Tag email in UDS/trash as trashed
 
 [Filter.4]
 query = from:"SLURM SLURM" AND -tag:trash
-tags = +notification;-inbox;-new;+clusters/udsjobs
+tags = +notification;-inbox;-new;+clusters/UDSjobs
 message = Manage slurm notifications
 
 [Filter.5]
@@ -41,15 +41,15 @@ message = Reminders
 
 [MailMover]
 rename = True
-folders = gmail/inbox uds/inbox uds/spam uds-etu/inbox uds-etu/spam uds/trash uds-etu/trash uds/archive uds-etu/archive
-gmail/inbox = 'tag:spam':"gmail/spam" '-tag:inbox AND -tag:trash AND -tag:spam':"gmail/archive" 'tag:trash AND -tag:spam':"gmail/trash"
-gmail/spam = '-tag:spam AND tag:inbox':"gmail/inbox" '-tag:spam':"gmail/archive"
-gmail/trash = '-tag:trash AND tag:inbox':"gmail/inbox" '-tag:trash AND -tag:inbox':"gmail/archive"
-uds/inbox = 'tag:spam':"uds/spam" '-tag:inbox AND -tag:trash AND -tag:spam':"uds/archive" 'tag:trash AND -tag:spam':"uds/trash"
-uds/spam = '-tag:spam AND tag:inbox':"uds/inbox" '-tag:spam':"uds/archive"
-uds/trash = '-tag:trash AND tag:inbox':"uds/inbox" '-tag:trash AND -tag:inbox':"uds/archive"
-uds/archive = 'tag:trash':"uds/trash" 'tag:inbox and -tag:trash and -tag:spam':"uds/inbox" 'tag:spam':"uds/spam"
-uds-etu/inbox = 'tag:spam':"uds-etu/spam" '-tag:inbox AND -tag:trash AND -tag:spam':"uds-etu/archive" 'tag:trash AND -tag:spam':"uds-etu/trash"
-uds-etu/spam = '-tag:spam AND tag:inbox':"uds-etu/inbox" '-tag:spam':"uds-etu/archive"
-uds-etu/trash = '-tag:trash AND tag:inbox':"uds-etu/inbox" '-tag:trash AND -tag:inbox':"uds-etu/archive"
-uds-etu/archive = 'tag:trash':"uds-etu/trash" 'tag:inbox and -tag:trash and -tag:spam':"uds-etu/inbox" 'tag:spam':"uds-etu/spam"
+folders = GMail/inbox UDS/inbox UDS/spam UDS-ETU/inbox UDS-ETU/spam UDS/trash UDS-ETU/trash UDS/archive UDS-ETU/archive
+GMail/inbox = 'tag:spam':"GMail/spam" '-tag:inbox AND -tag:trash AND -tag:spam':"GMail/archive" 'tag:trash AND -tag:spam':"GMail/trash"
+GMail/spam = '-tag:spam AND tag:inbox':"GMail/inbox" '-tag:spam':"GMail/archive"
+GMail/trash = '-tag:trash AND tag:inbox':"GMail/inbox" '-tag:trash AND -tag:inbox':"GMail/archive"
+UDS/inbox = 'tag:spam':"UDS/spam" '-tag:inbox AND -tag:trash AND -tag:spam':"UDS/archive" 'tag:trash AND -tag:spam':"UDS/trash"
+UDS/spam = '-tag:spam AND tag:inbox':"UDS/inbox" '-tag:spam':"UDS/archive"
+UDS/trash = '-tag:trash AND tag:inbox':"UDS/inbox" '-tag:trash AND -tag:inbox':"UDS/archive"
+UDS/archive = 'tag:trash':"UDS/trash" 'tag:inbox and -tag:trash and -tag:spam':"UDS/inbox" 'tag:spam':"UDS/spam"
+UDS-ETU/inbox = 'tag:spam':"UDS-ETU/spam" '-tag:inbox AND -tag:trash AND -tag:spam':"UDS-ETU/archive" 'tag:trash AND -tag:spam':"UDS-ETU/trash"
+UDS-ETU/spam = '-tag:spam AND tag:inbox':"UDS-ETU/inbox" '-tag:spam':"UDS-ETU/archive"
+UDS-ETU/trash = '-tag:trash AND tag:inbox':"UDS-ETU/inbox" '-tag:trash AND -tag:inbox':"UDS-ETU/archive"
+UDS-ETU/archive = 'tag:trash':"UDS-ETU/trash" 'tag:inbox and -tag:trash and -tag:spam':"UDS-ETU/inbox" 'tag:spam':"UDS-ETU/spam"
