@@ -116,7 +116,7 @@ font-5 = "Font Awesome 5 Brands:pixelsize=12;1"
 
 modules-left = jgmenu i3
 modules-center = 
-modules-right = filesystem pulseaudio memory cpu wlan eth temperature date powermenu
+modules-right = filesystem pulseaudio memory cpu wlan eth temperature battery date powermenu
 
 tray-position = right
 tray-padding = 2
@@ -504,7 +504,7 @@ bar-volume-empty-foreground = ${colors.foreground-alt}
 [module/battery]
 type = internal/battery
 battery = BAT0
-adapter = ADP1
+adapter = AC0
 full-at = 98
 
 format-charging = <animation-charging> <label-charging>
