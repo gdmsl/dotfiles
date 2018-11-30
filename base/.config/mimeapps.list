@@ -21,5 +21,5 @@ image/x-tga=org.kde.gwenview.desktop
 inode/directory=org.kde.dolphin.desktop
 x-scheme-handler/http=chromium.desktop;
 x-scheme-handler/https=chromium.desktop;
-x-scheme-handler/mailto=astroid.desktop
+x-scheme-handler/mailto=org.kde.kmail.desktop
 x-scheme-handler/tg=telegramdesktop.desktop
