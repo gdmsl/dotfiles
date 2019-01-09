@@ -10,7 +10,7 @@ Pkg.update()
 packages = String["PyPlot", "Plots", "StatPlots", "DifferentialEquations",
                   "DataFrames", "PyPlot", "GR", "IJulia", "JSON", "YAML",
                   "CSV", "ArgParse", "LsqFit", "Query", "ArgParse", "Unitful",
-                  "Interact", "InteractBulma", "IterTools"]
+                  "Interact", "InteractBulma", "IterTools", "Distributions"]
 
 for package in packages
     Pkg.add(package)
