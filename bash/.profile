@@ -12,7 +12,7 @@ export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.cabal/bin:$PATH"
 export LD_LIBRARY_PATH="$HOME/.local/lib64:$HOME/.local/lib:$LD_LIBRARYPATH"
 
 # go path
-export GOPATH="$GOPATH:$HOME/var/go"
+export GOPATH="$GOPATH:$HOME/Variable/go"
 export PATH="$PATH:$GOPATH/bin"
 
 # python path

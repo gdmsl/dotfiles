@@ -29,6 +29,7 @@ TERM gnome-256color
 TERM hurd
 TERM jfbterm
 TERM konsole
+TERM konsole-256colors
 TERM kterm
 TERM linux
 TERM linux-c
