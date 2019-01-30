@@ -3,9 +3,9 @@
   "editor": "nvim",
   "default_hour": 9,
   "journals": {
-    "default": "/home/gdmsl/log/jrnl/jrnl.txt",
-    "arch": "/home/gdmsl/log/jrnl/arch.txt",
-    "work": "/home/gdmsl/log/jrnl/work.txt"
+    "default": "/home/gdmsl/Logging/Journal/default.txt",
+    "arch": "/home/gdmsl/Logging/Journal/arch.txt",
+    "work": "/home/gdmsl/Logging/Journal/work.txt"
   },
   "timeformat": "%Y-%m-%d %H:%M",
   "highlight": true,
