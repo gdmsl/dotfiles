@@ -63,5 +63,8 @@ export PATH="$PATH:$HOME/.local/bin"
 # Load functions
 [ -f "$HOME/.bash/functions.bash" ] && source "$HOME/.bash/functions.bash"
 
+# Load aliases
+[ -f "$HOME/.bash/alias.bash" ] && source "$HOME/.bash/alias.bash"
+
 # force to write history after every command
 PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
