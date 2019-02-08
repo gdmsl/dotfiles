@@ -58,6 +58,7 @@ zplug "lib/*", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh, if:"which git"
 zplug "plugins/git-extras", from:oh-my-zsh, if:"which git"
 zplug "plugins/tmux", from:oh-my-zsh, if:"which tmux"
+zplug "plugins/tmuxinator", from:oh-my-zsh, if:"which tmuxinator"
 zplug "plugins/fasd", from:oh-my-zsh, if:"which fasd"
 zplug "plugins/archlinux", from:oh-my-zsh, if:"which pacman"
 zplug "plugins/cargo", from:oh-my-zsh, if:"which cargo"
