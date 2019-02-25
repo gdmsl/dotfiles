@@ -26,11 +26,65 @@ if dein#load_state('~/.cache/dein')
     call dein#add('junegunn/gv.vim', { 'on_cmd' : 'GV' })
     call dein#add('lambdalisue/gina.vim', { 'on_cmd' : 'Gina'})
 
-    " Colors 
+    " Colors
     call dein#add('joshdick/onedark.vim')
 
     " Sudo
     call dein#add('lambadalisue/suda.vim')
+
+	" Autocomplete
+    call dein#add('Shougo/deoplete.nvim', {
+                \ 'on_event' : 'InsertEnter',
+                \ 'loadconf' : 1,
+    	        \ })
+    call dein#add('honza/vim-snippets', {
+                \ 'on_event' : 'InsertEnter', 'loadconf_before' : 1
+                \ })
+    call dein#add('Shougo/neco-syntax', {
+                \ 'on_event' : 'InsertEnter'
+                \ })
+    call dein#add('ujihisa/neco-look', {
+                \ 'on_event' : 'InsertEnter'
+                \ })
+    call dein#add('Shougo/context_filetype.vim', {
+                \ 'on_event' : 'InsertEnter'
+                \ })
+    call dein#add('Shougo/neoinclude.vim', {
+                \ 'on_event' : 'InsertEnter'
+                \ })
+    call dein#add('Shougo/neosnippet-snippets', {
+                \ 'merged' : 0
+                \ })
+    call dein#add('Shougo/neopairs.vim', {
+                \ 'on_event' : 'InsertEnter'
+                \ })
+    call dein#add('Raimondi/delimitMate', {
+                \ 'merged' : 0
+                \ })
+    call dein#add('Shougo/echodot.vim', {
+                \ 'merged' : 0
+                \ })
+
+    " Snippet
+    call dein#add('Shougo/neosnippet.vim', {
+                \ 'on_event' : 'InsertEnter',
+                \ 'on_ft' : 'neosnippet',
+                \ 'loadconf' : 1,
+                \ 'on_cmd' : 'NeoSnippetEdit'})
+    call dein#add('tenfyzhong/CompleteParameter.vim', {
+                \ 'merged': 0
+                \ })
+
+    " Syntax checking
+    call dein#add('neomake/neomake', {
+                \ 'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1
+                \ })
+
+    " LSP
+    call dein#add('autozimu/LanguageClient-neovim', {
+		        \ 'rev': 'next',
+                \ 'if': has('python3'), 'build' : 'bash install.sh'
+		        \ })
 
     " Languages
     call dein#add('JuliaEditorSupport/julia-vim')
@@ -40,14 +94,20 @@ if dein#load_state('~/.cache/dein')
     call dein#add('rhysd/vim-clang-format')
     call dein#add('uplus/vim-clang-rename')
     call dein#add('cespare/vim-toml')
-    " Python
-    call dein#add('zchee/deoplete-jedi', { 'on_ft' : 'python'})
-    call dein#add('davidhalter/jedi-vim', { 'on_ft' : 'python', 'if' : has('python') || has('python3')})
-    call dein#add('heavenshell/vim-pydocstring', { 'on_cmd' : 'Pydocstring'})
-    call dein#add('Vimjas/vim-python-pep8-indent',  { 'on_ft' : 'python'})
 
-    " LSP
-    call dein#add('autozimu/LanguageClient-neovim', { 'if': has('python3'), 'build' : 'bash install.sh' })
+    " Python
+    call dein#add('zchee/deoplete-jedi', {
+                \ 'on_ft' : 'python'
+                \ })
+    call dein#add('davidhalter/jedi-vim', {
+                \ 'on_ft' : 'python', 'if' : has('python') || has('python3')
+                \ })
+    call dein#add('heavenshell/vim-pydocstring', {
+                \ 'on_cmd' : 'Pydocstring'
+                \ })
+    call dein#add('Vimjas/vim-python-pep8-indent',  {
+                \ 'on_ft' : 'python'
+                \ })
 
     " Text utilities
     call dein#add('myusuf3/numbers.vim')
@@ -127,22 +187,10 @@ augroup fuzzy_config
 augroup END
 " }}}
 
-" Autoclose {{{
-"augroup autoclose_config
-    "autocmd!
-    "let g:autoclose_vim_commentmode = 1
-"augroup END
-" }}}
-
 " LaTeX {{{
 augroup latex_config
     autocmd!
     let g:vimtex_fold_enabled = 1
-augroup END
-" }}}
-
-" Colors {{{
-augroup colors_config
 augroup END
 " }}}
 
@@ -218,18 +266,6 @@ augroup tagbar_config
 augroup END
 " }}}
 
-" Easymotions {{{
-augroup easymotion_config
-    autocmd!
-augroup END
-" }}}
-
-" RustLang {{{
-augroup rust_config
-    autocmd!
-augroup END
-" }}}
-
 " Arpeggio {{{
 augroup arpeggio_config
     autocmd!
@@ -260,44 +296,37 @@ augroup clangformat_config
 augroup END
 " }}}
 
-" NCM2 {{{
-"augroup ncm2_config
-    "autocmd!
+" Autocomplete {{{
+augroup autocomplete_config
+    autocmd!
+    inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+    smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+    imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+    smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
+    imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
+augroup END
+" }}}
 
-    "" enable ncm2 for all buffers
-    "autocmd BufEnter * call ncm2#enable_for_buffer()
-
-    "" IMPORTANTE: :help Ncm2PopupOpen for more information
-    "set completeopt=noinsert,menuone,noselect
-
-    "" suppress the annoying 'match x of y', 'The only match' and 'Pattern not
-    "" found' messages
-    "set shortmess+=c
-
-    "" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
-    "inoremap <c-c> <ESC>
-
-    "" When the <Enter> key is pressed while the popup menu is visible, it only
-    "" hides the menu. Use this mapping to close the menu and also start a new
-    "" line.
-    "inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-
-    "" Use <TAB> to select the popup menu:
-    "inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-    "inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-    "" libclang library path
-    "let g:ncm2_pyclang#library_path = "/usr/lib/libclang.so"
-
-    "" a list of relative paths looking for .clang_complete
-    "let g:ncm2_pyclang#args_file_path = ['.clang_complete']
-
-    "" goto declaration
-    "autocmd FileType c,cpp nnoremap <buffer> gd :<c-u>call ncm2_pyclang#goto_declaration()<cr>
-"augroup END
+" Syntax Checkers {{{
+    " Full config: when writing or reading a buffer, and on changes in insert
+    " and normal mode (after 1s; no delay when writing).
+    call neomake#configure#automake('nrwi', 500)
 " }}}
 
 " LSP {{{
+function SetLSPShortcuts()
+  nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
+  nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
+  nnoremap <leader>lf :call LanguageClient#textDocument_formatting()<CR>
+  nnoremap <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
+  nnoremap <leader>lx :call LanguageClient#textDocument_references()<CR>
+  nnoremap <leader>la :call LanguageClient_workspace_applyEdit()<CR>
+  nnoremap <leader>lc :call LanguageClient#textDocument_completion()<CR>
+  nnoremap <leader>lh :call LanguageClient#textDocument_hover()<CR>
+  nnoremap <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
+  nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
+endfunction()
+
 augroup lsp_config
     autocmd!
 
@@ -310,17 +339,25 @@ augroup lsp_config
     \       import StaticLint;
     \       import SymbolServer;
     \       env_path = dirname(Pkg.Types.Context().env.project_file);
-    \       debug = false; 
-    \       
+    \       debug = false;
+    \ 
     \       server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, "", Dict());
     \       server.runlinter = true;
     \       run(server);
-    \   ']
+    \   '],
+    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+    \ 'python': ['pyls'],
+    \ 'cpp': ['clangd'],
+    \ 'c': ['clangd']
     \ }
 
     nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
     nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
     nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+    autocmd FileType cpp,c,python,rust,julia call SetLSPShortcuts()
+
+    let g:echodoc#enable_at_startup = 1
+    let g:echodoc#type = 'signature'
 augroup END
 " }}}
 
@@ -377,7 +414,7 @@ set fdm=syntax
 set colorcolumn=80
 " }}}
 
-" Scrooll {{{
+" Scroll {{{
 set scrolljump=5
 set scrolloff=3
 " }}}
