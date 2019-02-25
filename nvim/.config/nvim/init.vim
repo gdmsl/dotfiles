@@ -14,21 +14,51 @@ if dein#load_state('~/.cache/dein')
 
     call dein#add('~/.cache/dein')
 
-    call dein#add('wsdjeg/dein-ui.vim')
-    call dein#add('ctrlpvim/ctrlp.vim')
-    call dein#add('scrooloose/nerdtree')
-    call dein#add('jistr/vim-nerdtree-tabs')
-    call dein#add('tpope/vim-fugitive')
+    " Fuzzy
+    call dein#add('Shougo/denite.nvim')
+    call dein#add('pocari/vim-denite-emoji')
+    call dein#add('Shougo/neoyank.vim')
+
+    " File manager
+    call dein#add('Shougo/defx.nvim')
+
+    " Git
+    call dein#add('junegunn/gv.vim', { 'on_cmd' : 'GV' })
+    call dein#add('lambdalisue/gina.vim', { 'on_cmd' : 'Gina'})
+
+    " Colors 
+    call dein#add('joshdick/onedark.vim')
+
+    " Sudo
+    call dein#add('lambadalisue/suda.vim')
+
+    " Languages
+    call dein#add('JuliaEditorSupport/julia-vim')
+    call dein#add('lervag/vimtex')
+    call dein#add('rust-lang/rust.vim')
+    call dein#add('chrisbra/csv.vim')
+    call dein#add('rhysd/vim-clang-format')
+    call dein#add('uplus/vim-clang-rename')
+    call dein#add('cespare/vim-toml')
+    " Python
+    call dein#add('zchee/deoplete-jedi', { 'on_ft' : 'python'})
+    call dein#add('davidhalter/jedi-vim', { 'on_ft' : 'python', 'if' : has('python') || has('python3')})
+    call dein#add('heavenshell/vim-pydocstring', { 'on_cmd' : 'Pydocstring'})
+    call dein#add('Vimjas/vim-python-pep8-indent',  { 'on_ft' : 'python'})
+
+    " LSP
+    call dein#add('autozimu/LanguageClient-neovim', { 'if': has('python3'), 'build' : 'bash install.sh' })
+
+    " Text utilities
+    call dein#add('myusuf3/numbers.vim')
     call dein#add('tpope/vim-surround')
     call dein#add('bronson/vim-trailing-whitespace')
-    call dein#add('myusuf3/numbers.vim')
     call dein#add('vim-airline/vim-airline')
     call dein#add('vim-airline/vim-airline-themes')
     call dein#add('jiangmiao/auto-pairs')
     call dein#add('scrooloose/nerdcommenter')
-    call dein#add('lervag/vimtex')
-    call dein#add('JuliaLang/julia-vim')
-    call dein#add('chriskempson/base16-vim')
+
+
     "linting
     "call dein#add('benekastah/neomake')
     call dein#add('w0rp/ale')
@@ -38,30 +68,9 @@ if dein#load_state('~/.cache/dein')
     call dein#add('kien/rainbow_parentheses.vim')
     call dein#add('majutsushi/tagbar')
     call dein#add('vim-scripts/loremipsum')
-    " BEGIN completition manager
-    "call dein#add('ncm2/ncm2')
-    "call dein#add('roxma/nvim-yarp')
-    "call dein#add('ncm2/ncm2-path')
-    "call dein#add('ncm2/ncm2-bufword')
-    "call dein#add('ncm2/ncm2-racer')
-    "call dein#add('ncm2/ncm2-pyclang')
-    "call dein#add('ncm2/ncm2-jedi')
-    call dein#add('prabirshrestha/asyncomplete.vim')
-    call dein#add('prabirshrestha/async.vim')
-    call dein#add('prabirshrestha/vim-lsp')
-    call dein#add('prabirshrestha/asyncomplete-lsp.vim')
-    call dein#add('prabirshrestha/asyncomplete-file.vim')
-    call dein#add('prabirshrestha/asyncomplete-buffer.vim')
-    " END completition manager
     call dein#add('mhinz/vim-signify')
-    call dein#add('rust-lang/rust.vim')
     call dein#add('kana/vim-arpeggio')
     call dein#add('mileszs/ack.vim')
-    call dein#add('rhysd/vim-clang-format')
-    call dein#add('chrisbra/csv.vim')
-    call dein#add('uplus/vim-clang-rename')
-    call dein#add('cespare/vim-toml')
-    call dein#add('vimwiki/vimwiki')
     call dein#add('mhinz/vim-startify')
 
     call dein#end()
@@ -81,19 +90,40 @@ augroup airline_config
   let g:airline#extensions#tabline#enabled = 1
   let g:airline#extensions#tabline#fnamecollapse = 0
   let g:airline#extensions#tabline#fnamemod = ':t'
-  let g:airline_theme = 'base16'
+  let g:airline_theme = 'onedark'
 augroup END
 " }}}
 
-" CtrlP {{{
-augroup ctrlp_config
-  autocmd!
-  let g:ctrlp_map = '<c-p>'
-  let g:ctrlp_cmd = 'CtrlP'
-  let g:ctrlp_working_path_mode = 'ra'
-  set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-  let g:ctrlp_custom_tag_files = '.git/tags'
-  noremap <silent> <leader>b :CtrlPBuffer<CR>
+" Fuzzy{{{
+augroup fuzzy_config
+	autocmd!
+
+	" Fuzzy  find registers
+	nnoremap <silent> <Leader>fe :<C-u>Denite register<CR>
+
+    " Resume Denite window
+    nnoremap <silent> <Leader>fr :<C-u>Denite -resume<CR>
+
+	" Fuzzy find yank history
+	nnoremap <silent> <Leader>fh :<C-u>Denite neoyank<CR>
+
+	" Fuzzy find jump
+	nnoremap <silent> <Leader>fj :<C-u>Denite jump<CR>
+
+    " Fuzzy find location list
+    nnoremap <silent> <Leader>fl :<C-u>Denite location_list<CR><Paste>
+
+	" Fuzzy find quickfix list
+	nnoremap <silent> <Leader>fq :<C-u>Denite quickfix<CR>
+
+	" Fuzzy find message
+	nnoremap <silent> <Leader>fm :<C-u>Denite output:message<CR>
+
+	" Fuzzy find outline
+	nnoremap <silent> <Leader>fo :<C-u>Denite outline<CR>
+
+	" Fuzzy find custom key maps
+	nnoremap <silent> <Leader>f<Space> :Denite menu:CustomKeyMaps<CR>
 augroup END
 " }}}
 
@@ -111,42 +141,47 @@ augroup latex_config
 augroup END
 " }}}
 
-" Base16 {{{
-augroup base16_config
-    let base16colorspace=256
-    "let g:base16_shell_path="~/.base16/"
+" Colors {{{
+augroup colors_config
 augroup END
 " }}}
 
-" Fugitive {{{
-augroup fugitive_config
+" Sudo {{{
+augroup sudo_config
     autocmd!
-    nnoremap <silent> <leader>gs :Gstatus<CR>
-    nnoremap <silent> <leader>gd :Gdiff<CR>
-    nnoremap <silent> <leader>gc :Gcommit<CR>
-    nnoremap <silent> <leader>gb :Gblame<CR>
-    nnoremap <silent> <leader>gl :Glog<CR>
-    nnoremap <silent> <leader>gp :Git push<CR>
-    nnoremap <silent> <leader>gr :Gread<CR>:GitGlutter<CR>
-    nnoremap <silent> <leader>gw :Gwrite<CR>:GitGlutter<CR>
-    nnoremap <silent> <leader>ge :Gedit<CR>
-    nnoremap <silent> <leader>gg :GitGlutterToggle<CR>
+
+    " Read current file with sudo
+    nnoremap <silent> <leader>fE :e suda://&<CR>
+
+    " Write current file with sudo
+    nnoremap <silent> <leader>fW :w suda://&<CR>
 augroup END
 " }}}
 
-" NERDTREE {{{
-augroup nerdtree_config
+" Git {{{
+augroup git_config
+    " This group contains the gina and GV configurations
     autocmd!
-    map <C-e> <plug>NERDTreeTabsToggle<CR>
-    map <leader>e :NERDTreeFind<CR>
-    nmap <leader>nt :NERDTreeFind<CR>
-    let NERDTreeShowBookmarks = 1
-    let NERDTreeIgnore = ['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
-    let NERDTreeChDirMode = 0
-    let NERDTreeQuitOnOpen = 1
-    let NERDTreeShowHidden = 1
-    let NERDTreeKeepTreeInNewTab = 1
-    let g:nerdtree_tabs_open_on_gui_startup = 0
+    nnoremap <silent> <leader>gs :Gina status --opener=10split<CR>
+    nnoremap <silent> <leader>gS :Gina add %<CR>
+    nnoremap <silent> <leader>gU :Gina reset -q %<CR>
+    nnoremap <silent> <leader>gc :Gina commit<CR>
+    nnoremap <silent> <leader>gp :Gina push<CR>
+    nnoremap <silent> <leader>gp :Gina push<CR>
+    nnoremap <silent> <leader>gd :Gina diff<CR>
+    nnoremap <silent> <leader>gA :Gina add .<CR>
+    nnoremap <silent> <leader>gb :Gina blame<CR>
+    autocmd FileType diff nnoremap <buffer><silent> q :bd!<CR>
+    " Instead of reverting the cursor to the last position in the buffer, we
+    " set it to the first line when editing a git commit message
+    au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+
+    " View git log of current file
+    nnoremap <silent> <leader>gV :GV!<CR>
+
+    " View git log of current repo
+    nnoremap <silent> <leader>gv :GV<CR>
+augroup END
 " }}}
 
 " Ale {{{
@@ -262,38 +297,49 @@ augroup END
 "augroup END
 " }}}
 
-" ASYNCOMPLETE {{{
-augroup asyncomplete_config
+" LSP {{{
+augroup lsp_config
     autocmd!
 
-    if executable('clangd')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'clangd',
-        \ 'cmd': {server_info->['clangd']},
-        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-        \ })
-    endif
+    " language server
+    let g:LanguageClient_autoStart = 1
+    let g:LanguageClient_serverCommands = {
+    \   'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
+    \       using LanguageServer;
+    \       using Pkg;
+    \       import StaticLint;
+    \       import SymbolServer;
+    \       env_path = dirname(Pkg.Types.Context().env.project_file);
+    \       debug = false; 
+    \       
+    \       server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, "", Dict());
+    \       server.runlinter = true;
+    \       run(server);
+    \   ']
+    \ }
 
-    au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
-        \ 'name': 'buffer',
-        \ 'whitelist': ['*'],
-        \ 'blacklist': ['go'],
-        \ 'completor': function('asyncomplete#sources#buffer#completor'),
-        \ }))
-
-    au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
-        \ 'name': 'file',
-        \ 'whitelist': ['*'],
-        \ 'priority': 10,
-        \ 'completor': function('asyncomplete#sources#file#completor')
-        \ }))
+    nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+    nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+    nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 augroup END
 " }}}
 
-" VimWiki {{{
-augroup vimwiki_config
+" Python {{{
+augroup python_config
     autocmd!
-    let g:vimwiki_list = [{'path': '~/log/bwiki/', 'template_path' : '~/log/bwiki/templates'}]
+    let g:jedi#completions_enabled = 0
+    " If you execute :Pydocstring at no `def`, `class` line.
+    " g:pydocstring_enable_comment enable to put comment.txt value.
+    let g:pydocstring_enable_comment = 0
+
+    " Disable this option to prevent pydocstring from creating any
+    " key mapping to the `:Pydocstring` command.
+    " Note: this value is overridden if you explicitly create a
+    " mapping in your vimrc, such as if you do:
+    let g:pydocstring_enable_mapping = 0
+
+    " autoformat on save
+    autocmd BufWritePost *.py Neoformat yapf
 augroup END
 " }}}
 
@@ -319,7 +365,7 @@ set undodir=/tmp/neovim//
 " Colorscheme {{{
 set background=dark
 syntax on
-colorscheme base16-onedark
+colorscheme onedark
 " }}}
 
 "Folding {{{
