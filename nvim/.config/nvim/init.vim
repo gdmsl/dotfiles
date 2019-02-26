@@ -30,7 +30,7 @@ if dein#load_state('~/.cache/dein')
     call dein#add('joshdick/onedark.vim')
 
     " Sudo
-    call dein#add('lambadalisue/suda.vim')
+    call dein#add('lambdalisue/suda.vim')
 
 	" Autocomplete
     call dein#add('Shougo/deoplete.nvim', {
@@ -61,7 +61,7 @@ if dein#load_state('~/.cache/dein')
     call dein#add('Raimondi/delimitMate', {
                 \ 'merged' : 0
                 \ })
-    call dein#add('Shougo/echodot.vim', {
+    call dein#add('Shougo/echodoc.vim', {
                 \ 'merged' : 0
                 \ })
 
@@ -348,7 +348,8 @@ augroup lsp_config
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
     \ 'python': ['pyls'],
     \ 'cpp': ['clangd'],
-    \ 'c': ['clangd']
+    \ 'c': ['clangd'],
+    \ 'sh': ['bash-language-server', 'start']
     \ }
 
     nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
