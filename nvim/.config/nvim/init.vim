@@ -95,6 +95,27 @@ if dein#load_state('~/.cache/dein')
     call dein#add('uplus/vim-clang-rename')
     call dein#add('cespare/vim-toml')
 
+    " Markdown
+    call dein#add('SpaceVim/vim-markdown', {
+                \ 'on_ft' : 'markdown'
+                \ })
+    call dein#add('joker1007/vim-markdown-quote-syntax',{
+                \ 'on_ft' : 'markdown'
+                \ })
+    call dein#add('mzlogin/vim-markdown-toc',{
+                \ 'on_ft' : 'markdown'
+                \ })
+    call dein#add('iamcco/mathjax-support-for-mkdp',{
+                \ 'on_ft' : 'markdown'
+                \ })
+    call dein#add('iamcco/markdown-preview.vim', {
+                \ 'depends' : 'open-browser.vim',
+                \ 'on_ft' : 'markdown'
+                \ })
+    call dein#add('lvht/tagbar-markdown',{
+                \ 'merged' : 0
+                \ })
+
     " Python
     call dein#add('zchee/deoplete-jedi', {
                 \ 'on_ft' : 'python'
@@ -359,6 +380,23 @@ augroup lsp_config
 
     let g:echodoc#enable_at_startup = 1
     let g:echodoc#type = 'signature'
+augroup END
+" }}}
+
+" Markdown {{{
+augroup markdown_config
+    " do not highlight markdown error
+    let g:markdown_hi_error = 0
+    " the fenced languages based on loaded language layer
+    let g:markdown_fenced_languages = []
+    let g:markdown_minlines = 100
+    let g:markdown_syntax_conceal = 0
+    let g:markdown_enable_mappings = 0
+    let g:markdown_enable_insert_mode_leader_mappings = 0
+    let g:markdown_enable_spell_checking = 0
+    let g:markdown_quote_syntax_filetypes = {
+                \ 'vim' : {'start' : "\\%(vim\\|viml\\)",},
+                \ }
 augroup END
 " }}}
 
