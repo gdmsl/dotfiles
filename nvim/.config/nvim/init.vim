@@ -15,12 +15,16 @@ if dein#load_state('~/.cache/dein')
     call dein#add('~/.cache/dein')
 
     " Fuzzy
-    call dein#add('Shougo/denite.nvim')
-    call dein#add('pocari/vim-denite-emoji')
-    call dein#add('Shougo/neoyank.vim')
+    call dein#add('Shougo/denite.nvim', {'merged' : 0})
+    call dein#add('pocari/vim-denite-emoji', {'merged' : 0})
+    call dein#add('Shougo/neoyank.vim', {'merged' : 0})
+    call dein#add('chemzqm/unite-location', {'merged' : 0})
+    call dein#add('ozelentok/denite-gtags', {'merged' : 0})
+    call dein#add('Shougo/neomru.vim', {'merged' : 0})
 
     " File manager
-    call dein#add('Shougo/defx.nvim')
+    call dein#add('scrooloose/nerdtree')
+    call dein#add('Xuyuanp/nerdtree-git-plugin')
 
     " Git
     call dein#add('junegunn/gv.vim', { 'on_cmd' : 'GV' })
@@ -179,32 +183,106 @@ augroup END
 augroup fuzzy_config
 	autocmd!
 
+
+    " denite option
+    let s:denite_options = {
+          \ 'default' : {
+          \ 'winheight' : 15,
+          \ 'mode' : 'insert',
+          \ 'quit' : 1,
+          \ 'highlight_matched_char' : 'MoreMsg',
+          \ 'highlight_matched_range' : 'MoreMsg',
+          \ 'direction': 'rightbelow',
+          \ 'statusline' : has('patch-7.4.1154') ? v:false : 0,
+          \ }}
+    function! s:profile(opts) abort
+        for fname in keys(a:opts)
+            for dopt in keys(a:opts[fname])
+                call denite#custom#option(fname, dopt, a:opts[fname][dopt])
+            endfor
+        endfor
+    endfunction
+
+    call s:profile(s:denite_options)
+
+    " buffer source
+    call denite#custom#var(
+                \ 'buffer',
+                \ 'date_format', '%m-%d-%Y %H:%M:%S')
+
+    call denite#custom#alias('source', 'file_rec/git', 'file_rec')
+    call denite#custom#var('file_rec/git', 'command',
+                \ ['git', 'ls-files', '-co', '--exclude-standard'])
+
+    " KEY MAPPINGS
+    let s:insert_mode_mappings = [
+                \ ['jk', '<denite:enter_mode:normal>', 'noremap'],
+                \ ['<Tab>', '<denite:move_to_next_line>', 'noremap'],
+                \ ['<C-j>', '<denite:move_to_next_line>', 'noremap'],
+                \ ['<S-tab>', '<denite:move_to_previous_line>', 'noremap'],
+                \ ['<C-k>', '<denite:move_to_previous_line>', 'noremap'],
+                \ ['<C-t>', '<denite:do_action:tabopen>', 'noremap'],
+                \ ['<C-v>', '<denite:do_action:vsplit>', 'noremap'],
+                \ ['<C-s>', '<denite:do_action:split>', 'noremap'],
+                \ ['<Esc>', '<denite:enter_mode:normal>', 'noremap'],
+                \ ['<C-N>', '<denite:assign_next_matched_text>', 'noremap'],
+                \ ['<C-P>', '<denite:assign_previous_matched_text>', 'noremap'],
+                \ ['<Up>', '<denite:assign_previous_text>', 'noremap'],
+                \ ['<Down>', '<denite:assign_next_text>', 'noremap'],
+                \ ['<C-Y>', '<denite:redraw>', 'noremap'],
+                \ ]
+
+    let s:normal_mode_mappings = [
+                \ ["'", '<denite:toggle_select_down>', 'noremap'],
+                \ ['<C-n>', '<denite:jump_to_next_source>', 'noremap'],
+                \ ['<C-p>', '<denite:jump_to_previous_source>', 'noremap'],
+                \ ['<Tab>', '<denite:move_to_next_line>', 'noremap'],
+                \ ['<C-j>', '<denite:move_to_next_line>', 'noremap'],
+                \ ['<S-tab>', '<denite:move_to_previous_line>', 'noremap'],
+                \ ['<C-k>', '<denite:move_to_previous_line>', 'noremap'],
+                \ ['gg', '<denite:move_to_first_line>', 'noremap'],
+                \ ['<C-t>', '<denite:do_action:tabopen>', 'noremap'],
+                \ ['<C-v>', '<denite:do_action:vsplit>', 'noremap'],
+                \ ['<C-s>', '<denite:do_action:split>', 'noremap'],
+                \ ['q', '<denite:quit>', 'noremap'],
+                \ ['r', '<denite:redraw>', 'noremap'],
+                \ ]
+
+    for s:m in s:insert_mode_mappings
+        call denite#custom#map('insert', s:m[0], s:m[1], s:m[2])
+    endfor
+    for s:m in s:normal_mode_mappings
+        call denite#custom#map('normal', s:m[0], s:m[1], s:m[2])
+    endfor
+
+    unlet s:m s:insert_mode_mappings s:normal_mode_mappings
+
 	" Fuzzy  find registers
-	nnoremap <silent> <Leader>fe :<C-u>Denite register<CR>
+	nnoremap <silent> <Space>e :<C-u>Denite register<CR>
 
     " Resume Denite window
-    nnoremap <silent> <Leader>fr :<C-u>Denite -resume<CR>
+    nnoremap <silent> <Space>r :<C-u>Denite -resume<CR>
 
 	" Fuzzy find yank history
-	nnoremap <silent> <Leader>fh :<C-u>Denite neoyank<CR>
+	nnoremap <silent> <Space>h :<C-u>Denite neoyank<CR>
 
 	" Fuzzy find jump
-	nnoremap <silent> <Leader>fj :<C-u>Denite jump<CR>
+	nnoremap <silent> <Space>j :<C-u>Denite jump<CR>
 
     " Fuzzy find location list
-    nnoremap <silent> <Leader>fl :<C-u>Denite location_list<CR><Paste>
+    nnoremap <silent> <Space>l :<C-u>Denite location_list<CR>
 
 	" Fuzzy find quickfix list
-	nnoremap <silent> <Leader>fq :<C-u>Denite quickfix<CR>
+	nnoremap <silent> <Space>q :<C-u>Denite quickfix<CR>
 
 	" Fuzzy find message
-	nnoremap <silent> <Leader>fm :<C-u>Denite output:message<CR>
+	nnoremap <silent> <Space>m :<C-u>Denite output:message<CR>
 
 	" Fuzzy find outline
-	nnoremap <silent> <Leader>fo :<C-u>Denite outline<CR>
+	nnoremap <silent> <Space>o :<C-u>Denite outline<CR>
 
-	" Fuzzy find custom key maps
-	nnoremap <silent> <Leader>f<Space> :Denite menu:CustomKeyMaps<CR>
+	" Fuzzy find buffers
+	nnoremap <silent> <Space>b :Denite buffer<CR>
 augroup END
 " }}}
 
@@ -224,6 +302,16 @@ augroup sudo_config
 
     " Write current file with sudo
     nnoremap <silent> <leader>fW :w suda://&<CR>
+augroup END
+" }}}
+"
+" File Manager {{{
+augroup filemanager_config
+    noremap <silent> <C-e> :NERDTreeToggle<CR>
+
+    "automatically open when vim starts in a directory
+    autocmd StdinReadPre * let s:std_in=1
+    autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 augroup END
 " }}}
 
