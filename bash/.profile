@@ -73,3 +73,5 @@ if [ -d $HOME/.linuxbrew ]; then
     export PATH="$HOME/.linuxbrew/bin:$PATH"
 fi
 
+export GTK_USE_PORTAL=1
+
