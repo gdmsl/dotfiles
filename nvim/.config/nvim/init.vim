@@ -36,32 +36,24 @@ if dein#load_state('~/.cache/dein')
     " Sudo
     call dein#add('lambdalisue/suda.vim')
 
+    " LSP
+    call  dein#add('prabirshrestha/async.vim')
+    call  dein#add('prabirshrestha/vim-lsp')
+
 	" Autocomplete
-    call dein#add('Shougo/deoplete.nvim', {
-                \ 'on_event' : 'InsertEnter',
-                \ 'loadconf' : 1,
-    	        \ })
-    call dein#add('honza/vim-snippets', {
-                \ 'on_event' : 'InsertEnter', 'loadconf_before' : 1
-                \ })
-    call dein#add('Shougo/neco-syntax', {
-                \ 'on_event' : 'InsertEnter'
-                \ })
-    call dein#add('ujihisa/neco-look', {
-                \ 'on_event' : 'InsertEnter'
-                \ })
-    call dein#add('Shougo/context_filetype.vim', {
-                \ 'on_event' : 'InsertEnter'
-                \ })
-    call dein#add('Shougo/neoinclude.vim', {
-                \ 'on_event' : 'InsertEnter'
-                \ })
-    call dein#add('Shougo/neosnippet-snippets', {
-                \ 'merged' : 0
-                \ })
-    call dein#add('Shougo/neopairs.vim', {
-                \ 'on_event' : 'InsertEnter'
-                \ })
+    call dein#add('prabirshrestha/asyncomplete.vim')
+    call dein#add('prabirshrestha/asyncomplete-lsp.vim')
+
+    " Autocomplete Sources
+    call dein#add('Shougo/neosnippet.vim')
+    call dein#add('Shougo/neosnippet-snippets')
+    call dein#add('Shougo/neoinclude.vim')
+    call dein#add('prabirshrestha/asyncomplete-buffer.vim')
+    call dein#add('prabirshrestha/asyncomplete-emoji.vim')
+    call dein#add('prabirshrestha/asyncomplete-file.vim')
+    call dein#add('prabirshrestha/asyncomplete-neosnippet.vim')
+    call dein#add('kyouryuukunn/asyncomplete-neoinclude.vim')
+
     call dein#add('Raimondi/delimitMate', {
                 \ 'merged' : 0
                 \ })
@@ -69,32 +61,22 @@ if dein#load_state('~/.cache/dein')
                 \ 'merged' : 0
                 \ })
 
-    " Snippet
-    call dein#add('Shougo/neosnippet.vim', {
-                \ 'on_event' : 'InsertEnter',
-                \ 'on_ft' : 'neosnippet',
-                \ 'loadconf' : 1,
-                \ 'on_cmd' : 'NeoSnippetEdit'})
-    call dein#add('tenfyzhong/CompleteParameter.vim', {
-                \ 'merged': 0
-                \ })
-
     " Syntax checking
     call dein#add('neomake/neomake', {
                 \ 'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1
                 \ })
 
-    " LSP
-    call dein#add('autozimu/LanguageClient-neovim', {
-		        \ 'rev': 'next',
-                \ 'if': has('python3'), 'build' : 'bash install.sh'
-		        \ })
-
     " Languages
     call dein#add('JuliaEditorSupport/julia-vim')
-    call dein#add('lervag/vimtex')
-    call dein#add('rust-lang/rust.vim')
-    call dein#add('chrisbra/csv.vim')
+    call dein#add('lervag/vimtex', {
+                \ 'on_ft': 'tex'
+                \ })
+    call dein#add('rust-lang/rust.vim', {
+                \ 'on_ft': 'rust'
+                \ })
+    call dein#add('chrisbra/csv.vim', {
+                \ 'on_ft': 'csv'
+                \ })
     call dein#add('rhysd/vim-clang-format')
     call dein#add('uplus/vim-clang-rename')
     call dein#add('cespare/vim-toml')
@@ -408,11 +390,42 @@ augroup END
 " Autocomplete {{{
 augroup autocomplete_config
     autocmd!
-    inoremap <silent><expr> ( complete_parameter#pre_complete("()")
-    smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-    imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-    smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
-    imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
+
+    " enable deoplete at startup
+    let g:deoplete#enable_at_startup = 1
+
+    " Register neosnippet as completition source
+    call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
+    \ 'name': 'neosnippet',
+    \ 'whitelist': ['*'],
+    \ 'completor': function('asyncomplete#sources#neosnippet#completor'),
+    \ }))
+
+    " Neosnippet trigger
+    imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+    smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+    xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+    call asyncomplete#register_source(asyncomplete#sources#neoinclude#get_source_options({
+    \ 'name': 'neoinclude',
+    \ 'whitelist': ['cpp'],
+    \ 'refresh_pattern': '\(<\|"\|/\)$',
+    \ 'completor': function('asyncomplete#sources#neoinclude#completor'),
+    \ }))
+
+    call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+    \ 'name': 'file',
+    \ 'whitelist': ['*'],
+    \ 'priority': 10,
+    \ 'completor': function('asyncomplete#sources#file#completor')
+    \ }))
+
+    call asyncomplete#register_source(asyncomplete#sources#emoji#get_source_options({
+    \ 'name': 'emoji',
+    \ 'whitelist': ['*'],
+    \ 'completor': function('asyncomplete#sources#emoji#completor'),
+    \ }))
+
 augroup END
 " }}}
 
@@ -439,32 +452,57 @@ endfunction()
 augroup lsp_config
     autocmd!
 
-    " language server
-    let g:LanguageClient_autoStart = 1
-    let g:LanguageClient_serverCommands = {
-    \   'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
-    \       using LanguageServer;
-    \       using Pkg;
-    \       import StaticLint;
-    \       import SymbolServer;
-    \       env_path = dirname(Pkg.Types.Context().env.project_file);
-    \       debug = false;
-    \ 
-    \       server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, "", Dict());
-    \       server.runlinter = true;
-    \       run(server);
-    \   '],
-    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-    \ 'python': ['pyls'],
-    \ 'cpp': ['clangd'],
-    \ 'c': ['clangd'],
-    \ 'sh': ['bash-language-server', 'start']
-    \ }
+    if executable('clangd')
+        au User lsp_setup call lsp#register_server({
+                    \ 'name': 'clangd',
+                    \ 'cmd': {server_info->['clangd']},
+                    \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+                    \ })
+    endif
 
-    nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-    nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-    nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-    autocmd FileType cpp,c,python,rust,julia call SetLSPShortcuts()
+    if executable('php')
+        au User lsp_setup call lsp#register_server({
+                    \ 'name': 'php-language-server',
+                    \ 'cmd': {server_info->['php', expand('~/.vim/plugged/php-language-server/bin/php-language-server.php')]},
+                    \ 'whitelist': ['php'],
+                    \ })
+    endif
+
+    if executable('pyls')
+        au User lsp_setup call lsp#register_server({
+                    \ 'name': 'pyls',
+                    \ 'cmd': {server_info->['pyls']},
+                    \ 'whitelist': ['python'],
+                    \ 'workspace_config': {'pyls': {'plugins': {'pydocstyle': {'enabled': v:true}}}}
+                    \ })
+    endif
+
+    if executable('rls')
+        au User lsp_setup call lsp#register_server({
+                    \ 'name': 'rls',
+                    \ 'cmd': {server_info->['rustup', 'run', 'stable', 'rls']},
+                    \ 'whitelist': ['rust'],
+                    \ })
+    endif
+
+    if executable('julia')
+        au User lsp_setup call lsp#register_server({
+                    \ 'name': 'julia-language-server',
+                    \ 'cmd': {server_info->['julia', '--startup-file=no', '--history-file=no', '-e', '
+                    \       using LanguageServer;
+                    \       using Pkg;
+                    \       import StaticLint;
+                    \       import SymbolServer;
+                    \       env_path = dirname(Pkg.Types.Context().env.project_file);
+                    \       debug = false;
+                    \ 
+                    \       server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, "", Dict());
+                    \       server.runlinter = true;
+                    \       run(server);
+                    \   ']},
+                    \ 'whitelist': ['julia'],
+                    \ })
+    endif
 
     let g:echodoc#enable_at_startup = 1
     let g:echodoc#type = 'signature'
