@@ -73,5 +73,9 @@ if [ -d $HOME/.linuxbrew ]; then
     export PATH="$HOME/.linuxbrew/bin:$PATH"
 fi
 
+# GTK use xdg-desktop-portal (for things like kdialog in firefox)
 export GTK_USE_PORTAL=1
+
+# Use ripgrep as default grep in fzf (and fzf.vim)
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 

@@ -14,6 +14,9 @@ if dein#load_state('~/.cache/dein')
 
     call dein#add('~/.cache/dein')
 
+    " Movement
+    call dein#add('justinmk/vim-sneak')
+
     " Fuzzy
     call dein#add('Shougo/denite.nvim', {'merged' : 0})
     call dein#add('pocari/vim-denite-emoji', {'merged' : 0})
@@ -145,231 +148,216 @@ if dein#load_state('~/.cache/dein')
 endif
 " }}}
 
-" Plugin Configurations ------------------------------------------------------
+" Settings {{{
+if executable('rg')
+  set grepprg=rg\ --vimgrep\ --no-heading\ -S
+  set grepformat=%f:%l:%c:%m,%f:%l:%m
+endif
+" }}}
+
+" Movement plugins {{{
+let g:sneak#label = 1
+" }}}
 
 " Airline {{{
-augroup airline_config
-  autocmd!
-  let g:airline_powerline_fonts = 1
-  let g:airline#extensions#syntastic#enabled = 0
-  let g:airline#extensions#tabline#buffer_nr_format = '%s '
-  let g:airline#extensions#tabline#buffer_nr_show = 1
-  let g:airline#extensions#tabline#enabled = 1
-  let g:airline#extensions#tabline#fnamecollapse = 0
-  let g:airline#extensions#tabline#fnamemod = ':t'
-  let g:airline_theme = 'onedark'
-augroup END
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#syntastic#enabled = 0
+let g:airline#extensions#tabline#buffer_nr_format = '%s '
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamecollapse = 0
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline_theme = 'onedark'
 " }}}
 
 " Fuzzy{{{
-augroup fuzzy_config
-	autocmd!
+" denite option
+let s:denite_options = {
+      \ 'default' : {
+      \ 'winheight' : 15,
+      \ 'mode' : 'insert',
+      \ 'quit' : 1,
+      \ 'highlight_matched_char' : 'MoreMsg',
+      \ 'highlight_matched_range' : 'MoreMsg',
+      \ 'direction': 'rightbelow',
+      \ 'statusline' : has('patch-7.4.1154') ? v:false : 0,
+      \ }}
 
-
-    " denite option
-    let s:denite_options = {
-          \ 'default' : {
-          \ 'winheight' : 15,
-          \ 'mode' : 'insert',
-          \ 'quit' : 1,
-          \ 'highlight_matched_char' : 'MoreMsg',
-          \ 'highlight_matched_range' : 'MoreMsg',
-          \ 'direction': 'rightbelow',
-          \ 'statusline' : has('patch-7.4.1154') ? v:false : 0,
-          \ }}
-    function! s:profile(opts) abort
-        for fname in keys(a:opts)
-            for dopt in keys(a:opts[fname])
-                call denite#custom#option(fname, dopt, a:opts[fname][dopt])
-            endfor
+function! s:profile(opts) abort
+    for fname in keys(a:opts)
+        for dopt in keys(a:opts[fname])
+            call denite#custom#option(fname, dopt, a:opts[fname][dopt])
         endfor
-    endfunction
-
-    call s:profile(s:denite_options)
-
-    " buffer source
-    call denite#custom#var(
-                \ 'buffer',
-                \ 'date_format', '%m-%d-%Y %H:%M:%S')
-
-    call denite#custom#alias('source', 'file_rec/git', 'file_rec')
-    call denite#custom#var('file_rec/git', 'command',
-                \ ['git', 'ls-files', '-co', '--exclude-standard'])
-
-    " KEY MAPPINGS
-    let s:insert_mode_mappings = [
-                \ ['jk', '<denite:enter_mode:normal>', 'noremap'],
-                \ ['<Tab>', '<denite:move_to_next_line>', 'noremap'],
-                \ ['<C-j>', '<denite:move_to_next_line>', 'noremap'],
-                \ ['<S-tab>', '<denite:move_to_previous_line>', 'noremap'],
-                \ ['<C-k>', '<denite:move_to_previous_line>', 'noremap'],
-                \ ['<C-t>', '<denite:do_action:tabopen>', 'noremap'],
-                \ ['<C-v>', '<denite:do_action:vsplit>', 'noremap'],
-                \ ['<C-s>', '<denite:do_action:split>', 'noremap'],
-                \ ['<Esc>', '<denite:enter_mode:normal>', 'noremap'],
-                \ ['<C-N>', '<denite:assign_next_matched_text>', 'noremap'],
-                \ ['<C-P>', '<denite:assign_previous_matched_text>', 'noremap'],
-                \ ['<Up>', '<denite:assign_previous_text>', 'noremap'],
-                \ ['<Down>', '<denite:assign_next_text>', 'noremap'],
-                \ ['<C-Y>', '<denite:redraw>', 'noremap'],
-                \ ]
-
-    let s:normal_mode_mappings = [
-                \ ["'", '<denite:toggle_select_down>', 'noremap'],
-                \ ['<C-n>', '<denite:jump_to_next_source>', 'noremap'],
-                \ ['<C-p>', '<denite:jump_to_previous_source>', 'noremap'],
-                \ ['<Tab>', '<denite:move_to_next_line>', 'noremap'],
-                \ ['<C-j>', '<denite:move_to_next_line>', 'noremap'],
-                \ ['<S-tab>', '<denite:move_to_previous_line>', 'noremap'],
-                \ ['<C-k>', '<denite:move_to_previous_line>', 'noremap'],
-                \ ['gg', '<denite:move_to_first_line>', 'noremap'],
-                \ ['<C-t>', '<denite:do_action:tabopen>', 'noremap'],
-                \ ['<C-v>', '<denite:do_action:vsplit>', 'noremap'],
-                \ ['<C-s>', '<denite:do_action:split>', 'noremap'],
-                \ ['q', '<denite:quit>', 'noremap'],
-                \ ['r', '<denite:redraw>', 'noremap'],
-                \ ]
-
-    for s:m in s:insert_mode_mappings
-        call denite#custom#map('insert', s:m[0], s:m[1], s:m[2])
     endfor
-    for s:m in s:normal_mode_mappings
-        call denite#custom#map('normal', s:m[0], s:m[1], s:m[2])
-    endfor
+endfunction
 
-    unlet s:m s:insert_mode_mappings s:normal_mode_mappings
+call s:profile(s:denite_options)
 
-	" Fuzzy  find registers
-	nnoremap <silent> <Space>e :<C-u>Denite register<CR>
+" buffer source
+call denite#custom#var(
+            \ 'buffer',
+            \ 'date_format', '%m-%d-%Y %H:%M:%S')
 
-    " Resume Denite window
-    nnoremap <silent> <Space>r :<C-u>Denite -resume<CR>
+call denite#custom#alias('source', 'file_rec/git', 'file_rec')
+call denite#custom#var('file_rec/git', 'command',
+            \ ['git', 'ls-files', '-co', '--exclude-standard'])
 
-	" Fuzzy find yank history
-	nnoremap <silent> <Space>h :<C-u>Denite neoyank<CR>
+" KEY MAPPINGS
+let s:insert_mode_mappings = [
+            \ ['jk', '<denite:enter_mode:normal>', 'noremap'],
+            \ ['<Tab>', '<denite:move_to_next_line>', 'noremap'],
+            \ ['<C-j>', '<denite:move_to_next_line>', 'noremap'],
+            \ ['<S-tab>', '<denite:move_to_previous_line>', 'noremap'],
+            \ ['<C-k>', '<denite:move_to_previous_line>', 'noremap'],
+            \ ['<C-t>', '<denite:do_action:tabopen>', 'noremap'],
+            \ ['<C-v>', '<denite:do_action:vsplit>', 'noremap'],
+            \ ['<C-s>', '<denite:do_action:split>', 'noremap'],
+            \ ['<Esc>', '<denite:enter_mode:normal>', 'noremap'],
+            \ ['<C-N>', '<denite:assign_next_matched_text>', 'noremap'],
+            \ ['<C-P>', '<denite:assign_previous_matched_text>', 'noremap'],
+            \ ['<Up>', '<denite:assign_previous_text>', 'noremap'],
+            \ ['<Down>', '<denite:assign_next_text>', 'noremap'],
+            \ ['<C-Y>', '<denite:redraw>', 'noremap'],
+            \ ]
 
-	" Fuzzy find jump
-	nnoremap <silent> <Space>j :<C-u>Denite jump<CR>
+let s:normal_mode_mappings = [
+            \ ["'", '<denite:toggle_select_down>', 'noremap'],
+            \ ['<C-n>', '<denite:jump_to_next_source>', 'noremap'],
+            \ ['<C-p>', '<denite:jump_to_previous_source>', 'noremap'],
+            \ ['<Tab>', '<denite:move_to_next_line>', 'noremap'],
+            \ ['<C-j>', '<denite:move_to_next_line>', 'noremap'],
+            \ ['<S-tab>', '<denite:move_to_previous_line>', 'noremap'],
+            \ ['<C-k>', '<denite:move_to_previous_line>', 'noremap'],
+            \ ['gg', '<denite:move_to_first_line>', 'noremap'],
+            \ ['<C-t>', '<denite:do_action:tabopen>', 'noremap'],
+            \ ['<C-v>', '<denite:do_action:vsplit>', 'noremap'],
+            \ ['<C-s>', '<denite:do_action:split>', 'noremap'],
+            \ ['q', '<denite:quit>', 'noremap'],
+            \ ['r', '<denite:redraw>', 'noremap'],
+            \ ]
 
-    " Fuzzy find location list
-    nnoremap <silent> <Space>l :<C-u>Denite location_list<CR>
+for s:m in s:insert_mode_mappings
+    call denite#custom#map('insert', s:m[0], s:m[1], s:m[2])
+endfor
+for s:m in s:normal_mode_mappings
+    call denite#custom#map('normal', s:m[0], s:m[1], s:m[2])
+endfor
 
-	" Fuzzy find quickfix list
-	nnoremap <silent> <Space>q :<C-u>Denite quickfix<CR>
+unlet s:m s:insert_mode_mappings s:normal_mode_mappings
 
-	" Fuzzy find message
-	nnoremap <silent> <Space>m :<C-u>Denite output:message<CR>
+" Fuzzy  find registers
+nnoremap <silent> <Space>e :<C-u>Denite register<CR>
 
-	" Fuzzy find outline
-	nnoremap <silent> <Space>o :<C-u>Denite outline<CR>
+" Resume Denite window
+nnoremap <silent> <Space>r :<C-u>Denite -resume<CR>
+" }}}
 
-	" Fuzzy find buffers
-	nnoremap <silent> <Space>b :Denite buffer<CR>
-augroup END
+" Fuzzy find yank history
+nnoremap <silent> <Space>h :<C-u>Denite neoyank<CR>
+
+" Fuzzy find jump
+nnoremap <silent> <Space>j :<C-u>Denite jump<CR>
+
+" Fuzzy find location list
+nnoremap <silent> <Space>l :<C-u>Denite location_list<CR>
+
+" Fuzzy  find registers
+nnoremap <silent> <Space>p :<C-u>Denite file_rec<CR>
+
+" Fuzzy find quickfix list
+nnoremap <silent> <Space>q :<C-u>Denite quickfix<CR>
+
+" Fuzzy find message
+nnoremap <silent> <Space>m :<C-u>Denite output:message<CR>
+
+" Fuzzy find outline
+nnoremap <silent> <Space>o :<C-u>Denite outline<CR>
+
+" Fuzzy find buffers
+nnoremap <silent> <Space>b :Denite buffer<CR>
 " }}}
 
 " LaTeX {{{
-augroup latex_config
-    autocmd!
-    let g:vimtex_fold_enabled = 1
-augroup END
+let g:vimtex_fold_enabled = 1
 " }}}
 
 " Sudo {{{
-augroup sudo_config
-    autocmd!
+" Read current file with sudo
+nnoremap <silent> <leader>fE :e suda://&<CR>
 
-    " Read current file with sudo
-    nnoremap <silent> <leader>fE :e suda://&<CR>
-
-    " Write current file with sudo
-    nnoremap <silent> <leader>fW :w suda://&<CR>
-augroup END
+" Write current file with sudo
+nnoremap <silent> <leader>fW :w suda://&<CR>
 " }}}
 "
 " File Manager {{{
-augroup filemanager_config
-    noremap <silent> <C-e> :NERDTreeToggle<CR>
-
+augroup nerdtree_config
+    autocmd!
     "automatically open when vim starts in a directory
     autocmd StdinReadPre * let s:std_in=1
     autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 augroup END
+
+" Toggle NerdTree with CTRL+e
+noremap <silent> <C-e> :NERDTreeToggle<CR>
 " }}}
 
 " Git {{{
 augroup git_config
     " This group contains the gina and GV configurations
     autocmd!
-    nnoremap <silent> <leader>gs :Gina status --opener=10split<CR>
-    nnoremap <silent> <leader>gS :Gina add %<CR>
-    nnoremap <silent> <leader>gU :Gina reset -q %<CR>
-    nnoremap <silent> <leader>gc :Gina commit<CR>
-    nnoremap <silent> <leader>gp :Gina push<CR>
-    nnoremap <silent> <leader>gp :Gina push<CR>
-    nnoremap <silent> <leader>gd :Gina diff<CR>
-    nnoremap <silent> <leader>gA :Gina add .<CR>
-    nnoremap <silent> <leader>gb :Gina blame<CR>
     autocmd FileType diff nnoremap <buffer><silent> q :bd!<CR>
     " Instead of reverting the cursor to the last position in the buffer, we
     " set it to the first line when editing a git commit message
     au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
-
-    " View git log of current file
-    nnoremap <silent> <leader>gV :GV!<CR>
-
-    " View git log of current repo
-    nnoremap <silent> <leader>gv :GV<CR>
 augroup END
-" }}}
 
-" Ale {{{
-augroup ale_config
-    autocmd!
-    let g:ale_c_parse_compile_commands = 1
-    let g:ale_linters = { 'cpp': ['clangtidy'] }
-    let g:ale_c_build_dir_names = ['build', 'release', 'debug']
-augroup END
+" Keybinds
+nnoremap <silent> <leader>gs :Gina status --opener=10split<CR>
+nnoremap <silent> <leader>gS :Gina add %<CR>
+nnoremap <silent> <leader>gU :Gina reset -q %<CR>
+nnoremap <silent> <leader>gc :Gina commit<CR>
+nnoremap <silent> <leader>gp :Gina push<CR>
+nnoremap <silent> <leader>gp :Gina push<CR>
+nnoremap <silent> <leader>gd :Gina diff<CR>
+nnoremap <silent> <leader>gA :Gina add .<CR>
+nnoremap <silent> <leader>gb :Gina blame<CR>
+
+" View git log of current file
+nnoremap <silent> <leader>gV :GV!<CR>
+
+" View git log of current repo
+nnoremap <silent> <leader>gv :GV<CR>
 " }}}
 
 " Tagbar {{{
-augroup tagbar_config
-    autocmd!
-    nmap <F8> :TagbarToggle<CR>
-    let g:tagbar_type_julia = {
-        \ 'ctagstype' : 'julia',
-        \ 'kinds'     : [
-        \ 't:struct', 'f:function', 'm:macro', 'c:const']
-        \ }
-    let g:tagbar_type_rust = {
-        \ 'ctagstype' : 'rust',
-        \ 'kinds' : [
-            \'T:types,type definitions',
-            \'f:functions,function definitions',
-            \'g:enum,enumeration names',
-            \'s:structure names',
-            \'m:modules,module names',
-            \'c:consts,static constants',
-            \'t:traits',
-            \'i:impls,trait implementations',
-            \]
-        \}
-augroup END
+nmap <F8> :TagbarToggle<CR>
+let g:tagbar_type_julia = {
+    \ 'ctagstype' : 'julia',
+    \ 'kinds'     : [
+    \ 't:struct', 'f:function', 'm:macro', 'c:const']
+    \ }
+let g:tagbar_type_rust = {
+    \ 'ctagstype' : 'rust',
+    \ 'kinds' : [
+        \'T:types,type definitions',
+        \'f:functions,function definitions',
+        \'g:enum,enumeration names',
+        \'s:structure names',
+        \'m:modules,module names',
+        \'c:consts,static constants',
+        \'t:traits',
+        \'i:impls,trait implementations',
+        \]
+    \}
 " }}}
 
 " Arpeggio {{{
-augroup arpeggio_config
-    autocmd!
-    call arpeggio#map('i', '', 0, 'jk', '<Esc>')
-    "let g:arpeggio_timeoutlen=20
-augroup END
+call arpeggio#map('i', '', 0, 'jk', '<Esc>')
+"let g:arpeggio_timeoutlen=20
 " }}}
 
 " Ack {{{
-augroup ack_config
-    autocmd!
-    let g:ackprg = 'ag --nogroup --nocolor --column'
-augroup END
+let g:ackprg = 'ag --nogroup --nocolor --column'
 " }}}
 
 " ClangFormat {{{
@@ -378,61 +366,52 @@ augroup clangformat_config
     " map to <Leader>cf in C++ code
     autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
     autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
-    " if you install vim-operator-user
-    " autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
-    " Toggle auto formatting:
-    " nmap <Leader>C :ClangFormatAutoToggle<CR>
-    " autocmd FileType c,cpp,objc ClangFormatAutoEnable
-    let g:clang_format#code_style = 'mozilla'
+    autocmd FileType c,cpp,objc let g:clang_format#code_style = 'mozilla'
 augroup END
 " }}}
 
 " Autocomplete {{{
 augroup autocomplete_config
-    autocmd!
+" enable deoplete at startup
+let g:deoplete#enable_at_startup = 1
 
-    " enable deoplete at startup
-    let g:deoplete#enable_at_startup = 1
+" Register neosnippet as completition source
+call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
+\ 'name': 'neosnippet',
+\ 'whitelist': ['*'],
+\ 'completor': function('asyncomplete#sources#neosnippet#completor'),
+\ }))
 
-    " Register neosnippet as completition source
-    call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
-    \ 'name': 'neosnippet',
-    \ 'whitelist': ['*'],
-    \ 'completor': function('asyncomplete#sources#neosnippet#completor'),
-    \ }))
+" Neosnippet trigger
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
 
-    " Neosnippet trigger
-    imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-    smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-    xmap <C-k>     <Plug>(neosnippet_expand_target)
+call asyncomplete#register_source(asyncomplete#sources#neoinclude#get_source_options({
+\ 'name': 'neoinclude',
+\ 'whitelist': ['cpp'],
+\ 'refresh_pattern': '\(<\|"\|/\)$',
+\ 'completor': function('asyncomplete#sources#neoinclude#completor'),
+\ }))
 
-    call asyncomplete#register_source(asyncomplete#sources#neoinclude#get_source_options({
-    \ 'name': 'neoinclude',
-    \ 'whitelist': ['cpp'],
-    \ 'refresh_pattern': '\(<\|"\|/\)$',
-    \ 'completor': function('asyncomplete#sources#neoinclude#completor'),
-    \ }))
+call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+\ 'name': 'file',
+\ 'whitelist': ['*'],
+\ 'priority': 10,
+\ 'completor': function('asyncomplete#sources#file#completor')
+\ }))
 
-    call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
-    \ 'name': 'file',
-    \ 'whitelist': ['*'],
-    \ 'priority': 10,
-    \ 'completor': function('asyncomplete#sources#file#completor')
-    \ }))
-
-    call asyncomplete#register_source(asyncomplete#sources#emoji#get_source_options({
-    \ 'name': 'emoji',
-    \ 'whitelist': ['*'],
-    \ 'completor': function('asyncomplete#sources#emoji#completor'),
-    \ }))
-
-augroup END
+call asyncomplete#register_source(asyncomplete#sources#emoji#get_source_options({
+\ 'name': 'emoji',
+\ 'whitelist': ['*'],
+\ 'completor': function('asyncomplete#sources#emoji#completor'),
+\ }))
 " }}}
 
 " Syntax Checkers {{{
-    " Full config: when writing or reading a buffer, and on changes in insert
-    " and normal mode (after 1s; no delay when writing).
-    call neomake#configure#automake('nrwi', 500)
+" Full config: when writing or reading a buffer, and on changes in insert
+" and normal mode (after 1s; no delay when writing).
+call neomake#configure#automake('nrwi', 500)
 " }}}
 
 " LSP {{{
@@ -473,7 +452,7 @@ augroup lsp_config
                     \ 'name': 'pyls',
                     \ 'cmd': {server_info->['pyls']},
                     \ 'whitelist': ['python'],
-                    \ 'workspace_config': {'pyls': {'plugins': {'pydocstyle': {'enabled': v:true}}}}
+                    \ 'workspace_config': {'pyls': {'plugins': {'pydocstyle': {'enabled': v:true} } } }
                     \ })
     endif
 
@@ -504,111 +483,94 @@ augroup lsp_config
                     \ })
     endif
 
-    let g:echodoc#enable_at_startup = 1
-    let g:echodoc#type = 'signature'
 augroup END
+
+" echodoc
+let g:echodoc#enable_at_startup = 1
+let g:echodoc#type = 'signature'
 " }}}
 
 " Markdown {{{
-augroup markdown_config
-    " do not highlight markdown error
-    let g:markdown_hi_error = 0
-    " the fenced languages based on loaded language layer
-    let g:markdown_fenced_languages = []
-    let g:markdown_minlines = 100
-    let g:markdown_syntax_conceal = 0
-    let g:markdown_enable_mappings = 0
-    let g:markdown_enable_insert_mode_leader_mappings = 0
-    let g:markdown_enable_spell_checking = 0
-    let g:markdown_quote_syntax_filetypes = {
-                \ 'vim' : {'start' : "\\%(vim\\|viml\\)",},
-                \ }
-augroup END
+" do not highlight markdown error
+let g:markdown_hi_error = 0
+" the fenced languages based on loaded language layer
+let g:markdown_fenced_languages = []
+let g:markdown_minlines = 100
+let g:markdown_syntax_conceal = 0
+let g:markdown_enable_mappings = 0
+let g:markdown_enable_insert_mode_leader_mappings = 0
+let g:markdown_enable_spell_checking = 0
+let g:markdown_quote_syntax_filetypes = {
+            \ 'vim' : {'start' : "\\%(vim\\|viml\\)",},
+            \ }
 " }}}
 
 " Python {{{
 augroup python_config
     autocmd!
-    let g:jedi#completions_enabled = 0
-    " If you execute :Pydocstring at no `def`, `class` line.
-    " g:pydocstring_enable_comment enable to put comment.txt value.
-    let g:pydocstring_enable_comment = 0
-
-    " Disable this option to prevent pydocstring from creating any
-    " key mapping to the `:Pydocstring` command.
-    " Note: this value is overridden if you explicitly create a
-    " mapping in your vimrc, such as if you do:
-    let g:pydocstring_enable_mapping = 0
-
     " autoformat on save
     autocmd BufWritePost *.py Neoformat yapf
 augroup END
+let g:jedi#completions_enabled = 0
+" If you execute :Pydocstring at no `def`, `class` line.
+" g:pydocstring_enable_comment enable to put comment.txt value.
+let g:pydocstring_enable_comment = 0
+
+" Disable this option to prevent pydocstring from creating any
+" key mapping to the `:Pydocstring` command.
+" Note: this value is overridden if you explicitly create a
+" mapping in your vimrc, such as if you do:
+let g:pydocstring_enable_mapping = 0
 " }}}
 
-" Settings -------------------------------------------------------------------
+" Settings {{{
 
-" NeoVim {{{
+" Enable True Colors
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
-" }}}
 
-" Backups and Swap files {{{
+" Change backup directories and undo directories
 set backupdir=/tmp/neovim///
 set directory=/tmp/neovim//
 set undodir=/tmp/neovim//
-" }}}
 
-" Mapleader {{{
-"let mapleader = ','
-"let g:mapleader = ','
-" }}}
-
-" Colorscheme {{{
+" Set the colorscheme
 set background=dark
 syntax on
 colorscheme onedark
-" }}}
 
-"Folding {{{
+" Enable syntax based folding
 set foldenable
 set fdm=syntax
-"}}}
 
-" Textwidth {{{
+" Set the width of the text
 set colorcolumn=80
-" }}}
 
-" Scroll {{{
+" Scroll parameters
 set scrolljump=5
 set scrolloff=3
-" }}}
 
-" LineNumbers {{{
+" Show line numbers
 set number
-" }}}
 
-" Alarms {{{
+" No alarms, please
 set noerrorbells
 set novisualbell
-" }}}
 
-" HighlightBrakets {{{
+" Hilight matching brakets
 set showmatch
 set mat=2
-" }}}
 
-" Search {{{
+" Search options
 set ignorecase
 set incsearch
 set smartcase
-" }}}
 
-" CommandBar {{{
+" Let the command bar be 2 lines
 set cmdheight=2
-" }}}
 
-" SetEditor {{{
+" Editor settings
 set nospell
 set backspace=indent,eol,start
 set wrap
@@ -619,67 +581,46 @@ set smarttab
 set shiftwidth=4
 set tabstop=4
 set softtabstop=4
-" }}}
 
-" ArrowKeys {{{
+" Forbid the use of arrow keys in all modes
 noremap <left> <nop>
 noremap <up> <nop>
 noremap <down> <nop>
 noremap <right> <nop>
-
 inoremap <left> <nop>
 inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <right> <nop>
-
 vnoremap <left> <nop>
 vnoremap <up> <nop>
 vnoremap <down> <nop>
 vnoremap <right> <nop>
-
 onoremap <left> <nop>
 onoremap <up> <nop>
 onoremap <down> <nop>
 onoremap <right> <nop>
-" }}}
 
-" FastSwitches {{{
-"ino jj <esc>
-"cno jj <c-c>
-vno v <esc>
-" }}}
 
-" Use The Silver Searcher {{{
+" Configure the silver searcher
 if executable('ag')
   " Use Ag over Grep
   set grepprg=ag\ --nogroup\ --nocolor
 
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag -Q -l --nocolor --hidden -g "" %s'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-
   if !exists(":Ag")
     command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-    nnoremap \ :Ag<SPACE>
   endif
 endif
-" }}}
 
-" File Types -----------------------------------------------------------------
-
-" General {{{
+" General
 set exrc
 set secure
 filetype plugin on
 filetype indent on
 
-" }}}
-
-" TextFiles {{{
+" Text files have textwidth of 78 characters
 augroup text_files
     autocmd FileType text setlocal textwidth=78
 augroup END
+
 " }}}
 
