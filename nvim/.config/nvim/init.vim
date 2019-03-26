@@ -3,7 +3,6 @@
 "   .nvimrc
 "   AUTHOR: Guido Masella <guido.masella@gmail.com>
 "
-" Plugins --------------------------------------------------------------------
 
 " LoadPlugins {{{
 " Add the dein installation directory into runtimepath
@@ -136,6 +135,7 @@ if dein#load_state('~/.cache/dein')
     call dein#add('sudar/vim-arduino-syntax')
     call dein#add('easymotion/vim-easymotion')
     call dein#add('kien/rainbow_parentheses.vim')
+    call dein#add('liuchengxu/vista.vim')
     call dein#add('majutsushi/tagbar')
     call dein#add('vim-scripts/loremipsum')
     call dein#add('mhinz/vim-signify')
@@ -262,7 +262,7 @@ nnoremap <silent> <Space>j :<C-u>Denite jump<CR>
 nnoremap <silent> <Space>l :<C-u>Denite location_list<CR>
 
 " Fuzzy  find registers
-nnoremap <silent> <Space>p :<C-u>Denite file_rec<CR>
+nnoremap <silent> <Space>p :<C-u>Denite file/rec<CR>
 
 " Fuzzy find quickfix list
 nnoremap <silent> <Space>q :<C-u>Denite quickfix<CR>
@@ -327,6 +327,46 @@ nnoremap <silent> <leader>gV :GV!<CR>
 
 " View git log of current repo
 nnoremap <silent> <leader>gv :GV<CR>
+" }}}
+
+" Vista {{{
+" Position to open the vista sidebar. On the right by default.
+" Change to 'vertical topleft' to open on the left.
+let g:vista_sidebar_position = 'vertical botright'
+
+" Width of vista sidebar.
+let g:vista_sidebar_width = 30
+
+" Set this flag to 0 to disable echoing when the cursor moves.
+let g:vista_echo_cursor = 1
+
+" Time delay for showing detailed symbol info at current cursor.
+let g:vista_cursor_delay = 400
+
+" Close the vista window automatically close when you jump to a symbol.
+let g:vista_close_on_jump = 0
+
+" Move to the vista window when it is opened.
+let g:vista_stay_on_open = 1
+
+" Blinking cursor 2 times with 100ms interval after jumping to the tag.
+let g:vista_blink = [2, 100]
+
+" How each level is indented and what to prepend.
+" This could make the display more compact or more spacious.
+" e.g., more compact: ["▸ ", ""]
+let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+
+" Executive used when opening vista sidebar without specifying it.
+" See all the avaliable executives via `:echo g:vista#executives`.
+let g:vista_default_executive = 'vim_lsp'
+
+" To enable fzf's preview window set g:vista_fzf_preview.
+" The elements of g:vista_fzf_preview will be passed as arguments to fzf#vim#with_preview()
+" For example:
+let g:vista_fzf_preview = ['right:50%']
+
+nmap <F9> :Vista!!<CR>
 " }}}
 
 " Tagbar {{{
