@@ -25,8 +25,7 @@ if dein#load_state('~/.cache/dein')
     call dein#add('Shougo/neomru.vim', {'merged' : 0})
 
     " File manager
-    call dein#add('scrooloose/nerdtree')
-    call dein#add('Xuyuanp/nerdtree-git-plugin')
+    call dein#add('Shougo/defx.nvim')
 
     " Git
     call dein#add('junegunn/gv.vim', { 'on_cmd' : 'GV' })
@@ -121,7 +120,7 @@ if dein#load_state('~/.cache/dein')
     " Text utilities
     call dein#add('myusuf3/numbers.vim')
     call dein#add('tpope/vim-surround')
-    call dein#add('bronson/vim-trailing-whitespace')
+    call dein#add('ntpeters/vim-better-whitespace')
     call dein#add('vim-airline/vim-airline')
     call dein#add('vim-airline/vim-airline-themes')
     call dein#add('jiangmiao/auto-pairs')
@@ -250,7 +249,6 @@ nnoremap <silent> <Space>e :<C-u>Denite register<CR>
 
 " Resume Denite window
 nnoremap <silent> <Space>r :<C-u>Denite -resume<CR>
-" }}}
 
 " Fuzzy find yank history
 nnoremap <silent> <Space>h :<C-u>Denite neoyank<CR>
@@ -290,15 +288,89 @@ nnoremap <silent> <leader>fW :w suda://&<CR>
 " }}}
 "
 " File Manager {{{
-augroup nerdtree_config
+
+" disable netrw.vim
+let g:loaded_netrwPlugin = 1
+
+function! s:defx_my_settings() abort
+  " Define mappings
+  nnoremap <silent><buffer><expr> <CR>
+  \ defx#do_action('open')
+  nnoremap <silent><buffer><expr> c
+  \ defx#do_action('copy')
+  nnoremap <silent><buffer><expr> m
+  \ defx#do_action('move')
+  nnoremap <silent><buffer><expr> p
+  \ defx#do_action('paste')
+  nnoremap <silent><buffer><expr> l
+  \ defx#do_action('open')
+  nnoremap <silent><buffer><expr> E
+  \ defx#do_action('open', 'vsplit')
+  nnoremap <silent><buffer><expr> P
+  \ defx#do_action('open', 'pedit')
+  nnoremap <silent><buffer><expr> o
+  \ defx#do_action('open_or_close_tree')
+  nnoremap <silent><buffer><expr> K
+  \ defx#do_action('new_directory')
+  nnoremap <silent><buffer><expr> N
+  \ defx#do_action('new_file')
+  nnoremap <silent><buffer><expr> M
+  \ defx#do_action('new_multiple_files')
+  nnoremap <silent><buffer><expr> C
+  \ defx#do_action('toggle_columns',
+  \                'mark:filename:type:size:time')
+  nnoremap <silent><buffer><expr> S
+  \ defx#do_action('toggle_sort', 'time')
+  nnoremap <silent><buffer><expr> d
+  \ defx#do_action('remove')
+  nnoremap <silent><buffer><expr> r
+  \ defx#do_action('rename')
+  nnoremap <silent><buffer><expr> !
+  \ defx#do_action('execute_command')
+  nnoremap <silent><buffer><expr> x
+  \ defx#do_action('execute_system')
+  nnoremap <silent><buffer><expr> yy
+  \ defx#do_action('yank_path')
+  nnoremap <silent><buffer><expr> .
+  \ defx#do_action('toggle_ignored_files')
+  nnoremap <silent><buffer><expr> ;
+  \ defx#do_action('repeat')
+  nnoremap <silent><buffer><expr> h
+  \ defx#do_action('cd', ['..'])
+  nnoremap <silent><buffer><expr> ~
+  \ defx#do_action('cd')
+  nnoremap <silent><buffer><expr> q
+  \ defx#do_action('quit')
+  nnoremap <silent><buffer><expr> <Space>
+  \ defx#do_action('toggle_select') . 'j'
+  nnoremap <silent><buffer><expr> *
+  \ defx#do_action('toggle_select_all')
+  nnoremap <silent><buffer><expr> j
+  \ line('.') == line('$') ? 'gg' : 'j'
+  nnoremap <silent><buffer><expr> k
+  \ line('.') == 1 ? 'G' : 'k'
+  nnoremap <silent><buffer><expr> <C-l>
+  \ defx#do_action('redraw')
+  nnoremap <silent><buffer><expr> <C-g>
+  \ defx#do_action('print')
+  nnoremap <silent><buffer><expr> cd
+  \ defx#do_action('change_vim_cwd')
+endfunction
+
+augroup defx_config
     autocmd!
-    "automatically open when vim starts in a directory
-    autocmd StdinReadPre * let s:std_in=1
-    autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+    autocmd FileType defx call s:defx_my_settings()
 augroup END
 
-" Toggle NerdTree with CTRL+e
-noremap <silent> <C-e> :NERDTreeToggle<CR>
+nnoremap <silent>- :Defx `expand('%:p:h')` -show-ignored-files -search=`expand('%:p')`<CR>
+nnoremap <Leader>- :Defx -split=vertical -winwidth=50 -direction=topleft<CR>
+
+" }}}
+
+" Trailing Whitespaces {{{
+
+let g:better_whitespace_filetypes_blacklist=['defx', 'diff', 'gitcommit', 'unite', 'qf', 'help']
+
 " }}}
 
 " Git {{{
