@@ -128,8 +128,6 @@ if dein#load_state('~/.cache/dein')
 
 
     "linting
-    "call dein#add('benekastah/neomake')
-    call dein#add('w0rp/ale')
     call dein#add('tpope/vim-markdown')
     call dein#add('sudar/vim-arduino-syntax')
     call dein#add('easymotion/vim-easymotion')
@@ -523,7 +521,9 @@ call asyncomplete#register_source(asyncomplete#sources#emoji#get_source_options(
 " Syntax Checkers {{{
 " Full config: when writing or reading a buffer, and on changes in insert
 " and normal mode (after 1s; no delay when writing).
-call neomake#configure#automake('nrwi', 500)
+call neomake#configure#automake('rw', 1000)
+
+let g:neomake_cpp_enabled_makers = ['clangtidy']
 " }}}
 
 " LSP {{{

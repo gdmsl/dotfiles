@@ -40,7 +40,7 @@ windows:
             -
     - swmc:
         layout: main-vertical
-        root: ~/Develop/swmc/
+        root: ~/Develop/swmc
         panes:
             - nvim
             -
