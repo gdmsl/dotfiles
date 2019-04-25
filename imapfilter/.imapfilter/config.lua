@@ -4,6 +4,9 @@
 -- Many things taken from https://github.com/wichtounet/dotfiles
 --
 
+options.limit = 10
+options.range = 10
+
 function main()
     local account = IMAP {
         server = 'imap.gmail.com',
