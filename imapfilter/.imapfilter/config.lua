@@ -4,8 +4,18 @@
 -- Many things taken from https://github.com/wichtounet/dotfiles
 --
 
+
+-- Limit the number of message a request can be applied at once.
 options.limit = 10
 options.range = 10
+
+-- Time in seconds for the program to wait for a mail server's response
+-- (default 60)
+options.timeout = 120
+
+-- Do not wait for mailbox to close before deleting messages. Do it
+-- immediately.
+options.expunge = true
 
 function main()
     local account = IMAP {
@@ -46,10 +56,10 @@ function main()
 
     -- Move emails to gmail
     print("Moving conversations to GMail")
-    move_between_accounts(uds_account['INBOX'], account['mailaccounts/uds'], 10)
-    move_between_accounts(udsetu_account['INBOX'], account['mailaccounts/uds-etu'], 10)
-    move_between_accounts(uds_account['Sent'], account['[Gmail]/Sent Mail'], 10)
-    move_between_accounts(udsetu_account['Sent'], account['[Gmail]/Sent Mail'], 10)
+    move_between_accounts(uds_account['INBOX'], account['mailaccounts/uds'], 10, uds_account['Trash'])
+    move_between_accounts(udsetu_account['INBOX'], account['mailaccounts/uds-etu'], 10, udsetu_account['Trash'])
+    move_between_accounts(uds_account['Sent'], account['[Gmail]/Sent Mail'], 10, uds_account['Trash'])
+    move_between_accounts(udsetu_account['Sent'], account['[Gmail]/Sent Mail'], 10, udsetu_account['Trash'])
 
     -- Move mailing lists
     print("Moving mailing lists")
@@ -157,9 +167,10 @@ function move_if_older(account, mailbox, olderthan, tomailbox)
 end
 
 -- Move from accounts
-function move_between_accounts(mailboxfrom, mailboxto, olderthan)
+function move_between_accounts(mailboxfrom, mailboxto, olderthan, trashbox)
     filtered = mailboxfrom:is_older(olderthan)
-    filtered:move_messages(mailboxto)
+    filtered:copy_messages(mailboxto)
+    filtered:move_messages(trashbox)
 end
 
 -- Utility function to get IMAP password from file
