@@ -73,6 +73,11 @@ if [ -d $HOME/.linuxbrew ]; then
     export PATH="$HOME/.linuxbrew/bin:$PATH"
 fi
 
+# keys for xmodmap
+if [ -f $HOME/.Xmodmap ]; then
+    xmodmap ~/.Xmodmap
+fi
+
 # GTK use xdg-desktop-portal (for things like kdialog in firefox)
 export GTK_USE_PORTAL=1
 
