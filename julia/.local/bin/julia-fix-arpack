@@ -1,0 +1,17 @@
+#!/bin/bash
+
+for dir in $HOME/.julia/packages/Arpack/*/deps/usr/lib
+do
+    [ -d $dir ] || exit 1
+    arpack=$(readlink -f /usr/lib/libarpack.so)
+    if [ ! -e $arpack ]
+    then
+        echo "No arpack installed on this system" 1>&2
+        exit 1
+    fi
+    dest="$dir/libarpack.so.2.0.0"
+    cp -rf $arpack $dest
+    echo "Copied $arpack in $dest"
+done
+
+# vim : set ft=sh : #
