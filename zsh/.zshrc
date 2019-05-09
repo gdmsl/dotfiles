@@ -83,6 +83,10 @@ zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 zplug "plugins/history-substring-search", from:oh-my-zsh, defer:2
 zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:3
 
+# direnv
+zplug "direnv/direnv", as:command, rename-to:direnv, use:"direnv", hook-build:"make"
+
+
 # Install packages that have not been installed yet
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -94,6 +98,9 @@ if ! zplug check --verbose; then
 fi
 
 zplug load
+
+# hook direnv into the shell
+if (( $+commands[direnv] )); then eval "$(direnv hook zsh)"; fi
 
 # bindkeys
 bindkey '^[[A' history-substring-search-up
