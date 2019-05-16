@@ -33,6 +33,7 @@ if dein#load_state('~/.cache/dein')
 
     " Colors
     call dein#add('joshdick/onedark.vim')
+    call dein#add('lifepillar/vim-solarized8')
 
     " Sudo
     call dein#add('lambdalisue/suda.vim')
@@ -647,6 +648,12 @@ set backupdir=/tmp/neovim///
 set directory=/tmp/neovim//
 set undodir=/tmp/neovim//
 
+" General
+set exrc
+set secure
+filetype plugin on
+filetype indent on
+
 " Set the colorscheme
 set background=dark
 syntax on
@@ -723,11 +730,6 @@ if executable('ag')
   endif
 endif
 
-" General
-set exrc
-set secure
-filetype plugin on
-filetype indent on
 
 " Text files have textwidth of 78 characters
 augroup text_files
