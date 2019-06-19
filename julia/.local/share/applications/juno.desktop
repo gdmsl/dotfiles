@@ -1,0 +1,12 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=Juno
+Comment=A hackable text editor for the 21st Century, for Julia development
+GenericName=Text Editor
+Exec=env ATOM_DISABLE_SHELLING_OUT_FOR_ENVIRONMENT=false juno %F
+Icon=atom
+Type=Application
+StartupNotify=true
+Categories=GNOME;GTK;Utility;TextEditor;Development;
+MimeType=text/plain;
+StartupWMClass=atom

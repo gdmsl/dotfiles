@@ -44,7 +44,6 @@ alias mimeconfig="nvim ~/.config/mimeapps.list ~/.local/share/applications/mimea
 
 # julia with colors
 alias julia="julia --color yes"
-alias juno="ATOM_HOME=\"$HOME/Variable/juno\" atom"
 
 # SLURM
 alias squeue='squeue -o "%.15i %.9P %.20j %.8u %.2t %.10M %.6D %.3C %R"'
