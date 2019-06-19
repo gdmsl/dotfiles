@@ -1,19 +1,9 @@
 label = Sync Between Spectre and Faerie
 
-root = /mnt/archive0/gdmsl
-root = /run/media/gdmsl/FaerieSafe/gdmsl
+root = /mnt/archive0/gdmsl/Shared
+root = /run/media/gdmsl/FaerieSafe/gdmsl/Shared
 
 # directories
-path=Archives
-path=Brothel
-path=Desktop
-path=Documents
-path=Libraries
-path=Music
-path=Notebooks
-path=Pictures
-path=Shared
-path=Software
-path=Vaults
-path=Videos
-path=Public/Zotero
+path=Heavy
+path=Main
+path=SFW
