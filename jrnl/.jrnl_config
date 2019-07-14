@@ -3,9 +3,15 @@
   "editor": "nvim",
   "default_hour": 9,
   "journals": {
-    "default": "/home/gdmsl/Logging/Journal/default.txt",
+    "default": {
+      "journal": "/home/gdmsl/Logging/Journal/default.txt",
+      "encrypt": true
+    },
     "arch": "/home/gdmsl/Logging/Journal/arch.txt",
-    "work": "/home/gdmsl/Logging/Journal/work.txt"
+    "work": {
+      "journal": "/home/gdmsl/Logging/Journal/work.txt",
+      "encrypt": true
+    }
   },
   "timeformat": "%Y-%m-%d %H:%M",
   "highlight": true,

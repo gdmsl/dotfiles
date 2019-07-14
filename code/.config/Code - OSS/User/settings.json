@@ -6,11 +6,16 @@
     "C_Cpp.default.cStandard": "c11",
     "C_Cpp.default.intelliSenseMode": "clang-x64",
     "C_Cpp.clang_format_path": "/usr/bin/clang-format",
+    "C_Cpp.default.defines": ["LINT"],
     "editor.rulers": [
         80,
         120
     ],
     "vim.neovimPath": "/usr/bin/nvim",
     "vim.enableNeovim": true,
-    "terminal.external.linuxExec": "konsole"
+    "terminal.external.linuxExec": "konsole",
+    "C_Cpp.clang_format_fallbackStyle": "Mozilla",
+    "[cpp]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    }
 }
