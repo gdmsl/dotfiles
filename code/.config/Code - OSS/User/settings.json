@@ -16,6 +16,6 @@
     "terminal.external.linuxExec": "konsole",
     "C_Cpp.clang_format_fallbackStyle": "Mozilla",
     "[cpp]": {
-        "editor.defaultFormatter": "ms-vscode.cpptools"
-    }
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+    },
 }
