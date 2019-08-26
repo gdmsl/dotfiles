@@ -27,7 +27,7 @@ else
 fi
 
 if which pacman &> /dev/null; then
-    echo "$fg[red]Last -Syu:$reset_color $(grep "pacman -Syu" /var/log/pacman.log | tail -n1 | cut -c 2- | cut -c-16)"
+    echo "$fg[red]Last -Syu:$reset_color $(grep "pacman -Syu" /var/log/pacman.log | tail -n2 | head -n1 | cut -c 2- | cut -c-16)"
     echo "$reset_color"
 fi
 
