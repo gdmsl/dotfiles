@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+# AUTHOR: Guido Masella
+#
+# Build latex documents in the cloud... ehm.... RAM
+#
+
+name=$(echo "$@" | sha1sum | awk '{print $1}')
+tmpdir=/tmp/mylatexmk-${name}
+
+if [ -d ${tmpdir} ]; then
+    echo "Warning: ${tmpdir} already exists" 1>&2
+    read -s -p "Press enter to continue or CTRL+C to terminate"
+else
+    mkdir ${tmpdir}
+    ln -s -f $tmpdir ./build
+fi
+
+latexmk --output-directory="${tmpdir}" $@
+
