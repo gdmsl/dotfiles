@@ -1,0 +1,3 @@
+#!/bin/bash
+
+mpv --ontop --on-all-workspaces -geometry=500x300 $@ $(xsel -o)
