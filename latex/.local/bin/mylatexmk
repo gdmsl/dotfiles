@@ -13,8 +13,11 @@ if [ -d ${tmpdir} ]; then
     read -s -p "Press enter to continue or CTRL+C to terminate"
 else
     mkdir ${tmpdir}
-    ln -s -f $tmpdir ./build
 fi
 
 latexmk --output-directory="${tmpdir}" $@
+
+if [ ! -e ./build-${name} ]; then
+    ln -s -f $tmpdir ./build-${name}
+fi
 
