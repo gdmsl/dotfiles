@@ -1,5 +1,6 @@
 ;;; init.el --- Emacs init file
 ;;; Author: Guido Masella <guido.masella@gmail.com>
+;;; Commentary:
 ;;; Code:
 (require 'package)
 (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
@@ -7,6 +8,10 @@
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/"))
 (setq package-enable-at-startup nil)
 (package-initialize)
+
+
+;; no dialog for git files
+(setq vc-follow-symlinks nil)
 
 ;; Setting up the package manager. Install if missing.
 (unless (package-installed-p 'use-package)

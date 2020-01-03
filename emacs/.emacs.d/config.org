@@ -7,10 +7,10 @@ Clean up the UI
 #+BEGIN_SRC emacs-lisp
   (use-package emacs
     :config
-    (setq frame-title-format '("BeagleEmacs") ; Yayyyyy Evil!
-          ring-bell-function 'ignore          ; minimise distraction
+    (setq frame-title-format '("BeagleEmacs")
+          ring-bell-function 'ignore
           frame-resize-pixelwise t
-          default-directory "~/")
+          default-directory (expand-file-name "~/"))
 
     (tool-bar-mode -1)
     (menu-bar-mode -1)
@@ -26,6 +26,9 @@ Clean up the UI
 
     ;; Always use spaces for indentation
     (setq-default indent-tabs-mode nil)
+
+    (when (version<= "26.0.50" emacs-version)
+          (global-display-line-numbers-mode))
   )
 #+END_SRC
 * Configuration for built-in packages
@@ -203,6 +206,7 @@ Normally, we need to add ~:ensure t~ to tell ~use-package~ to download packages 
           dashboard-banner-logo-title "BeagleEmacs"
           dashboard-items '((recents . 5)
                              (bookmarks . 5)
+                             (projects . 5)
                              (agenda . 5)
                              (registers . 5))))
 #+END_SRC
@@ -288,6 +292,17 @@ Selecting buffers/files with great efficiency. In my opinion, Ido is enough to r
 
   (use-package flx-ido :config (flx-ido-mode +1))
 #+END_SRC
+*** Projectile
+We will use ~projectile~ as project manager
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :ensure t
+    :config
+    (projectile-mode +1)
+    (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+    (setq projectile-project-search-path '("~/Develop/" "~/Work/")))
+#+end_SRC
 ** Programming language support and utilities
 *** Company for auto-completion
 Use ~C-n~ and ~C-p~ to navigate the tooltip.
@@ -347,9 +362,23 @@ Some minimal org mode tweaks: org-bullets gives our headings (h1, h2, h3...) a m
 #+BEGIN_SRC emacs-lisp
   (use-package org
     :hook ((org-mode . visual-line-mode)
-           (org-mode . org-indent-mode)))
+           (org-mode . org-indent-mode))
+    :bind
+    ("C-c l" . org-store-link)
+    :config
+    (setq org-log-done t)
+    (setq org-directory (expand-file-name (file-truename "~/Logging/Org"))))
 
   (use-package org-bullets :hook (org-mode . org-bullets-mode))
+
+  (use-package org-agenda
+    :ensure nil
+    :after org
+    :bind
+    ("C-c a" . org-agenda)
+    :config
+    (setq org-agenda-files (list (expand-file-name "~/Logging/Org/agenda/work.org")
+                                 (expand-file-name "~/Logging/Org/agenda/google.org"))))
 #+END_SRC
 *** Yasnippet & yasnippet-snippets
 Use TAB to expand snippets. The code snippet below also avoids clashing with company-mode.

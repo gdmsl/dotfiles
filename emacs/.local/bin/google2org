@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# customize these
+WGET=/usr/bin/wget
+ICS2ORG="$HOME/.local/bin/ical2org"
+ICSFILE=$(mktemp)
+ORGFILE="$HOME/Logging/Org/agenda/google.org"
+URL=$(cat $HOME/.private/googleics.url)
+
+# no customization needed below
+
+$WGET -O $ICSFILE $URL
+$ICS2ORG < $ICSFILE > $ORGFILE
