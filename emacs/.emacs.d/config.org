@@ -21,6 +21,9 @@ Clean up the UI
           scroll-preserve-screen-position t
           auto-window-vscroll nil)
 
+    ;; faster than scp tramp
+    (setq tramp-default-method "ssh")
+
     ;; increase line space for better readability
     (setq-default line-spacing 3)
 
@@ -362,23 +365,46 @@ Some minimal org mode tweaks: org-bullets gives our headings (h1, h2, h3...) a m
 #+BEGIN_SRC emacs-lisp
   (use-package org
     :hook ((org-mode . visual-line-mode)
-           (org-mode . org-indent-mode))
-    :bind
-    ("C-c l" . org-store-link)
+           (org-mode . org-indent-mode)
+           (remember-mode . org-remember-apply-template))
+    :bind (("C-c l" . org-store-link)
+           ("C-c c" . org-capture)
+           ("C-c a" . org-agenda)
+           ("C-c C-w" . org-refile)
+           ("C-c j" . org-clock-goto)
+           ("C-c C-x C-o" . org-clock-out))
     :config
     (setq org-log-done t)
-    (setq org-directory (expand-file-name (file-truename "~/Logging/Org"))))
+    (setq org-directory (expand-file-name (file-truename "~/Logging/")))
+    (setq org-default-notes-file "~/Logging/Inbox.org")
+    (setq org-latex-packages-alist '())
+    (add-to-list 'org-latex-packages-alist '("" "color" t))
+    (add-to-list 'org-latex-packages-alist '("" "physics" t))
+    (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
+    (setq org-capture-templates
+          '(("t" "Todo" entry (file+headline "~/Logging/Inbox.org" "Tasks")
+             "* TODO %^{Description}  %^g\n%?\nAdded: %U" :empty-lines 1)
+            ("T" "Todo with Clipboard" entry (file+headline "~/Logging/Inbox.org" "Tasks")
+             "* TODO %^{Description}  %^g\n%c\nAdded: %U" :empty-lines 1)
+            ("n" "Note" entry (file+headline "~/Logging/Inbox.org" "Notes")
+             "* TODO %^{Description}  %^g\n%?\nAdded: %U" :empty-lines 1)
+            ("N" "Note with Clipboard" entry (file+headlines "~/Logging/Inbox.org" "Notes")
+             "* TODO %^{Description}  %^g\n%c\nAdded: %U" :empty-lines 1)
+            ("j" "Journal" entry (file+datetree "~/Logging/Journal.org")
+             "** %^{Heading}\n%?" :empty-lines 1)
+            ("d" "Deadline" entry (file+headline "~/Logging/Inbox.org" "Tasks")
+             "* TODO %^{Description} %^g\nDEADLINE: %^t\nAdded: %U" :empty-lines 1)
+            ("s" "Scheduled TODO" entry (file+headline "~/Logging/Inbox.org" "Tasks")
+             "* TODO %^{Description} %^g\nSCHEDULED: %^t\nAdded: %U" :empty-lines 1)))
+    (setq org-refile-targets
+          '(("~/Logging/GTD.org" :maxlevel . 3)
+            ("~/Logging/Notes.org" :maxlevel . 3)
+            ("~/Logging/Journal.org" :maxlevel . 3)
+            ("~/Logging/Someday.org" :level . 1)))
+    (setq org-agenda-files (list (expand-file-name "~/Logging/agenda/Google.org"))))
 
   (use-package org-bullets :hook (org-mode . org-bullets-mode))
 
-  (use-package org-agenda
-    :ensure nil
-    :after org
-    :bind
-    ("C-c a" . org-agenda)
-    :config
-    (setq org-agenda-files (list (expand-file-name "~/Logging/Org/agenda/work.org")
-                                 (expand-file-name "~/Logging/Org/agenda/google.org"))))
 #+END_SRC
 *** Yasnippet & yasnippet-snippets
 Use TAB to expand snippets. The code snippet below also avoids clashing with company-mode.
@@ -403,6 +429,12 @@ Markdown mode and JSON mode
 
   (use-package json-mode)
   (use-package julia-mode)
+#+END_SRC
+*** Auctex
+#+BEGIN_SRC emacs-lisp
+  (use-package auctex
+    :defer t
+    :ensure t)
 #+END_SRC
 ** Miscellaneous
 *** Diminish minor modes
