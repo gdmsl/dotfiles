@@ -5,7 +5,7 @@
 # Build latex documents in the cloud... ehm.... RAM
 #
 
-name=$(echo "$@" | sha1sum | awk '{print $1}')
+name=$(echo "$(pwd) $@" | sha1sum | awk '{print $1}')
 tmpdir=/tmp/mylatexmk-${name}
 
 if [ -d ${tmpdir} ]; then
