@@ -6,7 +6,7 @@
 source /etc/profile
 
 # setting the PATH envirorment variable
-export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.cabal/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.cabal/bin:$HOME/.luarocks/bin:$PATH"
 
 # library path
 export LD_LIBRARY_PATH="$HOME/.local/lib64:$HOME/.local/lib:$LD_LIBRARYPATH"

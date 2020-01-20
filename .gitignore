@@ -15,3 +15,6 @@
 # Ignore vim installed bundles
 .vim/bundle/*
 
+# emacs el files
+emacs/*/config.el
+
