@@ -265,13 +265,13 @@ bindsym $mod+Control+equal exec --no-startup-id termite --class=mutt -e "zsh -c 
 
 # assign web browsers to workspace web
 assign [class="Chromium"] $WS02
-assign [class="Firefox"] $WS02
+assign [class="firefox"] $WS02
 
 # windows title
-#for_window [class=".*"] title_format " <b>%title</b>"
 for_window [class=".*"] title_format "<b>%title</b>"
+for_window [class=".*"] border pixel 3
 for_window [class="Chromium"] title_format "  <b>%title</b>"
-for_window [class="Firefox"] title_format "  <b>%title</b>"
+for_window [class="firefox"] title_format "  <b>%title</b>"
 
 # force apps to not go in floating mode
 for_window [class="gimp"] floating disable
@@ -295,8 +295,6 @@ for_window [class="Civ5XP"] fullscreen
 # other
 assign [class="TelegramDesktop"] $WS11
 assign [class="mutt"] $WS12
-assign [class="nylas mail"] $WS12
-assign [class="Nylas Mail"] $WS12
 assign [class="Thunderbird"] $WS12
 assign [class="Mail"] $WS12
 
@@ -306,7 +304,7 @@ assign [class="Mail"] $WS12
 
 # Font used to display widows titles, and other i3 stuffs
 # .. not used for i3bar
-font pango:Hack, FontAwesome 10
+font pango: Fira Code 10, FontAwesome 10
 
 # Colors
 # class                 border      background  text          indicator    child_border
@@ -316,7 +314,7 @@ client.unfocused        $c_inactive $c_inactive $c_inactive_t $c_inactive  $c_in
 client.urgent           $c_urgent   $c_urgent   $c_urgent_t   $c_urgent    $c_urgent
 
 # Keybindings to change border style
-bindsym $mod+t border normal
+bindsym $mod+t border normal 3
 bindsym $mod+y border pixel 3
 bindsym $mod+u border none
 
