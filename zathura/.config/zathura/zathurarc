@@ -1,6 +1,6 @@
 # zathura configuration file
 
-set font "Hack 10"
+set font "Fira Code 10"
 set smooth-scroll "true"
 set window-title-home-tilde "true"
 set statusbar-home-tilde "true"

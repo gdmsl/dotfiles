@@ -83,6 +83,14 @@ zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 zplug "plugins/history-substring-search", from:oh-my-zsh, defer:2
 zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:3
 
+# FZF
+zplug "junegunn/fzf-bin", \
+    from:gh-r, \
+    as:command, \
+    rename-to:fzf, \
+    use:"*linux*amd64*"
+zplug "junegunn/fzf", use:"shell/*.zsh", defer:2
+
 # Install packages that have not been installed yet
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "

@@ -285,6 +285,7 @@ assign [class="Steam"] $WS10
 # Scratchpad
 for_window [title="scratchmonitor"] move scratchpad
 for_window [class="Pavucontrol"] move scratchpad
+for_window [class="firefox_scratch"] move scratchpad
 
 # GAMES
 assign [class="dota2"] "13: dota"
