@@ -64,9 +64,9 @@ if dein#load_state('~/.cache/dein')
                 \ })
 
     " Syntax checking
-    call dein#add('neomake/neomake', {
-                \ 'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1
-                \ })
+    "call dein#add('neomake/neomake', {
+    "            \ 'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1
+    "            \ })
 
     " Languages
     call dein#add('JuliaEditorSupport/julia-vim')
@@ -522,9 +522,9 @@ call asyncomplete#register_source(asyncomplete#sources#emoji#get_source_options(
 " Syntax Checkers {{{
 " Full config: when writing or reading a buffer, and on changes in insert
 " and normal mode (after 1s; no delay when writing).
-call neomake#configure#automake('rw', 1000)
+"call neomake#configure#automake('rw', 1000)
 
-let g:neomake_cpp_enabled_makers = ['clangtidy']
+"let g:neomake_cpp_enabled_makers = ['clangtidy']
 " }}}
 
 " LSP {{{
