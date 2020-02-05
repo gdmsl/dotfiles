@@ -11,9 +11,6 @@
 
 MAILDIR="$HOME/Mail"
 
-# Exit as soon as one of the commands fail.
-set -e
-
 # check if we have a connection
 if ! ping -w 1 -W 1 -c 1 mail.google.com; then
     echo "there is no internet connection"
@@ -29,14 +26,34 @@ fi
 # move the email
 afew --move --all -v
 
+if [ $? -ne 0 ]; then
+    notify-send -u critical "Error on afew move"
+    exit
+fi
+
 # Fetch new mail.
 mbsync -a
+
+if [ $? -ne 0 ]; then
+    notify-send -u critical "Error on syncing emails"
+    exit
+fi
 
 # Import new mail into the notmuch database.
 notmuch new
 
+if [ $? -ne 0 ]; then
+    notify-send -u critical "Error on updating notmuch database"
+    exit
+fi
+
 # Run afew tag
 afew --tag --new -v
+
+if [ $? -ne 0 ]; then
+    notify-send -u critical "Error on tagging new messages"
+    exit
+fi
 
 # Desktop notifications
 notifymuch

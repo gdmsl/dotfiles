@@ -1,7 +1,7 @@
 {
     "astroid": {
         "config": {
-            "version": "10"
+            "version": "11"
         },
         "notmuch_config": "\/home\/gdmsl\/.notmuch-config",
         "debug": {
@@ -9,6 +9,11 @@
         },
         "hints": {
             "level": "0"
+        },
+        "log": {
+            "syslog": "false",
+            "stdout": "true",
+            "level": "info"
         }
     },
     "terminal": {
@@ -41,7 +46,8 @@
             "clock_format": "local",
             "same_year": "%b %-e",
             "diff_year": "%x"
-        }
+        },
+        "tagbar_move": "tag"
     },
     "editor": {
         "cmd": "termite -e \"nvim %1\"",
@@ -50,10 +56,12 @@
         "save_draft_on_force_quit": "true",
         "attachment_words": "attach",
         "attachment_directory": "~",
-        "markdown_processor": "marked"
+        "markdown_processor": "cmark",
+        "markdown_on": "false"
     },
     "mail": {
         "reply": {
+            "quote_processor": "w3m -dump -T text\/html",
             "quote_line": "Excerpts from %1's message of %2:",
             "mailinglist_reply_to_sender": "true"
         },
@@ -67,7 +75,7 @@
         "user_agent": "default",
         "send_delay": "2",
         "close_on_success": "false",
-        "format_flowed": "true"
+        "format_flowed": "false"
     },
     "poll": {
         "interval": "180",
@@ -78,15 +86,12 @@
     },
     "thread_view": {
         "open_html_part_external": "false",
+        "preferred_type": "plain",
+        "preferred_html_only": "false",
+        "allow_remote_when_encrypted": "false",
         "open_external_link": "xdg-open",
         "default_save_directory": "~",
         "indent_messages": "false",
-        "code_prettify": {
-            "enable": "true",
-            "for_tags": "",
-            "code_tag": "```",
-            "enable_for_patches": "true"
-        },
         "gravatar": {
             "enable": "true"
         },
@@ -164,9 +169,11 @@
     },
     "startup": {
         "queries": {
-            "inbox": "tag:inbox",
-            "Work": "tag:inbox and tag:work",
-            "UDS Jobs": "tag:clusters\/udsjobs"
+            "inbox": "tag:inbox and -tag:lists",
+            "Work": "tag:inbox and tag:work and -tag:killed",
+            "UDS Jobs": "tag:clusters\/udsjobs and -tag:killed",
+            "Archlinux": "tag:lists/arch-general or tag:lists/arch-security or tag:lists/arch-announce and -tag:killed",
+            "Lists": "tag:lists and -tag:killed"
         }
     }
 }

@@ -9,7 +9,7 @@
 IMAPAccount GMail
 Host imap.gmail.com
 User guido.masella@gmail.com
-PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/Documents/Identity/mail-gmail.gpg"
+PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/Documents/Personal/Identity/mail-gmail.gpg"
 SSLType IMAPS
 AuthMechs PLAIN
 CertificateFile /etc/ssl/certs/ca-certificates.crt
@@ -121,9 +121,9 @@ Channel GMail-folders
 
 # Account Settings
 IMAPAccount UDS
-Host mailserver.u-strasbg.fr
-User masella
-PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/Documents/Identity/mail-uds.gpg"
+Host partage.unistra.fr
+User masella@unistra.fr
+PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/Documents/Personal/Identity/mail-uds.gpg"
 SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
@@ -146,7 +146,7 @@ Expunge Both
 SyncState *
 
 Channel UDS-trash
-Master :UDS-remote:"INBOX/Trash"
+Master :UDS-remote:"Trash"
 Slave :UDS-local:"trash"
 Create Slave
 Remove Slave
@@ -154,7 +154,7 @@ Expunge Both
 SyncState *
 
 Channel UDS-sent
-Master :UDS-remote:"INBOX/Sent"
+Master :UDS-remote:"Sent"
 Slave :UDS-local:"sent"
 Create Slave
 Remove Slave
@@ -162,7 +162,7 @@ Expunge Both
 SyncState *
 
 Channel UDS-drafts
-Master :UDS-remote:"INBOX/Drafts"
+Master :UDS-remote:"Drafts"
 Slave :UDS-local:"drafts"
 Create Slave
 Remove Slave
@@ -170,7 +170,7 @@ Expunge Both
 SyncState *
 
 Channel UDS-spam
-Master :UDS-remote:"INBOX/Spam"
+Master :UDS-remote:"Junk"
 Slave :UDS-local:"spam"
 Create Slave
 Remove Slave
@@ -178,7 +178,7 @@ Expunge Both
 SyncState *
 
 Channel UDS-archive
-Master :UDS-remote:"INBOX/Archive"
+Master :UDS-remote:"Archive"
 Slave :UDS-local:"archive"
 Create Slave
 Remove Slave
@@ -223,9 +223,9 @@ Channel UDS-folders
 
 # Account Settings
 IMAPAccount UDS-ETU
-Host mailserver.u-strasbg.fr
-User gmasella
-PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/Documents/Identity/mail-uds-etu.gpg"
+Host partage.unistra.fr
+User gmasella@etu.unistra.fr
+PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/Documents/Personal/Identity/mail-uds-etu.gpg"
 SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
@@ -248,7 +248,7 @@ Expunge Both
 SyncState *
 
 Channel UDS-ETU-trash
-Master :UDS-ETU-remote:"INBOX/Trash"
+Master :UDS-ETU-remote:"Trash"
 Slave :UDS-ETU-local:"trash"
 Create Slave
 Remove Slave
@@ -256,7 +256,7 @@ Expunge Both
 SyncState *
 
 Channel UDS-ETU-sent
-Master :UDS-ETU-remote:"INBOX/Sent"
+Master :UDS-ETU-remote:"Sent"
 Slave :UDS-ETU-local:"sent"
 Create Slave
 Remove Slave
@@ -264,7 +264,7 @@ Expunge Both
 SyncState *
 
 Channel UDS-ETU-drafts
-Master :UDS-ETU-remote:"INBOX/Drafts"
+Master :UDS-ETU-remote:"Drafts"
 Slave :UDS-ETU-local:"drafts"
 Create Slave
 Remove Slave
@@ -272,7 +272,7 @@ Expunge Both
 SyncState *
 
 Channel UDS-ETU-spam
-Master :UDS-ETU-remote:"INBOX/Spam"
+Master :UDS-ETU-remote:"Junk"
 Slave :UDS-ETU-local:"spam"
 Create Slave
 Remove Slave
@@ -280,7 +280,7 @@ Expunge Both
 SyncState *
 
 Channel UDS-ETU-archive
-Master :UDS-ETU-remote:"INBOX/Archive"
+Master :UDS-ETU-remote:"Archive"
 Slave :UDS-ETU-local:"archive"
 Create Slave
 Remove Slave
