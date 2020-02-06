@@ -522,6 +522,12 @@ git-tree-sha1 = "b34d7cef7b337321e97d22242c3c2b91f476748e"
 uuid = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 version = "0.21.0"
 
+[[JuliaFormatter]]
+deps = ["CSTParser", "Test", "Tokenize"]
+git-tree-sha1 = "7fdcaa57869c9a821e7c9af5724b7dec105e156c"
+uuid = "98e50ef6-434e-11e9-1051-2b60c6c9e899"
+version = "0.3.2"
+
 [[KernelDensity]]
 deps = ["Distributions", "FFTW", "Interpolations", "Optim", "StatsBase", "Test"]
 git-tree-sha1 = "c1048817fe5711f699abc8fabd47b1ac6ba4db04"
