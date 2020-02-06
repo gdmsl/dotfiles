@@ -242,9 +242,9 @@ version = "0.4.1"
 
 [[DiffEqBase]]
 deps = ["ArrayInterface", "ChainRulesCore", "Compat", "DataStructures", "Distributed", "DocStringExtensions", "FunctionWrappers", "IterativeSolvers", "IteratorInterfaceExtensions", "LinearAlgebra", "MuladdMacro", "Parameters", "Printf", "RecipesBase", "RecursiveArrayTools", "RecursiveFactorization", "Requires", "Roots", "SparseArrays", "StaticArrays", "Statistics", "SuiteSparse", "TableTraits", "TreeViews", "ZygoteRules"]
-git-tree-sha1 = "d84f56013dcd658ac725252d24847114c9077f79"
+git-tree-sha1 = "8560ec7e0e869a99406380ffb959d15cf7814f97"
 uuid = "2b5f629d-d688-5b77-993f-72d75c75574e"
-version = "6.13.2"
+version = "6.13.3"
 
 [[DiffEqCallbacks]]
 deps = ["DataStructures", "DiffEqBase", "ForwardDiff", "LinearAlgebra", "NLsolve", "OrdinaryDiffEq", "RecipesBase", "RecursiveArrayTools", "StaticArrays"]
@@ -375,9 +375,9 @@ version = "0.8.4"
 
 [[FiniteDiff]]
 deps = ["ArrayInterface", "LinearAlgebra", "Requires", "SparseArrays", "StaticArrays"]
-git-tree-sha1 = "109cca539ac87b1b95538f539ed8eb7e3f35eee5"
+git-tree-sha1 = "eb90294af97b564e6036b49296479d7f667763c0"
 uuid = "6a86dc24-6348-571c-b903-95158fe2bd41"
-version = "2.1.0"
+version = "2.2.0"
 
 [[FixedPointNumbers]]
 git-tree-sha1 = "d14a6fa5890ea3a7e5dcab6811114f132fec2b4b"
@@ -603,9 +603,9 @@ version = "2019.0.117+2"
 
 [[MacroTools]]
 deps = ["DataStructures", "Markdown", "Random"]
-git-tree-sha1 = "e2fc7a55bb2224e203bbd8b59f72b91323233458"
+git-tree-sha1 = "07ee65e03e28ca88bc9a338a3726ae0c3efaa94b"
 uuid = "1914dd2f-81c6-5fcd-8719-6d5c9610ff09"
-version = "0.5.3"
+version = "0.5.4"
 
 [[Markdown]]
 deps = ["Base64"]
@@ -1006,9 +1006,9 @@ uuid = "4607b0f0-06f3-5cda-b6b1-a6196a1729e9"
 
 [[Sundials]]
 deps = ["BinaryProvider", "DataStructures", "DiffEqBase", "Libdl", "LinearAlgebra", "Logging", "Reexport", "SparseArrays", "SuiteSparse"]
-git-tree-sha1 = "a4d1e71b4fcfe655e0f96e935d173d1cefeaacc7"
+git-tree-sha1 = "d170564815dafe201568a84884d2c9bd52dc4eb6"
 uuid = "c3572dad-4567-51f8-b174-8c6c989267f4"
-version = "3.8.1"
+version = "3.8.2"
 
 [[SymbolServer]]
 deps = ["LibGit2", "Pkg", "SHA", "Serialization"]
