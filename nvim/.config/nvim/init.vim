@@ -34,6 +34,7 @@ if dein#load_state('~/.cache/dein')
     " Colors
     call dein#add('joshdick/onedark.vim')
     call dein#add('lifepillar/vim-solarized8')
+    call dein#add('KeitaNakamura/neodark.vim')
 
     " Sudo
     call dein#add('lambdalisue/suda.vim')
@@ -165,7 +166,7 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamecollapse = 0
 let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline_theme = 'onedark'
+"let g:airline_theme = 'onedark'
 " }}}
 
 " Fuzzy{{{
@@ -636,6 +637,11 @@ let g:pydocstring_enable_comment = 0
 let g:pydocstring_enable_mapping = 0
 " }}}
 
+" Neodark {{{
+let g:neodark#background = '#202020'
+"let g:neodark#terminal_transparent = 1 " default: 0
+" }}}
+
 " Settings {{{
 
 " Enable True Colors
@@ -657,7 +663,7 @@ filetype indent on
 " Set the colorscheme
 set background=dark
 syntax on
-colorscheme onedark
+colorscheme neodark
 
 " Enable syntax based folding
 set foldenable
