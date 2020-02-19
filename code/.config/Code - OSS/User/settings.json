@@ -117,5 +117,6 @@
             ],
             "env": {}
         }
-    ]
+    ],
+    "latex-workshop.view.pdf.viewer": "tab"
 }

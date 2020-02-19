@@ -6,7 +6,7 @@
 source /etc/profile
 
 # setting the PATH envirorment variable
-export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.cabal/bin:$HOME/.luarocks/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin"
 
 # library path
 export LD_LIBRARY_PATH="$HOME/.local/lib64:$HOME/.local/lib:$LD_LIBRARYPATH"
@@ -31,9 +31,6 @@ elif [ "$HOST" = "tachanka" ]; then
     export VDPAU_DRIVER=va_gl
 fi
 
-# I dunno.... :)
-export GDK_USE_XFT=1
-
 # Enabling AntiAliasing for applications using the
 # .. java virtual machine and use gtk default look and feel
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
@@ -45,7 +42,7 @@ export EDITOR="nvim"
 export BROWSER="firefox"
 
 # Default terminal emulator
-export TERMINAL="termite"
+export TERMINAL="gnome-terminal"
 
 # Start gnome keyring
 if [ -n "$DESKTOP_SESSION" ]; then
@@ -56,9 +53,6 @@ fi
 # Ruby
 export GEM_HOME=$(ruby -e 'print Gem.user_dir')
 export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
-
-# usefull paths
-export I3SESSIONS=$HOME/var/i3sessions
 
 # Rust Path, if any
 [ -e "$HOME/.cargo/env" ] && source $HOME/.cargo/env
@@ -77,9 +71,6 @@ fi
 if [ -f $HOME/.Xmodmap ]; then
     xmodmap ~/.Xmodmap
 fi
-
-# GTK use xdg-desktop-portal (for things like kdialog in firefox)
-export GTK_USE_PORTAL=1
 
 export QT_QPA_PLATFORMTHEME=gtk2
 

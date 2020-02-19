@@ -110,6 +110,11 @@ if (( $+commands[direnv] )); then eval "$(direnv hook zsh)"; fi
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
+# remove aliases
+unalias cp
+unalias mv
+unalias rm
+
 # tilix
 if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
         source /etc/profile.d/vte.sh
