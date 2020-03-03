@@ -57,6 +57,14 @@ export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
 # Rust Path, if any
 [ -e "$HOME/.cargo/env" ] && source $HOME/.cargo/env
 
+# Julia
+# I am really tired of problems with julia and dynamic system libraries,
+# so I will be using the binary releases directly from the Julia website.
+# It is full julia developers fault here.
+if [ -f "$HOME/Software/julia-current/bin/julia" ]; then
+    export PATH="$HOME/Software/julia-current/bin:$PATH"
+fi
+
 # FASD
 if which fasd &> /dev/null; then
     eval "$(fasd --init auto)"
