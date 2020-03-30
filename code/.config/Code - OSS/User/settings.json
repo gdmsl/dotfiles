@@ -17,6 +17,9 @@
     "[cpp]": {
         "editor.defaultFormatter": "ms-vscode.cpptools"
     },
+    "[julia]": {
+        "editor.defaultFormatter": "singularitti.vscode-julia-formatter"
+    },
     "julia.enableTelemetry": true,
     "window.zoomLevel": 0,
     "latex-workshop.latex.recipes": [

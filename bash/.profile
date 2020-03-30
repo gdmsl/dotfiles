@@ -12,7 +12,7 @@ export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 export LD_LIBRARY_PATH="$HOME/.local/lib64:$HOME/.local/lib:$LD_LIBRARYPATH"
 
 # go path
-export GOPATH="$GOPATH:$HOME/Variable/go"
+export GOPATH="$HOME/Variable/go"
 export PATH="$PATH:$GOPATH/bin"
 
 # python path
@@ -61,9 +61,7 @@ export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
 # I am really tired of problems with julia and dynamic system libraries,
 # so I will be using the binary releases directly from the Julia website.
 # It is full julia developers fault here.
-if [ -f "$HOME/Software/julia-current/bin/julia" ]; then
-    export PATH="$HOME/Software/julia-current/bin:$PATH"
-fi
+export PATH="$HOME/Software/julia-current/bin:$PATH"
 
 # FASD
 if which fasd &> /dev/null; then
@@ -80,8 +78,10 @@ if [ -f $HOME/.Xmodmap ]; then
     xmodmap ~/.Xmodmap
 fi
 
-export QT_QPA_PLATFORMTHEME=gtk2
-
 # Use ripgrep as default grep in fzf (and fzf.vim)
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
+
+# Use desktop portal in gtk apps
+# this will use kde dialogs
+export GTK_USE_PORTAL=1
 
