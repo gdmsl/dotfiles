@@ -1,0 +1,23 @@
+# Set colors from .Xresources and use Solarized color scheme as a fallback
+
+background = ${xrdb:background:#0F131C}
+background-alt = ${xrdb:polybar.background_alt}
+background-alt2 = ${xrdb:polybar.background_alt2}
+
+foreground = ${xrdb:foreground:#000000}
+foreground-alt = ${xrdb:polybar.foreground_alt}
+foreground-alt2 = ${xrdb:polybar.foreground_alt2}
+
+primary = ${xrdb:polybar.primary:#268BD2}
+secondary = ${xrdb:polybar.secondary:#859900}
+urgent = ${xrdb:polybar.urgent:#DC322F}
+
+fg1 = ${xrdb:color1}
+fg2 = ${xrdb:color2}
+fg3 = ${xrdb:color3}
+fg4 = ${xrdb:color4}
+fg5 = ${xrdb:color5}
+fg6 = ${xrdb:color6}
+fg7 = ${xrdb:color7}
+
+; vim:ft=dosini

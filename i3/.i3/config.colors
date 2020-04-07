@@ -5,41 +5,4 @@
 
 # AUTHOR: Guido Masella <guido.masella@gmail.com>
 
-# using xresources directly
-# set_from_resource $varname i3wm.name fallback
-set_from_resource $color0 i3wm.color0 #000000
-set_from_resource $color1 i3wm.color1 #cc0403
-set_from_resource $color2 i3wm.color2 #19cb00
-set_from_resource $color3 i3wm.color3 #cecb00
-set_from_resource $color4 i3wm.color4 #001cd1
-set_from_resource $color5 i3wm.color5 #cb1ed1
-set_from_resource $color6 i3wm.color6 #0dcdcd
-set_from_resource $color7 i3wm.color7 #e5e5e5
-set_from_resource $color8 i3wm.color8 #4d4d4d
-set_from_resource $color9 i3wm.color9 #3e0605
-set_from_resource $color10 i3wm.color10 #23fd00
-set_from_resource $color11 i3wm.color11 #fffd00
-set_from_resource $color12 i3wm.color12 #0026ff
-set_from_resource $color13 i3wm.color13 #fd28ff
-set_from_resource $color14 i3wm.color14 #14ffff
-set_from_resource $color15 i3wm.color15 #ffffff
-set_from_resource $color16 i3wm.color16 #ffffff
-set_from_resource $color17 i3wm.color17 #ffffff
-set_from_resource $color18 i3wm.color18 #ffffff
-set_from_resource $color19 i3wm.color19 #ffffff
-set_from_resource $color20 i3wm.color20 #ffffff
-set_from_resource $color21 i3wm.color21 #ffffff
-
-set_from_resource $c_focused    i3wm.color4 #0000FF
-set_from_resource $c_urgent     i3wm.color1 #FF0000
-set_from_resource $c_active     i3wm.color8 #AAAAAA
-set_from_resource $c_inactive   i3wm.color0 #555555
-set_from_resource $c_focused_t  i3wm.color0 #FFFFFF
-set_from_resource $c_urgent_t   i3wm.color0 #FFFFFF
-set_from_resource $c_active_t   i3wm.color7 #FFFFFF
-set_from_resource $c_inactive_t i3wm.color7 #FFFFFF
-set_from_resource $c_indicator  i3wm.color2 #FFFF00
-set_from_resource $c_bg         i3wm.color0 #000000
-set_from_resource $c_fg         i3wm.color7 #FFFFFF
-set_from_resource $c_separator  i3wm.color8 #CCCCCC
 

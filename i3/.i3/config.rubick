@@ -20,7 +20,3 @@ set $O2 DP1
 set $O3 HDMI1
 
 # }}}
-
-# AUTOSTART {{{
-exec --no-startup-id blueman-applet
-# }}}

@@ -1,6 +1,0 @@
-#!/bin/bash
-
-export ATOM_HOME=$HOME/.juno
-atom $@
-
-# vim : set ft=sh : #

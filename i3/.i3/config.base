@@ -5,6 +5,24 @@
 
 # AUTHOR: Guido Masella <guido.masella@gmail.com>
 
+# COLORS {{{
+
+# set_from_resource $varname i3wm.name fallback
+set_from_resource $c_focused    i3wm.focused #0000FF
+set_from_resource $c_urgent     i3wm.urgent #FF0000
+set_from_resource $c_active     i3wm.active #AAAAAA
+set_from_resource $c_inactive   i3wm.inactive #555555
+set_from_resource $c_focused_t  i3wm.focused_t #FFFFFF
+set_from_resource $c_urgent_t   i3wm.urgent_t #FFFFFF
+set_from_resource $c_active_t   i3wm.active_t #FFFFFF
+set_from_resource $c_inactive_t i3wm.inactive_t #FFFFFF
+set_from_resource $c_indicator  i3wm.indicator #FFFF00
+set_from_resource $c_bg         i3wm.background #000000
+set_from_resource $c_fg         i3wm.foreground #FFFFFF
+set_from_resource $c_separator  i3wm.separator #CCCCCC
+
+# }}}
+
 # BASE/APPS KEYBINDINGS {{{
 
 # Use the Super ("win") key as default modifier
@@ -18,14 +36,17 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+Return exec uxterm
 
 # Start a filemanager
-bindsym $mod+x exec xterm -e ranger
-bindsym $mod+Shift+x exec thunar
+bindsym $mod+x exec termite -e ranger
+bindsym $mod+Shift+x exec pcmanfm
 
-# start dmenu (a program launcher) with Super+d and
-# .. a modified version (which reads only .desktop files) with
-# .. Super+Shift+d
+# start rofi (a program launcher) with Super+d and
 bindsym $mod+d exec --no-startup-id "rofi -modi 'run,ssh,window' -show run"
+
+# start the filefinder with Super+Shift+d
 bindsym $mod+Shift+d exec --no-startup-id "rofi-filefinder.sh"
+
+# Start the clipboard manager with Super+b
+bindsym $mod+b exec --no-startup-id "rofi -modi 'clipboard:greenclip print' -show clipboard -run-command '{cmd}'"
 
 # Reload the configuration file
 bindsym $mod+Shift+c reload
@@ -39,11 +60,6 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Do you really want to exit i
 # Brightness control
 bindsym XF86MonBrightnessDown exec "xbacklight -dec 10"
 bindsym XF86MonBrightnessUp exec "xbacklight -inc 20"
-
-# Volume ALSA
-#bindsym XF86AudioMute exec --no-startup-id "amixer set Master toggle; pkill -RTMIN+10 i3blocks"
-#bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer set Master 5%+ unmute; pkill -RTMIN+10 i3blocks; paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
-#bindsym XF86AudioLowerVolume exec --no-startup-id "amixer set Master 5%- unmute; pkill -RTMIN+10 i3blocks; paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
 
 # Volume PULSE
 bindsym XF86AudioMute exec --no-startup-id "amixer -D pulse set Master toggle; pkill -RTMIN+10 i3blocks"
@@ -80,10 +96,7 @@ mode "$mode_system" {
 bindsym $mod+z mode "$mode_system"
 
 # take screenshots
-bindcode 107 exec --no-startup-id "maim ~/usr/pictures/screenshots/$(date +%F-%T).png && paplay /usr/share/sounds/freedesktop/stereo/screen-capture.oga"
-
-# avoid nosy people to sniff on your screen
-bindsym $mod+Delete exec --no-startup-id "~/.local/bin/i3-contain_nosy_people.sh"
+bindsym Print exec --no-startup-id "maim ~/Pictures/Screenshots/$(date +%F-%T).png && paplay /usr/share/sounds/freedesktop/stereo/screen-capture.oga"
 
 # }}}
 
@@ -295,7 +308,6 @@ for_window [class="Civ5XP"] fullscreen
 
 # other
 assign [class="TelegramDesktop"] $WS11
-assign [class="mutt"] $WS12
 assign [class="Thunderbird"] $WS12
 assign [class="Mail"] $WS12
 
@@ -310,7 +322,7 @@ font pango: Fira Code 10, FontAwesome 10
 # Colors
 # class                 border      background  text          indicator    child_border
 client.focused          $c_focused  $c_focused  $c_focused_t  $c_indicator $c_focused
-client.focused_inactive $c_inactive $c_active   $c_active_t   $c_active    $c_active
+client.focused_inactive $c_active   $c_active   $c_active_t   $c_active    $c_active
 client.unfocused        $c_inactive $c_inactive $c_inactive_t $c_inactive  $c_inactive
 client.urgent           $c_urgent   $c_urgent   $c_urgent_t   $c_urgent    $c_urgent
 
@@ -339,8 +351,8 @@ exec --no-startup-id xset dpms 600
 # set the $O1 as default (primary)
 exec xrandr --output $O1 --primary
 
-# Compositor with libmumble preloaded (for the overlay)
-exec "LD_PRELOAD=/usr/lib/mumble/libmumble.so compton --config ~/.config/compton/compton-i3.conf -b"
+# Compositor
+exec "compton --config ~/.config/compton/compton-i3.conf -b"
 
 # the bar
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
@@ -350,9 +362,6 @@ exec --no-startup-id "dunst"
 
 # Startup sound
 exec --no-startup-id "paplay /usr/share/sounds/freedesktop/stereo/service-login.oga"
-
-# PulseAudio volume control
-exec --no-startup-id pavucontrol
 
 # System monior running in the scratchpad
 exec --no-startup-id termite --title=scratchmonitor -e "zsh -c glances"
@@ -366,17 +375,10 @@ exec --no-startup-id "nitrogen --restore"
 #polkit agent
 exec --no-startup-id "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 
-# Network Manager Applet (applet to manage connections)
-exec --no-startup-id /usr/bin/nm-applet
+# Clipboard
+exec --no-startup-id "greenclip daemon"
 
-# Copyq
-exec --no-startup-id copyq
-
-# MegaSync. Client for automatic syncing with Mega.co.nz
-exec --no-startup-id "megasync"
-
-# Redshift, a software to change color temperature according to the
-# time of the day
-exec --no-startup-id "redshift-gtk"
+# Autostart .desktop files in ~/.config/autostart using dex
+exec dex -ae i3
 
 # }}}

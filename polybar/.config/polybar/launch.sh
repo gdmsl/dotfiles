@@ -6,18 +6,18 @@ killall -q polybar
 # Wait until the processes have been shut down
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
-# Get the connected monitors
-monitors=$(xrandr | grep " connected" | awk '{ print $1 }')
+wlan=$(ip link show | grep -E  '^[0-9]+: wlp' | awk '{print $2}' | tr -d ':' | head -n 1)
+eth=$(ip link show | grep -E  '^[0-9]+: enp' | awk '{print $2}' | tr -d ':' | head -n 1)
 
-counter=1
-for m in $monitors; do
-    postfix="$counter"
-    if [ $counter -eq 1 ]; then
-        postfix=''
-    fi
-    polybar $HOSTNAME$postfix &
-
-    counter=$((counter+1))
-done
+if type "xrandr"; then
+    # Get all the connected monitors
+    monitors=$(xrandr | grep " connected" | awk '{ print $1 }')
+    for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
+        ETH=$eth WLAN=$wlan MONITOR=$m polybar --reload full &
+    done
+else
+    ETH=$eth WLAN=$wlan polybar --reload full &
+fi
 
 echo "Bars launched..."
+

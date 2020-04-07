@@ -34,7 +34,6 @@ URxvt*cursorUnderline:      true
 URxvt*cursorBlink:          true
 
 ! xft settings ---------------------------------------------------------------
-!Xft.dpi:        120
 Xft.lcdfilter:  lcddefault
 Xft.antialias:  true
 Xft.rgba:       rgb
@@ -44,13 +43,38 @@ Xft.hintstyle:  slight
 ! colorscheme
 #include "/home/gdmsl/.xrdb/base16-onedark-256.Xresources"
 
+! i3wm -----------------------------------------------------------------------
+i3wm.focused: base0B
+i3wm.focused_t: base00
+
+i3wm.urgent: base08
+i3wm.urgent_t: base00
+
+i3wm.active: base02
+i3wm.active_t: base05
+
+i3wm.inactive: base01
+i3wm.inactive_t: base04
+
+i3wm.indicator: base0E
+i3wm.separator: base00
+
+! polybar --------------------------------------------------------------------
+polybar.background_alt: base01
+polybar.foreground_alt: base04
+polybar.background_alt2: base0B
+polybar.foreground_alt2: base00
+polybar.primary: base0B
+polybar.secondary: base0A
+polybar.urgent: base08
+
 ! rofi -----------------------------------------------------------------------
-rofi.color-window: base01,base0D
-rofi.color-normal: base01,base05,base01,base0D,base01
-rofi.color-active: base01,base05,base01,base0D,base01
-rofi.font:  Hack 10
-rofi.bw:    1
-rofi.o:     85
+rofi.color-window: base01,base0B
+rofi.color-normal: base01,base05,base01,base01,base06
+rofi.color-active: base01,base05,base01,base01,base06
+rofi.font:  Fira Mono 10
+rofi.bw:    3
+rofi.o:     100
 rofi.terminal:  termite
 rofi.location:  0
 rofi.separator-style: solid

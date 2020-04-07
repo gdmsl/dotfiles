@@ -663,7 +663,7 @@ filetype indent on
 " Set the colorscheme
 set background=dark
 syntax on
-colorscheme neodark
+colorscheme onedark
 
 " Enable syntax based folding
 set foldenable
