@@ -199,7 +199,6 @@ format-discharging-underline = ${self.format-charging-underline}
 
 format-full-prefix = "  "
 format-full-prefix-foreground = ${colors.foreground-alt}
-format-full-underline = ${self.format-charging-underline}
 
 ramp-capacity-0 = " "
 ramp-capacity-1 = " "

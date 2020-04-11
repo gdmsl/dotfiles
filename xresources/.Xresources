@@ -70,7 +70,7 @@ polybar.urgent: base08
 
 ! rofi -----------------------------------------------------------------------
 rofi.color-window: base01,base0B
-rofi.color-normal: base01,base05,base01,base01,base06
+rofi.color-normal: base01,base05,base01,base01,base0B
 rofi.color-active: base01,base05,base01,base01,base06
 rofi.font:  Fira Mono 10
 rofi.bw:    3
