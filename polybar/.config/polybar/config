@@ -115,7 +115,7 @@ label = %percentage_used%%
 
 [module/wlan]
 type = internal/network
-interface = ${env:WIRELESS:wlp0s20f0u2}
+interface = ${env:WLAN:wlp0s20f0u2}
 interval = 3.0
 
 format-connected =  <ramp-signal> <label-connected>
@@ -179,6 +179,8 @@ type = internal/pulseaudio
 format-volume = <ramp-volume> <label-volume>
 format-volume-background = ${colors.background-alt}
 
+format-muted-background = ${colors.background-alt}
+
 label-muted = "%{T4} %{T-}mute"
 
 ramp-volume-0 = "%{T4} %{T-}"
@@ -191,35 +193,31 @@ battery = BAT0
 adapter = AC0
 full-at = 98
 
+format-full-background = ${colors.background-alt}
+
 format-charging = <animation-charging> <label-charging>
 format-charging-background = ${colors.background-alt}
-format-charging-foreground = ${colors.foreground-alt}
 
 format-discharging = <animation-discharging> <label-discharging>
 format-discharging-background = ${colors.background-alt}
-format-discharging-foreground = ${colors.foreground-alt}
 
 format-full-prefix = "  "
-format-full-prefix-foreground = ${colors.foreground-alt}
 format-full-prefix-background = ${colors.background-alt}
 
 ramp-capacity-0 = " "
 ramp-capacity-1 = " "
 ramp-capacity-2 = " "
-ramp-capacity-foreground = ${colors.foreground-alt}
 ramp-capacity-background = ${colors.background-alt}
 
 animation-charging-0 = " "
 animation-charging-1 = " "
 animation-charging-2 = " "
-animation-charging-foreground = ${colors.foreground-alt}
 animation-charging-background = ${colors.background-alt}
 animation-charging-framerate = 750
 
 animation-discharging-0 = " "
 animation-discharging-1 = " "
 animation-discharging-2 = " "
-animation-discharging-foreground = ${colors.foreground-alt}
 animation-discharging-background = ${colors.background-alt}
 animation-discharging-framerate = 750
 
