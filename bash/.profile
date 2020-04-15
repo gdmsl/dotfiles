@@ -20,20 +20,16 @@ export PATH="$PATH:$GOPATH/bin"
 #export PYTHONPATH="$PYTHONUSERBASE/lib/python3.7/site-packages:$PYTHONPATH"
 #export PATH="$PYTHONUSERBASE/bin:$PATH"
 
-# Experience tell me that it's rather impossible to make vdpau
-# .. work with my discrete nvidia with OPTIMUS. So maybe i can make use
-# .. of hardware acceleration with my Intel card
 if [ "$HOST" = "rubick" ]; then
+    export LIBVA_DRIVER_NAME=i965
     export VDPAU_DRIVER=va_gl
 elif [ "$HOST" = "spectre" ]; then
-    export VDPAU_DRIVER=va_gl
+    export LIBVA_DRIVER_NAME=vdpau
+    export VDPAU_DRIVER=nvidia
 elif [ "$HOST" = "tachanka" ]; then
+    export LIBVA_DRIVER_NAME=i965
     export VDPAU_DRIVER=va_gl
 fi
-
-# Enabling AntiAliasing for applications using the
-# .. java virtual machine and use gtk default look and feel
-export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 
 # Default text editor
 export EDITOR="nvim"
@@ -42,7 +38,7 @@ export EDITOR="nvim"
 export BROWSER="firefox"
 
 # Default terminal emulator
-export TERMINAL="gnome-terminal"
+export TERMINAL="termite"
 
 # Start gnome keyring
 if [ -n "$DESKTOP_SESSION" ]; then
@@ -57,20 +53,12 @@ export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
 # Rust Path, if any
 [ -e "$HOME/.cargo/env" ] && source $HOME/.cargo/env
 
-# Julia
-# I am really tired of problems with julia and dynamic system libraries,
-# so I will be using the binary releases directly from the Julia website.
-# It is full julia developers fault here.
+# Use binary release of julia
 export PATH="$HOME/Software/julia-current/bin:$PATH"
 
 # FASD
 if which fasd &> /dev/null; then
     eval "$(fasd --init auto)"
-fi
-
-# linux brew
-if [ -d $HOME/.linuxbrew ]; then
-    export PATH="$HOME/.linuxbrew/bin:$PATH"
 fi
 
 # keys for xmodmap
@@ -80,8 +68,4 @@ fi
 
 # Use ripgrep as default grep in fzf (and fzf.vim)
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
-
-# Use desktop portal in gtk apps
-# this will use kde dialogs
-export GTK_USE_PORTAL=1
 

@@ -237,18 +237,22 @@
 #    urgency = normal
 #
 
+frame_color = "#abb2bf"
+separator_color = "#abb2bf"
+
 [base16_low]
     msg_urgency = low
-    background = "#2C393F"
-    foreground = "#707880"
+    background = "#353b45"
+    foreground = "#545862"
 
 [base16_normal]
     msg_urgency = normal
-    background = "#37474F"
-    foreground = "#CDD3DE"
+    background = "#3e4451"
+    foreground = "#abb2bf"
 
 [base16_critical]
     msg_urgency = critical
-    background = "#EC5F67"
-    foreground = "#D5DBE5"
+    background = "#e06c75"
+    foreground = "#b6bdca"
+
 # vim: ft=cfg
