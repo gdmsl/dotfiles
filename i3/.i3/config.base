@@ -36,7 +36,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+Return exec uxterm
 
 # Start a filemanager
-bindsym $mod+x exec termite -e ranger
+bindsym $mod+x exec alacritty -e ranger
 bindsym $mod+Shift+x exec pcmanfm
 
 # start rofi (a program launcher) with Super+d and
@@ -268,10 +268,6 @@ bindsym $mod+Tab workspace back_and_forth
 bindsym $mod+p workspace prev_on_output
 bindsym $mod+n workspace next_on_output
 
-# load special workspaces
-bindsym $mod+Control+minus exec --no-startup-id "~/.local/bin/i3-load-wscomm.sh"
-bindsym $mod+Control+equal exec --no-startup-id termite --class=mutt -e "zsh -c mutt"
-
 # }}}
 
 # WINDOWS RULES {{{
@@ -364,7 +360,7 @@ exec --no-startup-id "dunst"
 exec --no-startup-id "paplay /usr/share/sounds/freedesktop/stereo/service-login.oga"
 
 # System monior running in the scratchpad
-exec --no-startup-id termite --title=scratchmonitor -e "zsh -c glances"
+exec --no-startup-id alacritty --title=scratchmonitor -e "zsh -c glances"
 
 # File manager daemon to identify plugged devices
 exec --no-startup-id "pcmanfm -d"
