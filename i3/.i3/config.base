@@ -292,7 +292,7 @@ for_window [window_role="gimp-dock"] floating disable
 assign [class="Steam"] $WS10
 
 # Scratchpad
-for_window [title="scratchmonitor"] move scratchpad
+for_window [title="i3scratchpad"] move scratchpad
 for_window [class="Pavucontrol"] move scratchpad
 for_window [class="firefox_scratch"] move scratchpad
 
@@ -304,6 +304,8 @@ for_window [class="Civ5XP"] fullscreen
 
 # other
 assign [class="TelegramDesktop"] $WS11
+assign [class="Slack"] $WS11
+assign [class="Skype"] $WS11
 assign [class="Thunderbird"] $WS12
 assign [class="Mail"] $WS12
 
@@ -358,9 +360,6 @@ exec --no-startup-id "dunst"
 
 # Startup sound
 exec --no-startup-id "paplay /usr/share/sounds/freedesktop/stereo/service-login.oga"
-
-# System monior running in the scratchpad
-exec --no-startup-id alacritty --title=scratchmonitor -e "zsh -c glances"
 
 # File manager daemon to identify plugged devices
 exec --no-startup-id "pcmanfm -d"
