@@ -195,7 +195,7 @@ full-at = 98
 
 format-full-background = ${colors.background-alt}
 
-format-charging = <animation-charging> <label-charging>
+format-charging =  <animation-charging> <label-charging>
 format-charging-background = ${colors.background-alt}
 
 format-discharging = <animation-discharging> <label-discharging>
@@ -204,21 +204,19 @@ format-discharging-background = ${colors.background-alt}
 format-full-prefix = "  "
 format-full-prefix-background = ${colors.background-alt}
 
-ramp-capacity-0 = " "
-ramp-capacity-1 = " "
-ramp-capacity-2 = " "
+ramp-capacity-0 = "  "
+ramp-capacity-1 = "  "
+ramp-capacity-2 = "  "
 ramp-capacity-background = ${colors.background-alt}
 
-animation-charging-0 = " "
-animation-charging-1 = " "
-animation-charging-2 = " "
-animation-charging-background = ${colors.background-alt}
+animation-charging-0 = "  "
+animation-charging-1 = "  "
+animation-charging-2 = "  "
 animation-charging-framerate = 750
 
-animation-discharging-0 = " "
-animation-discharging-1 = " "
-animation-discharging-2 = " "
-animation-discharging-background = ${colors.background-alt}
+animation-discharging-0 = "  "
+animation-discharging-1 = "  "
+animation-discharging-2 = "  "
 animation-discharging-framerate = 750
 
 [module/temperature]
