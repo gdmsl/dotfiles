@@ -1,5 +1,6 @@
 # Font configuration (changes require restart)
 font:
+  size: 10
   # The normal (roman) font face to use.
   normal:
     family: FiraCode Nerd Font
