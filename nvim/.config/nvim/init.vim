@@ -725,6 +725,8 @@ onoremap <up> <nop>
 onoremap <down> <nop>
 onoremap <right> <nop>
 
+" Exit from terminal
+tnoremap <C-t><C-e> <C-\><C-n>
 
 " Configure the silver searcher
 if executable('ag')

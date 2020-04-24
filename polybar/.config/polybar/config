@@ -19,7 +19,6 @@ include-file=~/.config/polybar/colors
 
 [bar/full]
 monitor = ${env:MONITOR:HDMI-1}
-bottom = true
 enable-ipc = true
 override-redirect = false
 
@@ -275,6 +274,10 @@ type = custom/text
 content-background = ${colors.background-alt2}
 content-foreground = ${colors.background}
 content = " %{T2}%{T-}"
+
+[module/title]
+type = internal/xwindow
+format = <label>
 
 [settings]
 screenchange-reload = true
