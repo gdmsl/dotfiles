@@ -303,7 +303,7 @@ assign [class="Steam"] $WS10
 
 # Scratchpad
 for_window [title="i3scratchpad"] move scratchpad
-for_window [class="Pavucontrol"] move scratchpad
+for_window [class="pavucontrol-qt"] move scratchpad
 for_window [class="firefox_scratch"] move scratchpad
 
 # GAMES

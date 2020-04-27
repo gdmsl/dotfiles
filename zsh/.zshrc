@@ -20,13 +20,10 @@ fi
 export REPORTTIME=10
 
 # init screen
-if ! timeout 5s ping -w 1 -W 1 -c 1 mail.google.com &> /dev/null; then
-    fortune -s
-else
-    timeout 5s curl wttr.in/\?0
-fi
+fortune -s
 
 if which pacman &> /dev/null; then
+    echo ""
     echo "$fg[red]Last -Syu:$reset_color $(grep "pacman -Syu" /var/log/pacman.log | tail -n2 | head -n1 | cut -c 2- | cut -c-16)"
     echo "$reset_color"
 fi
