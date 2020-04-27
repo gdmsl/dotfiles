@@ -15,6 +15,11 @@ export LD_LIBRARY_PATH="$HOME/.local/lib64:$HOME/.local/lib:$LD_LIBRARYPATH"
 export GOPATH="$HOME/Variable/go"
 export PATH="$PATH:$GOPATH/bin"
 
+# XDG
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+
 # python path
 #export PYTHONUSERBASE="$HOME/Variable/python3"
 #export PYTHONPATH="$PYTHONUSERBASE/lib/python3.7/site-packages:$PYTHONPATH"
@@ -45,6 +50,9 @@ if [ -n "$DESKTOP_SESSION" ]; then
     eval $(gnome-keyring-daemon --start)
     export SSH_AUTH_SOCK
 fi
+
+# QT5 style
+export QT_QPA_PLATFORMTHEME=qt5ct
 
 # Ruby
 export GEM_HOME=$(ruby -e 'print Gem.user_dir')

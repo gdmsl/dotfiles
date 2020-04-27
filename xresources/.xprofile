@@ -14,10 +14,6 @@ fi
 # load the Xresources
 [[ -f ~/.Xresources ]] && xrdb ~/.Xresources
 
-if [ "$HOSTNAME" = "rubick" ]; then
-    xrdb -merge ~/.xrdb/fullhd.xresources
-fi
-
 # disable mouse acceleration
 if [ "$HOSTNAME" = "spectre" ]; then
     xset m 0 0

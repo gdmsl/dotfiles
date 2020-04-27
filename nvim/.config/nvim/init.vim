@@ -32,9 +32,7 @@ if dein#load_state('~/.cache/dein')
     call dein#add('lambdalisue/gina.vim', { 'on_cmd' : 'Gina'})
 
     " Colors
-    call dein#add('joshdick/onedark.vim')
-    call dein#add('lifepillar/vim-solarized8')
-    call dein#add('KeitaNakamura/neodark.vim')
+    call dein#add('arcticicestudio/nord-vim')
 
     " Sudo
     call dein#add('lambdalisue/suda.vim')
@@ -663,7 +661,11 @@ filetype indent on
 " Set the colorscheme
 set background=dark
 syntax on
-colorscheme onedark
+colorscheme nord
+
+" for keeping background opacity
+hi! Normal ctermbg=NONE guibg=NONE
+hi! NonText ctermbg=NONE guibg=NONE guifg=NONE ctermfg=NONE
 
 " Enable syntax based folding
 set foldenable

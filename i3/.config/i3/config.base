@@ -1,27 +1,9 @@
 #
-# ~/.i3/config
+# i3 Base configuration
 #
 # vim: set ft=conf sw=4 ts=4 sts=4 et tw=78 fdm=marker fdl=0 foldmarker={{{,}}} :
 
 # AUTHOR: Guido Masella <guido.masella@gmail.com>
-
-# COLORS {{{
-
-# set_from_resource $varname i3wm.name fallback
-set_from_resource $c_focused    i3wm.focused #0000FF
-set_from_resource $c_urgent     i3wm.urgent #FF0000
-set_from_resource $c_active     i3wm.active #AAAAAA
-set_from_resource $c_inactive   i3wm.inactive #555555
-set_from_resource $c_focused_t  i3wm.focused_t #FFFFFF
-set_from_resource $c_urgent_t   i3wm.urgent_t #FFFFFF
-set_from_resource $c_active_t   i3wm.active_t #FFFFFF
-set_from_resource $c_inactive_t i3wm.inactive_t #FFFFFF
-set_from_resource $c_indicator  i3wm.indicator #FFFF00
-set_from_resource $c_bg         i3wm.background #000000
-set_from_resource $c_fg         i3wm.foreground #FFFFFF
-set_from_resource $c_separator  i3wm.separator #CCCCCC
-
-# }}}
 
 # BASE/APPS KEYBINDINGS {{{
 
@@ -40,7 +22,7 @@ bindsym $mod+x exec alacritty -e ranger
 bindsym $mod+Shift+x exec pcmanfm
 
 # start rofi (a program launcher) with Super+d and
-bindsym $mod+d exec --no-startup-id "rofi -modi 'run,ssh,window' -show run"
+bindsym $mod+d exec --no-startup-id "rofi -show combi"
 
 # start the filefinder with Super+Shift+d
 bindsym $mod+Shift+d exec --no-startup-id "rofi-filefinder.sh"
@@ -65,9 +47,6 @@ bindsym XF86MonBrightnessUp exec "xbacklight -inc 20"
 bindsym XF86AudioMute exec --no-startup-id "amixer -D pulse set Master toggle; pkill -RTMIN+10 i3blocks"
 bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer -D pulse set Master 5%+ unmute; pkill -RTMIN+10 i3blocks; paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
 bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pulse set Master 5%- unmute; pkill -RTMIN+10 i3blocks; paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
-
-# Alsamixer
-#bindsym $mod+m exec "xterm -e alsamixer; pkill -RTMIN+10 i3blocks"
 
 # Make the currently focused window a scratchpad
 bindsym $mod+Shift+slash move scratchpad
@@ -270,6 +249,37 @@ bindsym $mod+n workspace next_on_output
 
 # }}}
 
+# LOOK {{{
+
+set $borderwidth 3
+
+# Font used to display widows titles, and other i3 stuffs
+# .. not used for i3bar
+font pango: Fira Code 10, FontAwesome 10
+
+# Keybindings to change border style
+bindsym $mod+t border normal $borderwidth
+bindsym $mod+y border pixel $borderwidth
+bindsym $mod+u border none
+
+# New windows are titleless
+new_window pixel $borderwidth
+new_float pixel $borderwidth
+
+# }}}
+
+# GAPS {{{
+
+# Set gaps
+# inner gaps are between containers
+# outer gaps with the edge of the screen
+gaps inner 10
+gaps outer -4
+
+# enabling smart gaps and borders
+smart_borders on
+# }}}
+
 # WINDOWS RULES {{{
 
 # assign web browsers to workspace web
@@ -278,7 +288,7 @@ assign [class="firefox"] $WS02
 
 # windows title
 for_window [class=".*"] title_format "<b>%title</b>"
-for_window [class=".*"] border pixel 3
+for_window [class=".*"] border pixel $borderwidth
 for_window [class="Chromium"] title_format "  <b>%title</b>"
 for_window [class="firefox"] title_format "  <b>%title</b>"
 
@@ -311,30 +321,6 @@ assign [class="Mail"] $WS12
 
 # }}}
 
-# LOOK {{{
-
-# Font used to display widows titles, and other i3 stuffs
-# .. not used for i3bar
-font pango: Fira Code 10, FontAwesome 10
-
-# Colors
-# class                 border      background  text          indicator    child_border
-client.focused          $c_focused  $c_focused  $c_focused_t  $c_indicator $c_focused
-client.focused_inactive $c_active   $c_active   $c_active_t   $c_active    $c_active
-client.unfocused        $c_inactive $c_inactive $c_inactive_t $c_inactive  $c_inactive
-client.urgent           $c_urgent   $c_urgent   $c_urgent_t   $c_urgent    $c_urgent
-
-# Keybindings to change border style
-bindsym $mod+t border normal 3
-bindsym $mod+y border pixel 3
-bindsym $mod+u border none
-
-# New windows are titleless
-new_window pixel 3
-new_float pixel 3
-
-# }}}
-
 # SCRATCHPAD {{{
 
 # Scratchpad
@@ -353,7 +339,7 @@ exec xrandr --output $O1 --primary
 exec "compton --config ~/.config/compton/compton-i3.conf -b"
 
 # the bar
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id "~/.config/polybar/launch.sh"
 
 # DUNST. A notification daemon
 exec --no-startup-id "dunst"
@@ -363,7 +349,7 @@ exec --no-startup-id "paplay /usr/share/sounds/freedesktop/stereo/service-login.
 
 # File manager daemon to identify plugged devices
 exec --no-startup-id "pcmanfm -d"
-#
+
 #wallpaper
 exec --no-startup-id "nitrogen --restore"
 

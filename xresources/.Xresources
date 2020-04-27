@@ -1,38 +1,3 @@
-! xterm settings --------------------------------------------------------------
-
-! make xterm 256 color compatible
-xterm*termName:		xterm-256color
-
-! enable UTF-8 locale
-xterm*locale:		true
-xterm*utf8:		2
-
-! fonts and colors
-xterm*faceName:		Hack::size=10
-xterm*font:		6x13
-xterm*dynamicColors:	true
-xterm*eightBitInput:	true
-
-! scrollback and scrollbar
-xterm*saveLines:	10240
-xterm*scrollBar:	false
-xterm*toolBar:		false
-
-! urxvt settings --------------------------------------------------------------
-URxvt*scrollBar:            false
-URxvt.font:                 xft:Hack:size=10
-URxvt.letterSpace:          -2
-URxvt.perl-ext-common:      default,matcher,clipboard,selection-to-clipboard
-URxvt.url-select.launcher:  chromium
-URxvt.url-select.underline: true
-URxvt.keysym.M-c:           perl:clipboard:copy
-URxvt.keysym.M-v:           perl:clipboard:paste
-URxvt.keysym.M-C-v:         perl:clipboard:paste_escaped
-URxvt.matcher.button:       1
-URxvt*saveLines:            12000
-URxvt*cursorUnderline:      true
-URxvt*cursorBlink:          true
-
 ! xft settings ---------------------------------------------------------------
 Xft.lcdfilter:  lcddefault
 Xft.antialias:  true
@@ -41,41 +6,66 @@ Xft.hinting:    true
 Xft.hintstyle:  slight
 
 ! colorscheme
-#include "/home/gdmsl/.xrdb/base16-onedark-256.Xresources"
+! Base16 Nord
+! Scheme: arcticicestudio
 
-! i3wm -----------------------------------------------------------------------
-i3wm.focused: base0B
-i3wm.focused_t: base00
+#define base00 #2E3440
+#define base01 #3B4252
+#define base02 #434C5E
+#define base03 #4C566A
+#define base04 #D8DEE9
+#define base05 #E5E9F0
+#define base06 #ECEFF4
+#define base07 #8FBCBB
+#define base08 #BF616A
+#define base09 #D08770
+#define base0A #EBCB8B
+#define base0B #A3BE8C
+#define base0C #88C0D0
+#define base0D #81A1C1
+#define base0E #B48EAD
+#define base0F #5E81AC
 
-i3wm.urgent: base08
-i3wm.urgent_t: base00
+*foreground:   base05
+#ifdef background_opacity
+*background:   [background_opacity]base00
+#else
+*background:   base00
+#endif
+*cursorColor:  base05
 
-i3wm.active: base02
-i3wm.active_t: base05
+*color0:       base00
+*color1:       base08
+*color2:       base0B
+*color3:       base0A
+*color4:       base0D
+*color5:       base0E
+*color6:       base0C
+*color7:       base05
 
-i3wm.inactive: base01
-i3wm.inactive_t: base04
+*color8:       base03
+*color9:       base08
+*color10:      base0B
+*color11:      base0A
+*color12:      base0D
+*color13:      base0E
+*color14:      base0C
+*color15:      base07
 
-i3wm.indicator: base0E
-i3wm.separator: base00
+! Note: colors beyond 15 might not be loaded (e.g., xterm, urxvt),
+! use 'shell' template to set these if necessary
+*color16:      base09
+*color17:      base0F
+*color18:      base01
+*color19:      base02
+*color20:      base04
+*color21:      base06
 
 ! polybar --------------------------------------------------------------------
 polybar.background_alt: base01
 polybar.foreground_alt: base04
-polybar.background_alt2: base0B
+polybar.background_alt2: base0D
 polybar.foreground_alt2: base00
-polybar.primary: base0B
+polybar.primary: base0D
 polybar.secondary: base0A
 polybar.urgent: base08
-
-! rofi -----------------------------------------------------------------------
-rofi.color-window: base01,base0B
-rofi.color-normal: base01,base05,base01,base01,base0B
-rofi.color-active: base01,base05,base01,base01,base06
-rofi.font:  Fira Mono 10
-rofi.bw:    3
-rofi.o:     100
-rofi.terminal:  termite
-rofi.location:  0
-rofi.separator-style: solid
-

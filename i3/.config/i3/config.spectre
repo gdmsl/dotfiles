@@ -1,8 +1,15 @@
 #
-# ~/.i3/config.colors
+# i3 configuration for Spectre
 #
 # vim: set ft=conf sw=4 ts=4 sts=4 et tw=78 fdm=marker fdl=0 foldmarker={{{,}}} :
 
 # AUTHOR: Guido Masella <guido.masella@gmail.com>
 
+# WORKSPACES {{{
 
+# outputs
+set $O1 DVI-D-0
+set $O2 DVI-D-1
+set $O3 HDMI-1
+
+# }}}
