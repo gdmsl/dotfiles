@@ -1,0 +1,10 @@
+configuration {
+    modi: "combi,drun,run,window,ssh";
+    theme: "/home/gdmsl/.config/rofi/slate.rasi";
+    font: "Fira Code 12";
+    combi-modi: "drun,run,window,ssh";
+    threads: 2;
+    show-icons: true;
+    icon-theme: "Papirus-Dark";
+}
+
