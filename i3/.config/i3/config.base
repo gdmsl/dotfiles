@@ -19,7 +19,7 @@ bindsym $mod+Shift+Return exec uxterm
 
 # Start a filemanager
 bindsym $mod+x exec alacritty -e ranger
-bindsym $mod+Shift+x exec pcmanfm
+bindsym $mod+Shift+x exec pcmanfm-qt
 
 # start rofi (a program launcher) with Super+d and
 bindsym $mod+d exec --no-startup-id "rofi -show combi"
@@ -348,7 +348,7 @@ exec --no-startup-id "dunst"
 exec --no-startup-id "paplay /usr/share/sounds/freedesktop/stereo/service-login.oga"
 
 # File manager daemon to identify plugged devices
-exec --no-startup-id "pcmanfm -d"
+exec --no-startup-id "pcmanfm-qt -d"
 
 #wallpaper
 exec --no-startup-id "nitrogen --restore"

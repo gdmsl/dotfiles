@@ -1,1 +1,13 @@
+# Default configuration
 feh --image-bg black --scale-down --auto-zoom --draw-tinted -d -N
+
+# Webcam mode, simply specify the urls(s).
+webcam --multiwindow --reload 20
+
+# Create an index of the current directory.
+# This version uses . as the current dir, so you don't even need any
+# commandline arguments
+mkindex -iVO index.jpg .
+
+# More ambitious version...
+imgidx -iVO .fehindex.jpg --limit-width 1200 --thumb-width 90 --thumb-height 90 .
