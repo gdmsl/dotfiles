@@ -3,7 +3,6 @@
 #
 # User defined aliases
 
-alias feh='feh --draw-tinted --force-aliasing --image-bg black --scale-down'
 alias :q='exit'
 
 # Pacnam ehm.... Pamcan ..... ok.... pacman aliases
