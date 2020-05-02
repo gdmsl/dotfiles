@@ -42,10 +42,11 @@ font-1 = "FuraCode Nerd Font:fontformat=truetype:pixelsize=14:antialias=true;3"
 font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=12;0"
 font-3 = "Font Awesome 5 Free:style=Solid:pixelsize=12;0"
 font-4 = "Font Awesome 5 Brands:pixelsize=12;0"
+font-5 = "coins:style=Regular:pixelsize=10;3"
 
 modules-left = right2 i3 right3
 modules-center = 
-modules-right = left1 pulseaudio battery memory cpu wlan eth left2 date left3
+modules-right = left1 crypto pulseaudio battery memory cpu wlan eth left2 date left3
 
 tray-position = right
 tray-padding = 2
@@ -275,9 +276,12 @@ content-background = ${colors.background-alt2}
 content-foreground = ${colors.background}
 content = " %{T2}%{T-}"
 
-[module/title]
-type = internal/xwindow
-format = <label>
+[module/crypto]
+type = custom/script
+exec = /home/gdmsl/.config/polybar/scripts/pcrypto.py --base EUR --coins btc eth ltc
+interval = 300
+format-background= ${colors.background-alt}
+format-foreground= ${colors.foreground-alt}
 
 [settings]
 screenchange-reload = true
