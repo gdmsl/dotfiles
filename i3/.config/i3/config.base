@@ -24,8 +24,8 @@ bindsym $mod+Shift+x exec pcmanfm-qt
 # start rofi (a program launcher) with Super+d and
 bindsym $mod+d exec --no-startup-id "rofi -show combi"
 
-# start the filefinder with Super+Shift+d
-bindsym $mod+Shift+d exec --no-startup-id "rofi-filefinder.sh"
+# start rofi for math
+bindsym $mod+Shift+d exec --no-startup-id "rofi -show calc -modi calc -no-show-match -no-sort"
 
 # Start the clipboard manager with Super+b
 bindsym $mod+b exec --no-startup-id "rofi -modi 'clipboard:greenclip print' -show clipboard -run-command '{cmd}'"
