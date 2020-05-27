@@ -81,6 +81,11 @@ if dein#load_state('~/.cache/dein')
     call dein#add('rhysd/vim-clang-format')
     call dein#add('uplus/vim-clang-rename')
     call dein#add('cespare/vim-toml')
+    call dein#add('sbdchd/neoformat')
+
+
+    " formatting
+    call dein#add('sbdchd/neoformat')
 
     " Markdown
     call dein#add('SpaceVim/vim-markdown', {
@@ -125,7 +130,6 @@ if dein#load_state('~/.cache/dein')
     call dein#add('vim-airline/vim-airline-themes')
     call dein#add('jiangmiao/auto-pairs')
     call dein#add('scrooloose/nerdcommenter')
-
 
     "linting
     call dein#add('tpope/vim-markdown')

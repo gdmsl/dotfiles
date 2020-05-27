@@ -43,3 +43,5 @@ set recolor-darkcolor           "#b6bdca"
 
 set recolor                     "false"
 set recolor-keephue             "false"
+
+map <C-i> recolor
