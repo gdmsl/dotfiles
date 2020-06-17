@@ -12,11 +12,11 @@ source /usr/local/configfiles/bashrc.default
 # load modules
 module purge
 module load slurm/slurm
+module load python/python3
 module load cmake/cmake-3.15.4
+module load julia/julia-1.4.2
 module load boost/boost-1.71.g9
 module load gcc/gcc-9
-module load python/python3
-module load julia/julia-1.4.2
 
 # aliases
 alias squeuel='squeue --format="%.18i %.9P %.25j %.8u %.8T %.10M %.9l %.6D %R"'
