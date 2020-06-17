@@ -1,0 +1,32 @@
+#!/bin/bash
+# Bash configuration file for the cluster login node
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+# module configurations
+source /usr/local/configfiles/bashrc.default
+
+# load modules
+module purge
+module load slurm/slurm
+module load cmake/cmake-3.15.4
+module load boost/boost-1.71.g9
+module load gcc/gcc-9
+module load python/python3
+module load julia/julia-1.4.2
+
+# aliases
+alias squeuel='squeue --format="%.18i %.9P %.25j %.8u %.8T %.10M %.9l %.6D %R"'
+alias sqm='squeue -u $USER'
+alias sqml='squeue -u $USER --format="%.18i %.9P %.25j %.8u %.8T %.10M %.9l %.6D %R"'
+alias sqg='squeue -u schachen,dhagenmu,wellnitz,amaronce,mezzacapo,geissler,tbotzung,sschutz,vodola,angelone,fcinti,gmasella,preisser'
+
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+
+# Bash-IT
+export SCM_CHECK=false
+export SCM_GIT_SHOW_MINIMAL_INFO=true

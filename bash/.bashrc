@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Load local bash file
-[ -f "$HOME/.bashrc.$HOSTNAME" ] && source "$HOME/.bashrc.$HOSTNAME"
+[ -f "$HOME/.bashrc.local" ] && source "$HOME/.bashrc.local"
 
 # Path to the bash it configuration
 export BASH_IT="$HOME/.bash_it"
