@@ -46,7 +46,7 @@ font-5 = "coins:style=Regular:pixelsize=10;3"
 
 modules-left = right2 i3 right3
 modules-center = 
-modules-right = left1 crypto pulseaudio battery memory cpu wlan eth left2 date left3
+modules-right = left1 pulseaudio battery memory cpu wlan eth left2 date left3
 
 tray-position = right
 tray-padding = 2
