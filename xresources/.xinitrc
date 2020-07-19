@@ -15,19 +15,8 @@ fi
 eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
 export GPG_AGENT_INFO SSH_AUTH_SOCK
 
-export MOZ_USE_OMTC=1
-
-if [ "$HOSTNAME" = "spectre" ]; then
-    cat ~/.xbindkeys.d/m1.xbind > ~/.xbindkeysrc
-    xbindkeys
-fi
-
 # load the Xresources
 [[ -f ~/.Xresources ]] && xrdb ~/.Xresources
-
-if [ "$HOSTNAME" = "rubick" ]; then
-    xrdb -merge ~/.xrdb/fullhd.xresources
-fi
 
 # disable mouse acceleration
 if [ "$HOSTNAME" = "spectre" ]; then
@@ -42,9 +31,6 @@ export MOZ_USE_OMTC=1
 
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 
-# exec gnome-session
-# exec startkde
-# exec startxfce4
 exec i3
 # ...or the Window Manager of your choice
 

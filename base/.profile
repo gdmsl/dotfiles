@@ -45,15 +45,6 @@ export BROWSER="firefox"
 # Default terminal emulator
 export TERMINAL="alacritty"
 
-# Start gnome keyring
-if [ -n "$DESKTOP_SESSION" ]; then
-    eval $(gnome-keyring-daemon --start)
-    export SSH_AUTH_SOCK
-fi
-
-# QT5 style
-export QT_QPA_PLATFORMTHEME=qt5ct
-
 # Ruby
 export GEM_HOME=$(ruby -e 'print Gem.user_dir')
 export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
