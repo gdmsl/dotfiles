@@ -111,8 +111,3 @@ bindkey '^[[B' history-substring-search-down
 unalias cp
 unalias mv
 unalias rm
-
-# tilix
-if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-        source /etc/profile.d/vte.sh
-fi
