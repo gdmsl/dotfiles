@@ -1,7 +1,7 @@
 [Default Applications]
 application/pcx=org.kde.gwenview.desktop
 application/pdf=org.kde.okular.desktop
-application/vnd.djvu=org.kde.zathura.desktop
+application/vnd.djvu=org.kde.okular.desktop
 image/bmp=org.kde.gwenview.desktop
 image/gif=org.kde.gwenview.desktop
 image/jpeg=org.kde.gwenview.desktop
@@ -10,7 +10,7 @@ image/png=org.kde.gwenview.desktop
 image/svg+xml=org.kde.gwenview.desktop
 image/svg-xml=org.kde.gwenview.desktop
 image/tiff=org.kde.gwenview.desktop
-image/vnd.djvu=org.kde.zathura.desktop
+image/vnd.djvu=org.kde.okular.desktop
 image/x-bmp=org.kde.gwenview.desktop
 image/x-pcx=org.kde.gwenview.desktop
 image/x-portable-bitmap=org.kde.gwenview.desktop
@@ -18,7 +18,7 @@ image/x-portable-greymap=org.kde.gwenview.desktop
 image/x-portable-pixmap=org.kde.gwenview.desktop
 image/x-targa=org.kde.gwenview.desktop
 image/x-tga=org.kde.gwenview.desktop
-inode/directory=pcmanfm.desktop
+inode/directory=org.kde.dolphin.desktop
 x-scheme-handler/http=firefox.desktop;
 x-scheme-handler/https=firefox.desktop;
 x-scheme-handler/tg=telegramdesktop.desktop
