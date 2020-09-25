@@ -30,7 +30,7 @@ export IRC_CLIENT='weechat'
 export TODO="t"
 
 # Set this to false to turn off version control status checking within the prompt for all themes
-export SCM_CHECK=true
+export SCM_CHECK=false
 
 # History management
 export HISTFILESIZE=
