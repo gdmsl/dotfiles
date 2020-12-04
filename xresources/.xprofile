@@ -23,13 +23,21 @@ fi
 
 [[ -f ~/.xbindkeysrc ]] && xbindkeys
 
+# Mozilla configurations
 export MOZ_USE_OMTC=1
 
+# QT5 style
+export QT_QPA_PLATFORMTHEME=qt5ct
+
+# GTK2 Config files
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 
-if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-    ssh-agent > "$XDG_RUNTIME_DIR/ssh-agent.env"
-fi
-if [[ ! "$SSH_AUTH_SOCK" ]]; then
-    source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
-fi
+#if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+#    ssh-agent > "$XDG_RUNTIME_DIR/ssh-agent.env"
+#fi
+#if [[ ! "$SSH_AUTH_SOCK" ]]; then
+#    source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
+#fi
+
+eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
+export GPG_AGENT_INFO SSH_AUTH_SOCK

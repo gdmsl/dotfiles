@@ -2,7 +2,9 @@
 # AUTHOR: Guido Masella <guido.masella@gmail.com>
 #
 
-push!(LOAD_PATH, "$(ENV["HOME"])/src/julia")
-ENV["MPLBACKEND"]="tkagg"
+push!(LOAD_PATH, "$(ENV["HOME"])/Code/JuliaModules")
 
-isfile("_init.jl") && include(joinpath(pwd(), "_init.jl"))
+# load current directory configurations from _init.jl
+if isfile("_init.jl")
+    include(joinpath(pwd(), "_init.jl"))
+end

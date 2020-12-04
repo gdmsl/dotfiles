@@ -191,6 +191,7 @@ set $WS09 "9: Fun"
 set $WS10 "10: Gaming"
 set $WS11 "11: IM"
 set $WS12 "12: Mail"
+set $WSC01 "1: Monitor"
 
 # Putting workspaces on screens
 workspace $WS01 output $O1
@@ -205,6 +206,7 @@ workspace $WS09 output $O1
 workspace $WS10 output $O1
 workspace $WS11 output $O1
 workspace $WS12 output $O1
+workspace $WSC01 output $O2
 
 # move workspace to next monitor
 bindsym $mod+Control+h move workspace to output left
@@ -225,6 +227,7 @@ bindsym $mod+9 workspace $WS09
 bindsym $mod+0 workspace $WS10
 bindsym $mod+minus workspace $WS11
 bindsym $mod+equal workspace $WS12
+bindsym $mod+Control+1 workspace $WSC01
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $WS01
@@ -239,6 +242,7 @@ bindsym $mod+Shift+9 move container to workspace $WS09
 bindsym $mod+Shift+0 move container to workspace $WS10
 bindsym $mod+Shift+minus move container to workspace $WS11
 bindsym $mod+Shift+equal move container to workspace $WS12
+bindsym $mod+Shift+Control+1 move container to workspace $WSC01
 
 # switch workspace back and forth
 bindsym $mod+Tab workspace back_and_forth
@@ -307,10 +311,10 @@ for_window [class="pavucontrol-qt"] move scratchpad
 for_window [class="firefox_scratch"] move scratchpad
 
 # GAMES
-assign [class="dota2"] "13: dota"
-assign [class="Civ5XP"] "13: civ"
+assign [class="dota2"] "14: DoTA"
 for_window [class="dota2"] fullscreen
-for_window [class="Civ5XP"] fullscreen
+assign [class="minecraft-launcher"] "14: Minecraft"
+assign [class="Minecraft"] "14: Minecraft"
 
 # other
 assign [class="TelegramDesktop"] $WS11
@@ -336,7 +340,7 @@ exec --no-startup-id xset dpms 600
 exec xrandr --output $O1 --primary
 
 # Compositor
-exec "compton --config ~/.config/compton/compton-i3.conf -b"
+exec "picom --config ~/.config/picom/i3.conf -b"
 
 # the bar
 exec_always --no-startup-id "~/.config/polybar/launch.sh"

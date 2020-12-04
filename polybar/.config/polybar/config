@@ -62,6 +62,10 @@ padding-right = 2
 type = internal/i3
 format = <label-state> <label-mode>
 
+# Only show workspaces defined on the same output as the bar
+pin-workspaces = true
+
+# Split the workspace name on :
 strip-wsnumbers = true
 
 label-focused = %name%
@@ -96,6 +100,8 @@ label-mode-foreground = #000
 label-mode-background = ${colors.primary}
 
 label-visible = %name%
+label-visible-background = ${colors.background-alt}
+label-visible-foreground = ${colors.foreground-alt2}
 label-visible-underline = ${self.label-focused-underline}
 label-visible-padding = ${self.label-focused-padding}
 
