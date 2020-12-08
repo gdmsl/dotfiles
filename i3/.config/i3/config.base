@@ -192,6 +192,9 @@ set $WS10 "10: Gaming"
 set $WS11 "11: IM"
 set $WS12 "12: Mail"
 set $WSC01 "1: Monitor"
+set $WSC02 "2: Read"
+set $WSC03 "3: Misc"
+set $WSC04 "4: Distracting"
 
 # Putting workspaces on screens
 workspace $WS01 output $O1
@@ -207,6 +210,9 @@ workspace $WS10 output $O1
 workspace $WS11 output $O1
 workspace $WS12 output $O1
 workspace $WSC01 output $O2
+workspace $WSC02 output $O2
+workspace $WSC03 output $O2
+workspace $WSC04 output $O2
 
 # move workspace to next monitor
 bindsym $mod+Control+h move workspace to output left
@@ -227,7 +233,10 @@ bindsym $mod+9 workspace $WS09
 bindsym $mod+0 workspace $WS10
 bindsym $mod+minus workspace $WS11
 bindsym $mod+equal workspace $WS12
-bindsym $mod+Control+1 workspace $WSC01
+bindsym $mod+Mod1+1 workspace $WSC01
+bindsym $mod+Mod1+2 workspace $WSC02
+bindsym $mod+Mod1+3 workspace $WSC03
+bindsym $mod+Mod1+4 workspace $WSC04
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $WS01
@@ -242,7 +251,10 @@ bindsym $mod+Shift+9 move container to workspace $WS09
 bindsym $mod+Shift+0 move container to workspace $WS10
 bindsym $mod+Shift+minus move container to workspace $WS11
 bindsym $mod+Shift+equal move container to workspace $WS12
-bindsym $mod+Shift+Control+1 move container to workspace $WSC01
+bindsym $mod+Shift+Mod1+1 move container to workspace $WSC01
+bindsym $mod+Shift+Mod1+2 move container to workspace $WSC02
+bindsym $mod+Shift+Mod1+3 move container to workspace $WSC03
+bindsym $mod+Shift+Mod1+4 move container to workspace $WSC04
 
 # switch workspace back and forth
 bindsym $mod+Tab workspace back_and_forth
