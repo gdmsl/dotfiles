@@ -21,8 +21,8 @@ include-file=~/.config/polybar/colors
 monitor = ${env:MONITOR:HDMI-1}
 enable-ipc = true
 override-redirect = false
+include-file=~/.config/polybar/local
 
-height = 23
 width = 100%
 offset-y = 0%
 offset-x = 0%
@@ -46,7 +46,7 @@ font-5 = "coins:style=Regular:pixelsize=10;3"
 
 modules-left = right2 i3 right3
 modules-center = 
-modules-right = left1 pulseaudio battery memory cpu wlan eth left2 date left3
+modules-right = left1 battery pulseaudio memory cpu wlan eth left2 date left3
 
 tray-position = right
 tray-padding = 2
@@ -201,28 +201,28 @@ full-at = 98
 
 format-full-background = ${colors.background-alt}
 
-format-charging =  <animation-charging> <label-charging>
+format-charging =  <animation-charging><label-charging>
 format-charging-background = ${colors.background-alt}
 
-format-discharging = <animation-discharging> <label-discharging>
+format-discharging = <animation-discharging><label-discharging>
 format-discharging-background = ${colors.background-alt}
 
-format-full-prefix = "  "
+format-full-prefix = " "
 format-full-prefix-background = ${colors.background-alt}
 
-ramp-capacity-0 = "  "
-ramp-capacity-1 = "  "
-ramp-capacity-2 = "  "
+ramp-capacity-0 = " "
+ramp-capacity-1 = " "
+ramp-capacity-2 = " "
 ramp-capacity-background = ${colors.background-alt}
 
-animation-charging-0 = "  "
-animation-charging-1 = "  "
-animation-charging-2 = "  "
+animation-charging-0 = " "
+animation-charging-1 = " "
+animation-charging-2 = " "
 animation-charging-framerate = 750
 
-animation-discharging-0 = "  "
-animation-discharging-1 = "  "
-animation-discharging-2 = "  "
+animation-discharging-0 = " "
+animation-discharging-1 = " "
+animation-discharging-2 = " "
 animation-discharging-framerate = 750
 
 [module/temperature]

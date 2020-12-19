@@ -1,10 +1,12 @@
 ! xft settings ---------------------------------------------------------------
-Xft.lcdfilter:  lcddefault
-Xft.antialias:  true
-Xft.rgba:       rgb
-Xft.hinting:    true
-Xft.hintstyle:  slight
-Xft.dpi:        96
+#include ".xresources.d/xft.xresources"
+!Xft.dpi: 96
+!Xft.autohint: 0
+!Xft.lcdfilter: lcddefault
+!Xft.hintstyle: hintfull
+!Xft.hinting: 1
+!Xft.antialias: 1
+!Xft.rgba: rgb
 
 ! colorscheme
 ! Base16 Nord

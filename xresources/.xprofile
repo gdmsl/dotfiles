@@ -6,22 +6,28 @@
 # sourcing all files in ~/.xprofile.d
 if [ -d $HOME/.xprofile.d ]; then
   for f in $HOME/.xprofile.d/*; do
-    [ -x "$f" ] && . "$f"
+    if [ -x "$f" ]; then
+        source "$f"
+    fi
   done
   unset f
 fi
 
-# load the Xresources
-[[ -f ~/.Xresources ]] && xrdb ~/.Xresources
 
 # disable mouse acceleration
-if [ "$HOSTNAME" = "spectre" ]; then
+if [ "$HOSTNAME" != "rubick" ]; then
     xset m 0 0
 fi
 
-[[ -f ~/.screenlayout/default.sh ]] && ~/.screenlayout/default.sh
+# Loading default xlayout
+if [ -e ~/.screenlayout/default.sh ]; then
+    ~/.screenlayout/default.sh
+fi
 
-[[ -f ~/.xbindkeysrc ]] && xbindkeys
+# new keyboard bindings
+if [ -e ~/.xbindkeysrc ]; then
+    xbindkeys
+fi
 
 # Mozilla configurations
 export MOZ_USE_OMTC=1
@@ -32,12 +38,8 @@ export QT_QPA_PLATFORMTHEME=qt5ct
 # GTK2 Config files
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 
-#if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-#    ssh-agent > "$XDG_RUNTIME_DIR/ssh-agent.env"
-#fi
-#if [[ ! "$SSH_AUTH_SOCK" ]]; then
-#    source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
-#fi
-
-eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
-export GPG_AGENT_INFO SSH_AUTH_SOCK
+# Gnome keyring
+if [ -x /usr/bin/gnome-keyring-daemon ]; then
+    eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
+    export GPG_AGENT_INFO SSH_AUTH_SOCK
+fi
