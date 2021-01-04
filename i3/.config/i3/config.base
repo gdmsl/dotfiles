@@ -192,9 +192,11 @@ set $WS10 "10: Gaming"
 set $WS11 "11: IM"
 set $WS12 "12: Mail"
 set $WSC01 "1: Monitor"
-set $WSC02 "2: Read"
-set $WSC03 "3: Misc"
-set $WSC04 "4: Distracting"
+set $WSC02 "2: Web B"
+set $WSC03 "3: Term B"
+set $WSC04 "4: Coding B"
+set $WSC05 "5: Rec"
+set $WSC06 "6: Read"
 
 # Putting workspaces on screens
 workspace $WS01 output $O1
@@ -213,6 +215,8 @@ workspace $WSC01 output $O2
 workspace $WSC02 output $O2
 workspace $WSC03 output $O2
 workspace $WSC04 output $O2
+workspace $WSC05 output $O2
+workspace $WSC06 output $O2
 
 # move workspace to next monitor
 bindsym $mod+Control+h move workspace to output left
@@ -237,6 +241,8 @@ bindsym $mod+Mod1+1 workspace $WSC01
 bindsym $mod+Mod1+2 workspace $WSC02
 bindsym $mod+Mod1+3 workspace $WSC03
 bindsym $mod+Mod1+4 workspace $WSC04
+bindsym $mod+Mod1+5 workspace $WSC05
+bindsym $mod+Mod1+6 workspace $WSC06
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $WS01
@@ -255,6 +261,8 @@ bindsym $mod+Shift+Mod1+1 move container to workspace $WSC01
 bindsym $mod+Shift+Mod1+2 move container to workspace $WSC02
 bindsym $mod+Shift+Mod1+3 move container to workspace $WSC03
 bindsym $mod+Shift+Mod1+4 move container to workspace $WSC04
+bindsym $mod+Shift+Mod1+5 move container to workspace $WSC05
+bindsym $mod+Shift+Mod1+6 move container to workspace $WSC06
 
 # switch workspace back and forth
 bindsym $mod+Tab workspace back_and_forth
@@ -301,6 +309,7 @@ smart_borders on
 # assign web browsers to workspace web
 assign [class="Chromium"] $WS02
 assign [class="firefox"] $WS02
+for_window [class="firefox" title="Picture-in-Picture"] sticky enable
 
 # windows title
 for_window [class=".*"] title_format "<b>%title</b>"

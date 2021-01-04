@@ -1,4 +1,4 @@
 # toggle killed (this command is its own inverse)
-thread_index.run(/home/gdmsl/.config/astroid/hooks/toggle killed %1)=D
+thread_index.run(/home/gdmsl/.config/astroid/hooks/toggle trash %1)=D
 thread_index.run(/home/gdmsl/.config/astroid/hooks/toggle spam %1)=S
 

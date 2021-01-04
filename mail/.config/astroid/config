@@ -78,7 +78,7 @@
         "format_flowed": "false"
     },
     "poll": {
-        "interval": "180",
+        "interval": "600",
         "always_full_refresh": "false"
     },
     "attachment": {
@@ -138,9 +138,9 @@
             "sendmail": "msmtp -a UDS -i -t",
             "default": "true",
             "save_sent": "true",
-            "save_sent_to": "\/home\/gdmsl\/Mail\/UDS\/sent\/cur\/",
+            "save_sent_to": "\/home\/gdmsl\/Mail\/account.uds\/sent\/cur\/",
             "additional_sent_tags": "",
-            "save_drafts_to": "\/home\/gdmsl\/Mail\/UDS\/drafts\/cur\/",
+            "save_drafts_to": "\/home\/gdmsl\/Mail\/account.uds\/drafts\/cur\/",
             "signature_separate": "false",
             "signature_file": "",
             "signature_file_markdown": "",
@@ -156,9 +156,9 @@
             "sendmail": "msmtp -a UDS-ETU -i -t",
             "default": "true",
             "save_sent": "true",
-            "save_sent_to": "\/home\/gdmsl\/Mail\/UDS-ETU\/sent\/cur\/",
+            "save_sent_to": "\/home\/gdmsl\/Mail\/account.udsetu\/sent\/cur\/",
             "additional_sent_tags": "",
-            "save_drafts_to": "\/home\/gdmsl\/Mail\/UDS-ETU\/drafts\/cur\/",
+            "save_drafts_to": "\/home\/gdmsl\/Mail\/account.udsetu\/drafts\/cur\/",
             "signature_separate": "false",
             "signature_file": "",
             "signature_file_markdown": "",
@@ -170,10 +170,10 @@
     "startup": {
         "queries": {
             "inbox": "tag:inbox and -tag:lists",
-            "Work": "tag:inbox and tag:work and -tag:killed",
-            "UDS Jobs": "tag:clusters\/udsjobs and -tag:killed",
-            "Archlinux": "tag:lists/arch-general or tag:lists/arch-security or tag:lists/arch-announce and -tag:killed",
-            "Lists": "tag:lists and -tag:killed"
+            "Work": "tag:inbox and tag:work and -tag:trash",
+            "UDS Jobs": "tag:clusters\/udsjobs and -tag:trash",
+            "Archlinux": "tag:lists/arch-general or tag:lists/arch-security or tag:lists/arch-announce and -tag:trash",
+            "Lists": "tag:lists and -tag:trash"
         }
     }
 }

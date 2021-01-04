@@ -35,9 +35,21 @@ fi
 mbsync -a
 
 if [ $? -ne 0 ]; then
-    notify-send -u critical "Error on syncing emails"
+    notify-send -u critical "Error on syncing emails with mbsync"
     exit
 fi
+
+# fetch gmail email
+(
+cd $MAILDIR/account.gmail
+
+gmi sync
+
+if [ $? -ne 0 ]; then
+    notify-send -u critical "Error on syncing emails with gmi"
+    exit
+fi
+)
 
 # Import new mail into the notmuch database.
 notmuch new

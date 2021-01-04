@@ -3,120 +3,6 @@
 # by Guido Masella
 #
 
-# GMail {{{
-
-# Account Settings
-IMAPAccount GMail
-Host imap.gmail.com
-User guido.masella@gmail.com
-PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/Documents/Personal/Identity/mail-gmail.gpg"
-SSLType IMAPS
-AuthMechs PLAIN
-CertificateFile /etc/ssl/certs/ca-certificates.crt
-
-# Remote Storage
-IMAPStore GMail-remote
-Account GMail
-
-# Local Storage
-MaildirStore GMail-local
-Path ~/Mail/GMail/
-Inbox ~/Mail/GMail/inbox
-SubFolders Verbatim
-
-Channel GMail-inbox
-Master :GMail-remote:"INBOX"
-Slave :GMail-local:"inbox"
-Create Slave
-Remove Slave
-Expunge Both
-SyncState *
-
-Channel GMail-trash
-Master :GMail-remote:"[Gmail]/Trash"
-Slave :GMail-local:"trash"
-Create Slave
-Remove Slave
-Expunge Both
-SyncState *
-
-Channel GMail-sent
-Master :GMail-remote:"[Gmail]/Sent Mail"
-Slave :GMail-local:"sent"
-Create Slave
-Remove Slave
-Expunge Both
-SyncState *
-
-Channel GMail-archive
-Master :GMail-remote:"[Gmail]/All Mail"
-Slave :GMail-local:"archive"
-Create Slave
-Remove Slave
-Expunge Both
-SyncState *
-
-Channel GMail-starred
-Master :GMail-remote:"[Gmail]/Starred"
-Slave :GMail-local:"starred"
-Create Slave
-Remove Slave
-Expunge Both
-SyncState *
-
-Channel GMail-drafts
-Master :GMail-remote:"[Gmail]/Drafts"
-Slave :GMail-local:"drafts"
-Create Slave
-Remove Slave
-Expunge Both
-SyncState *
-
-Channel GMail-spam
-Master :GMail-remote:"[Gmail]/Spam"
-Slave :GMail-local:"spam"
-Create Slave
-Remove Slave
-Expunge Both
-SyncState *
-
-Channel GMail-folders
-Master :GMail-remote:
-Slave :GMail-local:
-Pattern * ![Gmail]* !INBOX !trash !sent !spam !starred !drafts !archive
-Create Slave
-Remove Slave
-Expunge Both
-SyncState *
-
-
-# GROUPS PUT TOGETHER CHANNELS, SO THAT WE CAN INVOKE
-# MBSYNC ON A GROUP TO SYNC ALL CHANNELS
-#
-# FOR INSTANCE: "mbsync GMail" GETS MAIL FROM
-# "GMail-inbox", "GMail-sent", and "GMail-trash"
-#
-Group GMail
-Channel GMail-inbox
-Channel GMail-sent
-Channel GMail-trash
-Channel GMail-drafts
-Channel GMail-spam
-Channel GMail-starred
-Channel GMail-archive
-
-Group GMail-complete
-Channel GMail-inbox
-Channel GMail-sent
-Channel GMail-trash
-Channel GMail-drafts
-Channel GMail-spam
-Channel GMail-starred
-Channel GMail-archive
-Channel GMail-folders
-
-# }}}
-
 # UDS {{{
 
 # Account Settings
@@ -133,8 +19,8 @@ Account UDS
 
 # Local Storage
 MaildirStore UDS-local
-Path ~/Mail/UDS/
-Inbox ~/Mail/UDS/inbox
+Path ~/Mail/account.uds/
+Inbox ~/Mail/account.uds/inbox
 SubFolders Verbatim
 
 Channel UDS-inbox
@@ -235,8 +121,8 @@ Account UDS-ETU
 
 # Local Storage
 MaildirStore UDS-ETU-local
-Path ~/Mail/UDS-ETU/
-Inbox ~/Mail/UDS-ETU/inbox
+Path ~/Mail/account.udsetu/
+Inbox ~/Mail/account.udsetu/inbox
 SubFolders Verbatim
 
 Channel UDS-ETU-inbox
@@ -322,8 +208,6 @@ Channel UDS-ETU-folders
 # }}}
 
 Group fast
-Channel GMail-inbox
-Channel GMail-sent
 Channel UDS-inbox
 Channel UDS-sent
 Channel UDS-ETU-inbox

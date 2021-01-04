@@ -590,12 +590,22 @@ augroup lsp_config
                     \       import SymbolServer;
                     \       env_path = dirname(Pkg.Types.Context().env.project_file);
                     \       debug = false;
-                    \ 
+                    \
                     \       server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, "", Dict());
                     \       server.runlinter = true;
                     \       run(server);
                     \   ']},
                     \ 'whitelist': ['julia'],
+                    \ })
+    endif
+    if executable('texlab')
+        au User lsp_setup call lsp#register_server({
+                    \ 'name': 'texlab',
+                    \ 'cmd': {server_info->['texlab']},
+                    \ 'config': {
+                    \     'hover_conceal': 0,
+                    \ },
+                    \ 'whitelist': ['bib','tex'],
                     \ })
     endif
 

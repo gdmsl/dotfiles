@@ -49,7 +49,7 @@ other_email=masella@unistra.fr;guido.masella@etu.unistra.fr;guido.masella@ino.it
 #
 [new]
 tags=new
-ignore=.mbsyncstate;.uidvalidity;
+ignore=.mbsyncstate;.uidvalidity;/.*[.](json|lock|bak)$/;
 
 # Search configuration
 #
