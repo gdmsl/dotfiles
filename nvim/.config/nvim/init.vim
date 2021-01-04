@@ -33,6 +33,7 @@ if dein#load_state('~/.cache/dein')
 
     " Colors
     call dein#add('arcticicestudio/nord-vim')
+    call dein#add('fneu/breezy')
 
     " Sudo
     call dein#add('lambdalisue/suda.vim')
@@ -168,7 +169,7 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamecollapse = 0
 let g:airline#extensions#tabline#fnamemod = ':t'
-"let g:airline_theme = 'onedark'
+let g:airline_theme = 'breezy'
 " }}}
 
 " Fuzzy{{{
@@ -675,7 +676,7 @@ filetype indent on
 " Set the colorscheme
 set background=dark
 syntax on
-colorscheme nord
+colorscheme breezy
 
 " for keeping background opacity
 hi! Normal ctermbg=NONE guibg=NONE
