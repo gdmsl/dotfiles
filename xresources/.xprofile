@@ -34,6 +34,8 @@ fi
 
 # Mozilla configurations
 export MOZ_USE_OMTC=1
+export MOZ_X11_EGL=1
+export MOZ_WEBRENDER=1
 
 
 # QT5 style
