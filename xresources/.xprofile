@@ -34,8 +34,12 @@ fi
 
 # Mozilla configurations
 export MOZ_USE_OMTC=1
-export MOZ_X11_EGL=1
-export MOZ_WEBRENDER=1
+
+# use webrenderer everywhere but not at work
+if [ $HOSTNAME != "tachanka" ]; then
+    export MOZ_X11_EGL=1
+    export MOZ_WEBRENDER=1
+fi
 
 
 # QT5 style

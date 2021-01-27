@@ -63,11 +63,6 @@ if dein#load_state('~/.cache/dein')
                 \ 'merged' : 0
                 \ })
 
-    " Syntax checking
-    "call dein#add('neomake/neomake', {
-    "            \ 'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1
-    "            \ })
-
     " Languages
     call dein#add('JuliaEditorSupport/julia-vim')
     call dein#add('lervag/vimtex', {
@@ -172,80 +167,23 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_theme = 'breezy'
 " }}}
 
-" Fuzzy{{{
-" denite option
-let s:denite_options = {
-      \ 'default' : {
-      \ 'winheight' : 15,
-      \ 'mode' : 'insert',
-      \ 'quit' : 1,
-      \ 'highlight_matched_char' : 'MoreMsg',
-      \ 'highlight_matched_range' : 'MoreMsg',
-      \ 'direction': 'rightbelow',
-      \ 'statusline' : has('patch-7.4.1154') ? v:false : 0,
-      \ }}
-
-function! s:profile(opts) abort
-    for fname in keys(a:opts)
-        for dopt in keys(a:opts[fname])
-            call denite#custom#option(fname, dopt, a:opts[fname][dopt])
-        endfor
-    endfor
+" Denite {{{
+" Define mappings
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+  nnoremap <silent><buffer><expr> <CR>
+  \ denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> d
+  \ denite#do_map('do_action', 'delete')
+  nnoremap <silent><buffer><expr> p
+  \ denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> q
+  \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> i
+  \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> <Space>
+  \ denite#do_map('toggle_select').'j'
 endfunction
-
-call s:profile(s:denite_options)
-
-" buffer source
-call denite#custom#var(
-            \ 'buffer',
-            \ 'date_format', '%m-%d-%Y %H:%M:%S')
-
-call denite#custom#alias('source', 'file_rec/git', 'file_rec')
-call denite#custom#var('file_rec/git', 'command',
-            \ ['git', 'ls-files', '-co', '--exclude-standard'])
-
-" KEY MAPPINGS
-let s:insert_mode_mappings = [
-            \ ['jk', '<denite:enter_mode:normal>', 'noremap'],
-            \ ['<Tab>', '<denite:move_to_next_line>', 'noremap'],
-            \ ['<C-j>', '<denite:move_to_next_line>', 'noremap'],
-            \ ['<S-tab>', '<denite:move_to_previous_line>', 'noremap'],
-            \ ['<C-k>', '<denite:move_to_previous_line>', 'noremap'],
-            \ ['<C-t>', '<denite:do_action:tabopen>', 'noremap'],
-            \ ['<C-v>', '<denite:do_action:vsplit>', 'noremap'],
-            \ ['<C-s>', '<denite:do_action:split>', 'noremap'],
-            \ ['<Esc>', '<denite:enter_mode:normal>', 'noremap'],
-            \ ['<C-N>', '<denite:assign_next_matched_text>', 'noremap'],
-            \ ['<C-P>', '<denite:assign_previous_matched_text>', 'noremap'],
-            \ ['<Up>', '<denite:assign_previous_text>', 'noremap'],
-            \ ['<Down>', '<denite:assign_next_text>', 'noremap'],
-            \ ['<C-Y>', '<denite:redraw>', 'noremap'],
-            \ ]
-
-let s:normal_mode_mappings = [
-            \ ["'", '<denite:toggle_select_down>', 'noremap'],
-            \ ['<C-n>', '<denite:jump_to_next_source>', 'noremap'],
-            \ ['<C-p>', '<denite:jump_to_previous_source>', 'noremap'],
-            \ ['<Tab>', '<denite:move_to_next_line>', 'noremap'],
-            \ ['<C-j>', '<denite:move_to_next_line>', 'noremap'],
-            \ ['<S-tab>', '<denite:move_to_previous_line>', 'noremap'],
-            \ ['<C-k>', '<denite:move_to_previous_line>', 'noremap'],
-            \ ['gg', '<denite:move_to_first_line>', 'noremap'],
-            \ ['<C-t>', '<denite:do_action:tabopen>', 'noremap'],
-            \ ['<C-v>', '<denite:do_action:vsplit>', 'noremap'],
-            \ ['<C-s>', '<denite:do_action:split>', 'noremap'],
-            \ ['q', '<denite:quit>', 'noremap'],
-            \ ['r', '<denite:redraw>', 'noremap'],
-            \ ]
-
-for s:m in s:insert_mode_mappings
-    call denite#custom#map('insert', s:m[0], s:m[1], s:m[2])
-endfor
-for s:m in s:normal_mode_mappings
-    call denite#custom#map('normal', s:m[0], s:m[1], s:m[2])
-endfor
-
-unlet s:m s:insert_mode_mappings s:normal_mode_mappings
 
 " Fuzzy  find registers
 nnoremap <silent> <Space>e :<C-u>Denite register<CR>
@@ -630,6 +568,14 @@ let g:markdown_enable_spell_checking = 0
 let g:markdown_quote_syntax_filetypes = {
             \ 'vim' : {'start' : "\\%(vim\\|viml\\)",},
             \ }
+" }}}
+
+" Vimwiki {{{
+let g:vimwiki_list = [
+    \{'path': '~/Logging/vimwiki.wiki', 'syntax': 'markdown', 'ext': '.md'}
+\]
+let g:vimwiki_ext2syntax = {'.md': 'markdown'}
+let g:vimwiki_global_ext = 0
 " }}}
 
 " Python {{{
