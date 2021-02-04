@@ -341,6 +341,7 @@ assign [class="Minecraft"] "14: Minecraft"
 assign [class="TelegramDesktop"] $WS11
 assign [class="Slack"] $WS11
 assign [class="Skype"] $WS11
+assign [class="Element"] $WS11
 assign [class="Thunderbird"] $WS12
 assign [class="Mail"] $WS12
 

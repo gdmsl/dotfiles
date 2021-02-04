@@ -13,7 +13,8 @@ if type "xrandr"; then
     # Get all the connected monitors
     monitors=$(xrandr | grep " connected" | awk '{ print $1 }')
     for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-        ETH=$eth WLAN=$wlan MONITOR=$m polybar --reload full &
+        ETH=$eth WLAN=$wlan MONITOR=$m polybar --reload top &
+        ETH=$eth WLAN=$wlan MONITOR=$m polybar --reload bottom &
     done
 else
     ETH=$eth WLAN=$wlan polybar --reload full &

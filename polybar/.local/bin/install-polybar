@@ -1,0 +1,9 @@
+#!/bin/bash
+
+scriptfolder="$HOME/.config/polybar/scripts"
+mkdir -p $scriptfolder
+
+cd $scriptfolder
+
+git clone https://github.com/Jvanrhijn/polybar-spotify.git
+
