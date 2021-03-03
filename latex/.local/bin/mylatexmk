@@ -5,19 +5,14 @@
 # Build latex documents in the cloud... ehm.... RAM
 #
 
-name=$(echo "$(pwd) $@" | sha1sum | awk '{print $1}')
-tmpdir=/tmp/mylatexmk-${name}
+builddir="build"
 
-if [ -d ${tmpdir} ]; then
-    echo "Warning: ${tmpdir} already exists" 1>&2
+if [ -d ${builddir} ]; then
+    echo "Warning: ${builddir} already exists" 1>&2
     read -s -p "Press enter to continue or CTRL+C to terminate"
 else
-    mkdir ${tmpdir}
+    mkdir ${builddir}
 fi
 
-latexmk --output-directory="${tmpdir}" $@
-
-if [ ! -e ./build-${name} ]; then
-    ln -s -f $tmpdir ./build-${name}
-fi
+latexmk --output-directory="${builddir}" $@
 
