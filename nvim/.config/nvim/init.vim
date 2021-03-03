@@ -32,7 +32,7 @@ if dein#load_state('~/.cache/dein')
     call dein#add('lambdalisue/gina.vim', { 'on_cmd' : 'Gina'})
 
     " Colors
-    call dein#add('arcticicestudio/nord-vim')
+    call dein#add('fneu/breezy')
 
     " Sudo
     call dein#add('lambdalisue/suda.vim')
@@ -163,7 +163,7 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamecollapse = 0
 let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline_theme = 'nord'
+let g:airline_theme = 'breezy'
 " }}}
 
 " Denite {{{
@@ -621,7 +621,7 @@ filetype indent on
 " Set the colorscheme
 set background=dark
 syntax on
-colorscheme nord
+colorscheme breezy
 
 " for keeping background opacity
 hi! Normal ctermbg=NONE guibg=NONE

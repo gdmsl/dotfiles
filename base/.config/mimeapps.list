@@ -1,7 +1,3 @@
-[Added Associations]
-inode/directory=pcmanfm-qt.desktop;
-x-scheme-handler/tg=telegramdesktop.desktop;
-
 [Default Applications]
 application/pcx=gpicview.desktop
 application/pdf=org.pwmt.zathura.desktop
