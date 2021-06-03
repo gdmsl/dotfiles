@@ -34,7 +34,7 @@ local on_attach = function(client)
     end
 end
 
-local servers = { 'clangd', 'texlab' }
+local servers = { 'clangd', 'texlab' , 'julials' }
 for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup { on_init = oninit, on_attach = on_attach }
 end

@@ -21,14 +21,17 @@ if require('core.first_load')() then
   return
 end
 
--- Leader key -> "\"
+-- Leader key -> ","
 --
 -- The leader key has to be defined as early as possible so no plugin will use
 -- the old definition in setting mappings.
-vim.g.mapleader = '\\'
+vim.g.mapleader = ','
 
 -- Load packer.nvim files
 require('core.plugins')
+
+-- Force loading of astronauta first.
+vim.cmd [[runtime plugin/astronauta.vim]]
 
 -- Load neovim options
 require('core.options')

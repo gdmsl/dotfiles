@@ -29,8 +29,4 @@ if has_compe then
             snippets_nvim = true,
         },
     }
-
-    vim.api.nvim_set_keymap("i", "<c-y>", 'compe#confirm("<c-y>")', {silent = true, noremap = true, expr = true})
-    vim.api.nvim_set_keymap("i", "<c-e>", 'compe#close("<c-e>")', {silent = true, noremap = true, expr = true})
-    vim.api.nvim_set_keymap("i", "<space>", 'compe#complete()', {silent = true, noremap = true, expr = true})
 end

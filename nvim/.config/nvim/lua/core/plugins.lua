@@ -10,6 +10,7 @@ return require('packer').startup(function()
 	    'nvim-telescope/telescope.nvim',
 	    requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
     }
+    use "nvim-telescope/telescope-packer.nvim"
 
     -- Treesitter
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
@@ -20,6 +21,10 @@ return require('packer').startup(function()
     -- LSP
     use "neovim/nvim-lspconfig"
     use "wbthomason/lsp-status.nvim"
+    use "glepnir/lspsaga.nvim"
+
+    -- Languages
+    use "JuliaEditorSupport/julia-vim"
 
     -- Colorscheme
     use "glepnir/zephyr-nvim"
