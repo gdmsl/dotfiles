@@ -17,7 +17,7 @@
 --
 -- Will install packer if this is the first run and then stop reading the rest
 -- of the configuration
-if require('first_load')() then
+if require('core.first_load')() then
   return
 end
 
@@ -28,7 +28,10 @@ end
 vim.g.mapleader = '\\'
 
 -- Load packer.nvim files
-require('plugins')
+require('core.plugins')
 
 -- Load neovim options
-require('options')
+require('core.options')
+
+-- LSP
+require('core.lsp')
