@@ -22,6 +22,7 @@ return require('packer').startup(function()
     use "neovim/nvim-lspconfig"
     use "wbthomason/lsp-status.nvim"
     use "glepnir/lspsaga.nvim"
+    use "onsails/lspkind-nvim"
 
     -- Languages
     use "JuliaEditorSupport/julia-vim"
