@@ -26,6 +26,11 @@ return require('packer').startup(function()
     -- Languages
     use "JuliaEditorSupport/julia-vim"
 
+    -- Git
+    use "TimUntersberger/neogit"
+    use "rhysd/committia.vim"
+    use "rhysd/git-messenger.vim"
+
     -- Colorscheme
     use "glepnir/zephyr-nvim"
 end)
