@@ -10,7 +10,17 @@ return require('packer').startup(function()
 	    'nvim-telescope/telescope.nvim',
 	    requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
     }
+    use "nvim-telescope/telescope-fzy-native.nvim"
+    use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+    use "nvim-telescope/telescope-fzf-writer.nvim"
     use "nvim-telescope/telescope-packer.nvim"
+    use "nvim-telescope/telescope-symbols.nvim"
+    use "nvim-telescope/telescope-bibtex.nvim"
+
+    use "tami5/sql.nvim"
+    use "nvim-telescope/telescope-cheat.nvim"
+    use "nvim-telescope/telescope-frecency.nvim"
+    use { "nvim-telescope/telescope-arecibo.nvim", rocks = { "openssl", "lua-http-parser" } }
 
     -- Treesitter
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
@@ -34,4 +44,8 @@ return require('packer').startup(function()
 
     -- Colorscheme
     use "glepnir/zephyr-nvim"
+
+    -- Icons
+    use "kyazdani42/nvim-web-devicons"
+    use "yamatsum/nvim-web-nonicons"
 end)

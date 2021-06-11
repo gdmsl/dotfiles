@@ -38,3 +38,7 @@ require('core.options')
 
 -- LSP
 require('core.lsp')
+
+-- Telescope
+require("core.telescope")
+require("core.telescope.mappings")
