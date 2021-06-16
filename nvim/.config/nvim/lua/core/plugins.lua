@@ -48,4 +48,8 @@ return require('packer').startup(function()
     -- Icons
     use "kyazdani42/nvim-web-devicons"
     use "yamatsum/nvim-web-nonicons"
+
+    -- Line
+    use 'glepnir/galaxyline.nvim'
+
 end)
