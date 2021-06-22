@@ -52,4 +52,7 @@ return require('packer').startup(function()
     -- Line
     use 'glepnir/galaxyline.nvim'
 
+    -- Lua
+    use 'tjdevries/nlua.nvim'
+
 end)

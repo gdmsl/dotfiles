@@ -111,3 +111,5 @@ bindkey '^[[B' history-substring-search-down
 unalias cp
 unalias mv
 unalias rm
+
+alias luamake=$HOME/.cache/nvim/nlua/sumneko_lua/lua-language-server/3rd/luamake/luamake
