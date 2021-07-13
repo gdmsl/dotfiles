@@ -17,7 +17,6 @@ telescope.setup{
         winblend = 0,
 
         selection_strategy = "reset",
-        prompt_position = "top",
         sorting_strategy = "descending",
         scroll_strategy = "cycle",
         color_devicons = true,
@@ -27,6 +26,9 @@ telescope.setup{
                 ["<esc>"] = actions.close,
             },
         },
+    },
+    layout_config = {
+        prompt_position = "top",
     },
     extensions = {
         fzf = {
