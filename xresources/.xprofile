@@ -37,8 +37,10 @@ if [ $HOSTNAME != "tachanka" ]; then
     export MOZ_WEBRENDER=1
 fi
 
-# QT5 style
-#export QT_QPA_PLATFORMTHEME=qt5ct
+if [ $DESKTOP_SESSION == "i3" ]; then
+    # QT5 style
+    export QT_QPA_PLATFORMTHEME=qt5ct
+fi
 
 # GTK2 Config files
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
