@@ -13,24 +13,20 @@ if [ -d $HOME/.xprofile.d ]; then
   unset f
 fi
 
-
 # disable mouse acceleration
 if [ "$HOSTNAME" != "rubick" ]; then
     xset m 0 0
 fi
-
 
 # Loading default xlayout
 if [ -e ~/.screenlayout/default.sh ]; then
     ~/.screenlayout/default.sh
 fi
 
-
 # new keyboard bindings
 if [ -e ~/.xbindkeysrc ]; then
     xbindkeys
 fi
-
 
 # Mozilla configurations
 export MOZ_USE_OMTC=1
@@ -41,14 +37,11 @@ if [ $HOSTNAME != "tachanka" ]; then
     export MOZ_WEBRENDER=1
 fi
 
-
 # QT5 style
-export QT_QPA_PLATFORMTHEME=qt5ct
-
+#export QT_QPA_PLATFORMTHEME=qt5ct
 
 # GTK2 Config files
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
-
 
 # SSH Agent
 if [ -x /usr/bin/gnome-keyring-daemon ]; then
