@@ -2,17 +2,28 @@
 #
 # AUTHOR: Guido Masella
 #
-# Build latex documents in the cloud... ehm.... RAM
+# Build latex documents in a hidden subdirectory and link back the resulting
+# pdf files for easy access
 #
 
-builddir="build"
+builddir=".mylatexmk"
+pdfdir="pdf"
 
-if [ -d ${builddir} ]; then
-    echo "Warning: ${builddir} already exists" 1>&2
-    read -s -p "Press enter to continue or CTRL+C to terminate"
-else
-    mkdir ${builddir}
+if [ ! -d "$builddir" ]; then
+    mkdir "$builddir"
+fi
+
+if [ ! -d  "$pdfdir" ]; then
+    mkdir "$pdfdir"
 fi
 
 latexmk --output-directory="${builddir}" $@
+lmkresult=$?
 
+files=$(ls "$builddir" | grep -e '\.pdf')
+
+for file in $files; do
+    ln -rs "${builddir}/${file}" "$pdfdir"
+done
+
+exit $lmkresult

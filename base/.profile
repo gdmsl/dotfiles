@@ -68,3 +68,12 @@ fi
 # Use ripgrep as default grep in fzf (and fzf.vim)
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 
+# Start the ssh-agent if there is no gnome-keyring started already
+if ! pgrep -u "$USER" gnome-keyring-daemon > /dev/null; then
+    if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+        ssh-agent > "$XDG_RUNTIME_DIR/ssh-agent.env"
+    fi
+    if [[ ! "$SSH_AUTH_SOCK" ]]; then
+        source "$XDG_RUNTIME_DIR/ssh-agent.env" > /dev/null
+    fi
+fi

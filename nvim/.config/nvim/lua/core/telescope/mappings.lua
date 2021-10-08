@@ -1,4 +1,6 @@
-if not pcall(require, "telescope") then
+local has_telescope, telescope = pcall(require, "telescope")
+
+if not has_telescope then
   return
 end
 

@@ -8,8 +8,8 @@
 # WORKSPACES {{{
 
 # outputs
-set $O1 HDMI-2
-set $O2 VGA-1
-set $O3 HDMI-1
+set $O1 HDMI2
+set $O2 VGA1
+set $O3 HDMI1
 
 # }}}
