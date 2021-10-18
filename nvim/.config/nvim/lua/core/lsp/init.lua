@@ -8,8 +8,6 @@ require("core.lsp.status").activate()
 
 _ = require("lspkind").init()
 
-local nnoremap = vim.keymap.nnoremap
-
 local mapper = function(mode, key, result)
   vim.api.nvim_buf_set_keymap(0, mode, key, "<cmd>lua " .. result .. "<CR>", { noremap = true, silent = true })
 end
