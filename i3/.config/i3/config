@@ -1,0 +1,361 @@
+#
+# i3 configuration
+# Guido Masella <guido.masella@gmail.com>
+#
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango: Fira Code 10, FontAwesome 10
+
+# Start XDG autostart .desktop files using dex. See also
+# https://wiki.archlinux.org/index.php/XDG_Autostart
+exec --no-startup-id dex --autostart --environment i3
+
+# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+# screen before suspend. Use loginctl lock-session to lock your screen.
+exec --no-startup-id xss-lock --transfer-sleep-lock -- blurlock
+
+# NetworkManager is the most popular way to manage wireless networks on Linux,
+# and nm-applet is a desktop environment-independent system tray GUI for it.
+exec --no-startup-id nm-applet
+
+# Compositor
+exec --no-startup-id "picom --config ~/.config/picom/i3.conf -b"
+
+# the bar
+exec_always --no-startup-id "~/.config/polybar/launch.sh"
+
+# DUNST. A notification daemon
+exec --no-startup-id "dunst"
+
+#wallpaper
+exec --no-startup-id "nitrogen --restore"
+
+# Clipboard
+exec --no-startup-id "greenclip daemon"
+
+# border width
+set $borderwidth 3
+
+# new windows are titleless
+new_window pixel $borderwidth
+new_float pixel $borderwidth
+
+# Use the Super ("win") key as default modifier
+set $mod Mod4
+
+# use these keys for focus, movement, and resize directions when reaching for
+# the arrows is not convenient
+set $left h
+set $down j
+set $up k
+set $right l
+
+# use Mouse+Mod1 to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec i3-sensible-terminal
+
+# start a filemanager
+bindsym $mod+x exec "alacritty -e ranger"
+bindsym $mod+Shift+x exec "dolphin"
+
+# start rofi combi mode
+bindsym $mod+d exec "rofi -show combi"
+
+# start rofi math mode
+bindsym $mod+Shift+d exec "rofi -show calc -modi calc -no-show-match -no-sort"
+
+# clipboard manager
+bindsym $mod+b exec "rofi -modi 'clipboard:greenclip print' -show clipboard -run-command '{cmd}'"
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# change focus
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+# move focused window
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+# move workspace
+bindsym $mod+Control+h move workspace to output left
+bindsym $mod+Control+j move workspace to output down
+bindsym $mod+Control+k move workspace to output up
+bindsym $mod+Control+l move workspace to output right
+
+# split in horizontal orientation
+bindsym $mod+o split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# keybindings to change border style
+bindsym $mod+t border normal $borderwidth
+bindsym $mod+y border pixel $borderwidth
+bindsym $mod+u border none
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+bindsym $mod+c focus child
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+
+# move the currently focused window to the scratchpad
+bindsym $mod+Shift+slash move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+slash scratchpad show
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        bindsym $left       resize shrink width 10 px or 10 ppt
+
+        # Pressing right will grow the window’s width.
+        bindsym $down       resize grow height 10 px or 10 ppt
+
+        # Pressing up will shrink the window’s height.
+        bindsym $up         resize shrink height 10 px or 10 ppt
+
+        # Pressing down will grow the window’s height.
+        bindsym $right      resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape or Mod1+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+# resize windows
+bindsym $mod+r mode "resize"
+
+# lock screen
+bindsym $mod+comma exec "blurlock"
+
+# switch workspace back and forth
+bindsym $mod+Tab workspace back_and_forth
+
+# switch to prev or next workspace
+bindsym $mod+p workspace prev_on_output
+bindsym $mod+n workspace next_on_output
+
+# shutdown menu 
+set $mode_system (l) lock, (e) logout, (z) suspend, (h) hibernate, (r) reboot, (s) shutdown, (y) hybrid
+mode "$mode_system" {
+	bindsym l exec --no-startup-id "i3exit.sh lock", mode "default"
+	bindsym e exec --no-startup-id "i3exit.sh logout", mode "default"
+	bindsym z exec --no-startup-id "i3exit.sh suspend", mode "default"
+	bindsym h exec --no-startup-id "i3exit.sh hibernate", mode "default"
+	bindsym r exec --no-startup-id "i3exit.sh reboot", mode "default"
+	bindsym s exec --no-startup-id "i3exit.sh shutdown", mode "default"
+	bindsym y exec --no-startup-id "i3exit.sh hybrid", mode "default"
+
+	# back to normal: Enter or Escape
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+	bindsym $mod+z mode "default"
+}
+# shutdown menu 
+bindsym $mod+z mode "$mode_system"
+
+# mark or unmark windows and move to marker
+set $mode_manage Mark (m), Unmark (u), Go to mark (g), Workspace (w), Command (c)
+mode "$mode_manage" {
+    bindsym m exec i3-input -F 'mark %s' -P 'Mark: '
+    bindsym g exec i3-input -F '[con_mark="%s"] focus' -P 'Go to: '
+    bindsym u exec i3-input -F 'unmark %s' -P 'Unmark: '
+    bindsym w exec i3-input -F 'workspace %s' -P 'Workspace: '
+    bindsym c exec i3-input -P 'Command: '
+
+	# back to normal: Enter or Escape
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+    bindsym $mod+m mode "default"
+}
+# mark or unmark windows and move to marker
+bindsym $mod+m mode "$mode_manage"
+
+# take screenshots
+bindsym Print exec --no-startup-id "maim ~/Pictures/Screenshots/$(date +%F-%T).png && paplay /usr/share/sounds/freedesktop/stereo/screen-capture.oga"
+
+# Brightness control
+bindsym XF86MonBrightnessDown exec "xbacklight -dec 10"
+bindsym XF86MonBrightnessUp exec "xbacklight -inc 20"
+
+# Volume PULSE
+bindsym XF86AudioRaiseVolume exec --no-startup-id "pactl set-sink-volume @DEFAULT_SINK@ +10%"
+bindsym XF86AudioLowerVolume exec --no-startup-id "pactl set-sink-volume @DEFAULT_SINK@ -10%"
+bindsym XF86AudioMute exec --no-startup-id "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+bindsym XF86AudioMicMute exec --no-startup-id "pactl set-source-mute @DEFAULT_SOURCE@ toggle"
+
+# include host specific configurations
+include ~/.config/i3/`hostname`.conf
+
+# disable back and forth when pressing the same workspace 
+workspace_auto_back_and_forth no
+
+# Defining workspace variables
+set $WS01 "1: Home"
+set $WS02 "2: Web"
+set $WS03 "3: Term"
+set $WS04 "4: Coding"
+set $WS05 "5: Testing"
+set $WS06 "6: SSH"
+set $WS07 "7: Logging"
+set $WS08 "8: Maintenance"
+set $WS09 "9: Fun"
+set $WS10 "10: Gaming"
+set $WS11 "11: IM"
+set $WS12 "12: Mail"
+set $WSC01 "1: Monitor"
+set $WSC02 "2: Term B"
+set $WSC03 "3: Term C"
+set $WSC04 "4: Coding B"
+set $WSC05 "5: Coding C"
+set $WSC06 "6: Rec"
+set $WSC07 "7: Read"
+
+# Putting workspaces on screens
+workspace $WS01 output $O1
+workspace $WS02 output $O1
+workspace $WS03 output $O1
+workspace $WS04 output $O1
+workspace $WS05 output $O1
+workspace $WS06 output $O1
+workspace $WS07 output $O1
+workspace $WS08 output $O1
+workspace $WS09 output $O1
+workspace $WS10 output $O1
+workspace $WS11 output $O1
+workspace $WS12 output $O1
+workspace $WSC01 output $O2
+workspace $WSC02 output $O2
+workspace $WSC03 output $O2
+workspace $WSC04 output $O2
+workspace $WSC05 output $O2
+workspace $WSC06 output $O2
+workspace $WSC07 output $O2
+
+# switch to workspace
+bindsym $mod+1 workspace $WS01
+bindsym $mod+2 workspace $WS02
+bindsym $mod+3 workspace $WS03
+bindsym $mod+4 workspace $WS04
+bindsym $mod+5 workspace $WS05
+bindsym $mod+6 workspace $WS06
+bindsym $mod+7 workspace $WS07
+bindsym $mod+8 workspace $WS08
+bindsym $mod+9 workspace $WS09
+bindsym $mod+0 workspace $WS10
+bindsym $mod+minus workspace $WS11
+bindsym $mod+equal workspace $WS12
+bindsym $mod+Mod1+1 workspace $WSC01
+bindsym $mod+Mod1+2 workspace $WSC02
+bindsym $mod+Mod1+3 workspace $WSC03
+bindsym $mod+Mod1+4 workspace $WSC04
+bindsym $mod+Mod1+5 workspace $WSC05
+bindsym $mod+Mod1+6 workspace $WSC06
+bindsym $mod+Mod1+7 workspace $WSC07
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $WS01
+bindsym $mod+Shift+2 move container to workspace $WS02
+bindsym $mod+Shift+3 move container to workspace $WS03
+bindsym $mod+Shift+4 move container to workspace $WS04
+bindsym $mod+Shift+5 move container to workspace $WS05
+bindsym $mod+Shift+6 move container to workspace $WS06
+bindsym $mod+Shift+7 move container to workspace $WS07
+bindsym $mod+Shift+8 move container to workspace $WS08
+bindsym $mod+Shift+9 move container to workspace $WS09
+bindsym $mod+Shift+0 move container to workspace $WS10
+bindsym $mod+Shift+minus move container to workspace $WS11
+bindsym $mod+Shift+equal move container to workspace $WS12
+bindsym $mod+Shift+Mod1+1 move container to workspace $WSC01
+bindsym $mod+Shift+Mod1+2 move container to workspace $WSC02
+bindsym $mod+Shift+Mod1+3 move container to workspace $WSC03
+bindsym $mod+Shift+Mod1+4 move container to workspace $WSC04
+bindsym $mod+Shift+Mod1+5 move container to workspace $WSC05
+bindsym $mod+Shift+Mod1+6 move container to workspace $WSC06
+bindsym $mod+Shift+Mod1+7 move container to workspace $WSC07
+
+# Set gaps
+# inner gaps are between containers
+# outer gaps with the edge of the screen
+#gaps inner 10
+#gaps outer -4
+
+# enabling smart gaps and borders
+#smart_borders on
+
+# assign web browsers to workspace web
+assign [class="Chromium"] $WS02
+assign [class="firefox"] $WS02
+for_window [class="firefox" title="Picture-in-Picture"] sticky enable
+
+# windows title
+for_window [class=".*"] border pixel $borderwidth
+
+# force apps to not go in floating mode
+for_window [class="gimp"] floating disable
+for_window [window_role="gimp-toolbox"] floating disable
+for_window [window_role="gimp-dock"] floating disable
+
+# Steam goes float on workspace gaming
+#for_window [class="Steam"] floating enable
+assign [class="Steam"] $WS10
+
+# Scratchpad
+for_window [title="i3scratchpad"] move scratchpad
+for_window [class="pavucontrol-qt"] move scratchpad
+for_window [class="firefox_scratch"] move scratchpad
+
+# GAMES
+assign [class="dota2"] "14: DoTA"
+for_window [class="dota2"] fullscreen
+assign [class="minecraft-launcher"] "14: Minecraft"
+assign [class="Minecraft"] "14: Minecraft"
+
+# other
+assign [class="TelegramDesktop"] $WS11
+assign [class="Slack"] $WS11
+assign [class="Skype"] $WS11
+assign [class="Element"] $WS11
+assign [class="Thunderbird"] $WS12
+assign [class="Mail"] $WS12
+
+include ~/.config/i3/theme.conf
+
+# vim: set ft=conf sw=4 ts=4 sts=4 et tw=78 :
