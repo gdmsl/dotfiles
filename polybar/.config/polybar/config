@@ -21,16 +21,21 @@ include-file=~/.config/polybar/colors
 monitor = ${env:MONITOR:HDMI-1}
 enable-ipc = true
 override-redirect = false
+
 include-file=~/.config/polybar/local
+
 width = 100%
+
 module-margin-left = 1
 module-margin-right = 1
+
 font-0 = "Fira Code:fontformat=truetype:pixelsize=12:antialias=true;2"
 font-1 = "Font Awesome 5 Free:style=Regular:pixelsize=12;2"
 font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=12;2"
 font-3 = "Font Awesome 5 Brands:pixelsize=12;2"
-font-4 = "coins:style=Regular:pixelsize=10;2"
+
 fixed-center = true
+
 line-size = 3
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -40,20 +45,12 @@ padding-right= 2
 [bar/top]
 inherit = bar/common
 
-modules-left = title
-modules-center = i3
-modules-right = date
+modules-left = i3
+modules-center = date
+modules-right = battery memory cpu temperature wlan eth pulseaudio dunst_indicator
 
 tray-position = right
 tray-padding = 2
-
-[bar/bottom]
-inherit = bar/common
-bottom=true
-
-modules-left = filesystem battery memory cpu temperature wlan eth
-modules-center =
-modules-right = crypto spotify pulseaudio
 
 # --------------------------------------------------------------------------- #
 #                                   MODULES                                   #
@@ -61,27 +58,52 @@ modules-right = crypto spotify pulseaudio
 
 [module/i3]
 type = internal/i3
-format = <label-state> <label-mode>
 
-# Only show workspaces defined on the same output as the bar
+# only show workspaces defined on the same output as the bar
 pin-workspaces = true
 
-# Split the workspace name on :
+# split the workspace name on :
 strip-wsnumbers = true
 
-# colors and aspect
-label-unfocused-padding = 1
+# sort workspaces by their number
+index-sort = true
+
+# scrolling to after the end will restart from first and vice versa
+wrapping-scroll = true
+
+# padding
+format-padding = 1
+
+# general format of the label
+format = <label-state> <label-mode>
 
 label-focused-background = ${colors.background-alt}
 label-focused-foreground = ${colors.primary}
-label-focused-overline = ${colors.primary}
 label-focused-padding = 1
 
-label-urgent-background = ${colors.urgent}
+label-unfocused-padding = 1
+
+label-visible-padding = 1
+
+label-mode-padding = 1
+
+label-urgent-background = ${colors.background-alt}
+label-urgent-foreground = ${colors.urgent}
 label-urgent-padding = 1
 
-index-sort = true
-wrapping-scroll = true
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-8 = 9;
+ws-icon-9 = 10;
+ws-icon-10 = 11;
+ws-icon-11 = 12;
+ws-icon-default = 
 
 [module/cpu]
 type = internal/cpu
@@ -129,15 +151,18 @@ label-disconnected = 
 
 [module/date]
 type = internal/date
-interval = 5
 
-date = %A %Y-%m-%d
+interval = 1.0
+
+date = %A %d %b %Y
 date-alt = %Y-%m-%d
 time = %H:%M
 time-alt = %H:%M:%S
 
 label = %date% %time%
-format=<label>
+
+format = <label>
+format-padding = 1
 format-prefix = " "
 
 [module/pulseaudio]
@@ -194,11 +219,6 @@ ramp-0 = 
 ramp-1 = 
 ramp-2 = 
 
-[module/crypto]
-type = custom/script
-exec = /home/gdmsl/.config/polybar/scripts/pcrypto.py --base EUR --coins btc eth ltc
-interval = 300
-
 [module/filesystem]
 type = internal/fs
 mount-0 = /
@@ -216,12 +236,14 @@ type = custom/script
 interval = 1
 format-prefix = " "
 format = <label>
-exec = python /home/gdmsl/.config/polybar/scripts/polybar-spotify/spotify_status.py -f '{artist}: {song}'
+exec = python ~/.config/polybar/scripts/polybar-spotify/spotify_status.py -f '{artist}: {song}'
 
-[module/title]
-type = internal/xwindow
-label = " %title%"
-label-maxlen = 40
+[module/dunst_indicator]
+type = custom/script
+exec = ~/.config/polybar/scripts/dunst_indicator.sh
+tail = true
+interval = 1
+click-left = dunstctl set-paused toggle
 
 [settings]
 screenchange-reload = true
