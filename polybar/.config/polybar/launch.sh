@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+export DPI=$(xrdb -query | sed -nE 's/^Xft\.dpi:\s*//p')
+export HEIGHT=$((32 * DPI / 96))
+
 # Terminate already running bar instances
 killall -q polybar
 

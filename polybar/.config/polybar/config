@@ -22,9 +22,9 @@ monitor = ${env:MONITOR:HDMI-1}
 enable-ipc = true
 override-redirect = false
 
-include-file=~/.config/polybar/local
-
 width = 100%
+dpi = ${xrdb:Xft.dpi:-1}
+height = ${env:HEIGHT:32}
 
 module-margin-left = 1
 module-margin-right = 1
