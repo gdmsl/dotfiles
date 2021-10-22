@@ -295,11 +295,8 @@ bindsym $mod+Shift+equal move container to workspace number $ws12
 # Set gaps
 # inner gaps are between containers
 # outer gaps with the edge of the screen
-#gaps inner 10
-#gaps outer -4
-
-# enabling smart gaps and borders
-#smart_borders on
+gaps inner 10
+gaps outer -4
 
 # hide borders adjacent to screen edges when there is only one window on the
 # workspace 

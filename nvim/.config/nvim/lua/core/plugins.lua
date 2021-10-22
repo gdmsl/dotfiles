@@ -36,6 +36,7 @@ return require('packer').startup(function()
 
     -- Languages
     use "JuliaEditorSupport/julia-vim"
+    use "kdheepak/JuliaFormatter.vim"
 
     -- Git
     use "TimUntersberger/neogit"
