@@ -78,8 +78,8 @@ bindsym $mod+$right focus right
 
 # change focus with arrow keys
 bindsym $mod+Left focus left
-bindsym $mod+Up focus down
-bindsym $mod+Down focus up
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
