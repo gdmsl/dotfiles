@@ -2,12 +2,8 @@
 ICON=$XDG_DATA_HOME/xlock/lock.png
 TMPBG=/tmp/screen.png
 
-# start the clock and make the window floating
-alacritty --title "ttyclock" -e "mongoclock"&
-sleep 0.1 && i3-msg 'floating enable'
-
 # take the screenshot
-sleep 0.1 && maim -u /tmp/screen.png
+maim -u /tmp/screen.png
 
 # reduce quality of screenshot and attach lock image
 convert $TMPBG -scale 10% -scale 1000% $TMPBG
