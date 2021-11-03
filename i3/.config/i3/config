@@ -122,8 +122,8 @@ bindsym $mod+t border normal $borderwidth
 bindsym $mod+y border pixel $borderwidth
 bindsym $mod+u border none
 
-# toggle tiling / floating
-bindsym $mod+period floating sticky toggle
+# toggle sticky
+bindsym $mod+period sticky toggle
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
