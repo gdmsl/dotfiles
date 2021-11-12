@@ -56,4 +56,7 @@ return require('packer').startup(function()
     -- Lua
     use 'tjdevries/nlua.nvim'
 
+    -- Spell checks
+    use 'vigoux/LanguageTool.nvim'
+
 end)
