@@ -77,3 +77,4 @@ if ! pgrep -u "$USER" gnome-keyring-daemon > /dev/null; then
         source "$XDG_RUNTIME_DIR/ssh-agent.env" > /dev/null
     fi
 fi
+

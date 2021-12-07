@@ -48,8 +48,4 @@ fi
 # GTK2 Config files
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 
-# SSH Agent
-if [ -x /usr/bin/gnome-keyring-daemon ]; then
-    eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
-    export GPG_AGENT_INFO SSH_AUTH_SOCK
-fi
+export GTK_USE_PORTAL=1
