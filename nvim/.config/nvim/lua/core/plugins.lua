@@ -31,7 +31,7 @@ return require('packer').startup(function()
     -- LSP
     use "neovim/nvim-lspconfig"
     use "wbthomason/lsp-status.nvim"
-    use "glepnir/lspsaga.nvim"
+    --use 'tami5/lspsaga.nvim' doesn't work anymore fix
     use "onsails/lspkind-nvim"
 
     -- Languages
