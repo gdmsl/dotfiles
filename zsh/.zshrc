@@ -58,7 +58,7 @@ zplug "plugins/tmux", from:oh-my-zsh, if:"which tmux"
 zplug "plugins/tmuxinator", from:oh-my-zsh, if:"which tmuxinator"
 zplug "plugins/fasd", from:oh-my-zsh, if:"which fasd"
 zplug "plugins/archlinux", from:oh-my-zsh, if:"which pacman"
-zplug "plugins/cargo", from:oh-my-zsh, if:"which cargo"
+zplug "plugins/rust", from:oh-my-zsh, if:"which cargo"
 zplug "plugins/vagrant", from:oh-my-zsh, if:"which vagrant"
 zplug "plugins/rsync", from:oh-my-zsh, if:"which rsync"
 zplug "plugins/command-not-found", from:oh-my-zsh
