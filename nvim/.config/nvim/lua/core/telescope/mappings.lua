@@ -3,8 +3,6 @@
 -- https://github.com/tjdevries/config_manager/blob/master/xdg_config/nvim/lua/tj/telescope/mappings.lua
 --
 
-local sorters = require "telescope.sorters"
-
 TelescopeMapArgs = TelescopeMapArgs or {}
 
 local map_tele = function(key, f, options, buffer)
