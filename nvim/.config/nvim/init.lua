@@ -5,13 +5,8 @@
 -- | |_| | |_| | |  | |___) | |___     https://twitter.com/gdmsl
 --  \____|____/|_|  |_|____/|_____|    https://gitlab.com/gdmsl
 --
--- This configuration is heavily inspired by tjdevires from
+-- This configuration is heavily inspired (and often copyed) by tjdevires from
 -- https://github.com/tjdevires/config_manager
-
---[[
-
-
---]]
 
 -- First run
 --
@@ -27,11 +22,13 @@ end
 -- the old definition in setting mappings.
 vim.g.mapleader = ','
 
+-- Term GUI Colors
+--
+-- needed somewhere otherwise getting warning
+vim.opt.termguicolors = true
+
 -- Load packer.nvim files
 require('core.plugins')
-
--- Force loading of astronauta first.
-vim.cmd [[runtime plugin/astronauta.vim]]
 
 -- Load neovim options
 require('core.options')
