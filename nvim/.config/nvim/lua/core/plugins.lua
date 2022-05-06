@@ -14,36 +14,92 @@ return require('packer').startup(function()
 	-- https://github.com/nvim-telescope/telescope.nvim
     use {
 	    'nvim-telescope/telescope.nvim',
-	    requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+	    requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
+        config = function()
+            require("telescope").setup{}
+        end,
     }
 
     -- https://github.com/nvim-telescope/telescope-fzy-native.nvim
     use "nvim-telescope/telescope-fzy-native.nvim"
 
+    -- fzf-native is a c port of fzf. It only covers the algorithm and
+    -- implements few functions to support calculating the score.
     -- https://github.com/nvim-telescope/telescope-fzf-native.nvim
-    use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+    use {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        run = 'make',
+        requires = {{'nvim-telescope/telescope.nvim'},},
+        config = function ()
+            require("telescope").load_extension("fzf")
+        end,
+    }
 
+    -- Incorporating fzf into telescope using plenary's job writer
+    -- functionality.
     -- https://github.com/nvim-telescope/telescope-fzf-writer.nvim
     use "nvim-telescope/telescope-fzf-writer.nvim"
 
     -- https://github.com/nvim-telescope/telescope-packer.nvim
-    use "nvim-telescope/telescope-packer.nvim"
+    use {
+        "nvim-telescope/telescope-packer.nvim",
+        requires = {{'nvim-telescope/telescope.nvim'},},
+        config = function ()
+            require("telescope").load_extension("packer")
+        end,
+    }
 
+    -- `telescope-symbols` provide its users with the ability of picking
+    -- symbols and insert them at point.
     -- https://github.com/nvim-telescope/telescope-symbols.nvim
     use "nvim-telescope/telescope-symbols.nvim"
 
+    -- Search and paste entries from *.bib files with telescope.nvim.
     -- https://github.com/nvim-telescope/telescope-bibtex.nvim
-    use "nvim-telescope/telescope-bibtex.nvim"
+    use {
+        "nvim-telescope/telescope-bibtex.nvim",
+        requires = {{'nvim-telescope/telescope.nvim'},},
+        config = function ()
+            require("telescope").load_extension("bibtex")
+        end,
+    }
 
-    use "tami5/sql.nvim"
-    use "nvim-telescope/telescope-cheat.nvim"
+    -- An attempt to recreate cheat.sh with lua, neovim, sqlite.lua, and
+    -- telescope.nvim.
+    -- https://github.com/nvim-telescope/telescope-cheat.nvim
+    use {
+        "nvim-telescope/telescope-cheat.nvim",
+        requires = {{'nvim-telescope/telescope.nvim'},},
+        config = function ()
+            require("telescope").load_extension("cheat")
+        end,
+    }
+
+    -- A telescope.nvim extension that offers intelligent prioritization when
+    -- selecting files from your editing history.
+    -- https://github.com/nvim-telescope/telescope-frecency.nvim
     use "nvim-telescope/telescope-frecency.nvim"
-    use { "nvim-telescope/telescope-arecibo.nvim", rocks = { "openssl", "lua-http-parser" } }
 
-    -- Treesitter
+    -- A Neovim Telescope extension for searching the web!
+    -- https://github.com/nvim-telescope/telescope-arecibo.nvim
+    use {
+        "nvim-telescope/telescope-arecibo.nvim",
+        rocks = { "openssl", "lua-http-parser" },
+        config = function()
+            require("telescope").load_extension("arceibo")
+        end,
+    }
+
+    ----------------
+    -- Treesitter --
+    ----------------
+
+    -- https://github.com/nvim-treesitter/nvim-treesitter
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 
-    -- Autocompletion
+    --------------------
+    -- Autocompletion --
+    --------------------
     use "hrsh7th/nvim-compe"
     
     ---------

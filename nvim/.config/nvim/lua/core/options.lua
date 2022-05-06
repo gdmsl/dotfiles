@@ -15,7 +15,7 @@ opt.wildmode = opt.wildmode + { "longest", "full" }
 opt.wildoptions = "pum"
 
 -- Set the width of the text
-opt.colorcolumn = "80"
+opt.colorcolumn = {"80", "92", "120"}
 
 -- Line numbers
 opt.relativenumber = true -- Show line numbers
