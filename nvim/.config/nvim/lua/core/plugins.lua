@@ -86,7 +86,7 @@ return require('packer').startup(function()
         "nvim-telescope/telescope-arecibo.nvim",
         rocks = { "openssl", "lua-http-parser" },
         config = function()
-            require("telescope").load_extension("arceibo")
+            require("telescope").load_extension("arecibo")
         end,
     }
 
@@ -105,6 +105,12 @@ return require('packer').startup(function()
     ---------
     -- LSP --
     ---------
+
+    -- Allows you to manage LSP servers (servers are installed inside :echo
+    -- stdpath("data") by default). It works in tandem with `lspconfig`.
+    -- https://github.com/williamboman/nvim-lsp-installer
+    --
+    use "williamboman/nvim-lsp-installer"
 
     -- A collection of common configurations for Neovim's built-in language
     -- server client.
@@ -281,8 +287,7 @@ return require('packer').startup(function()
 
     -- Lua Development for Neovim
     -- https://github.com/tjdevries/nlua.nvim
-    use 'tjdevries/nlua.nvim'
-
+    --use 'tjdevries/nlua.nvim'
 
     -- Clipboard manager for neovim
     -- https://github.com/AckslD/nvim-neoclip.lua

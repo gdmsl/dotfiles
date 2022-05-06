@@ -58,12 +58,7 @@ local on_attach = function(client)
     end
 end
 
-require('nlua.lsp.nvim').setup(lspconfig, {
-    on_init = on_init, on_attach = on_attach,
-    globals = {'love'}
-})
-
-local servers = { 'clangd', 'texlab' , 'julials', 'cmake' }
+local servers = { 'clangd', 'texlab' , 'julials', 'cmake', 'sumneko_lua', 'bashls', 'remark_ls', 'jedi_language_server', 'rome'}
 for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup { on_init = on_init, on_attach = on_attach }
 end
