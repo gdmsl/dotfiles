@@ -1,1 +1,2 @@
-require 'zephyr'
+-- require 'zephyr'
+vim.cmd([[colorscheme adwaita]])

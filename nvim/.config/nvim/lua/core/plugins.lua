@@ -241,7 +241,8 @@ return require('packer').startup(function()
     use "tweekmonster/spellrotate.vim"
 
     -- Colorscheme
-    use "glepnir/zephyr-nvim"
+    -- use "glepnir/zephyr-nvim"
+    use 'Mofiqul/adwaita.nvim'
    
     -- A high-performance color highlighter for Neovim
     -- https://github.com/norcalli/nvim-colorizer.lua
