@@ -2,7 +2,7 @@
 
 import Pkg
 
-Pkg.activate("@pluto")
+Pkg.activate("pluto"; shared=true)
 
 import Pluto
 
