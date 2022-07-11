@@ -59,6 +59,21 @@ local on_attach = function(client)
 end
 
 local servers = { 'clangd', 'texlab' , 'julials', 'cmake', 'sumneko_lua', 'bashls', 'remark_ls', 'jedi_language_server', 'rome'}
+
+require("nvim-lsp-installer").setup {
+    -- ensure these servers are always installed
+    ensure_installed = servers,
+    -- automatically detect which servers to install (based on which servers are set up via lspconfig)
+    automatic_installation = true,
+    ui = {
+        icons = {
+            server_installed = "✓",
+            server_pending = "➜",
+            server_uninstalled = "✗"
+        }
+    }
+}
+
 for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup { on_init = on_init, on_attach = on_attach }
 end
