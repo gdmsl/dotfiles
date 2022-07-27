@@ -58,7 +58,7 @@ local on_attach = function(client)
     end
 end
 
-local servers = { 'clangd', 'texlab' , 'julials', 'cmake', 'sumneko_lua', 'bashls', 'remark_ls', 'jedi_language_server', 'rome'}
+local servers = { 'clangd', 'texlab' , 'julials', 'cmake', 'sumneko_lua', 'bashls', 'jedi_language_server', 'rome'}
 
 require("nvim-lsp-installer").setup {
     -- ensure these servers are always installed
