@@ -1,15 +1,19 @@
 [user]
 	email = guido.masella@gmail.com
 	name = Guido Masella
+
 [push]
 	default = simple
+
 [url "https://aur.archlinux.org/"]
     insteadOf = aur:
+
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+
 [pull]
 	rebase = false
 
@@ -17,12 +21,12 @@
     pager = delta
 
 [delta]
-    plus-style = "syntax #012800"
-    minus-style = "syntax #340001"
-    syntax-theme = Monokai Extended
+    side-by-side = true
+    line-numbers = true
     navigate = true
 
 [interactive]
     diffFilter = delta --color-only
+
 [init]
-	defaultBranch = master
+	defaultBranch = main
