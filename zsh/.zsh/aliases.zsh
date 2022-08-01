@@ -42,7 +42,7 @@ alias pqiv="pqiv --bind-key='d { command(mkdir -p .pqiv-trash; mv \$1 .pqiv-tras
 alias mimeconfig="nvim ~/.config/mimeapps.list ~/.local/share/applications/mimeapps.list"
 
 # julia with colors
-alias julia="julia --color yes"
+alias julia="JULIA_SSH_NO_VERIFY_HOSTS=\"git.unistra.fr\" julia --color yes"
 
 # SLURM
 alias squeue='squeue -o "%.15i %.9P %.20j %.8u %.2t %.10M %.6D %.3C %R"'
