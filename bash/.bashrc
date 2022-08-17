@@ -8,7 +8,10 @@ export BASH_IT="$HOME/.bash_it"
 
 # Lock and Load a custom theme file
 # location /.bash_it/themes/
-export BASH_IT_THEME='sexy'
+export BASH_IT_THEME='easy'
+
+# Command duration
+export BASH_IT_COMMAND_DURATION=true
 
 # git minimal info in prompt
 export SCM_GIT_SHOW_MINIMAL_INFO=true

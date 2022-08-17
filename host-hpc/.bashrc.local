@@ -12,17 +12,17 @@ source /usr/local/configfiles/bashrc.default
 # load modules
 module purge
 module load slurm/slurm
-module load python/python3
-module load cmake/cmake-3.15.4
-module load julia/julia-1.4.2
-module load boost/boost-1.71.g9
+module load julia/julia-1.6.1
+module load python/Miniconda3
+module load cmake/cmake-3.23.2
 module load gcc/gcc-9
+module load boost/boost-1.71.g9
 
 # aliases
 alias squeuel='squeue --format="%.18i %.9P %.25j %.8u %.8T %.10M %.9l %.6D %R"'
 alias sqm='squeue -u $USER'
 alias sqml='squeue -u $USER --format="%.18i %.9P %.25j %.8u %.8T %.10M %.9l %.6D %R"'
-alias sqg='squeue -u schachen,dhagenmu,wellnitz,amaronce,mezzacapo,geissler,tbotzung,sschutz,vodola,angelone,fcinti,gmasella,preisser'
+alias sqg='squeue -u schachen,dhagenmu,wellnitz,amaronce,mezzacapo,geissler,tbotzung,sschutz,vodola,angelone,fcinti,gmasella,preisser,ykasim,tgupta'
 
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
@@ -30,3 +30,22 @@ alias grep='grep --color=auto'
 # Bash-IT
 export SCM_CHECK=false
 export SCM_GIT_SHOW_MINIMAL_INFO=true
+
+if which conda > /dev/null; then
+    # >>> conda initialize >>>
+    # !! Contents within this block are managed by 'conda init' !!
+    __conda_setup="$('/usr/local/Miniconda/Miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
+    else
+        if [ -f "/usr/local/Miniconda/Miniconda3/etc/profile.d/conda.sh" ]; then
+            . "/usr/local/Miniconda/Miniconda3/etc/profile.d/conda.sh"
+        else
+            export PATH="/usr/local/Miniconda/Miniconda3/bin:$PATH"
+        fi
+    fi
+    unset __conda_setup
+    # <<< conda initialize <<<
+
+    conda activate gdmsldefault
+fi
