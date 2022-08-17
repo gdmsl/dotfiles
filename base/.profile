@@ -45,9 +45,14 @@ export BROWSER="firefox"
 # Default terminal emulator
 export TERMINAL="alacritty"
 
+# Solve Julia problems with git stuff
+export JULIA_SSH_NO_VERIFY_HOSTS="git.unistra.fr"
+
 # Ruby
-export GEM_HOME=$(ruby -e 'print Gem.user_dir')
-export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+if which ruby > /dev/null; then
+    export GEM_HOME=$(ruby -e 'print Gem.user_dir')
+    export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+fi
 
 # Rust Path, if any
 [ -e "$HOME/.cargo/env" ] && source $HOME/.cargo/env
