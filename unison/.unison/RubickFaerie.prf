@@ -1,8 +1,0 @@
-label = Sync usrshare between the ExtenalHD and Rubick
-
-root = /run/media/gdmsl/FaerieSafe/gdmsl
-root = /home/gdmsl
-
-# directories
-path=Shared
-path=Public/Zotero
