@@ -1,0 +1,29 @@
+#!/bin/bash
+#
+# AUTHOR: Guido Masella
+#
+# Build latex documents in a hidden subdirectory and link back the resulting
+# pdf files for easy access
+#
+
+builddir=".mylatexmk"
+pdfdir="pdf"
+
+if [ ! -d "$builddir" ]; then
+    mkdir "$builddir"
+fi
+
+if [ ! -d  "$pdfdir" ]; then
+    mkdir "$pdfdir"
+fi
+
+latexmk --output-directory="${builddir}" $@
+lmkresult=$?
+
+files=$(ls "$builddir" | grep -e '\.pdf')
+
+for file in $files; do
+    ln -rs "${builddir}/${file}" "$pdfdir"
+done
+
+exit $lmkresult
