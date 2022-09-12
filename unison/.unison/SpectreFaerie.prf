@@ -1,9 +1,0 @@
-label = Sync Between Spectre and Faerie
-
-root = /mnt/archive0/gdmsl/Shared
-root = /run/media/gdmsl/FaerieSafe/gdmsl/Shared
-
-# directories
-path=Heavy
-path=Main
-path=SFW
