@@ -7,31 +7,18 @@
 --
 -- This configuration is heavily inspired (and often copyed) by tjdevires from
 -- https://github.com/tjdevires/config_manager
+-- https://github.com/folke/dot/
 
--- First run
---
--- Will install packer if this is the first run and then stop reading the rest
--- of the configuration
-if require('core.first_load')() then
-  return
-end
+local util = require("util")
 
--- Leader key -> ","
---
--- The leader key has to be defined as early as possible so no plugin will use
--- the old definition in setting mappings.
-vim.g.mapleader = ','
+-- util.debug_pcall()
 
--- Term GUI Colors
---
--- needed somewhere otherwise getting warning
-vim.opt.termguicolors = true
+util.require("config.options")
 
--- Load packer.nvim files
-require('core.plugins')
-
--- Load neovim options
-require('core.options')
-
--- LSP
-require('core.lsp')
+vim.schedule(function()
+  util.packer_defered()
+  util.version()
+  util.require("config.commands")
+  util.require("config.mappings")
+  util.require("config.plugins")
+end)
