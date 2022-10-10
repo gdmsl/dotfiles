@@ -185,13 +185,19 @@ local function plugins(use, plugin)
 
   -- Julia support for Vim.
   -- https://github.com/JuliaEditorSupport/julia-vim
-  use("JuliaEditorSupport/julia-vim")
+  use({
+    "JuliaEditorSupport/julia-vim",
+    ft = "julia"
+  })
 
   -- Plugin for formatting Julia code in (n)vim using `JuliaFormatter.jl`.
   -- https://github.com/kdheepak/JuliaFormatter.vim
   -- `:JuliaFormatterFormat` to use
   -- `:JuliaFormatterUpdate` to update the julia module
-  use("kdheepak/JuliaFormatter.vim")
+  use({
+    "kdheepak/JuliaFormatter.vim",
+    ft = "julia"
+  })
 
   --A plugin to improve your rust experience in neovim.
   -- https://github.com/simrat39/rust-tools.nvim

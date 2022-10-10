@@ -5,7 +5,7 @@ local M = {
 function M.config()
   require("lua-dev").setup({
     library = {
-      runtime = "~/projects/neovim/runtime/",
+      runtime = "~/Code/neovim/runtime/",
     },
   })
   require("mason")
@@ -28,6 +28,7 @@ function M.config()
     tsserver = {},
     eslint = {},
     html = {},
+    julials = {},
     jsonls = {
       settings = {
         json = {
