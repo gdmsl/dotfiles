@@ -61,14 +61,14 @@ function M.get_name(pkg)
 end
 
 function M.has_local(name)
-  return vim.loop.fs_stat(vim.fn.expand("~/projects/" .. name)) ~= nil
+  return vim.loop.fs_stat(vim.fn.expand("~/Code/nvim-plugins/" .. name)) ~= nil
 end
 
 -- This method replaces any plugins with the local clone under ~/projects
 function M.process_local_plugins(spec)
   local spec_name = spec[1]
   local name, owner = M.get_name(spec_name)
-  local local_pkg = "~/projects/" .. name
+  local local_pkg = "~/Code/nvim-plugins/" .. name
 
   if M.local_plugins[name] or M.local_plugins[owner] or M.local_plugins[owner .. "/" .. name] then
     if M.has_local(name) then

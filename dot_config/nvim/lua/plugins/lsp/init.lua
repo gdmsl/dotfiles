@@ -11,12 +11,12 @@ function M.config()
   require("mason")
   require("plugins.lsp.diagnostics").setup()
   require("fidget").setup({ text = { spinner = "dots" } })
-  require("neoconf").setup()
-  local function on_attach(client, bufnr)
-    require("nvim-navic").attach(client, bufnr)
-    require("plugins.lsp.formatting").setup(client, bufnr)
-    require("plugins.lsp.keys").setup(client, bufnr)
-  end
+  -- require("neoconf").setup()
+  -- local function on_attach(client, bufnr)
+  --   require("nvim-navic").attach(client, bufnr)
+  --   require("plugins.lsp.formatting").setup(client, bufnr)
+  --   require("plugins.lsp.keys").setup(client, bufnr)
+  -- end
 
   ---@type lspconfig.options
   local servers = {
@@ -115,11 +115,12 @@ function M.config()
 
   for server, opts in pairs(servers) do
     opts = vim.tbl_deep_extend("force", {}, options, opts or {})
-    if server == "tsserver" then
-      require("typescript").setup({ server = opts })
-    else
-      require("lspconfig")[server].setup(opts)
-    end
+    -- if server == "tsserver" then
+    --   require("typescript").setup({ server = opts })
+    -- else
+    --  require("lspconfig")[server].setup(opts)
+    -- end
+    require("lspconfig")[server].setup(opts)
   end
 
   require("plugins.null-ls").setup(options)

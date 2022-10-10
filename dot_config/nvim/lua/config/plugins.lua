@@ -34,16 +34,34 @@ local function plugins(use, plugin)
   use('wbthomason/packer.nvim')
 
   -------------
-  -- PLENARY --
+  -- LIBS --
   -------------
+  
+  -- All the lua functions I don't want to write twice.
+  -- https://github.com/nvim-lua/plenary.nvim
   use({ "nvim-lua/plenary.nvim", module = "plenary" })
+
+  -- Neovim plugin to improve the default vim.ui interfaces 
+  -- https://github.com/stevearc/dressing.nvim
+  use({ "stevearc/dressing.nvim", event = "User PackerDefered" })
+
+  -- UI Component Library for Neovim.
+  -- https://github.com/MunifTanjim/nui.nvim
+  use({
+    "MunifTanjim/nui.nvim",
+    module = "nui",
+  })
 
   -----------
   -- NOICE --
   -----------
 
+  -- Highly experimental plugin that completely replaces the UI for messages,
+  -- cmdline and the popupmenu.
+  -- https://github.com/folke/noice.nvim
   use({
     "folke/noice.nvim",
+    requires={"rcarriga/nvim-notify"},
     module = "noice",
     event = "VimEnter",
     config = function()
@@ -51,26 +69,17 @@ local function plugins(use, plugin)
     end,
   })
 
-  use({ "stevearc/dressing.nvim", event = "User PackerDefered" })
-
+  -- A fancy, configurable, notification manager for NeoVim
+  -- https://github.com/rcarriga/nvim-notify
   use({
     "rcarriga/nvim-notify",
     event = "User PackerDefered",
+    module="notify",
     config = function()
       require("notify").setup({ level = vim.log.levels.INFO, fps = 20 })
       vim.notify = require("notify")
     end,
   })
-
-  use({ "b0o/SchemaStore.nvim", module = "schemastore" })
-
-  plugin("jose-elias-alvarez/null-ls.nvim")
-
-  use({ "folke/lua-dev.nvim", module = "lua-dev" })
-
-  plugin("anuvyklack/windows.nvim")
-
-  plugin("monaqa/dial.nvim")
 
   ---------------------
   -- MASON, LSP, DAP --
@@ -149,6 +158,27 @@ local function plugins(use, plugin)
     end,
   })
 
+  -- Sniprun is a code runner plugin for neovim written in Lua and Rust. It
+  -- aims to provide stupidly fast partial code testing for interpreted and
+  -- compiled languages . Sniprun blurs the line between standard save/run
+  -- workflow, jupyter-like notebook, and REPL/interpreters.
+  -- https://github.com/michaelb/sniprun
+  plugin("michaelb/sniprun")
+
+  -- A completion engine plugin for neovim written in Lua. Completion sources
+  -- are installed from external repositories and "sourced".
+  -- https://github.com/hrsh7th/nvim-cmp
+  plugin("hrsh7th/nvim-cmp")
+
+  -- A Neovim Lua plugin providing access to the SchemaStore catalog.
+  -- https://github.com/b0o/SchemaStore.nvim
+  use({ "b0o/SchemaStore.nvim", module = "schemastore" })
+
+  -- Use Neovim as a language server to inject LSP diagnostics, code actions,
+  -- and more via Lua.
+  -- https://github.com/jose-elias-alvarez/null-ls.nvim
+  plugin("jose-elias-alvarez/null-ls.nvim")
+
   ---------------
   -- Languages --
   ---------------
@@ -167,7 +197,6 @@ local function plugins(use, plugin)
   -- https://github.com/simrat39/rust-tools.nvim
   plugin("simrat39/rust-tools.nvim")
 
-
   -- Markdown Preview for (Neo)vim
   -- :MarkdownPreview to open in the browser
   -- https://github.com/iamcco/markdown-preview.nvim
@@ -179,6 +208,11 @@ local function plugins(use, plugin)
     ft = "markdown",
     cmd = { "MarkdownPreview" },
   })
+
+  -- Dev setup for init.lua and plugin development with full signature help,
+  -- docs and completion for the nvim lua API.
+  -- https://github.com/folke/lua-dev
+  use({ "folke/lua-dev.nvim", module = "lua-dev" })
 
   -----------------------
   -- Text Manipulation --
@@ -225,16 +259,11 @@ local function plugins(use, plugin)
     end,
   })
 
-  -- match-up is a plugin that lets you highlight, navigate, and operate on
-  -- sets of matching text. It extends vim's % key to language-specific words
-  -- instead of just single characters.
-  use({
-    "andymass/vim-matchup",
-    event = "BufReadPost",
-    config = function()
-      vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
-    end,
-  })
+
+  -- Enhanced increment/decrement plugin for Neovim. 
+  -- https://github.com/monaqa/dial.nvim
+  plugin("monaqa/dial.nvim")
+
 
   ---------
   -- Git --
@@ -272,13 +301,6 @@ local function plugins(use, plugin)
   -- https://github.com/tweekmonster/spellrotate.vim
   use("tweekmonster/spellrotate.vim")
 
-  -- Colorscheme
-  -- use "glepnir/zephyr-nvim"
-  use('Mofiqul/adwaita.nvim')
-  
-  -- A high-performance color highlighter for Neovim
-  -- https://github.com/norcalli/nvim-colorizer.lua
-  plugin("NvChad/nvim-colorizer.lua")
 
   -- A high performance filetype mode for Neovim which leverages conceal and
   -- highlights your buffer with the correct color codes.
@@ -304,30 +326,169 @@ local function plugins(use, plugin)
     requires = {'kyazdani42/nvim-web-devicons'}
   })
 
-  ---------------
-  -- Telescope --
-  ---------------
+  ----------------------
+  -- SEARCH AND FUZZY --
+  ----------------------
+
+  -- A search panel for neovim.
+  -- https://github.com/windwp/nvim-spectre
+  use({
+    "windwp/nvim-spectre",
+    module = "spectre",
+  })
 
   -- `telescope.nvim` is a highly extendable fuzzy finder over lists.
 	-- https://github.com/nvim-telescope/telescope.nvim
   plugin("nvim-telescope/telescope.nvim")
 
-  ----------------
-  -- Treesitter --
-  ----------------
+  ------------------
+  -- HIGHLIGHTING --
+  ------------------
 
+  -- Nvim Treesitter configurations and abstraction layer 
   -- https://github.com/nvim-treesitter/nvim-treesitter
   plugin("nvim-treesitter/nvim-treesitter")
 
+  -- View treesitter information directly in Neovim!
+  -- https://github.com/nvim-treesitter/playground"
   use({ "nvim-treesitter/playground", cmd = { "TSHighlightCapturesUnderCursor", "TSPlaygroundToggle" } })
+
+  -- Vim plugin for automatically highlighting other uses of the word under the
+  -- cursor using either LSP, Tree-sitter, or regex matching.
+  -- https://github.com/RRethy/vim-illuminate
+  plugin("RRethy/vim-illuminate")
+
+  -- Highlight arguments' definitions and usages, asynchronously, using
+  -- Treesitter
+  -- https://github.com/m-demare/hlargs.nvim
+  use({
+    "m-demare/hlargs.nvim",
+    requires = { "nvim-treesitter/nvim-treesitter", "foke/tokyonight.nvim" },
+    event = "User PackerDefered",
+    config = function()
+      require("hlargs").setup({
+        color = require("tokyonight").colors.setup().yellow,
+      })
+    end,
+  })
+
+  -- todo-comments is a lua plugin for Neovim 0.5 to highlight and search for
+  -- todo comments like TODO, HACK, BUG in your code base.
+  -- https://github.com/folke/todo-comments.nvim
+  plugin("folke/todo-comments.nvim")
+
+  -- A high-performance color highlighter for Neovim
+  -- https://github.com/norcalli/nvim-colorizer.lua
+  plugin("NvChad/nvim-colorizer.lua")
+
+  ---------------
+  -- DASHBOARD --
+  ---------------
+
+  -- Fancy Fastest Async Start Screen Plugin of Neovim
+  -- https://github.com/glepnir/dashboard-nvim
+  plugin("glepnir/dashboard-nvim")
+
+  ------------------
+  -- UI and THEME --
+  ------------------
+  --
+  -- This plugin adds indentation guides to all lines (including empty lines).
+  -- https://github.com/lukas-reineke/indent-blankline.nvim
+  plugin("lukas-reineke/indent-blankline.nvim")
+
+  -- A snazzy nail_care buffer line (with tabpage integration) for Neovim built
+  -- using lua.
+  -- https://github.com/akinsho/nvim-bufferline.lua
+  plugin("akinsho/nvim-bufferline.lua")
+
+    -- Extensible Neovim Scrollbar
+  -- https://github.com/petertriho/nvim-scrollbar
+  plugin("petertriho/nvim-scrollbar")
+
+  -- Automatically expand width of the current window. Maximizes and restore
+  -- it. And all this with nice animations! 
+  -- https://github.com/anuvyklack/windows.nvim
+  plugin("anuvyklack/windows.nvim")
+
+  -- A dark and light Neovim theme written in Lua ported from the Visual Studio
+  -- Code TokyoNight theme. Includes extra themes for Kitty, Alacritty, iTerm
+  -- and Fish.
+  -- https://github.com/folke/tokyonight.nvim
+  plugin("folke/tokyonight.nvim")
+
+  ------------
+  -- MOTION -- 
+  ------------
+
+  -- Neoscroll: a smooth scrolling neovim plugin written in lua
+  -- https://github.com/karb94/neoscroll.nvim
+  plugin("karb94/neoscroll.nvim")
+
+  -- Hop is an EasyMotion-like plugin allowing you to jump anywhere in a
+  -- document with as few keystrokes as possible.
+  -- https://github.com/phaazon/hop.nvim
+  plugin("phaazon/hop.nvim")
+
+  -- A blazing fast and easy to configure Neovim statusline written in Lua.
+  -- https://github.com/nvim-lualine/lualine.nvim
+  plugin("nvim-lualine/lualine.nvim")
+
+  -- Show where your cursor moves when jumping large distances (e.g between
+  -- windows). Fast and lightweight, written completely in Lua.
+  -- https://github.com/edluffy/specs.nvim
+  plugin("edluffy/specs.nvim")
+
+  -- match-up is a plugin that lets you highlight, navigate, and operate on
+  -- sets of matching text. It extends vim's % key to language-specific words
+  -- instead of just single characters.
+  use({
+    "andymass/vim-matchup",
+    event = "BufReadPost",
+    config = function()
+      vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
+    end,
+  })
+
+  ----------------
+  -- FOCUS MODE -- 
+  ----------------
+
+  -- Twilight is a Lua plugin for Neovim 0.5 that dims inactive portions of the
+  -- code you're editing.
+  -- :Twilight to toggle
+  -- https://github.com/folke/twilight.nvim
+  use({ "folke/twilight.nvim", module = "twilight" })
+
+  -- Distraction-free coding for Neovim >= 0.5
+  -- https://github.com/folke/zen-mode.nvim
+  use({
+    "folke/zen-mode.nvim",
+    cmd = "ZenMode",
+    config = function()
+      require("zen-mode").setup({
+        plugins = { gitsigns = true, tmux = true, kitty = { enabled = false, font = "+2" } },
+      })
+    end,
+  })
 
   -----------
   -- Other --
   -----------
 
-  -- Cool tags based viewer
-  -- :Vista  <-- Opens up a really cool sidebar with info about file.
-  use { "liuchengxu/vista.vim", cmd = "Vista" }
+  -- A tree like view for symbols in Neovim using the Language Server Protocol.
+  -- Supports all your favourite languages.
+  -- https://github.com/simrat39/symbols-outline.nvim",
+  use({
+    "simrat39/symbols-outline.nvim",
+    cmd = { "SymbolsOutline" },
+    config = function()
+      require("symbols-outline").setup()
+    end,
+    setup = function()
+      vim.keymap.set("n", "<leader>cs", "<cmd>SymbolsOutline<cr>", { desc = "Symbols Outline" })
+    end,
+  })
 
   use({
     "AckslD/nvim-neoclip.lua",
@@ -348,37 +509,30 @@ local function plugins(use, plugin)
   -- https://github.com/nvim-neorg/neorg
   plugin("nvim-neorg/neorg")
 
-
+  -- bufdelete.nvim aims to fix :bdelete by providing useful commands that
+  -- allow you to delete a buffer without messing up your window layout.
+  -- https://github.com/famiu/bufdelete.nvim
   use({ "famiu/bufdelete.nvim", cmd = "Bdelete" })
 
-  plugin("petertriho/nvim-scrollbar")
 
-  plugin("hrsh7th/nvim-cmp")
-
+  -- A super powerful autopair plugin for Neovim that supports multiple
+  -- characters.
+  -- https://github.com/windwp/nvim-autopairs
   plugin("windwp/nvim-autopairs")
 
+  -- Snippet Engine for Neovim written in Lua
+  -- https://github.com/L3MON4D3/LuaSnip
   plugin("L3MON4D3/LuaSnip")
 
-
-  use({
-    "simrat39/symbols-outline.nvim",
-    cmd = { "SymbolsOutline" },
-    config = function()
-      require("symbols-outline").setup()
-    end,
-    setup = function()
-      vim.keymap.set("n", "<leader>cs", "<cmd>SymbolsOutline<cr>", { desc = "Symbols Outline" })
-    end,
-  })
-
-
+  -- Neo-tree is a Neovim plugin to browse the file system and other tree like
+  -- structures in whatever style suits you, including sidebars, floating
+  -- windows, netrw split style, or all of them at once!
+  -- https://nvim-neo-tree/neo-tree.nvim
   plugin("nvim-neo-tree/neo-tree.nvim")
 
-  use({
-    "MunifTanjim/nui.nvim",
-    module = "nui",
-  })
 
+
+  -- https://github.com/danymat/neogen
   use({
     "danymat/neogen",
     module = "neogen",
@@ -387,52 +541,8 @@ local function plugins(use, plugin)
     end,
   })
 
-
-  -- Highlight arguments' definitions and usages, asynchronously, using
-  -- Treesitter
-  -- https://github.com/m-demare/hlargs.nvim
-  use({
-    "m-demare/hlargs.nvim",
-    event = "User PackerDefered",
-    config = function()
-      require("hlargs").setup({
-        -- color = require("tokyonight.colors").setup().yellow,
-      })
-    end,
-  })
-
-
-  -- Dashboard
-  plugin("glepnir/dashboard-nvim")
-
-
-  use({
-    "windwp/nvim-spectre",
-    module = "spectre",
-  })
-
-
-  plugin("lukas-reineke/indent-blankline.nvim")
-  plugin("akinsho/nvim-bufferline.lua")
-
-  -- Smooth Scrolling
-  plugin("karb94/neoscroll.nvim")
-
-  plugin("edluffy/specs.nvim")
-
-  plugin("michaelb/sniprun")
-
-
-  -- A blazing fast and easy to configure Neovim statusline written in Lua.
-  -- https://github.com/nvim-lualine/lualine.nvim
-  plugin("nvim-lualine/lualine.nvim")
-
-
-  -- plugin("kevinhwang91/nvim-ufo")
-
-
-  plugin("phaazon/hop.nvim")
-
+  -- Persistence is a simple lua plugin for automated session management.
+  -- https://github.com/folke/persistence.nvim
   use({
     "folke/persistence.nvim",
     event = "BufReadPre",
@@ -442,6 +552,11 @@ local function plugins(use, plugin)
     end,
   })
 
+  -- vim-startuptime is a Vim plugin for viewing vim and nvim startup event
+  -- timing information. The data is automatically obtained by launching (n)vim
+  -- with the `--startuptime` argument. See `:help startuptime-configuration`
+  -- for details on customization options.
+  -- https://github.com/dstein64/vim-startuptime
   use({
     "dstein64/vim-startuptime",
     cmd = "StartupTime",
@@ -450,30 +565,6 @@ local function plugins(use, plugin)
     end,
   })
 
-  -- Twilight is a Lua plugin for Neovim 0.5 that dims inactive portions of the
-  -- code you're editing.
-  -- :Twilight to toggle
-  -- https://github.com/folke/twilight.nvim
-  use({ "folke/twilight.nvim", module = "twilight" })
-
-  -- Distraction-free coding for Neovim >= 0.5
-  -- https://github.com/folke/zen-mode.nvim
-  use({
-    "folke/zen-mode.nvim",
-    cmd = "ZenMode",
-    config = function()
-      require("zen-mode").setup({
-        plugins = { gitsigns = true, tmux = true, kitty = { enabled = false, font = "+2" } },
-      })
-    end,
-  })
-
-  -- todo-comments is a lua plugin for Neovim 0.5 to highlight and search for
-  -- todo comments like TODO, HACK, BUG in your code base.
-  -- https://github.com/folke/todo-comments.nvim
-  plugin("folke/todo-comments.nvim")
-
-
   -- WhichKey is a lua plugin for Neovim 0.5 that displays a popup with
   -- possible key bindings of the command you started typing.
   -- https://github.com/folke/which-key.nvim
@@ -481,11 +572,6 @@ local function plugins(use, plugin)
     "folke/which-key.nvim",
     module = "which-key",
   })
-
-  -- Vim plugin for automatically highlighting other uses of the word under the
-  -- cursor using either LSP, Tree-sitter, or regex matching.
-  -- https://github.com/RRethy/vim-illuminate
-  plugin("RRethy/vim-illuminate")
 
 end
 

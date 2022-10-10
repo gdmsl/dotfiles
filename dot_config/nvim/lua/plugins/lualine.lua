@@ -1,12 +1,10 @@
-local M = { event = "User PackerDefered" }
+local M = {
+  requires = {"folke/noice.nvim", "folke/tokyonight.nvim"},
+  event = "User PackerDefered",
+}
 
 local function clock()
   return " " .. os.date("%H:%M")
-end
-
-local function holidays()
-  return "🌴🌊"
-  -- return "🎅🎄🌟🎁"
 end
 
 function M.config()
@@ -41,29 +39,24 @@ function M.config()
       },
       lualine_x = {
         {
-          require("noice.status").message.get_hl,
-          cond = require("noice.status").message.has,
+          require("noice").api.statusline.message.get_hl,
+          cond = require("noice").api.statusline.message.has,
         },
         {
-          require("noice.status").command.get,
-          cond = require("noice.status").command.has,
+          require("noice").api.statusline.command.get,
+          cond = require("noice").api.statusline.command.has,
           color = { fg = "#ff9e64" },
         },
         {
-          require("noice.status").mode.get,
-          cond = require("noice.status").mode.has,
+          require("noice").api.statusline.mode.get,
+          cond = require("noice").api.statusline.mode.has,
           color = { fg = "#ff9e64" },
         },
         {
-          require("noice.status").search.get,
-          cond = require("noice.status").search.has,
+          require("noice").api.statusline.search.get,
+          cond = require("noice").api.statusline.search.has,
           color = { fg = "#ff9e64" },
         },
-        -- function()
-        --   return require("messages.view").status
-        -- end,
-        { require("github-notifications").statusline_notification_count },
-        { holidays },
       },
       lualine_y = { "location" },
       lualine_z = { clock },
