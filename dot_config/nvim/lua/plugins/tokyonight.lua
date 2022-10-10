@@ -4,7 +4,7 @@ return {
     -- vim.o.background = "dark"
     local tokyonight = require("tokyonight")
     tokyonight.setup({
-      style = "moon",
+      style = "night",
       -- transparent = true,
       -- hide_inactive_statusline = false,
       sidebars = {

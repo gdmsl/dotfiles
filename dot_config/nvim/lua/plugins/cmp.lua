@@ -10,6 +10,7 @@ local M = {
     "hrsh7th/cmp-path",
     "saadparwaiz1/cmp_luasnip",
     "hrsh7th/cmp-nvim-lsp-signature-help",
+    "kdheepak/cmp-latex-symbols",
   },
 }
 
@@ -36,6 +37,7 @@ function M.config()
       ["<CR>"] = cmp.mapping.confirm({ select = true }),
     }),
     sources = cmp.config.sources({
+      { name = "latex_symbols" },
       { name = "nvim_lsp" },
       { name = "luasnip" },
       { name = "buffer" },

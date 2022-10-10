@@ -36,7 +36,7 @@ local function plugins(use, plugin)
   -------------
   -- LIBS --
   -------------
-  
+
   -- All the lua functions I don't want to write twice.
   -- https://github.com/nvim-lua/plenary.nvim
   use({ "nvim-lua/plenary.nvim", module = "plenary" })
@@ -187,17 +187,16 @@ local function plugins(use, plugin)
   -- https://github.com/JuliaEditorSupport/julia-vim
   use({
     "JuliaEditorSupport/julia-vim",
-    ft = "julia"
-  })
+    opt = false,
+    config = function()
+			vim.g.latex_to_unicode_tab = "off"
+		end,})
 
   -- Plugin for formatting Julia code in (n)vim using `JuliaFormatter.jl`.
   -- https://github.com/kdheepak/JuliaFormatter.vim
   -- `:JuliaFormatterFormat` to use
   -- `:JuliaFormatterUpdate` to update the julia module
-  use({
-    "kdheepak/JuliaFormatter.vim",
-    ft = "julia"
-  })
+  use({"kdheepak/JuliaFormatter.vim", ft = "julia"})
 
   --A plugin to improve your rust experience in neovim.
   -- https://github.com/simrat39/rust-tools.nvim
