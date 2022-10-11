@@ -1,5 +1,5 @@
 local M = {
-  requires = {"folke/noice.nvim", "folke/tokyonight.nvim"},
+  requires = {"folke/noice.nvim", "cpea2506/one_monokai.nvim"},
   event = "User PackerDefered",
 }
 

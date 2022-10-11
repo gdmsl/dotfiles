@@ -368,11 +368,11 @@ local function plugins(use, plugin)
   -- https://github.com/m-demare/hlargs.nvim
   use({
     "m-demare/hlargs.nvim",
-    requires = { "nvim-treesitter/nvim-treesitter", "foke/tokyonight.nvim" },
+    requires = { "nvim-treesitter/nvim-treesitter"},
     event = "User PackerDefered",
     config = function()
       require("hlargs").setup({
-        color = require("tokyonight").colors.setup().yellow,
+        color = require("one_monokai").colors.setup().yellow,
       })
     end,
   })
@@ -420,7 +420,11 @@ local function plugins(use, plugin)
   -- Code TokyoNight theme. Includes extra themes for Kitty, Alacritty, iTerm
   -- and Fish.
   -- https://github.com/folke/tokyonight.nvim
-  plugin("folke/tokyonight.nvim")
+  --plugin("folke/tokyonight.nvim")
+
+  -- VSCode One Monokai theme written in Lua for Neovim.
+  -- https://github.com//cpea2506/one_monokai.nvim
+  plugin("cpea2506/one_monokai.nvim")
 
   ------------
   -- MOTION -- 
