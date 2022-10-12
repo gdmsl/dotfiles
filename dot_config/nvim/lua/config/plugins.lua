@@ -264,7 +264,6 @@ local function plugins(use, plugin)
     end,
   })
 
-
   -- Enhanced increment/decrement plugin for Neovim. 
   -- https://github.com/monaqa/dial.nvim
   plugin("monaqa/dial.nvim")
@@ -366,16 +365,15 @@ local function plugins(use, plugin)
   -- Highlight arguments' definitions and usages, asynchronously, using
   -- Treesitter
   -- https://github.com/m-demare/hlargs.nvim
-  use({
-    "m-demare/hlargs.nvim",
-    requires = { "nvim-treesitter/nvim-treesitter"},
-    event = "User PackerDefered",
-    config = function()
-      require("hlargs").setup({
-        color = require("one_monokai").colors.setup().yellow,
-      })
-    end,
-  })
+  -- use({
+  --   "m-demare/hlargs.nvim",
+  --   disabled = true,
+  --   requires = { "nvim-treesitter/nvim-treesitter"},
+  --   event = "User PackerDefered",
+  --   config = function()
+  --     require("hlargs").setup()
+  --   end,
+  -- })
 
   -- todo-comments is a lua plugin for Neovim 0.5 to highlight and search for
   -- todo comments like TODO, HACK, BUG in your code base.
@@ -415,12 +413,6 @@ local function plugins(use, plugin)
   -- it. And all this with nice animations! 
   -- https://github.com/anuvyklack/windows.nvim
   plugin("anuvyklack/windows.nvim")
-
-  -- A dark and light Neovim theme written in Lua ported from the Visual Studio
-  -- Code TokyoNight theme. Includes extra themes for Kitty, Alacritty, iTerm
-  -- and Fish.
-  -- https://github.com/folke/tokyonight.nvim
-  --plugin("folke/tokyonight.nvim")
 
   -- VSCode One Monokai theme written in Lua for Neovim.
   -- https://github.com//cpea2506/one_monokai.nvim
