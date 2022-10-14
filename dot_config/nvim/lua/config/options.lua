@@ -46,7 +46,7 @@ vim.opt.conceallevel = 3 -- Hide * markup for bold and italic
 
 -- Line numbers
 vim.opt.number = true -- But show the actual number for the line we're on
-vim.opt.relativenumber = true -- Show line numbers
+vim.opt.relativenumber = true -- Sho:nohw line numbers
 
 -- Search options
 vim.opt.ignorecase = true -- Ignore case when searching...
@@ -93,22 +93,35 @@ vim.opt.linebreak = true
 
 
 -- Formatting
---
--- Helpful related items:
---   1. :center, :left, :right
---   2. gw{motion} - Put cursor back after formatting motion.
---
-vim.opt.formatoptions = vim.opt.formatoptions
-  - "a" -- Auto formatting is BAD.
-  - "t" -- Don't auto format my code. I got linters for that.
-  + "c" -- In general, I like it when comments respect textwidth
-  + "q" -- Allow formatting comments w/ gq
-  - "o" -- O and o, don't continue comments
-  + "r" -- But do continue when pressing enter.
-  + "n" -- Indent past the formatlistpat, not underneath it.
-  + "j" -- Auto-remove comments if possible.
-  - "2" -- ??
-vim.opt.joinspaces = false -- No double spaces with join after a dot
+-- see :help formatoptions or :help fo-table for a list of values.
+-- This table will be probably changed by filetype plugins.
+
+-- Do not auto-wrap text using 'textwidth'. Leave the choice to formatters
+vim.opt.formatoptions:remove("t")
+
+-- Auto-wrap comments using 'textwidth'.
+vim.opt.formatoptions:append("c")
+
+-- Do not automatically insert the comment leader after o or O
+vim.opt.formatoptions:remove("o")
+
+-- ... but do so after pressing enter
+vim.opt.formatoptions:remove("r")
+
+-- Allow formatting of comments with `gq`
+vim.opt.formatoptions:append("q")
+
+-- Disable auto formatting of paragraphs
+vim.opt.formatoptions:remove("a")
+
+-- When formatting text, recognize numbered lists.
+vim.opt.formatoptions:append("n")
+
+-- Where it makes sense, remove a comment leader when joining lines
+vim.opt.formatoptions:append("j")
+
+-- No double spaces with join after a dot
+vim.opt.joinspaces = false
 
 -- General
 vim.opt.showmode = false -- dont show mode since we have a statusline
@@ -152,6 +165,7 @@ local fences = {
   "ts=typescript",
   "shell=sh",
   "python",
+  "math=tex",
   "sh",
   "console=sh",
 }

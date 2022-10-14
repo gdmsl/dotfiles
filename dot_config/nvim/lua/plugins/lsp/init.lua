@@ -1,4 +1,5 @@
 local M = {
+  requires = {'folke/lua-dev'},
   event = "BufReadPre",
 }
 
