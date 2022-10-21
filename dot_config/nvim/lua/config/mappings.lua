@@ -12,19 +12,19 @@ wk.setup({
   key_labels = { ["<leader>"] = "SPC" },
 })
 
--- Move to window using the <ctrl> movement keys
+-- Move to window using arrows
 vim.keymap.set("n", "<left>", "<C-w>h")
 vim.keymap.set("n", "<down>", "<C-w>j")
 vim.keymap.set("n", "<up>", "<C-w>k")
 vim.keymap.set("n", "<right>", "<C-w>l")
 
--- Resize window using <ctrl> arrow keys
+-- Resize window using shift + arrows
 vim.keymap.set("n", "<S-Up>", "<cmd>resize +2<CR>")
 vim.keymap.set("n", "<S-Down>", "<cmd>resize -2<CR>")
 vim.keymap.set("n", "<S-Left>", "<cmd>vertical resize -2<CR>")
 vim.keymap.set("n", "<S-Right>", "<cmd>vertical resize +2<CR>")
 
--- Move Lines
+-- Move Lines using alt + arrows
 vim.keymap.set("n", "<A-j>", ":m .+1<CR>==")
 vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv")
 vim.keymap.set("i", "<A-j>", "<Esc>:m .+1<CR>==gi")
@@ -32,7 +32,7 @@ vim.keymap.set("n", "<A-k>", ":m .-2<CR>==")
 vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv")
 vim.keymap.set("i", "<A-k>", "<Esc>:m .-2<CR>==gi")
 
--- Switch buffers with tab
+-- Switch buffers using ctrl + arrows
 vim.keymap.set("n", "<C-Left>", "<cmd>bprevious<cr>")
 vim.keymap.set("n", "<C-Right>", "<cmd>bnext<cr>")
 
@@ -45,37 +45,29 @@ vim.keymap.set("", "<esc>", ":noh<esc>")
 vim.keymap.set("n", "gw", "*N")
 vim.keymap.set("x", "gw", "*N")
 
--- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
-vim.keymap.set("n", "n", "'Nn'[v:searchforward]", { expr = true })
-vim.keymap.set("x", "n", "'Nn'[v:searchforward]", { expr = true })
-vim.keymap.set("o", "n", "'Nn'[v:searchforward]", { expr = true })
-vim.keymap.set("n", "N", "'nN'[v:searchforward]", { expr = true })
-vim.keymap.set("x", "N", "'nN'[v:searchforward]", { expr = true })
-vim.keymap.set("o", "N", "'nN'[v:searchforward]", { expr = true })
-
 -- Add undo break-points
 vim.keymap.set("i", ",", ",<c-g>u")
 vim.keymap.set("i", ".", ".<c-g>u")
 vim.keymap.set("i", ";", ";<c-g>u")
 
--- save in insert mode
+-- Save with ctrl + s
 vim.keymap.set("i", "<C-s>", "<cmd>:w<cr><esc>")
 vim.keymap.set("n", "<C-s>", "<cmd>:w<cr><esc>")
-vim.keymap.set("n", "<C-c>", "<cmd>normal ciw<cr>a")
 
--- telescope <ctrl-r> in command line
--- vim.cmd([[cmap <C-R> <Plug>(TelescopeFuzzyCommandSearch)]])
+-- Fast change word with ctrl + c in normal mode
+vim.keymap.set("n", "<C-c>", "<cmd>normal ciw<cr>a")
 
 -- better indenting
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
 
+-- Random GUID
 vim.keymap.set("n", "<space>cu", function()
   local number = math.random(math.pow(2, 127) + 1, math.pow(2, 128))
   return "i" .. string.format("%.0f", number)
 end, {
   expr = true,
-  desc = "GUID",
+  desc = "Random GUID",
 })
 
 -- makes * and # work on visual mode too.
