@@ -216,8 +216,8 @@ local function plugins(use, plugin)
 
   -- Dev setup for init.lua and plugin development with full signature help,
   -- docs and completion for the nvim lua API.
-  -- https://github.com/folke/lua-dev
-  use({ "folke/lua-dev.nvim", module = "lua-dev" })
+  -- https://github.com/folke/neodev.nvim
+  use({ "folke/neodev.nvim", module = "neodev" })
 
   -----------------------
   -- Text Manipulation --
