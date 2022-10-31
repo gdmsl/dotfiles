@@ -10,6 +10,7 @@ local config = {
       return require("packer.util").float({ border = "single" })
     end,
   },
+  max_jobs = 5,
   opt_default = true,
   auto_reload_compiled = false,
   -- list of plugins that should be taken from ~/projects
