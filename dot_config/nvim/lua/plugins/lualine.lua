@@ -32,29 +32,29 @@ function M.config()
           end,
           cond = function()
             local navic = require("nvim-navic")
-            return navic.is_available()
+            return navic.is_available() and false
           end,
           color = { fg = "#ff9e64" },
         },
       },
       lualine_x = {
         {
-          require("noice").api.statusline.message.get_hl,
-          cond = require("noice").api.statusline.message.has,
+          require("noice").api.status.message.get_hl,
+          cond = require("noice").api.status.message.has,
         },
         {
-          require("noice").api.statusline.command.get,
-          cond = require("noice").api.statusline.command.has,
+          require("noice").api.status.command.get,
+          cond = require("noice").api.status.command.has,
           color = { fg = "#ff9e64" },
         },
         {
-          require("noice").api.statusline.mode.get,
-          cond = require("noice").api.statusline.mode.has,
+          require("noice").api.status.mode.get,
+          cond = require("noice").api.status.mode.has,
           color = { fg = "#ff9e64" },
         },
         {
-          require("noice").api.statusline.search.get,
-          cond = require("noice").api.statusline.search.has,
+          require("noice").api.status.search.get,
+          cond = require("noice").api.status.search.has,
           color = { fg = "#ff9e64" },
         },
       },

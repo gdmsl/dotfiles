@@ -128,6 +128,7 @@ function M.float(fn)
     if vim.api.nvim_win_is_valid(win) then
       vim.api.nvim_win_close(win, true)
     end
+    vim.cmd([[checktime]])
   end
 
   vim.keymap.set("n", "<ESC>", close, { buffer = buf, nowait = true })
@@ -152,7 +153,7 @@ function M.float_terminal(cmd)
   M.float(function(buf, win)
     vim.fn.termopen(cmd)
     local autocmd = {
-      "autocmd! TermClose <buffer> lua",
+      "autocmd! TermClose <buffer> lua vim.cmd[[checktime]];",
       string.format("vim.api.nvim_win_close(%d, {force = true});", win),
       string.format("vim.api.nvim_buf_delete(%d, {force = true});", buf),
     }
@@ -235,7 +236,7 @@ end
 
 function M.version()
   local v = vim.version()
-  if not v.prerelease then
+  if v and not v.prerelease then
     vim.notify(
       ("Neovim v%d.%d.%d"):format(v.major, v.minor, v.patch),
       vim.log.levels.WARN,

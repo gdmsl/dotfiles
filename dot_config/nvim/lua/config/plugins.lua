@@ -72,15 +72,7 @@ local function plugins(use, plugin)
 
   -- A fancy, configurable, notification manager for NeoVim
   -- https://github.com/rcarriga/nvim-notify
-  use({
-    "rcarriga/nvim-notify",
-    event = "User PackerDefered",
-    module="notify",
-    config = function()
-      require("notify").setup({ level = vim.log.levels.INFO, fps = 20 })
-      vim.notify = require("notify")
-    end,
-  })
+  plugin("rcarriga/nvim-notify")
 
   ---------------------
   -- MASON, LSP, DAP --
@@ -109,22 +101,6 @@ local function plugins(use, plugin)
   -- Configs for the Nvim LSP client (:help lsp).
   -- https://github.com/neovim/nvim-lspconfig
   use({ "neovim/nvim-lspconfig", plugin = "lsp" })
-
-  -- Standalone UI for nvim-lsp progress
-  -- https://github.com/j-hui/fidget.nvim
-  use({
-    "j-hui/fidget.nvim",
-    module = "fidget",
-    config = function()
-      require("fidget").setup({
-        window = {
-          relative = "editor",
-        },
-      })
-      -- HACK: prevent error when exiting Neovim
-      vim.api.nvim_create_autocmd("VimLeavePre", { command = [[silent! FidgetClose]] })
-    end,
-  })
 
   -- This tiny plugin adds vscode-like pictograms to neovim built-in lsp.
   -- https://github.com/onsails/lspkind-nvim
@@ -180,6 +156,17 @@ local function plugins(use, plugin)
   -- https://github.com/jose-elias-alvarez/null-ls.nvim
   plugin("jose-elias-alvarez/null-ls.nvim")
 
+  -- Incremental LSP renaming based on Neovim's command-preview feature.
+  -- https://github.com/smjonas/inc-rename.nvim
+  use({
+    "smjonas/inc-rename.nvim",
+    cmd = "IncRename",
+    module = "inc_rename",
+    config = function()
+      require("inc_rename").setup()
+    end,
+  })
+
   ---------------
   -- Languages --
   ---------------
@@ -203,17 +190,9 @@ local function plugins(use, plugin)
   -- https://github.com/simrat39/rust-tools.nvim
   plugin("simrat39/rust-tools.nvim")
 
-  -- Markdown Preview for (Neo)vim
-  -- :MarkdownPreview to open in the browser
-  -- https://github.com/iamcco/markdown-preview.nvim
-  use({
-    "iamcco/markdown-preview.nvim",
-    run = function()
-      vim.fn["mkdp#util#install"]()
-    end,
-    ft = "markdown",
-    cmd = { "MarkdownPreview" },
-  })
+  -- Markdown preview plugin for Neovim
+  -- https://github.com/toppair/peek.nvim
+  plugin("toppair/peek.nvim")
 
   -- Dev setup for init.lua and plugin development with full signature help,
   -- docs and completion for the nvim lua API.
@@ -401,6 +380,14 @@ local function plugins(use, plugin)
   -- https://github.com/lukas-reineke/indent-blankline.nvim
   plugin("lukas-reineke/indent-blankline.nvim")
 
+  -- A blazing fast and easy to configure Neovim statusline written in Lua.
+  -- https://github.com/nvim-lualine/lualine.nvim
+  plugin("nvim-lualine/lualine.nvim")
+
+  -- Floating statuslines for Neovim 
+  -- https://github.com/b0o/incline.nvim
+  plugin("b0o/incline.nvim")
+
   -- A snazzy nail_care buffer line (with tabpage integration) for Neovim built
   -- using lua.
   -- https://github.com/akinsho/nvim-bufferline.lua
@@ -431,10 +418,6 @@ local function plugins(use, plugin)
   -- document with as few keystrokes as possible.
   -- https://github.com/phaazon/hop.nvim
   plugin("phaazon/hop.nvim")
-
-  -- A blazing fast and easy to configure Neovim statusline written in Lua.
-  -- https://github.com/nvim-lualine/lualine.nvim
-  plugin("nvim-lualine/lualine.nvim")
 
   -- Show where your cursor moves when jumping large distances (e.g between
   -- windows). Fast and lightweight, written completely in Lua.
@@ -504,6 +487,10 @@ local function plugins(use, plugin)
       })
     end,
   })
+
+  -- Improved Yank and Put functionalities for Neovim
+  -- https://github.com/gbprod/yanky.nvim
+  plugin("gbprod/yanky.nvim")
 
   -- Neorg (Neo - new, org - organization) is a tool designed to reimagine
   -- organization as you know it. Grab some coffee, start writing some notes,

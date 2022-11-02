@@ -14,14 +14,14 @@ function M.setup(options)
       -- nls.builtins.diagnostics.shellcheck,
       nls.builtins.formatting.shfmt,
       nls.builtins.diagnostics.markdownlint,
-      -- nls.builtins.formatting.deno_fmt.with({
-      --   filetypes = { "markdown" }, -- only runs `deno fmt` for markdown
-      -- }),
+      nls.builtins.formatting.prettierd.with({
+        filetypes = { "markdown" }, -- only runs `deno fmt` for markdown
+      }),
       -- nls.builtins.diagnostics.selene,
       -- nls.builtins.code_actions.gitsigns,
     },
     on_attach = options.on_attach,
-    root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".nvim.settings.json", ".git"),
+    root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".git"),
   })
 end
 

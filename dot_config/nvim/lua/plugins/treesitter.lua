@@ -14,7 +14,7 @@ function M.config()
       "bash",
       "c",
       "cmake",
-      "comment",
+      -- "comment", disabled because for now is slowing TS
       "cpp",
       "css",
       "fish",
@@ -45,6 +45,7 @@ function M.config()
       "scss",
       "sql",
       "svelte",
+      "teal",
       "toml",
       "tsx",
       "typescript",

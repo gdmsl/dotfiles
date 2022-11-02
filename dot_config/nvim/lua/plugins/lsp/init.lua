@@ -7,13 +7,7 @@ function M.config()
   require("neodev").setup({})
   require("mason")
   require("plugins.lsp.diagnostics").setup()
-  require("fidget").setup({ text = { spinner = "dots" } })
-  -- require("neoconf").setup()
-  -- local function on_attach(client, bufnr)
-  --   require("nvim-navic").attach(client, bufnr)
-  --   require("plugins.lsp.formatting").setup(client, bufnr)
-  --   require("plugins.lsp.keys").setup(client, bufnr)
-  -- end
+  require("plugins.lsp.handlers").setup()
 
   ---@type lspconfig.options
   local servers = {
@@ -37,6 +31,7 @@ function M.config()
         },
       },
     },
+    marksman = {},
     pyright = {},
     rust_analyzer = {
       settings = {
@@ -50,7 +45,6 @@ function M.config()
       },
     },
     sumneko_lua = {
-      -- cmd = { "/home/folke/projects/lua-language-server/bin/lua-language-server" },
       single_file_support = true,
       settings = {
         Lua = {
@@ -58,7 +52,7 @@ function M.config()
             checkThirdParty = false,
           },
           completion = {
-            workspaceWord = false,
+            workspaceWord = true,
           },
           misc = {
             parameters = {
@@ -66,20 +60,6 @@ function M.config()
             },
           },
           diagnostics = {
-            groupFileStatus = {
-              ["ambiguity"] = "Opened",
-              ["await"] = "Opened",
-              ["codestyle"] = "None",
-              ["duplicate"] = "Opened",
-              ["global"] = "Opened",
-              ["luadoc"] = "Opened",
-              ["redefined"] = "Opened",
-              ["strict"] = "Opened",
-              ["strong"] = "Opened",
-              ["type-check"] = "Opened",
-              ["unbalanced"] = "Opened",
-              ["unused"] = "Opened",
-            },
             unusedLocalExclude = { "_*" },
           },
           format = {
@@ -93,10 +73,13 @@ function M.config()
         },
       },
     },
+    teal_ls = {},
     vimls = {},
     -- tailwindcss = {},
   }
-  local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
   capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
     lineFoldingOnly = true,

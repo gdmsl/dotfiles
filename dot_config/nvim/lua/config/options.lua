@@ -1,5 +1,38 @@
 local indent = 2
 
+local notify = {
+  old = vim.notify,
+  lazy = nil,
+}
+
+notify .lazy = function(...)
+  local args = { ... }
+  vim.defer_fn(function()
+    if vim.notify == notify.lazy then
+      -- if vim.notify still hasn't been replaced yet, then something went wrong,
+      -- so use the old vim.notify instead
+      notify.old(unpack(args))
+    else
+      -- use the new notify
+      vim.notify(unpack(args))
+    end
+  end, 300)
+end
+vim.notify = notify.lazy
+
+if vim.fn.has("nvim-0.8") == 1 then
+  vim.opt.cmdheight = 0
+  local keymap_set = vim.keymap.set
+  vim.keymap.set = function(mode, lhs, rhs, opts)
+    opts = opts or {}
+    opts.silent = opts.silent ~= false
+    return keymap_set(mode, lhs, rhs, opts)
+  end
+end
+
+if vim.fn.has("nvim-0.9") == 1 then
+  vim.opt.splitkeep = "scrren"
+end
 
 -- Leader key -> ","
 --
@@ -15,6 +48,12 @@ vim.opt.guifont = "FiraCode Nerd Font:h12"
 -- Ignore compiled files
 vim.opt.wildignore = {"*.o", "*~", "*.pyc", "*pycache*"}
 vim.opt.wildmode = {"longest", "list", "full"}
+
+-- options for insert mode completion
+-- * `menu` and `menuone` will show a menu even if there is only one entry
+-- * `noselect` will not select a match from the menu but will wait for the user
+--   to do it.
+vim.opt.completeopt = "menu,menuone,noselect"
 
 -- Cool floating window popup menu for completion on command line
 vim.opt.pumblend = 10 -- Popup blend
@@ -54,7 +93,7 @@ vim.opt.smartcase = true -- ... unless there is a capital letter in the query
 vim.opt.hlsearch = true
 vim.opt.grepprg = "rg --vimgrep"
 vim.opt.grepformat = "%f:%l:%c:%m"
-vim.opt.inccommand = "split" -- preview incremental substitute
+vim.opt.inccommand = "nosplit" -- preview incremental substitute
 vim.opt.list = true -- Show some invisible characters (tabs...
 
 -- Buffers
@@ -138,15 +177,6 @@ vim.opt.shada = { "!", "'1000", "<50", "s10", "h" }
 vim.opt.mouse = "a" -- enable mouse mode
 vim.opt.confirm = true -- confirm to save changes before exiting modified buffer
 
-if vim.fn.has("nvim-0.8") ~= 0 then
-  vim.opt.cmdheight = 1 -- Height of the command bar
-  local keymap_set = vim.keymap.set
-  vim.keymap.set = function(mode, lhs, rhs, opts)
-    opts = opts or {}
-    opts.silent = opts.silent ~= false
-    return keymap_set(mode, lhs, rhs, opts)
-  end
-end
 
 vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize" }
 
