@@ -1,9 +1,9 @@
 local M = {
   event = "BufReadPre",
+  require = { "kyazdani42/nvim-web-devicons" },
 }
 
 function M.config()
-
   require("incline").setup({
     highlight = {
       groups = {

@@ -26,13 +26,12 @@ local config = {
 }
 
 local function plugins(use, plugin)
-
   ------------
   -- Packer --
   ------------
 
   -- https://github.com/wbthomason/packer.nvim
-  use('wbthomason/packer.nvim')
+  use("wbthomason/packer.nvim")
 
   -------------
   -- LIBS --
@@ -42,7 +41,7 @@ local function plugins(use, plugin)
   -- https://github.com/nvim-lua/plenary.nvim
   use({ "nvim-lua/plenary.nvim", module = "plenary" })
 
-  -- Neovim plugin to improve the default vim.ui interfaces 
+  -- Neovim plugin to improve the default vim.ui interfaces
   -- https://github.com/stevearc/dressing.nvim
   use({ "stevearc/dressing.nvim", event = "User PackerDefered" })
 
@@ -62,7 +61,7 @@ local function plugins(use, plugin)
   -- https://github.com/folke/noice.nvim
   use({
     "folke/noice.nvim",
-    requires={"rcarriga/nvim-notify"},
+    requires = { "rcarriga/nvim-notify" },
     module = "noice",
     event = "VimEnter",
     config = function()
@@ -87,7 +86,7 @@ local function plugins(use, plugin)
 
   -- mason-lspconfig bridges mason.nvim with the lspconfig plugin - making it
   -- easier to use both plugins together.
-  -- :help mason-lspconfig.nvim 
+  -- :help mason-lspconfig.nvim
   -- https://github.com/williamboman/mason-lspconfig.nvim
   use({
     "williamboman/mason-lspconfig.nvim",
@@ -177,14 +176,15 @@ local function plugins(use, plugin)
     "JuliaEditorSupport/julia-vim",
     opt = false,
     config = function()
-			vim.g.latex_to_unicode_tab = "off"
-		end,})
+      vim.g.latex_to_unicode_tab = "off"
+    end,
+  })
 
   -- Plugin for formatting Julia code in (n)vim using `JuliaFormatter.jl`.
   -- https://github.com/kdheepak/JuliaFormatter.vim
   -- `:JuliaFormatterFormat` to use
   -- `:JuliaFormatterUpdate` to update the julia module
-  use({"kdheepak/JuliaFormatter.vim", ft = "julia"})
+  use({ "kdheepak/JuliaFormatter.vim", ft = "julia" })
 
   --A plugin to improve your rust experience in neovim.
   -- https://github.com/simrat39/rust-tools.nvim
@@ -244,10 +244,9 @@ local function plugins(use, plugin)
     end,
   })
 
-  -- Enhanced increment/decrement plugin for Neovim. 
+  -- Enhanced increment/decrement plugin for Neovim.
   -- https://github.com/monaqa/dial.nvim
   plugin("monaqa/dial.nvim")
-
 
   ---------
   -- Git --
@@ -278,13 +277,12 @@ local function plugins(use, plugin)
   plugin("sindrets/diffview.nvim")
 
   --------------
-  -- Spelling -- 
+  -- Spelling --
   --------------
 
   -- Cycles spelling suggestions under the cursor.
   -- https://github.com/tweekmonster/spellrotate.vim
   use("tweekmonster/spellrotate.vim")
-
 
   -- A high performance filetype mode for Neovim which leverages conceal and
   -- highlights your buffer with the correct color codes.
@@ -297,17 +295,21 @@ local function plugins(use, plugin)
     end,
   })
 
-  plugin("akinsho/nvim-toggleterm.lua")
+  -- A neovim lua plugin to help easily manage multiple terminal windows
+  -- https://github.com/akinsho/toggleterm.nvim
+  plugin("akinsho/toggleterm.nvim")
 
   -----------
   -- Icons --
   -----------
 
   -- https://github.com/kyazdani42/nvim-web-devicons
+  use({ "kyazdani42/nvim-web-devicons", module = "nvim-web-devicons" })
+
   -- https://github.com/yamatsum/nvim-nonicons
   use({
-    'yamatsum/nvim-nonicons',
-    requires = {'kyazdani42/nvim-web-devicons'}
+    "yamatsum/nvim-nonicons",
+    requires = { "kyazdani42/nvim-web-devicons" },
   })
 
   ----------------------
@@ -322,14 +324,14 @@ local function plugins(use, plugin)
   })
 
   -- `telescope.nvim` is a highly extendable fuzzy finder over lists.
-	-- https://github.com/nvim-telescope/telescope.nvim
+  -- https://github.com/nvim-telescope/telescope.nvim
   plugin("nvim-telescope/telescope.nvim")
 
   ------------------
   -- HIGHLIGHTING --
   ------------------
 
-  -- Nvim Treesitter configurations and abstraction layer 
+  -- Nvim Treesitter configurations and abstraction layer
   -- https://github.com/nvim-treesitter/nvim-treesitter
   plugin("nvim-treesitter/nvim-treesitter")
 
@@ -384,7 +386,7 @@ local function plugins(use, plugin)
   -- https://github.com/nvim-lualine/lualine.nvim
   plugin("nvim-lualine/lualine.nvim")
 
-  -- Floating statuslines for Neovim 
+  -- Floating statuslines for Neovim
   -- https://github.com/b0o/incline.nvim
   plugin("b0o/incline.nvim")
 
@@ -393,12 +395,12 @@ local function plugins(use, plugin)
   -- https://github.com/akinsho/nvim-bufferline.lua
   plugin("akinsho/nvim-bufferline.lua")
 
-    -- Extensible Neovim Scrollbar
+  -- Extensible Neovim Scrollbar
   -- https://github.com/petertriho/nvim-scrollbar
   plugin("petertriho/nvim-scrollbar")
 
   -- Automatically expand width of the current window. Maximizes and restore
-  -- it. And all this with nice animations! 
+  -- it. And all this with nice animations!
   -- https://github.com/anuvyklack/windows.nvim
   plugin("anuvyklack/windows.nvim")
 
@@ -407,7 +409,7 @@ local function plugins(use, plugin)
   plugin("cpea2506/one_monokai.nvim")
 
   ------------
-  -- MOTION -- 
+  -- MOTION --
   ------------
 
   -- Neoscroll: a smooth scrolling neovim plugin written in lua
@@ -436,7 +438,7 @@ local function plugins(use, plugin)
   })
 
   ----------------
-  -- FOCUS MODE -- 
+  -- FOCUS MODE --
   ----------------
 
   -- Twilight is a Lua plugin for Neovim 0.5 that dims inactive portions of the
@@ -503,7 +505,6 @@ local function plugins(use, plugin)
   -- https://github.com/famiu/bufdelete.nvim
   use({ "famiu/bufdelete.nvim", cmd = "Bdelete" })
 
-
   -- A super powerful autopair plugin for Neovim that supports multiple
   -- characters.
   -- https://github.com/windwp/nvim-autopairs
@@ -518,8 +519,6 @@ local function plugins(use, plugin)
   -- windows, netrw split style, or all of them at once!
   -- https://nvim-neo-tree/neo-tree.nvim
   plugin("nvim-neo-tree/neo-tree.nvim")
-
-
 
   -- https://github.com/danymat/neogen
   use({
@@ -561,7 +560,6 @@ local function plugins(use, plugin)
     "folke/which-key.nvim",
     module = "which-key",
   })
-
 end
 
 return packer.setup(config, plugins)
