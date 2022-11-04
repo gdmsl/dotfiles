@@ -95,7 +95,7 @@ zplug "plugins/vi-mode", from:oh-my-zsh
 zplug "mafredri/zsh-async", from:github, defer:0
 
 # Theme!
-zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
+#zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 
 # Syntax highlighting for commands, load last
 zplug "plugins/history-substring-search", from:oh-my-zsh, defer:2
@@ -103,7 +103,6 @@ zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:3
 
 # FZF
 zplug "junegunn/fzf-bin", \
-    from:gh-r, \
     as:command, \
     rename-to:fzf, \
     use:"*linux*amd64*"
@@ -125,12 +124,27 @@ zplug load
 if (( $+commands[direnv] )); then eval "$(direnv hook zsh)"; fi
 
 # bindkeys
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
+if zplug check "zsh-users/zsh-history-substring-search"; then
+  zmodload zsh/terminfo
+  [ -n "${terminfo[kcuu1]}" ] && bindkey "${terminfo[kcuu1]}" history-substring-search-up
+  [ -n "${terminfo[kcud1]}" ] && bindkey "${terminfo[kcud1]}" history-substring-search-down
+  bindkey '^[[A' history-substring-search-up
+  bindkey '^[[B' history-substring-search-down
+  bindkey -M vicmd 'k' history-substring-search-up
+  bindkey -M vicmd 'j' history-substring-search-down
+  # For iTerm2 running on Apple MacBook laptops
+      if [[ -n "$terminfo[cuu1]" ]]; then
+        bindkey "$terminfo[cuu1]" history-substring-search-up
+      fi
+      if [[ -n "$terminfo[cud1]" ]]; then
+        bindkey "$terminfo[cud1]" history-substring-search-down
+      fi
+fi
 
 # remove aliases
 unalias cp
 unalias mv
 unalias rm
 
-alias luamake=$HOME/.cache/nvim/nlua/sumneko_lua/lua-language-server/3rd/luamake/luamake
+# starship theme
+eval "$(starship init zsh)"

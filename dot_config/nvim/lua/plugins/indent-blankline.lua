@@ -1,6 +1,7 @@
-local M = {}
-
-M.event = "BufReadPre"
+local M = {
+  event = "BufReadPre",
+  requires = { "nvim-treesitter/nvim-treesitter" },
+}
 
 function M.config()
   local indent = require("indent_blankline")
