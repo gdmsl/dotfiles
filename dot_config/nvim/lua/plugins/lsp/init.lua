@@ -1,116 +1,86 @@
-local M = {
-  requires = {'folke/neodev.nvim'},
-  event = "BufReadPre",
+return {
+  -- lspconfig
+  {
+    "neovim/nvim-lspconfig",
+    event = "BufReadPre",
+    dependencies = {
+      { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
+      { "folke/neodev.nvim", config = true },
+      "mason.nvim",
+      { "williamboman/mason-lspconfig.nvim", config = { automatic_installation = true } },
+      "hrsh7th/cmp-nvim-lsp",
+    },
+    ---@type lspconfig.options
+    servers = nil,
+    config = function(plugin)
+      -- setup formatting and keymaps
+      require("util").on_attach(function(client, buffer)
+        require("plugins.lsp.format").on_attach(client, buffer)
+        require("plugins.lsp.keymaps").on_attach(client, buffer)
+      end)
+
+      -- diagnostics
+      for name, icon in pairs(require("config.icons").diagnostics) do
+        name = "DiagnosticSign" .. name
+        vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
+      end
+      vim.diagnostic.config({
+        underline = true,
+        update_in_insert = false,
+        virtual_text = { spacing = 4, prefix = "●" },
+        severity_sort = true,
+      })
+
+      -- lspconfig
+      local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+      ---@type lspconfig.options
+      local servers = plugin.servers or require("plugins.lsp.servers")
+      for server, opts in pairs(servers) do
+        opts.capabilities = capabilities
+        require("lspconfig")[server].setup(opts)
+      end
+    end,
+  },
+
+  -- formatters
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    event = "BufReadPre",
+    dependencies = { "mason.nvim" },
+    config = function()
+      local nls = require("null-ls")
+      nls.setup({
+        sources = {
+          -- nls.builtins.formatting.prettierd,
+          nls.builtins.formatting.stylua,
+          nls.builtins.diagnostics.flake8,
+        },
+      })
+    end,
+  },
+
+  -- cmdline tools and lsp servers
+  {
+
+    "williamboman/mason.nvim",
+    cmd = "Mason",
+    keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
+    ensure_installed = {
+      "stylua",
+      "shellcheck",
+      "shfmt",
+      "flake8",
+    },
+    config = function(plugin)
+      require("mason").setup()
+      local mr = require("mason-registry")
+      for _, tool in ipairs(plugin.ensure_installed) do
+        local p = mr.get_package(tool)
+        if not p:is_installed() then
+          p:install()
+        end
+      end
+    end,
+  },
 }
-
-function M.config()
-  require("neodev").setup({})
-  require("mason")
-  require("plugins.lsp.diagnostics").setup()
-  require("plugins.lsp.handlers").setup()
-
-  local function on_attach(client, bufnr)
-    require("nvim-navic").attach(client, bufnr)
-    require("plugins.lsp.formatting").setup(client, bufnr)
-    require("plugins.lsp.keys").setup(client, bufnr)
-  end
-
-  ---@type lspconfig.options
-  local servers = {
-    ansiblels = {},
-    bashls = {},
-    clangd = {},
-    cssls = {},
-    dockerls = {},
-    tsserver = {},
-    eslint = {},
-    html = {},
-    julials = {},
-    jsonls = {
-      settings = {
-        json = {
-          format = {
-            enable = true,
-          },
-          schemas = require("schemastore").json.schemas(),
-          validate = { enable = true },
-        },
-      },
-    },
-    marksman = {},
-    pyright = {},
-    rust_analyzer = {
-      settings = {
-        ["rust-analyzer"] = {
-          cargo = { allFeatures = true },
-          checkOnSave = {
-            command = "clippy",
-            extraArgs = { "--no-deps" },
-          },
-        },
-      },
-    },
-    sumneko_lua = {
-      single_file_support = true,
-      settings = {
-        Lua = {
-          workspace = {
-            checkThirdParty = false,
-          },
-          completion = {
-            workspaceWord = true,
-          },
-          misc = {
-            parameters = {
-              "--log-level=trace",
-            },
-          },
-          diagnostics = {
-            unusedLocalExclude = { "_*" },
-          },
-          format = {
-            enable = false,
-            defaultConfig = {
-              indent_style = "space",
-              indent_size = "2",
-              continuation_indent_size = "2",
-            },
-          },
-        },
-      },
-    },
-    teal_ls = {},
-    vimls = {},
-    -- tailwindcss = {},
-  }
-
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-  capabilities.textDocument.foldingRange = {
-    dynamicRegistration = false,
-    lineFoldingOnly = true,
-  }
-
-  ---@type _.lspconfig.options
-  local options = {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    flags = {
-      debounce_text_changes = 150,
-    },
-  }
-
-  for server, opts in pairs(servers) do
-    opts = vim.tbl_deep_extend("force", {}, options, opts or {})
-    -- if server == "tsserver" then
-    --   require("typescript").setup({ server = opts })
-    -- else
-    --  require("lspconfig")[server].setup(opts)
-    -- end
-    require("lspconfig")[server].setup(opts)
-  end
-
-  require("plugins.null-ls").setup(options)
-end
-
-return M
