@@ -29,15 +29,15 @@ function M.config()
       },
     },
     routes = {
-      {
-        filter = {
-          cond = function()
-            return not focused
-          end,
-        },
-        view = "notify_send",
-        opts = { stop = false },
-      },
+      -- {
+      --   filter = {
+      --     cond = function()
+      --       return not focused
+      --     end,
+      --   },
+      --   view = "notify_send",
+      --   opts = { stop = false },
+      -- },
       {
         filter = {
           event = "msg_show",
