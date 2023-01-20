@@ -9,7 +9,7 @@ source /etc/profile
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # library path
-export LD_LIBRARY_PATH="$HOME/.local/lib64:$HOME/.local/lib:$LD_LIBRARYPATH"
+export LD_LIBRARY_PATH="$HOME/.local/lib64:$HOME/.local/lib:$LD_LIBRARY_PATH"
 
 # go path
 export GOPATH="$HOME/Variable/go"
@@ -45,9 +45,6 @@ export BROWSER="firefox"
 # Default terminal emulator
 export TERMINAL="alacritty"
 
-# Solve Julia problems with git stuff
-export JULIA_SSH_NO_VERIFY_HOSTS="git.unistra.fr"
-
 # Ruby
 if which ruby > /dev/null; then
     export GEM_HOME=$(ruby -e 'print Gem.user_dir')
@@ -55,10 +52,9 @@ if which ruby > /dev/null; then
 fi
 
 # Rust Path, if any
-[ -e "$HOME/.cargo/env" ] && source $HOME/.cargo/env
-
-# Use binary release of julia
-export PATH="$HOME/Software/julia-current/bin:$PATH"
+if [ -f "$HOME/.cargo/env" ]; then
+  source "$HOME/.cargo/env"
+fi
 
 # FASD
 if which fasd &> /dev/null; then
@@ -66,8 +62,8 @@ if which fasd &> /dev/null; then
 fi
 
 # keys for xmodmap
-if [ -f $HOME/.Xmodmap ]; then
-    xmodmap ~/.Xmodmap
+if [ -f "$HOME/.Xmodmap" ]; then
+    xmodmap "$HOME/.Xmodmap"
 fi
 
 # Use ripgrep as default grep in fzf (and fzf.vim)
