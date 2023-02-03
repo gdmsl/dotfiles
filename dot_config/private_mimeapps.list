@@ -73,6 +73,7 @@ image/svg+xml-compressed=org.gnome.eog.desktop
 image/vnd.wap.wbmp=org.gnome.eog.desktop
 image/x-icns=org.gnome.eog.desktop
 x-scheme-handler/mailto=org.gnome.Geary.desktop
+application/pdf=org.gnome.Evince.desktop
 
 [Added Associations]
 video/3gp=org.gnome.Totem.desktop;
@@ -147,3 +148,4 @@ image/svg+xml-compressed=org.gnome.eog.desktop;
 image/vnd.wap.wbmp=org.gnome.eog.desktop;
 image/x-icns=org.gnome.eog.desktop;
 x-scheme-handler/mailto=org.gnome.Geary.desktop;
+application/pdf=org.gnome.Evince.desktop;
