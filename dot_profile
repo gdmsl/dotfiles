@@ -8,9 +8,6 @@ source /etc/profile
 # setting the PATH envirorment variable
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-# library path
-export LD_LIBRARY_PATH="$HOME/.local/lib64:$HOME/.local/lib:$LD_LIBRARY_PATH"
-
 # go path
 export GOPATH="$HOME/Variable/go"
 export PATH="$PATH:$GOPATH/bin"
