@@ -8,9 +8,6 @@ source /etc/profile
 # setting the PATH envirorment variable
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-# library path
-export LD_LIBRARY_PATH="$HOME/.local/lib64:$HOME/.local/lib:$LD_LIBRARYPATH"
-
 # go path
 export GOPATH="$HOME/Variable/go"
 export PATH="$PATH:$GOPATH/bin"
@@ -45,9 +42,6 @@ export BROWSER="firefox"
 # Default terminal emulator
 export TERMINAL="alacritty"
 
-# Solve Julia problems with git stuff
-export JULIA_SSH_NO_VERIFY_HOSTS="git.unistra.fr"
-
 # Ruby
 if which ruby > /dev/null; then
     export GEM_HOME=$(ruby -e 'print Gem.user_dir')
@@ -55,10 +49,9 @@ if which ruby > /dev/null; then
 fi
 
 # Rust Path, if any
-[ -e "$HOME/.cargo/env" ] && source $HOME/.cargo/env
-
-# Use binary release of julia
-export PATH="$HOME/Software/julia-current/bin:$PATH"
+if [ -f "$HOME/.cargo/env" ]; then
+  source "$HOME/.cargo/env"
+fi
 
 # FASD
 if which fasd &> /dev/null; then
@@ -66,22 +59,12 @@ if which fasd &> /dev/null; then
 fi
 
 # keys for xmodmap
-if [ -f $HOME/.Xmodmap ]; then
-    xmodmap ~/.Xmodmap
+if [ -f "$HOME/.Xmodmap" ]; then
+    xmodmap "$HOME/.Xmodmap"
 fi
 
 # Use ripgrep as default grep in fzf (and fzf.vim)
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
-
-# Start the ssh-agent if there is no gnome-keyring started already
-if ! pgrep -u "$USER" gnome-keyring-daemon > /dev/null; then
-    if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-        ssh-agent > "$XDG_RUNTIME_DIR/ssh-agent.env"
-    fi
-    if [[ ! "$SSH_AUTH_SOCK" ]]; then
-        source "$XDG_RUNTIME_DIR/ssh-agent.env" > /dev/null
-    fi
-fi
 
 if test "$SSH_AUTH_SOCK" ; then
   ln -sf $SSH_AUTH_SOCK ~/.ssh/ssh_auth_sock
