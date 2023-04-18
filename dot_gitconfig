@@ -15,7 +15,7 @@
 	required = true
 
 [pull]
-	rebase = false
+	rebase = true
 
 [core]
     pager = delta
