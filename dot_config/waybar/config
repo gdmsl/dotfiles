@@ -1,0 +1,258 @@
+{
+  "layer": "top", // Waybar at top layer
+  // "position": "bottom", // Waybar position (top|bottom|left|right)
+  "height": 40, // Waybar height (to be removed for auto height)
+  // "width": 1280, // Waybar width
+  "margin-top": 3,
+  "margin-left": 10,
+  "margin-right": 10,
+  "margin-bottom": 0,
+  "spacing": 0, // Gaps between modules (in pixels)
+  // Choose the order of the modules
+  "modules-left": [
+    "wlr/workspaces",
+    "hyprland/submap",
+    "cpu",
+    "memory",
+    "temperature",
+    "disk"
+  ],
+  "modules-center": [],
+  "modules-right": [
+    "idle_inhibitor",
+    "wireplumber",
+    "pulseaudio",
+    "backlight",
+    "network",
+    "battery",
+    "clock",
+    "tray"
+  ],
+  // Modules configuration
+  "wlr/workspaces": {
+    "format": "{icon} {name}",
+    "format-icons": {
+      "active": "",
+      "default": ""
+    },
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1",
+    "on-click": "activate"
+  },
+  "hyprland/submap": {
+    "format": "✌️ {}",
+    "max-length": 8,
+    "tooltip": false
+  },
+  "wireplumber": {
+    "format": "{icon} {volume}%",
+    "format-muted": "",
+    "on-click": "qpwgraph",
+    "format-icons": [
+      "",
+      "",
+      ""
+    ]
+  },
+  "mpris": {
+    "format": "DEFAULT: {player_icon} {dynamic}",
+    "format-paused": "DEFAULT: {status_icon} <i>{dynamic}</i>",
+    "player-icons": {
+      "default": "▶",
+      "mpv": "🎵"
+    },
+    "status-icons": {
+      "paused": "⏸"
+    }
+    // "ignored-players": ["firefox"]
+  },
+  // "sway/workspaces": {
+  //     "disable-scroll": true,
+  //     "all-outputs": true,
+  //     "format": "{name}: {icon}",
+  //     "format-icons": {
+  //         "1": "",
+  //         "2": "",
+  //         "3": "",
+  //         "4": "",
+  //         "5": "",
+  //         "urgent": "",
+  //         "focused": "",
+  //         "default": ""
+  //     }
+  // },
+  "keyboard-state": {
+    "numlock": true,
+    "capslock": true,
+    "format": "{name} {icon}",
+    "format-icons": {
+      "locked": "",
+      "unlocked": ""
+    }
+  },
+  "sway/mode": {
+    "format": "<span style=\"italic\">{}</span>"
+  },
+  "sway/scratchpad": {
+    "format": "{icon} {count}",
+    "show-empty": false,
+    "format-icons": [
+      "",
+      ""
+    ],
+    "tooltip": true,
+    "tooltip-format": "{app}: {title}"
+  },
+  "mpd": {
+    "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
+    "format-disconnected": "Disconnected ",
+    "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
+    "unknown-tag": "N/A",
+    "interval": 2,
+    "consume-icons": {
+      "on": " "
+    },
+    "random-icons": {
+      "off": "<span color=\"#f53c3c\"></span> ",
+      "on": " "
+    },
+    "repeat-icons": {
+      "on": " "
+    },
+    "single-icons": {
+      "on": "1 "
+    },
+    "state-icons": {
+      "paused": "",
+      "playing": ""
+    },
+    "tooltip-format": "MPD (connected)",
+    "tooltip-format-disconnected": "MPD (disconnected)"
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "",
+      "deactivated": ""
+    }
+  },
+  "tray": {
+    "icon-size": 15,
+    "spacing": 15
+  },
+  "clock": {
+    // "timezone": "America/New_York",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format-alt": "{:%Y-%m-%d}"
+  },
+  "cpu": {
+    "format": " {usage}%",
+    "tooltip": false
+  },
+  "memory": {
+    "format": " {}%"
+  },
+  "temperature": {
+    // "thermal-zone": 2,
+    // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+    "critical-threshold": 80,
+    // "format-critical": "{temperatureC}°C {icon}",
+    "format-critical": "{icon} {temperatureC}°C",
+    "format": "{icon} {temperatureC}°C",
+    "format-icons": [
+      "",
+      "",
+      ""
+    ]
+  },
+  "disk": {
+    "format": " {percentage_used}% ({free})",
+    "tooltip": true,
+    "interval": 2
+  },
+  "backlight": {
+    // "device": "acpi_video1",
+    "format": "{icon} {percent}%",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
+  },
+  "battery": {
+    "states": {
+      "good": 100,
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": " {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-alt": "{icon} {time}",
+    // "format-good": "", // An empty format will hide the module
+    "format-full": " {capacity}%",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "interval": 2
+  },
+  "network": {
+    // "interface": "wlp2*", // (Optional) To force the use of this interface
+    "format": "{icon} {bandwidthTotalBytes}",
+    "format-disconnected": "{icon} No Internet",
+    "format-linked": " {ifname} (No IP)",
+    "format-alt": "{icon} {bandwidthUpBytes} | {icon} {bandwidthDownBytes}",
+    "tooltip-format": "{ifname}: {ipaddr}/{cidr}  {gwaddr}",
+    "tooltip-format-wifi": "{icon} {essid} ({signalStrength}%)",
+    "tooltip-format-ethernet": "{icon} {ipaddr}/{cidr}",
+    "tooltip-format-disconnected": "{icon} Disconnected",
+    "on-click-right": "nm-connection-editor",
+    "format-icons": {
+      "ethernet": "",
+      "disconnected": "⚠",
+      "wifi": [
+        "睊",
+        "直"
+      ]
+    }
+  },
+  "pulseaudio": {
+    // "scroll-step": 1, // %, can be a float
+    "format": "{icon} {volume}% {format_source}",
+    "format-bluetooth": "{volume}% {icon} {format_source}",
+    "format-bluetooth-muted": " {icon} {format_source}",
+    "format-muted": " {format_source}",
+    "format-source": " {volume}%",
+    "format-source-muted": "",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    },
+    "on-click": "pavucontrol-qt"
+  }
+}
+// vim: set ft=jsonc: //
