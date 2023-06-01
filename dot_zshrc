@@ -4,10 +4,6 @@ emulate -R zsh
 # source local definitions
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
 
-# ignore certain commands from history
-export HISTORY_IGNORE="cd:cd ..:ls:la:make"
-export HISTFILE="$HOME/.zsh_history"
-
 eval "$(dircolors ~/.dircolors)"
 
 # color scheme for console theme
@@ -84,7 +80,6 @@ zplug "plugins/vagrant", from:oh-my-zsh, if:"which vagrant"
 zplug "plugins/rsync", from:oh-my-zsh, if:"which rsync"
 zplug "plugins/command-not-found", from:oh-my-zsh
 zplug "plugins/common-aliases", from:oh-my-zsh
-zplug "plugins/history", from:oh-my-zsh, defer:1
 zplug "plugins/jump", from:oh-my-zsh
 zplug "plugins/cp", from:oh-my-zsh
 zplug "plugins/sudo", from:oh-my-zsh
@@ -94,19 +89,11 @@ zplug "plugins/vi-mode", from:oh-my-zsh
 # Async for zsh, used by pure
 zplug "mafredri/zsh-async", from:github, defer:0
 
-# Theme!
-#zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
-
 # Syntax highlighting for commands, load last
-zplug "plugins/history-substring-search", from:oh-my-zsh, defer:2
 zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:3
 
-# FZF
-zplug "junegunn/fzf-bin", \
-    as:command, \
-    rename-to:fzf, \
-    use:"*linux*amd64*"
-zplug "junegunn/fzf", use:"shell/*.zsh", defer:2
+# ATUIN
+zplug "ellie/atuin", from:github, defer:1
 
 # Install packages that have not been installed yet
 if ! zplug check --verbose; then
@@ -122,24 +109,6 @@ zplug load
 
 # hook direnv into the shell
 if (( $+commands[direnv] )); then eval "$(direnv hook zsh)"; fi
-
-# bindkeys
-if zplug check "zsh-users/zsh-history-substring-search"; then
-  zmodload zsh/terminfo
-  [ -n "${terminfo[kcuu1]}" ] && bindkey "${terminfo[kcuu1]}" history-substring-search-up
-  [ -n "${terminfo[kcud1]}" ] && bindkey "${terminfo[kcud1]}" history-substring-search-down
-  bindkey '^[[A' history-substring-search-up
-  bindkey '^[[B' history-substring-search-down
-  bindkey -M vicmd 'k' history-substring-search-up
-  bindkey -M vicmd 'j' history-substring-search-down
-  # For iTerm2 running on Apple MacBook laptops
-      if [[ -n "$terminfo[cuu1]" ]]; then
-        bindkey "$terminfo[cuu1]" history-substring-search-up
-      fi
-      if [[ -n "$terminfo[cud1]" ]]; then
-        bindkey "$terminfo[cud1]" history-substring-search-down
-      fi
-fi
 
 # remove aliases
 unalias cp
