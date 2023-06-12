@@ -1,6 +1,7 @@
 #!/bin/sh
 
-cd $HOME/.ssh
+echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK"
+echo "HOSTNAME=$HOSTNAME"
 
 for key in ${HOME}/.ssh/id_*.${HOSTNAME}.pub; do
 	echo "Adding $key"
@@ -13,5 +14,5 @@ for key in ${HOME}/.ssh/id_*.pub; do
 	fi
 
 	echo "Adding $key"
-	#ssh-add ${key/.pub/} < /dev/null
+	ssh-add ${key/.pub/} < /dev/null
 done
