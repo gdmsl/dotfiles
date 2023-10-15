@@ -10,20 +10,20 @@ builddir=".mylatexmk"
 pdfdir="pdf"
 
 if [ ! -d "$builddir" ]; then
-    mkdir "$builddir"
+	mkdir "$builddir"
 fi
 
-if [ ! -d  "$pdfdir" ]; then
-    mkdir "$pdfdir"
+if [ ! -d "$pdfdir" ]; then
+	mkdir "$pdfdir"
 fi
 
-latexmk --output-directory="${builddir}" $@
+latexmk --output-directory="${builddir}" "$@"
 lmkresult=$?
 
 files=$(ls "$builddir" | grep -e '\.pdf')
 
 for file in $files; do
-    ln -rs "${builddir}/${file}" "$pdfdir"
+	ln -rs "${builddir}/${file}" "$pdfdir"
 done
 
 exit $lmkresult

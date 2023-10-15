@@ -89,6 +89,7 @@ video/x-theora=org.gnome.Totem.desktop;
 video/x-theora+ogg=org.gnome.Totem.desktop;
 video/x-totem-stream=org.gnome.Totem.desktop;
 application/pdf=org.gnome.Evince.desktop;
+application/json=org.gnome.TextEditor.desktop;
 
 [Default Applications]
 inode/directory=org.gnome.Nautilus.desktop;
@@ -196,3 +197,4 @@ video/x-theora=org.gnome.Totem.desktop
 video/x-theora+ogg=org.gnome.Totem.desktop
 video/x-totem-stream=org.gnome.Totem.desktop
 application/pdf=org.gnome.Evince.desktop
+application/json=org.gnome.TextEditor.desktop
