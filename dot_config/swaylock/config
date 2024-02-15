@@ -1,12 +1,50 @@
+#  ___                      _           _
+# / __|__ __ __ __ _  _  _ | | ___  __ | |__
+# \__ \\ V  V // _` || || || |/ _ \/ _|| / /
+# |___/ \_/\_/ \__,_| \_, ||_|\___/\__||_\_\
+#                     |__/
+#  _
+# | |__  _  _
+# | '_ \| || |
+# |_.__/ \_, |
+#        |__/
+#  ___                   _     __      __           _               _
+# | _ ) ___  __ _  __ _ | | ___\ \    / /__ _  _ _ | | ___  _ _  __| |
+# | _ \/ -_)/ _` |/ _` || |/ -_)\ \/\/ // _` || '_|| |/ _ \| '_|/ _` |
+# |___/\___|\__,_|\__, ||_|\___| \_/\_/ \__,_||_|  |_|\___/|_|  \__,_|
+#                 |___/
+
 daemonize
+
+# Behavior
+ignore-empty-password
 show-failed-attempts
+
+font="Fira Code"
+
 clock
-effect-blur=5x5
-color=1f1d2e80
-font="Inter"
+timestr=%R
+datestr=%a, %e of %B
+
+# Current screenshot as wallpaper
+screenshots
+
+# Fade in time
+fade-in=1
+
+# Effect for background
+effect-blur=8x8
+effect-greyscale
+
+# Show/Hide indicator circle
 indicator
+
+# Indicator styling
 indicator-radius=200
 indicator-thickness=20
+indicator-caps-lock
+
+color=1f1d2e80
 line-color=1f1d2e
 ring-color=191724
 inside-color=1f1d2e
@@ -27,9 +65,5 @@ ring-clear-color=9ccfd8
 line-clear-color=1f1d2e
 line-wrong-color=1f1d2e
 bs-hl-color=31748f
-grace=2
-grace-no-mouse
-grace-no-touch
-datestr="%d.%m"
-fade-in="0.1"
-ignore-empty-password
+
+# vim: ft=conf

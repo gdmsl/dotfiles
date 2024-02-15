@@ -10,9 +10,10 @@ set -x MANPAGER "nvim +Man!"
 set -x MANROFFOPT -c
 
 # NPM
+set GOPATH "$HOME/Variable/."
 set NPM_PACKAGES "$HOME/.npm-packages"
 set PATH $PATH $NPM_PACKAGES/bin
-set MANPATH $NPM_PACKAGES/share/man $MANPATH
+set MANPATH $NPM_PACKAGES/share/man $(manpath)
 
 # Cursor styles
 set -gx fish_vi_force_cursor 1

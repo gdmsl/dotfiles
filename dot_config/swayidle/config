@@ -1,0 +1,6 @@
+timeout 570 'notify-send -u critical "Warning!" "Screen Locker will be activated in 30 seconds"'
+timeout 600 'swaylock -f'
+timeout 630 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on'
+timeout 3600 'systemctl suspend'
+before-sleep 'swaylock -f'
+after-resume 'hyprctl dispatch dpms on'
