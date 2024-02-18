@@ -2,5 +2,5 @@ timeout 570 'notify-send -u critical "Warning!" "Screen Locker will be activated
 timeout 600 'swaylock -f'
 timeout 630 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on'
 timeout 3600 'systemctl suspend'
-before-sleep 'swaylock -f'
+before-sleep 'sh -c "swaylock -f && sleep 3"'
 after-resume 'hyprctl dispatch dpms on'
