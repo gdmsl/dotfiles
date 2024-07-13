@@ -8,7 +8,7 @@ return {
         "clangd",
         "clang-format",
         "julia-lsp",
-        "rustfmt",
+        "rust-analyzer",
         "shellcheck",
         "stylua",
         "lua-language-server",
@@ -19,17 +19,5 @@ return {
         "latexindent",
       },
     },
-    --opts = function(_, opts)
-    --  vim.list_extend(opts.ensure_installed, {
-    --    ensure_installed = {
-    --      "clang-format",
-    --      "clangd",
-    --      "julia-lsp",
-    --      "rustfmt",
-    --      "shellcheck",
-    --      "shfmt",
-    --    },
-    --  })
-    --end,
   },
 }

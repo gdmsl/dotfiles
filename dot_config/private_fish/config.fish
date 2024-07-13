@@ -49,6 +49,7 @@ abbr mkdir 'mkdir -vp'
 alias ls="eza --color=always --icons --group-directories-first"
 alias la 'eza --color=always --icons --group-directories-first --all'
 alias ll 'eza --color=always --icons --group-directories-first --all --long'
+alias tree 'eza --color=always --icons --group-directories-first --tree'
 abbr l ll
 abbr ncdu 'ncdu --color dark'
 

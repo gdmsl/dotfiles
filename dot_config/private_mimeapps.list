@@ -92,6 +92,8 @@ application/pdf=org.gnome.Evince.desktop;
 application/json=org.gnome.TextEditor.desktop;
 text/markdown=org.gnome.gitlab.somas.Apostrophe.desktop;
 image/jpeg=gimp.desktop;
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
+text/julia=org.gnome.TextEditor.desktop;
 
 [Default Applications]
 inode/directory=org.gnome.Nautilus.desktop;
@@ -201,3 +203,5 @@ video/x-totem-stream=org.gnome.Totem.desktop
 application/pdf=org.gnome.Evince.desktop
 application/json=org.gnome.TextEditor.desktop
 text/markdown=org.gnome.gitlab.somas.Apostrophe.desktop
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop
+text/julia=org.gnome.TextEditor.desktop
