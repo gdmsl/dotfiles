@@ -108,6 +108,9 @@ abbr pal 'paru -Q'
 abbr paf 'paru -Ql'
 abbr pao 'paru -Qo'
 
+# hoock up direnv
+direnv hook fish | source
+
 if status is-interactive
     # Commands to run in interactive sessions can go here
 end
