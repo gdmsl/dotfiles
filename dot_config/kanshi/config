@@ -1,0 +1,17 @@
+profile Home {
+        output eDP-1 disable
+        output "Lenovo Group Limited L27q-35 URB55TC4" mode 2560x1440@59.95 position 1920,0
+}
+
+profile Presenter {
+        output eDP-1 mode 1920x1080@60.0 position 0,0
+        output HDMI-A-1 position 1920,0
+}
+
+profile Nomad {
+        output eDP-1 mode 1920x1080@60.0 position 0,0
+}
+
+
+
+# vim: ft=conf

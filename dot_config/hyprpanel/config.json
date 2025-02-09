@@ -1,0 +1,40 @@
+{
+  "bar.customModules.updates.pollingInterval": 1440000,
+  "theme.font.name": "Inter",
+  "theme.font.label": "Inter",
+  "theme.font.size": "1rem",
+  "theme.font.weight": 400,
+  "tear": false,
+  "menus.power.lowBatteryNotification": true,
+  "wallpaper.pywal": false,
+  "theme.bar.transparent": false,
+  "theme.bar.buttons.enableBorders": false,
+  "bar.scrollSpeed": 2,
+  "bar.layouts": {
+    "*": {
+      "left": [
+        "dashboard",
+        "workspaces",
+        "windowtitle"
+      ],
+      "middle": [
+        "media"
+      ],
+      "right": [
+        "volume",
+        "network",
+        "bluetooth",
+        "battery",
+        "systray",
+        "clock",
+        "notifications"
+      ]
+    }
+  },
+  "menus.dashboard.directories.left.directory1.label": "󰉍  Downloads",
+  "menus.dashboard.directories.left.directory2.label": "󰉏  Videos",
+  "menus.dashboard.directories.left.directory3.label": "󰚝  Projects",
+  "menus.dashboard.directories.right.directory1.label": "󱧶  Documents",
+  "menus.dashboard.directories.right.directory2.label": "󰉏  Pictures",
+  "menus.dashboard.directories.right.directory3.label": "󱂵  Home"
+}
