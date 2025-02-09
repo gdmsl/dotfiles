@@ -1,0 +1,13 @@
+show-summary: true
+show-tags: true
+show-fundamentals: true
+show-separator: true
+show-holdings: true
+sort: value
+currency: USD
+currency-summary-only: false
+watchlist:
+  - BTC-USD
+  - ETH-USD
+  - XRP-USD
+  - DOGE-USD
