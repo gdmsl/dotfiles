@@ -15,12 +15,17 @@
       "left": [
         "dashboard",
         "workspaces",
-        "windowtitle"
+        "cpu",
+        "ram",
+        "windowtitle",
+        "submap"
       ],
       "middle": [
         "media"
       ],
       "right": [
+        "hypridle",
+        "hyprsunset",
         "volume",
         "network",
         "bluetooth",
@@ -36,5 +41,15 @@
   "menus.dashboard.directories.left.directory3.label": "󰚝  Projects",
   "menus.dashboard.directories.right.directory1.label": "󱧶  Documents",
   "menus.dashboard.directories.right.directory2.label": "󰉏  Pictures",
-  "menus.dashboard.directories.right.directory3.label": "󱂵  Home"
+  "menus.dashboard.directories.right.directory3.label": "󱂵  Home",
+  "theme.bar.buttons.dashboard.enableBorder": true,
+  "bar.customModules.ram.labelType": "percentage",
+  "theme.bar.buttons.workspaces.enableBorder": false,
+  "bar.workspaces.monitorSpecific": true,
+  "bar.workspaces.show_icons": false,
+  "bar.workspaces.show_numbered": true,
+  "bar.workspaces.showWsIcons": false,
+  "bar.workspaces.showApplicationIcons": false,
+  "bar.workspaces.numbered_active_indicator": "underline",
+  "theme.bar.buttons.modules.cpuTemp.enableBorder": false
 }

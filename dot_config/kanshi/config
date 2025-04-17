@@ -1,17 +1,35 @@
-profile Home {
-        output eDP-1 disable
-        output "Lenovo Group Limited L27q-35 URB55TC4" mode 2560x1440@59.95 position 1920,0
+profile home {
+    output "Lenovo Group Limited L27q-35 URB55TC4" mode 2560x1440@59.95 position 0,0
+    output eDP-1 enable mode 1920x1080@60.0 position 320,1440
 }
 
-profile Presenter {
-        output eDP-1 mode 1920x1080@60.0 position 0,0
-        output HDMI-A-1 position 1920,0
+profile home-nolid {
+    output "Lenovo Group Limited L27q-35 URB55TC4" mode 2560x1440@59.95 position 0,0
+    output eDP-1 disable
 }
 
-profile Nomad {
-        output eDP-1 mode 1920x1080@60.0 position 0,0
+profile cesq-vip {
+    output eDP-1 enable mode 1920x1080@60.0 position 1920,0
+    output "Sony SONY TV  *30 0x01010101" enable scale 2 position 0,0
 }
 
+profile work {
+    output eDP-1 enable mode 1920x1080@60.0 position 0,360
+    output "Samsung Electric Company U28E850 HTPKA00103" enable mode 3840x2160@60.0 position 1920,0 scale 1.5
+}
 
+profile presenter {
+    output eDP-1 enable mode 1920x1080@60.0 position 0,0
+    output HDMI-A-1 position 1920,0
+}
+
+profile presenter-nolid {
+    output eDP-1 disable
+    output HDMI-A-1 position 1920,0
+}
+
+profile nomad {
+    output eDP-1 enable mode 1920x1080@60.0 position 0,0
+}
 
 # vim: ft=conf

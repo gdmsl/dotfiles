@@ -1,6 +1,6 @@
-term=alacritty
+term=kitty
 location=center
-width=30%
+width=45%
 
 prompt=
 lines=11
@@ -13,3 +13,4 @@ hide_scroll=true
 
 aways_parse_args=true
 show_all=true
+
