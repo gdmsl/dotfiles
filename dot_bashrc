@@ -1,73 +1,106 @@
 #!/usr/bin/env bash
 
-# Load local bash file
+# Load local overrides
 [ -f "$HOME/.bashrc.local" ] && source "$HOME/.bashrc.local"
 
-# Path to the bash it configuration
-export BASH_IT="$HOME/.bash_it"
+# Don't run if not interactive
+[[ $- != *i* ]] && return
 
-# Lock and Load a custom theme file
-# location /.bash_it/themes/
-export BASH_IT_THEME='easy'
+# Vi mode
+set -o vi
 
-# Command duration
-export BASH_IT_COMMAND_DURATION=true
+# History
+HISTCONTROL=ignoreboth:erasedups
+HISTSIZE=50000
+HISTFILESIZE=50000
+shopt -s histappend
+PROMPT_COMMAND="history -a; ${PROMPT_COMMAND:-}"
 
-# git minimal info in prompt
-export SCM_GIT_SHOW_MINIMAL_INFO=true
+# Shell options
+shopt -s checkwinsize
+shopt -s globstar 2>/dev/null
 
-# (Advanced): Change this to the name of your remote repo if you
-# cloned bash-it with a remote other than origin such as `bash-it`.
-# export BASH_IT_REMOTE='bash-it'
+# ── Aliases (mirroring fish) ─────────────────────────────────────────
 
-# Your place for hosting Git repos. I use this for private repos.
-export GIT_HOSTING='git@github.com'
-
-# Don't check mail when opening terminal.
-unset MAILCHECK
-
-# Change this to your console based IRC client of choice.
-export IRC_CLIENT='weechat'
-
-# Set this to the command you use for todo.txt-cli
-export TODO="t"
-
-# Set this to false to turn off version control status checking within the prompt for all themes
-export SCM_CHECK=false
-
-# History management
-export HISTFILESIZE=
-export HISTSIZE=
-export HISTFILE=~/.bash_eternal_history
-export HISTCONTROL=erasedups
-
-# Set Xterm/screen/Tmux title with only a short hostname.
-# Uncomment this (or set SHORT_HOSTNAME to something else),
-# Will otherwise fall back on $HOSTNAME.
-#export SHORT_HOSTNAME=$(hostname -s)
-
-# Set vcprompt executable path for scm advance info in prompt (demula theme)
-# https://github.com/djl/vcprompt
-#export VCPROMPT_EXECUTABLE=~/.vcprompt/bin/vcprompt
-
-# (Advanced): Uncomment this to make Bash-it reload itself automatically
-# after enabling or disabling aliases, plugins, and completions.
-# export BASH_IT_AUTOMATIC_RELOAD_AFTER_CONFIG_CHANGE=1
-
-# check if bashit is installed
-if [ ! -d $BASH_IT ]; then
-  git clone https://github.com/Bash-it/bash-it $BASH_IT
+# Files & directories
+alias mv='mv -iv'
+alias cp='cp -riv'
+alias mkdir='mkdir -vp'
+if command -v eza &>/dev/null; then
+	alias ls='eza --color=always --icons --group-directories-first'
+	alias la='eza --color=always --icons --group-directories-first --all'
+	alias ll='eza --color=always --icons --group-directories-first --all --long'
+	alias tree='eza --color=always --icons --group-directories-first --tree'
+	alias l='ll'
 fi
-source $BASH_IT/bash_it.sh
 
-#
-export PATH="$PATH:$HOME/.local/bin"
+# Editor
+if command -v nvim &>/dev/null; then
+	alias vim='nvim'
+	alias vi='nvim'
+	alias v='nvim'
+	alias sv='sudoedit'
+	alias vudo='sudoedit'
+fi
 
-# Load functions
-[ -f "$HOME/.bash/functions.bash" ] && source "$HOME/.bash/functions.bash"
+# Tmux
+alias t='tmux'
+alias tc='tmux attach'
+alias ta='tmux attach -t'
+alias tl='tmux ls'
+alias ts='tmux new-session -s'
+alias tk='tmux kill-session -t'
 
-# Load aliases
-[ -f "$HOME/.bash/alias.bash" ] && source "$HOME/.bash/alias.bash"
+# Git
+alias gg='lazygit'
+alias gs='git st'
+alias gb='git checkout -b'
+alias gc='git commit'
+alias gcp='git commit -p'
+alias gpp='git push'
+alias gp='git pull'
 
-# force to write history after every command
-PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+# Grep / find
+alias grep='rg'
+alias fda='fd -IH'
+alias rga='rg -uu'
+
+# systemctl
+alias s='systemctl'
+alias su='systemctl --user'
+alias ss='systemctl status'
+alias sl='systemctl --type service --state running'
+alias slu='systemctl --user --type service --state running'
+alias sf='systemctl --failed --all'
+
+# journalctl
+alias jb='journalctl -b'
+alias jf='journalctl -f'
+alias jg='journalctl -b --grep'
+alias ju='journalctl --unit'
+alias jm='journalctl --user'
+
+# paru
+if command -v paru &>/dev/null; then
+	alias p='paru'
+	alias pai='paru -S'
+	alias par='paru -R'
+	alias pas='paru -Ss'
+	alias pal='paru -Q'
+	alias paf='paru -Ql'
+	alias pao='paru -Qo'
+fi
+
+# ── Tool integrations ────────────────────────────────────────────────
+
+# Starship prompt
+command -v starship &>/dev/null && eval "$(starship init bash)"
+
+# Atuin (shell history)
+command -v atuin &>/dev/null && eval "$(atuin init bash)"
+
+# Zoxide (smart cd)
+command -v zoxide &>/dev/null && eval "$(zoxide init bash)"
+
+# Direnv
+command -v direnv &>/dev/null && eval "$(direnv hook bash)"

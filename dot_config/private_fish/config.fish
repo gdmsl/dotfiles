@@ -10,7 +10,7 @@ set -x MANPAGER "nvim +Man!"
 set -x MANROFFOPT -c
 
 # NPM
-set GOPATH "$HOME/Variable/."
+set GOPATH "$HOME/Variable/go"
 set NPM_PACKAGES "$HOME/.npm-packages"
 set PATH $PATH $NPM_PACKAGES/bin
 set MANPATH $NPM_PACKAGES/share/man (manpath)
@@ -65,18 +65,16 @@ abbr lv lazyvim
 alias bt "coredumpctl -1 gdb -A '-ex \"bt\" -q -batch' 2>/dev/null | awk '/Program terminated with signal/,0' | bat -l cpp --no-pager --style plain"
 
 # Dev
-abbr git hub
-abbr g hub
 abbr gg lazygit
-abbr gl "hub l --color | devmoji --log --color | less -rXF"
-abbr gs 'hub st'
-abbr gb 'hub checkout -b'
-abbr gc 'hub commit'
-abbr gpr 'hub pr checkout'
-abbr gm "hub branch -l main | rg main > /dev/null 2>&1 && hub checkout main || hub checkout master"
-abbr gcp "hub commit -p"
-abbr gpp "hub push"
-abbr gp "hub pull"
+abbr gl "git l --color | devmoji --log --color | less -rXF"
+abbr gs 'git st'
+abbr gb 'git checkout -b'
+abbr gc 'git commit'
+abbr gpr 'gh pr checkout'
+abbr gm "git branch -l main | rg main > /dev/null 2>&1 && git checkout main || git checkout master"
+abbr gcp "git commit -p"
+abbr gpp "git push"
+abbr gp "git pull"
 
 # Other
 abbr grep rg
