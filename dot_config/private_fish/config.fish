@@ -106,9 +106,19 @@ abbr pal 'paru -Q'
 abbr paf 'paru -Ql'
 abbr pao 'paru -Qo'
 
-# hoock up direnv
+# Hook up direnv
 direnv hook fish | source
 
-if status is-interactive
-    # Commands to run in interactive sessions can go here
-end
+# ── Folke's tricks ───────────────────────────────────────────────────
+
+# Pipe --help output through bat with syntax highlighting
+abbr -a --position anywhere --set-cursor -- -h "-h 2>&1 | bat --plain --language=help"
+
+# ── Git worktree workflow ────────────────────────────────────────────
+
+# gw <branch> - create or switch to a git worktree
+# gpr <pr>    - checkout a PR into a worktree via gh
+# gwl         - fuzzy-pick a worktree with fzf
+# gwr         - remove a worktree
+# gwm         - toggle between main and latest worktree
+# (see ~/.config/fish/functions/ for implementations)
