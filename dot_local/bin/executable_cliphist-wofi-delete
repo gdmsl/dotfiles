@@ -1,0 +1,2 @@
+#!/bin/bash
+cliphist list | wofi -S dmenu | cliphist delete
