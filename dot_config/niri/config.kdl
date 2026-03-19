@@ -3,13 +3,28 @@
 // Check the wiki for a full description of the configuration:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Introduction
 
+environment {
+    DCONF_PROFILE "niri"
+
+    CLUTTER_BACKEND "wayland"
+    GDK_BACKEND "wayland"
+
+    QT_QPA_PLATFORM "wayland;xcb"
+    QT_QPA_PLATFORMTHEME "qt6ct"
+    QT_WAYLAND_DISABLE_WINDOW_DECORATION "1"
+
+    SDL_VIDEODRIVER "wayland"
+
+    MOZ_ENABLE_WAYLAND "1"
+}
+
 // Input device configuration.
 // Find the full list of options on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Input
 input {
     keyboard {
         xkb {
-            layout "us"
+layout "us"
             variant "intl"
         }
 
@@ -254,6 +269,8 @@ layout {
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
 // spawn-at-startup "waybar"
+
+// Set gnome settings for themes
 spawn-at-startup "gsettings set org.gnome.desktop.interface gtk-theme Arc-Dark"
 spawn-at-startup "gsettings set org.gnome.desktop.interface icon-theme Tela-circle-dark"
 spawn-at-startup "gsettings set org.gnome.desktop.interface cursor-theme Bibata-Moden-Ice"
@@ -312,7 +329,7 @@ window-rule {
 
 // Example: block out two password managers from screen capture.
 // (This example rule is commented out with a "/-" in front.)
-/-window-rule {
+window-rule {
     match app-id=r#"^org\.keepassxc\.KeePassXC$"#
     match app-id=r#"^org\.gnome\.World\.Secrets$"#
 
@@ -344,6 +361,15 @@ layer-rule {
     place-within-backdrop true
 }
 
+
+// Open the Firefox picture-in-picture player as floating by default.
+window-rule {
+    match app-id="^me.gdmsl.clipse$"
+    open-floating true
+    default-column-width { fixed 700; }
+    default-window-height { fixed 700; }
+}
+
 binds {
     // Keys consist of modifiers separated by + signs, followed by an XKB key name
     // in the end. To find an XKB name for a particular key, you may use a program
@@ -364,6 +390,7 @@ binds {
     Mod+Shift+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Mod+D hotkey-overlay-title="Run an Application: Noctalia" { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "hyprlock"; }
+    Mod+G hotkey-overlay-title="Switch windows: niri-wselector" { spawn "niri-wselector" "--windows"; }
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument in the end.
@@ -617,5 +644,20 @@ binds {
 
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.
-    Mod+Shift+P { power-off-monitors; }
+    Mod+Backspace{ power-off-monitors; }
+
+    // Niriswitcher
+    Alt+Tab repeat=false { spawn "gdbus" "call" "--session" "--dest" "io.github.isaksamsten.Niriswitcher" "--object-path" "/io/github/isaksamsten/Niriswitcher" "--method" "io.github.isaksamsten.Niriswitcher.application" ; }
+    Alt+Shift+Tab repeat=false { spawn "gdbus" "call" "--session" "--dest" "io.github.isaksamsten.Niriswitcher" "--object-path" "/io/github/isaksamsten/Niriswitcher" "--method" "io.github.isaksamsten.Niriswitcher.application" ; }
+
+    // Clipse
+    Mod+P repeat=false { spawn "cliphist-wofi"; }
+    Mod+Shift+P repeat=false { spawn "cliphist-wofi-delete"; }
+
+    // Hexecute
+    Mod+Space repeat=false { spawn "hexecute" ; }
+
+    // File manager
+    Mod+X repeat=false { spawn "kitty" "-e" "yazi" ; }
+    Mod+Shift+X repeat=false { spawn "kitty" "-e" "spf"  ; }
 }

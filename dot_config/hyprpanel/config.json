@@ -43,7 +43,7 @@
   "menus.dashboard.directories.right.directory2.label": "󰉏  Pictures",
   "menus.dashboard.directories.right.directory3.label": "󱂵  Home",
   "theme.bar.buttons.dashboard.enableBorder": true,
-  "bar.customModules.ram.labelType": "percentage",
+  "bar.customModules.ram.labelType": "used",
   "theme.bar.buttons.workspaces.enableBorder": false,
   "bar.workspaces.monitorSpecific": true,
   "bar.workspaces.show_icons": false,
@@ -51,5 +51,8 @@
   "bar.workspaces.showWsIcons": false,
   "bar.workspaces.showApplicationIcons": false,
   "bar.workspaces.numbered_active_indicator": "underline",
-  "theme.bar.buttons.modules.cpuTemp.enableBorder": false
+  "theme.bar.buttons.modules.cpuTemp.enableBorder": false,
+  "bar.customModules.storage.paths": [
+    "/"
+  ]
 }

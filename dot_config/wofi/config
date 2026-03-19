@@ -2,8 +2,7 @@ term=kitty
 location=center
 width=45%
 
-prompt=
-lines=11
+prompt=Search
 
 show=drun
 insensitive=true

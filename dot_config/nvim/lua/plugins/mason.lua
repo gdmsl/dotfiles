@@ -2,12 +2,12 @@ return {
   -- `vim.tbl_deep_extend` can only merge table and not list
   -- so we have to do this to add our languages to the list
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {
       ensure_installed = {
         "clangd",
         "clang-format",
-        "julia-lsp",
+        --"julia-lsp",
         "rust-analyzer",
         "shellcheck",
         "stylua",
