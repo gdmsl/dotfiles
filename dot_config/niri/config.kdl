@@ -270,6 +270,9 @@ layout {
 // This line starts waybar, a commonly used bar for Wayland compositors.
 // spawn-at-startup "waybar"
 
+// ── Daemons managed by systemd (see run_once_install-niri.sh) ──────
+// noctalia-shell, kanshi, hyprpolkitagent, vicinae, cliphist, niriswitcher, hypridle
+
 // Set gnome settings for themes
 spawn-at-startup "gsettings set org.gnome.desktop.interface gtk-theme Arc-Dark"
 spawn-at-startup "gsettings set org.gnome.desktop.interface icon-theme Tela-circle-dark"
@@ -375,7 +378,7 @@ binds {
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+Return hotkey-overlay-title="Open a Terminal" { spawn "kitty"; }
-    Mod+Space hotkey-overlay-title="Launcher: Vicinae" { spawn "vicinae"; }
+    Mod+Space hotkey-overlay-title="Launcher: Vicinae" { spawn "vicinae" "toggle"; }
     Mod+Alt+Space hotkey-overlay-title="Launcher: Anyrun" { spawn "anyrun"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "hyprlock"; }
     Mod+G hotkey-overlay-title="Switch windows: niri-wselector" { spawn "niri-wselector" "--windows"; }
