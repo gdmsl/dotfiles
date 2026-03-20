@@ -381,7 +381,7 @@ binds {
     Mod+Space hotkey-overlay-title="Launcher: Vicinae" { spawn "vicinae" "toggle"; }
     Mod+Alt+Space hotkey-overlay-title="Launcher: Anyrun" { spawn "anyrun"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "hyprlock"; }
-    Mod+G hotkey-overlay-title="Switch windows: niri-wselector" { spawn "niri-wselector" "--windows"; }
+    Mod+G hotkey-overlay-title="Switch windows" { spawn "vicinae" "vicinae://extensions/vicinae/window-management/switch"; }
 
     // Dev workspace (spawns terminal if empty)
     Mod+Alt+Return hotkey-overlay-title="Dev workspace" { spawn "fish" "-c" "dev"; }
@@ -644,9 +644,9 @@ binds {
     Alt+Tab repeat=false { spawn "gdbus" "call" "--session" "--dest" "io.github.isaksamsten.Niriswitcher" "--object-path" "/io/github/isaksamsten/Niriswitcher" "--method" "io.github.isaksamsten.Niriswitcher.application" ; }
     Alt+Shift+Tab repeat=false { spawn "gdbus" "call" "--session" "--dest" "io.github.isaksamsten.Niriswitcher" "--object-path" "/io/github/isaksamsten/Niriswitcher" "--method" "io.github.isaksamsten.Niriswitcher.application" ; }
 
-    // Clipboard history (cliphist + tofi)
-    Mod+P repeat=false { spawn "cliphist-pick"; }
-    Mod+Shift+P repeat=false { spawn "cliphist-delete"; }
+    // Clipboard history (vicinae primary, cliphist+tofi fallback)
+    Mod+P repeat=false { spawn "vicinae" "vicinae://extensions/vicinae/clipboard/history"; }
+    Mod+Shift+P repeat=false { spawn "cliphist-pick"; }
 
     // File manager
     Mod+X repeat=false { spawn "kitty" "-e" "yazi" ; }

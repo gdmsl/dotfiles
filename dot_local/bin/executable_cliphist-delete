@@ -1,2 +1,2 @@
 #!/bin/bash
-cliphist list | tofi --dmenu --prompt-text "Delete: " | cliphist delete
+cliphist list | tofi --prompt-text "Delete: " | cliphist delete

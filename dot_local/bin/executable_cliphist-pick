@@ -1,2 +1,2 @@
 #!/bin/bash
-cliphist list | tofi --dmenu --prompt-text "Clipboard: " | cliphist decode | wl-copy
+cliphist list | tofi --prompt-text "Clipboard: " | cliphist decode | wl-copy
