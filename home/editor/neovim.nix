@@ -1,0 +1,16 @@
+{ config, pkgs, lib, ... }:
+
+{
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+  };
+
+  # Deploy LazyVim config via symlink so lazy.nvim can write to the directory
+  # Use mkOutOfStoreSymlink so the config stays mutable (LazyVim needs to write lock files etc.)
+  xdg.configFile."nvim".source =
+    config.lib.file.mkOutOfStoreSymlink
+      "${config.home.homeDirectory}/.config/home-manager/raw/nvim";
+}
