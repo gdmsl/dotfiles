@@ -72,6 +72,19 @@
   services.thermald.enable = true;
   services.power-profiles-daemon.enable = true;
 
+  # --- Lid / power button / sleep ---
+  services.logind = {
+    lidSwitch = "suspend-then-hibernate";
+    lidSwitchExternalPower = "lock";
+    extraConfig = ''
+      HandlePowerKey=suspend-then-hibernate
+    '';
+  };
+
+  systemd.sleep.extraConfig = ''
+    HibernateDelaySec=1h
+  '';
+
   # --- Laptop hardware essentials ---
   services.fwupd.enable = true;
   services.upower.enable = true;
@@ -264,10 +277,6 @@
       auto-optimise-store = true;
     };
   };
-
-  # External SSD auto-detection (LUKS encrypted, personal password)
-  # TODO: set up after purchasing the SSD (needs UUID)
-  # fileSystems."/home/gdmsl/External" = { ... };
 
   system.stateVersion = "24.11";
 }

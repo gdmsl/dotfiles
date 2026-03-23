@@ -31,7 +31,11 @@
     options = [ "fmask=0077" "dmask=0077" ];
   };
 
-  # LUKS encrypted swap
+  # LUKS encrypted swap (unlocked in initrd for hibernate resume)
+  boot.initrd.luks.devices."luks-88d3d5fd-fdfc-4b31-9ea6-b993af4e8b7f".device =
+    "/dev/disk/by-uuid/88d3d5fd-fdfc-4b31-9ea6-b993af4e8b7f";
+  boot.resumeDevice = "/dev/mapper/luks-88d3d5fd-fdfc-4b31-9ea6-b993af4e8b7f";
+
   swapDevices = [
     { device = "/dev/mapper/luks-88d3d5fd-fdfc-4b31-9ea6-b993af4e8b7f"; }
   ];

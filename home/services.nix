@@ -56,6 +56,22 @@ in
     #   };
     # };
 
+    hypridle = {
+      Unit = {
+        Description = "Idle manager (lock, DPMS, suspend)";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" ];
+      };
+      Service = {
+        ExecStart = "${pkgs.hypridle}/bin/hypridle";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
+      };
+    };
+
     noctalia-shell = {
       Unit = {
         Description = "Noctalia desktop shell";
