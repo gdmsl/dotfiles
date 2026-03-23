@@ -85,6 +85,9 @@
     HibernateDelaySec = "1h";
   };
 
+  # --- Ollama (local LLM) ---
+  services.ollama.enable = true;
+
   # --- Laptop hardware essentials ---
   services.fwupd.enable = true;
   services.upower.enable = true;
@@ -247,6 +250,10 @@
     logseq
     microsoft-edge
     spotify
+
+    # AI / LLM
+    claude-code
+    gemini-cli
   ];
 
   # Convenience aliases for vault management
@@ -257,6 +264,7 @@
 
   # Allow specific unfree packages
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
+    "claude-code"
     "discord"
     "microsoft-edge"
     "logseq"
