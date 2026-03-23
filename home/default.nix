@@ -48,10 +48,8 @@
     MOZ_USE_OMTC = "1";
     MOZ_WEBRENDER = "1";
     MOZ_ENABLE_WAYLAND = "1";
-    GIT_ASKPASS = "/usr/lib/seahorse/ssh-askpass";
-    SSH_ASKPASS = "/usr/lib/seahorse/ssh-askpass";
-    SSH_ASKPASS_REQUIRE = "prefer";
-    SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/gcr/ssh";
+    # SSH_AUTH_SOCK not set here — let gnome-keyring or SSH agent forwarding
+    # set it at runtime. Hardcoding breaks agent forwarding over SSH.
   };
 
   # Additional PATH entries
