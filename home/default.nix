@@ -77,10 +77,8 @@
 
   # Dotfiles in home directory
   home.file = {
-    ".profile".source = ../raw/profile;
-    # .bash_profile managed by programs.bash
-    ".zprofile".source = ../raw/zprofile;
-    ".zshenv".source = ../raw/zshenv;
+    # .profile, .bash_profile managed by programs.bash
+    # .zprofile, .zshenv managed by programs.zsh
     ".latexmkrc".source = ../raw/latexmkrc;
     ".screenrc".source = ../raw/screenrc;
     ".ticker.yaml".source = ../raw/ticker.yaml;
