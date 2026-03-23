@@ -18,6 +18,11 @@
     vicinae = {
       url = "github:vicinaehq/vicinae";
     };
+
+    anyrun = {
+      url = "github:anyrun-org/anyrun";
+      # Don't override nixpkgs — breaks their binary cache
+    };
   };
 
   outputs = { nixpkgs, nixos-hardware, home-manager, noctalia, ... }@inputs:

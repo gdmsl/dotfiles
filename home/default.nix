@@ -21,6 +21,7 @@
     ./desktop/kanshi.nix
     ./desktop/noctalia.nix
     ./desktop/vicinae.nix
+    ./desktop/anyrun.nix
     ./services.nix
     ./xdg.nix
     ./scripts.nix

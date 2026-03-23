@@ -69,9 +69,21 @@
 
     # Dev tools
     git-lfs
+    gh           # GitHub CLI
 
-    # TODO: vicinae and anyrun may not be in nixpkgs -- install via overlay or flake input
-    # TODO: hyprpaper, hyprshade, hyprpm, iio-hyprland may need separate inputs
-    # TODO: noctalia-shell, niriswitcher need separate packaging
+    # Theming / GTK
+    arc-theme
+    tela-circle-icon-theme
+    bibata-cursors
+
+    # Hyprland extras
+    hyprpaper
+
+    # Niri extras
+    # TODO: niriswitcher — check if packaged or add flake input
+    # TODO: niri-wselector — check if packaged
+
+    # TODO: spf (superfile) — check if in nixpkgs
+    # TODO: iio-hyprland — check if in nixpkgs (screen rotation)
   ];
 }
