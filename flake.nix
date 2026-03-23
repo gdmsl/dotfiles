@@ -10,9 +10,13 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+    };
   };
 
-  outputs = { nixpkgs, nixos-hardware, home-manager, ... }@inputs:
+  outputs = { nixpkgs, nixos-hardware, home-manager, noctalia, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -29,6 +33,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.gdmsl = import ./home;
           }
         ];
@@ -38,6 +43,7 @@
       # Usage: home-manager switch --flake .#gdmsl
       homeConfigurations."gdmsl" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
+        extraSpecialArgs = { inherit inputs; };
         modules = [ ./home ];
       };
     };

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   imports = [
@@ -19,6 +19,7 @@
     ./desktop/waybar.nix
     ./desktop/mako.nix
     ./desktop/kanshi.nix
+    ./desktop/noctalia.nix
     ./services.nix
     ./xdg.nix
     ./scripts.nix
