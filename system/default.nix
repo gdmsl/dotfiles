@@ -110,12 +110,12 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --remember-session --sessions ${pkgs.niri}/share/wayland-sessions:${pkgs.hyprland}/share/wayland-sessions --cmd niri-session";
+        command = "${pkgs.greetd.greetd}/bin/agreety --cmd niri-session";
         user = "greeter";
       };
     };
   };
-  # Fix: greetd PAM needs gnome-keyring config
+  # greetd PAM needs gnome-keyring config
   security.pam.services.greetd.enableGnomeKeyring = true;
   systemd.tmpfiles.rules = [
     "d /var/cache/tuigreet 0755 greeter greeter -"
