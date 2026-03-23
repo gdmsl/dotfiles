@@ -243,7 +243,7 @@
   # Allow specific unfree packages
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
     "discord"
-    "microsoft-edge-stable"
+    "microsoft-edge"
     "logseq"
     "slack"
     "spotify"
