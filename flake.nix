@@ -14,6 +14,10 @@
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
     };
+
+    vicinae = {
+      url = "github:vicinaehq/vicinae";
+    };
   };
 
   outputs = { nixpkgs, nixos-hardware, home-manager, noctalia, ... }@inputs:

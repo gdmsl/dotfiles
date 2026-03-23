@@ -20,6 +20,7 @@
     ./desktop/mako.nix
     ./desktop/kanshi.nix
     ./desktop/noctalia.nix
+    ./desktop/vicinae.nix
     ./services.nix
     ./xdg.nix
     ./scripts.nix
