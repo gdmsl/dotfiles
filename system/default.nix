@@ -79,7 +79,8 @@
 
   # --- Bluetooth ---
   hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
+  # Bluetooth UI provided by noctalia-shell
+  services.blueman.enable = false;
 
   # --- Printing ---
   services.printing.enable = true;

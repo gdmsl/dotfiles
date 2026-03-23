@@ -22,6 +22,7 @@
     ./desktop/noctalia.nix
     ./desktop/vicinae.nix
     ./desktop/anyrun.nix
+    ./firefox.nix
     ./services.nix
     ./xdg.nix
     ./scripts.nix

@@ -31,7 +31,7 @@ in
         After = [ "graphical-session.target" ];
       };
       Service = {
-        ExecStart = "${inputs.vicinae.packages.${system}.default}/bin/vicinae";
+        ExecStart = "${inputs.vicinae.packages.${system}.default}/bin/vicinae server";
         Restart = "on-failure";
         RestartSec = 2;
       };

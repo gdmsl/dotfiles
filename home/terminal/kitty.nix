@@ -45,6 +45,7 @@
       "kitty_mod+right" = "neighboring_window right";
       "kitty_mod+up" = "neighboring_window up";
       "kitty_mod+down" = "neighboring_window down";
+      "kitty_mod+t" = "new_tab_with_cwd";
       "kitty_mod+r" = "show_scrollback";
     };
 
