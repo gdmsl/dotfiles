@@ -1,11 +1,11 @@
 profile qperfect {
-    output eDP-1 enable mode 1920x1080@60.0 scale 1 position 0,0
+    output eDP-1 enable mode 1920x1200@60.0 scale 1 position 0,0
     output "ASUSTek COMPUTER INC MB16A RCLMQS075225" enable mode 1920x1080@60.0 position 1920,0 scale 1
 }
 
 profile home {
     output "Lenovo Group Limited L27q-35 URB55TC4" mode 2560x1440@59.95 position 1920,0 scale 1
-    output eDP-1 enable mode 1920x1080@60.0 scale 1 position 0,320
+    output eDP-1 enable mode 1920x1200@60.0 scale 1 position 0,240
 }
 
 profile home-nolid {
@@ -14,32 +14,32 @@ profile home-nolid {
 }
 
 profile cesq-vip {
-    output eDP-1 enable mode 1920x1080@60.0 scale 1 position 1920,0
+    output eDP-1 enable mode 1920x1200@60.0 scale 1 position 1920,0
     output "Sony SONY TV  *30 0x01010101" enable mode 3840x2160@30.0 scale 2 position 0,0
 }
 
 profile cesq-kitchen {
-    output eDP-1 enable mode 1920x1080@60.0 scale 1 position 1920,0
+    output eDP-1 enable mode 1920x1200@60.0 scale 1 position 1920,0
     output "Samsung Electric Company SAMSUNG 0x01000E00" enable mode 3840x2160@30.0 scale 2 position 0,0
 }
 
 profile work-lenovo-large {
-    output eDP-1 enable mode 1920x1080@60.0 scale 1 position 0,280
+    output eDP-1 enable mode 1920x1200@60.0 scale 1 position 0,240
     output "Lenovo Group Limited P27q-30 V30DM54G" enable mode 2560x1440@59.951 position 1920,0 scale 1
 }
 
 profile work-lenovo-small {
-    output eDP-1 enable mode 1920x1080@60.0 scale 1 position 0,0
+    output eDP-1 enable mode 1920x1200@60.0 scale 1 position 0,0
     output "Lenovo Group Limited T24i-30 VTV0LRJA" enable mode 1920x1080@60.0 position 1920,0 scale 1
 }
 
 profile work-samsung {
-    output eDP-1 enable mode 1920x1080@60.0 position 0,360
+    output eDP-1 enable mode 1920x1200@60.0 position 0,240
     output "Samsung Electric Company U28E850 HTPKA00103" enable mode 3840x2160 position 1920,0 scale 1.5
 }
 
 profile presenter {
-    output eDP-1 enable mode 1920x1080@60.0 scale 1 position 0,0
+    output eDP-1 enable mode 1920x1200@60.0 scale 1 position 0,0
     output HDMI-A-1 position 1920,0 scale 1
 }
 
@@ -49,7 +49,7 @@ profile presenter-nolid {
 }
 
 profile nomad {
-    output eDP-1 enable mode 1920x1080@60.0 scale 1 position 0,0
+    output eDP-1 enable mode 1920x1200@60.0 scale 1 position 0,0
 }
 
 # vim: ft=conf

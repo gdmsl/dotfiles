@@ -1,5 +1,8 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
+let
+  system = pkgs.stdenv.hostPlatform.system;
+in
 {
   # Systemd user services converted from run_once_install-niri.sh and run_once_install-hyprland.sh
   # These services were previously enabled imperatively via chezmoi run_once scripts.
@@ -21,21 +24,21 @@
       };
     };
 
-    # TODO: vicinae is not in nixpkgs -- uncomment once packaged or use overlay
-    # vicinae = {
-    #   Unit = {
-    #     Description = "Vicinae launcher";
-    #     PartOf = [ "graphical-session.target" ];
-    #     After = [ "graphical-session.target" ];
-    #   };
-    #   Service = {
-    #     ExecStart = "vicinae";
-    #     Restart = "on-failure";
-    #   };
-    #   Install = {
-    #     WantedBy = [ "graphical-session.target" ];
-    #   };
-    # };
+    vicinae = {
+      Unit = {
+        Description = "Vicinae launcher daemon";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" ];
+      };
+      Service = {
+        ExecStart = "${inputs.vicinae.packages.${system}.default}/bin/vicinae";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
+      };
+    };
 
     # TODO: niriswitcher is not in nixpkgs -- uncomment once packaged or use overlay
     # niriswitcher = {
@@ -53,20 +56,20 @@
     #   };
     # };
 
-    # TODO: noctalia-shell is not in nixpkgs -- uncomment once packaged
-    # noctalia-shell = {
-    #   Unit = {
-    #     Description = "Noctalia shell";
-    #     PartOf = [ "graphical-session.target" ];
-    #     After = [ "graphical-session.target" ];
-    #   };
-    #   Service = {
-    #     ExecStart = "noctalia-shell";
-    #     Restart = "on-failure";
-    #   };
-    #   Install = {
-    #     WantedBy = [ "graphical-session.target" ];
-    #   };
-    # };
+    noctalia-shell = {
+      Unit = {
+        Description = "Noctalia desktop shell";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" ];
+      };
+      Service = {
+        ExecStart = "${inputs.noctalia.packages.${system}.default}/bin/noctalia-shell";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
+      };
+    };
   };
 }
