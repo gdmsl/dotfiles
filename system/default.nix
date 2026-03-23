@@ -82,6 +82,9 @@
   # Bluetooth UI provided by noctalia-shell
   services.blueman.enable = false;
 
+  # --- PKI / trusted certificates ---
+  security.pki.certificateFiles = [ ./ca.pem ];
+
   # --- Printing ---
   services.printing.enable = true;
 
