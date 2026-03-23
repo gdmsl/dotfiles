@@ -220,6 +220,18 @@
     # Keyring GUI
     seahorse
     gnome-keyring
+
+    # Communication
+    discord
+    slack
+    telegram-desktop
+    zoom-us
+
+    # Productivity
+    logseq
+    vscode
+    microsoft-edge
+    spotify
   ];
 
   # Convenience aliases for vault management
@@ -230,9 +242,13 @@
 
   # Allow specific unfree packages
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
-    "obsidian"
-    "vscode"
     "discord"
+    "microsoft-edge-stable"
+    "logseq"
+    "slack"
+    "spotify"
+    "vscode"
+    "zoom"
   ];
 
   # --- Nix settings ---

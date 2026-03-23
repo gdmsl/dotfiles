@@ -86,5 +86,9 @@
     ".ticker.yaml".source = ../raw/ticker.yaml;
     ".dircolors".source = ../raw/dircolors;
     ".makepkg.conf".source = ../raw/makepkg.conf;
+
+    # Symlink app data into encrypted Personal vault
+    ".local/share/TelegramDesktop".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Personal/.local/share/TelegramDesktop";
+    ".config/discord".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Personal/.config/discord";
   };
 }
