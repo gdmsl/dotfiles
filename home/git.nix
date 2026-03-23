@@ -19,6 +19,8 @@
 
     lfs.enable = true;
 
+    signing.format = null;
+
     extraConfig = {
       color.ui = true;
 
@@ -30,7 +32,7 @@
 
       diff.colorMoved = "default";
 
-      interactive.diffFilter = "delta --color-only";
+      # interactive.diffFilter managed by programs.git.delta
 
       init.defaultBranch = "main";
 
