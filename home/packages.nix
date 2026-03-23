@@ -70,6 +70,7 @@
     # Dev tools
     git-lfs
     gh           # GitHub CLI
+    glab         # GitLab CLI
 
     # Theming / GTK
     arc-theme
