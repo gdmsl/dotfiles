@@ -76,14 +76,14 @@
   services.logind = {
     lidSwitch = "suspend-then-hibernate";
     lidSwitchExternalPower = "lock";
-    extraConfig = ''
-      HandlePowerKey=suspend-then-hibernate
-    '';
+    settings.Login = {
+      HandlePowerKey = "suspend-then-hibernate";
+    };
   };
 
-  systemd.sleep.extraConfig = ''
-    HibernateDelaySec=1h
-  '';
+  systemd.sleep.settings.Sleep = {
+    HibernateDelaySec = "1h";
+  };
 
   # --- Laptop hardware essentials ---
   services.fwupd.enable = true;
