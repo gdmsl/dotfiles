@@ -14,7 +14,7 @@
 
     defaultKeymap = "viins";
 
-    initExtra = ''
+    initContent = ''
       # Reset zsh state (useful on shared clusters)
       emulate -R zsh
 
