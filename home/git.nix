@@ -3,38 +3,24 @@
 {
   programs.git = {
     enable = true;
-    userName = "Guido Masella";
-    userEmail = "guido.masella@gmail.com";
-
-    delta = {
-      enable = true;
-      options = {
-        navigate = true;
-        light = false;
-        side-by-side = false;
-        line-numbers = true;
-        syntax-theme = "TwoDark";
-      };
-    };
-
-    lfs.enable = true;
 
     signing.format = null;
 
-    extraConfig = {
+    lfs.enable = true;
+
+    settings = {
+      user = {
+        name = "Guido Masella";
+        email = "guido.masella@gmail.com";
+      };
+
       color.ui = true;
-
       push.default = "simple";
-
       merge.conflictstyle = "diff3";
-
       pull.rebase = true;
-
       diff.colorMoved = "default";
-
-      # interactive.diffFilter managed by programs.git.delta
-
       init.defaultBranch = "main";
+      fetch.prune = true;
 
       alias = {
         change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ \\\\\"$`echo $VAR`\\\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\" $@; }; f";
@@ -72,8 +58,19 @@
       "url \"https://aur.archlinux.org/\"" = {
         insteadOf = "aur:";
       };
+    };
+  };
 
-      fetch.prune = true;
+  # Delta (pager/diff viewer) — now a separate program in HM
+  programs.delta = {
+    enable = true;
+    enableGitIntegration = true;
+    options = {
+      navigate = true;
+      light = false;
+      side-by-side = false;
+      line-numbers = true;
+      syntax-theme = "TwoDark";
     };
   };
 
