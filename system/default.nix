@@ -229,7 +229,6 @@
 
     # Productivity
     logseq
-    vscode
     microsoft-edge
     spotify
   ];
@@ -247,7 +246,6 @@
     "logseq"
     "slack"
     "spotify"
-    "vscode"
     "zoom"
   ];
 
