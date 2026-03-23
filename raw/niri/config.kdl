@@ -326,6 +326,16 @@ debug {
   honor-xdg-activation-with-invalid-serial
 }
 
+// Noctalia shell layer rules
+layer-rule {
+    match namespace="^quickshell-wallpaper$"
+}
+
+layer-rule {
+    match namespace="^quickshell-overview$"
+    place-within-backdrop true
+}
+
 // Open clipse as floating window
 window-rule {
     match app-id="^me.gdmsl.clipse$"
