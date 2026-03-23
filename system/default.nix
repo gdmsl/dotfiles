@@ -144,7 +144,7 @@
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-color-emoji
-      maple-font
+      # TODO: Maple Mono not in nixpkgs — add via overlay if needed
     ];
     fontconfig.defaultFonts = {
       serif = [ "Noto Serif" ];
