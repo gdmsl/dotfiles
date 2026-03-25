@@ -246,13 +246,7 @@ layout {
 // ── Daemons managed by systemd (see run_once_install-niri.sh) ──────
 // noctalia-shell, kanshi, hyprpolkitagent, vicinae, cliphist, niriswitcher, hypridle
 
-// Set gnome settings for themes
-spawn-at-startup "gsettings set org.gnome.desktop.interface gtk-theme Arc-Dark"
-spawn-at-startup "gsettings set org.gnome.desktop.interface icon-theme Tela-circle-dark"
-spawn-at-startup "gsettings set org.gnome.desktop.interface cursor-theme Bibata-Moden-Ice"
-spawn-at-startup "gsettings set org.gnome.desktop.interface text-scaling-factor 1"
-spawn-at-startup "gsettings set org.gnome.desktop.interface cursor-size 24"
-spawn-at-startup "gsettings set org.gnome.desktop.interface color-scheme prefer-dark"
+// GTK/cursor theming managed by Home Manager (desktop/gtk.nix + dconf)
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
 // If the client will specifically ask for CSD, the request will be honored.

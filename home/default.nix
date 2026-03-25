@@ -18,6 +18,7 @@
     ./desktop/niri.nix
     ./desktop/waybar.nix
     ./desktop/mako.nix
+    ./desktop/gtk.nix
     ./desktop/kanshi.nix
     ./desktop/noctalia.nix
     ./desktop/vicinae.nix

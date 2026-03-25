@@ -72,10 +72,14 @@
     gh           # GitHub CLI
     glab         # GitLab CLI
 
-    # Theming / GTK
-    arc-theme
+    # Theming
+    tokyonight-gtk-theme    # GTK + Kvantum Tokyo Night theme
     tela-circle-icon-theme
     bibata-cursors
+    nwg-look               # GTK theme GUI
+    dconf                   # needed for gsettings
+    kdePackages.qtstyleplugin-kvantum
+    qt6Packages.qt6ct
 
     # Hyprland extras
     hyprpaper
