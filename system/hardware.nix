@@ -40,6 +40,9 @@
     { device = "/dev/mapper/luks-88d3d5fd-fdfc-4b31-9ea6-b993af4e8b7f"; }
   ];
 
+  # Firmware (Wi-Fi, Bluetooth, GPU, etc.)
+  hardware.enableRedistributableFirmware = true;
+
   # CPU
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
