@@ -265,11 +265,13 @@
   # Allow specific unfree packages
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
     "claude-code"
+    "corefonts"
     "discord"
     "microsoft-edge"
     "logseq"
     "slack"
     "spotify"
+    "vista-fonts"
     "zoom"
   ];
 

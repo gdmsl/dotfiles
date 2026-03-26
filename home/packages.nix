@@ -72,6 +72,15 @@
     gh           # GitHub CLI
     glab         # GitLab CLI
 
+    # Fonts
+    maple-mono.NF           # Maple Mono Nerd Font (italic support)
+    nerd-fonts.fira-code    # FiraCode Nerd Font
+    nerd-fonts.symbols-only # Nerd Font symbols
+    inter                   # Inter (sans-serif)
+    carlito                 # Calibri metric-compatible
+    corefonts               # MS core fonts (Arial, Times New Roman, etc.)
+    vista-fonts             # MS Vista fonts (Calibri, Cambria, etc.)
+
     # Theming
     tokyonight-gtk-theme    # GTK + Kvantum Tokyo Night theme
     tela-circle-icon-theme
