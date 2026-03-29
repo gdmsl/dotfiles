@@ -73,12 +73,10 @@
   services.power-profiles-daemon.enable = true;
 
   # --- Lid / power button / sleep ---
-  services.logind = {
-    lidSwitch = "suspend-then-hibernate";
-    lidSwitchExternalPower = "lock";
-    settings.Login = {
-      HandlePowerKey = "suspend-then-hibernate";
-    };
+  services.logind.settings.Login = {
+    HandleLidSwitch = "suspend-then-hibernate";
+    HandleLidSwitchExternalPower = "lock";
+    HandlePowerKey = "suspend-then-hibernate";
   };
 
   systemd.sleep.settings.Sleep = {
