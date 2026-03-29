@@ -1,7 +1,7 @@
 # yara - ThinkPad E14 Gen 7
 # Role: work laptop (QPerfect) with encrypted personal vault
 # Full disk LUKS (company password) + gocryptfs personal vault + external SSD
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [
@@ -83,6 +83,35 @@
 
   systemd.sleep.settings.Sleep = {
     HibernateDelaySec = "1h";
+  };
+
+  # --- Syncthing (file sync — only when encrypted vault is mounted) ---
+  services.syncthing = {
+    enable = true;
+    user = "gdmsl";
+    dataDir = "/home/gdmsl";
+    configDir = "/home/gdmsl/Personal/.config/syncthing";
+    openDefaultPorts = true; # 22000/tcp, 21027/udp
+    settings.gui.insecureSkipHostcheck = true;
+  };
+
+  # Guard: never auto-start, require gocryptfs vault on ~/Personal
+  systemd.services.syncthing = {
+    wantedBy = lib.mkForce [];
+    serviceConfig.ExecStartPre =
+      "${pkgs.bash}/bin/bash -c 'grep -q \"/home/gdmsl/Personal fuse.gocryptfs\" /proc/mounts'";
+  };
+
+  # Watchdog: stop syncthing if the vault is unmounted out-of-band
+  systemd.services.syncthing-vault-guard = {
+    description = "Stop syncthing when gocryptfs vault is unmounted";
+    wantedBy = [ "syncthing.service" ];
+    after = [ "syncthing.service" ];
+    unitConfig.BindsTo = "syncthing.service";
+    serviceConfig = {
+      ExecStart = "${pkgs.bash}/bin/bash -c 'while grep -q \"/home/gdmsl/Personal fuse.gocryptfs\" /proc/mounts; do sleep 5; done'";
+      ExecStopPost = "${pkgs.systemd}/bin/systemctl stop syncthing.service";
+    };
   };
 
   # --- Ollama (local LLM) ---
@@ -256,10 +285,10 @@
     gemini-cli
   ];
 
-  # Convenience aliases for vault management
+  # Convenience aliases for vault management (syncthing lifecycle tied to vault)
   environment.shellAliases = {
-    unlock-personal = "gocryptfs ~/.personal-encrypted ~/Personal";
-    lock-personal = "fusermount -u ~/Personal";
+    unlock-personal = "gocryptfs ~/.personal-encrypted ~/Personal && sudo systemctl start syncthing";
+    lock-personal = "sudo systemctl stop syncthing; fusermount -u ~/Personal";
   };
 
   # Allow specific unfree packages
