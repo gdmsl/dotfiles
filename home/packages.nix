@@ -51,6 +51,7 @@
     cosmic-files   # Rust GUI file manager (Mod+Shift+X)
     cosmic-edit    # Rust text editor (COSMIC)
     zathura        # KISS PDF/DjVu/CBR viewer (vim-like)
+    evince         # PDF viewer with annotation support
     oculante       # Rust GPU-accelerated image viewer
     satty          # Rust screenshot annotation tool
     libreoffice-fresh # Office suite
