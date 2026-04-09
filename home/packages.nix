@@ -48,6 +48,17 @@
     fastfetch
     ranger
     mpv
+    cosmic-files   # Rust GUI file manager (Mod+Shift+X)
+    cosmic-edit    # Rust text editor (COSMIC)
+    zathura        # KISS PDF/DjVu/CBR viewer (vim-like)
+    oculante       # Rust GPU-accelerated image viewer
+    satty          # Rust screenshot annotation tool
+    libreoffice-fresh # Office suite
+    hyprpicker     # Wayland color picker
+    wf-recorder    # Wayland screen recorder
+    inkscape       # Vector graphics editor (SVG)
+    gimp           # Raster image editor
+    darktable      # RAW photo editor / workflow
 
     # GNOME keyring / secrets
     gnome-keyring
@@ -97,7 +108,7 @@
     # TODO: niriswitcher — check if packaged or add flake input
     # TODO: niri-wselector — check if packaged
 
-    # TODO: spf (superfile) — check if in nixpkgs
+    # TODO: superfile — check if in nixpkgs (TUI file manager)
     # TODO: iio-hyprland — check if in nixpkgs (screen rotation)
   ];
 }

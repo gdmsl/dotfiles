@@ -75,7 +75,8 @@
   # --- Lid / power button / sleep ---
   services.logind.settings.Login = {
     HandleLidSwitch = "suspend-then-hibernate";
-    HandleLidSwitchExternalPower = "lock";
+    HandleLidSwitchExternalPower = "suspend-then-hibernate";
+    HandleLidSwitchDocked = "suspend-then-hibernate";
     HandlePowerKey = "suspend-then-hibernate";
   };
 

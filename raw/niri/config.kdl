@@ -518,7 +518,9 @@ binds {
 
     Mod+W { toggle-column-tabbed-display; }
 
-    Print { screenshot; }
+    // Screenshots (grim → satty for annotation/crop)
+    Print { spawn "sh" "-c" "grim - | satty --filename -"; }
+    Shift+Print { spawn "sh" "-c" "grim -g \"$(slurp)\" - | satty --filename -"; }
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
 
@@ -539,5 +541,5 @@ binds {
 
     // File manager
     Mod+X repeat=false { spawn "kitty" "-e" "yazi" ; }
-    Mod+Shift+X repeat=false { spawn "kitty" "-e" "spf"  ; }
+    Mod+Shift+X repeat=false { spawn "cosmic-files" ; }
 }
