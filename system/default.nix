@@ -56,6 +56,14 @@
   # --- Tailscale (mesh VPN to homelab) ---
   services.tailscale.enable = true;
   networking.firewall.checkReversePath = "loose";
+  systemd.services.tailscaled = {
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    serviceConfig = {
+      Restart = "on-failure";
+      RestartSec = "5s";
+    };
+  };
 
   # --- GPU ---
   hardware.graphics = {
