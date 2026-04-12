@@ -52,7 +52,8 @@
     cosmic-edit    # Rust text editor (COSMIC)
     zathura        # KISS PDF/DjVu/CBR viewer (vim-like)
     evince         # PDF viewer with annotation support
-    oculante       # Rust GPU-accelerated image viewer
+    loupe          # GNOME image viewer (GPU-accelerated, GTK4)
+    # oculante     # Rust GPU-accelerated image viewer (broken in nixpkgs, libaom patch failure)
     satty          # Rust screenshot annotation tool
     libreoffice-fresh # Office suite
     hyprpicker     # Wayland color picker
