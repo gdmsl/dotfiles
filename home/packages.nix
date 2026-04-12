@@ -80,8 +80,15 @@
     shellcheck
     stylua
 
-    # Languages
+    # Languages & toolchains
     julia
+    lua
+    rustup         # Rust toolchain manager (rustc, cargo, rustfmt, clippy)
+    python3
+    gcc
+    cmake
+    ninja
+    gnumake
 
     # Dev tools
     git-lfs
