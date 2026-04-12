@@ -46,6 +46,7 @@
   xdg.configFile."gtk-3.0/settings.ini".force = true;
   xdg.configFile."gtk-4.0/settings.ini".force = true;
   xdg.configFile."gtk-4.0/gtk.css".force = true;
+  home.file.".gtkrc-2.0".force = true;
   xdg.dataFile."icons/default/index.theme".force = true;
 
   dconf.settings = {
