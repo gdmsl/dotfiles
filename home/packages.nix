@@ -70,7 +70,7 @@
     lua-language-server
     nil # Nix LSP
     pyright
-    rust-analyzer
+    # rust-analyzer provided by rustup
     nodePackages.typescript-language-server
     clang-tools # clangd + clang-format
     cmake-language-server
