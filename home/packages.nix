@@ -80,6 +80,9 @@
     shellcheck
     stylua
 
+    # Languages
+    julia
+
     # Dev tools
     git-lfs
     gh           # GitHub CLI
