@@ -85,6 +85,7 @@
     lua
     rustup         # Rust toolchain manager (rustc, cargo, rustfmt, clippy)
     python3
+    uv             # Fast Python package/project manager
     gcc
     cmake
     ninja
