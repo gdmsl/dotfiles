@@ -121,6 +121,19 @@
     };
   };
 
+  # --- OneDrive (QPerfect file sync) ---
+  systemd.user.services.onedrive = {
+    description = "OneDrive sync for QPerfect";
+    wantedBy = [ "default.target" ];
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.onedrive}/bin/onedrive --monitor";
+      Restart = "on-failure";
+      RestartSec = "10s";
+    };
+  };
+
   # --- Ollama (local LLM) ---
   services.ollama.enable = true;
 

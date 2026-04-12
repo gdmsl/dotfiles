@@ -76,6 +76,7 @@
     "chromium-flags.conf".source = ../raw/chromium-flags.conf;
     "electron-flags.conf".source = ../raw/electron-flags.conf;
     "locale.conf".source = ../raw/locale.conf;
+    "onedrive/config".source = ../raw/onedrive/config;
   };
 
   # Dotfiles in home directory
