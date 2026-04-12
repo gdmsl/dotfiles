@@ -48,19 +48,18 @@
     fastfetch
     ranger
     mpv
-    cosmic-files   # Rust GUI file manager (Mod+Shift+X)
-    cosmic-edit    # Rust text editor (COSMIC)
-    zathura        # KISS PDF/DjVu/CBR viewer (vim-like)
-    evince         # PDF viewer with annotation support
-    loupe          # GNOME image viewer (GPU-accelerated, GTK4)
-    # oculante     # Rust GPU-accelerated image viewer (broken in nixpkgs, libaom patch failure)
-    satty          # Rust screenshot annotation tool
-    libreoffice-fresh # Office suite
-    hyprpicker     # Wayland color picker
-    wf-recorder    # Wayland screen recorder
-    inkscape       # Vector graphics editor (SVG)
-    gimp           # Raster image editor
-    darktable      # RAW photo editor / workflow
+    cosmic-files
+    cosmic-edit
+    zathura
+    evince
+    loupe
+    satty
+    libreoffice-fresh
+    hyprpicker
+    wf-recorder
+    inkscape
+    gimp
+    darktable
 
     # GNOME keyring / secrets
     gnome-keyring
@@ -68,11 +67,10 @@
 
     # Neovim LSP servers (for LazyVim)
     lua-language-server
-    nil # Nix LSP
+    nil
     pyright
-    # rust-analyzer provided by rustup
     nodePackages.typescript-language-server
-    clang-tools # clangd + clang-format
+    clang-tools
     cmake-language-server
     texlab
     bash-language-server
@@ -83,9 +81,9 @@
     # Languages & toolchains
     julia
     lua
-    rustup         # Rust toolchain manager (rustc, cargo, rustfmt, clippy)
+    rustup
     python3
-    uv             # Fast Python package/project manager
+    uv
     gcc
     cmake
     ninja
@@ -93,35 +91,28 @@
 
     # Dev tools
     git-lfs
-    gh           # GitHub CLI
-    glab         # GitLab CLI
+    gh
+    glab
 
     # Fonts
-    maple-mono.NF           # Maple Mono Nerd Font (italic support)
-    nerd-fonts.fira-code    # FiraCode Nerd Font
-    nerd-fonts.symbols-only # Nerd Font symbols
-    inter                   # Inter (sans-serif)
-    carlito                 # Calibri metric-compatible
-    corefonts               # MS core fonts (Arial, Times New Roman, etc.)
-    vista-fonts             # MS Vista fonts (Calibri, Cambria, etc.)
+    maple-mono.NF
+    nerd-fonts.fira-code
+    nerd-fonts.symbols-only
+    inter
+    carlito
+    corefonts
+    vista-fonts
 
     # Theming
-    tokyonight-gtk-theme    # GTK + Kvantum Tokyo Night theme
+    tokyonight-gtk-theme
     tela-circle-icon-theme
     bibata-cursors
-    nwg-look               # GTK theme GUI
-    dconf                   # needed for gsettings
+    nwg-look
+    dconf
     kdePackages.qtstyleplugin-kvantum
     qt6Packages.qt6ct
 
     # Hyprland extras
     hyprpaper
-
-    # Niri extras
-    # TODO: niriswitcher — check if packaged or add flake input
-    # TODO: niri-wselector — check if packaged
-
-    # TODO: superfile — check if in nixpkgs (TUI file manager)
-    # TODO: iio-hyprland — check if in nixpkgs (screen rotation)
   ];
 }
