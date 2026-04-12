@@ -284,6 +284,7 @@
 
     # Productivity
     logseq
+    onedrive
     microsoft-edge
     spotify
 
