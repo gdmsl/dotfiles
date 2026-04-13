@@ -273,6 +273,7 @@
 
     # Auto-mount removable media
     udiskie
+    gvfs
 
     # Screen locking / idle
     hyprlock

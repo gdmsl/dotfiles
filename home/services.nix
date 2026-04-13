@@ -87,5 +87,21 @@ in
         WantedBy = [ "graphical-session.target" ];
       };
     };
+
+    udiskie = {
+      Unit = {
+        Description = "Auto-mount removable media";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" ];
+      };
+      Service = {
+        ExecStart = "${pkgs.udiskie}/bin/udiskie --tray";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
+      };
+    };
   };
 }
