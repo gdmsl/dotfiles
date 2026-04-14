@@ -29,6 +29,10 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      # Absolute path to the dotfiles checkout (used for mkOutOfStoreSymlink).
+      # Override with --override-input or by editing this line if the repo
+      # lives somewhere other than ~/dotfiles.
+      dotfilesPath = "/home/gdmsl/dotfiles";
     in {
       # NixOS system configuration
       # Usage: sudo nixos-rebuild switch --flake .#yara
@@ -43,7 +47,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "hm-backup";
-            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.extraSpecialArgs = { inherit inputs dotfilesPath; };
             home-manager.users.gdmsl = import ./home;
           }
         ];
@@ -53,7 +57,7 @@
       # Usage: home-manager switch --flake .#gdmsl
       homeConfigurations."gdmsl" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        extraSpecialArgs = { inherit inputs; };
+        extraSpecialArgs = { inherit inputs dotfilesPath; };
         modules = [ ./home ];
       };
     };

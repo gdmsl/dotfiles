@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, dotfilesPath, ... }:
 
 {
   programs.neovim = {
@@ -12,5 +12,5 @@
   # Use mkOutOfStoreSymlink so the config stays mutable (LazyVim needs to write lock files etc.)
   xdg.configFile."nvim".source =
     config.lib.file.mkOutOfStoreSymlink
-      "${config.home.homeDirectory}/Code/configs/dotfiles/raw/nvim";
+      "${dotfilesPath}/raw/nvim";
 }
