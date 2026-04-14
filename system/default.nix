@@ -106,7 +106,7 @@
   systemd.services.syncthing = {
     wantedBy = lib.mkForce [];
     serviceConfig.ExecStartPre =
-      "${pkgs.bash}/bin/bash -c 'grep -q \"/home/gdmsl/Personal fuse.gocryptfs\" /proc/mounts'";
+      "${pkgs.bash}/bin/bash -c 'grep -q \"/home/gdmsl/Personal fuse.gocryptfs\" /proc/mounts && mkdir -p /home/gdmsl/Personal/.config/syncthing'";
   };
 
   # Watchdog: stop syncthing if the vault is unmounted out-of-band
