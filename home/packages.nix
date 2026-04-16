@@ -69,7 +69,7 @@
     lua-language-server
     nil
     pyright
-    nodePackages.typescript-language-server
+    typescript-language-server
     clang-tools
     cmake-language-server
     texlab
