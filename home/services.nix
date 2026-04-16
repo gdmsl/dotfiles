@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 let
   system = pkgs.stdenv.hostPlatform.system;
@@ -103,5 +103,35 @@ in
         WantedBy = [ "graphical-session.target" ];
       };
     };
+
+    # --- Syncthing (config lives inside encrypted vault for security) ---
+    syncthing-vault-guard = {
+      Unit = {
+        Description = "Stop syncthing when gocryptfs vault is unmounted";
+        BindsTo = [ "syncthing.service" ];
+        After = [ "syncthing.service" ];
+      };
+      Service = {
+        ExecStart = "${pkgs.bash}/bin/bash -c 'while ${pkgs.util-linux}/bin/mountpoint -q %h/Personal; do sleep 5; done'";
+        ExecStopPost = "${pkgs.systemd}/bin/systemctl --user stop syncthing.service";
+      };
+      Install = {
+        WantedBy = [ "syncthing.service" ];
+      };
+    };
+  };
+
+  # Syncthing user service — only runs when vault is mounted
+  services.syncthing = {
+    enable = true;
+    extraOptions = [
+      "--home=${config.home.homeDirectory}/Personal/.config/syncthing"
+    ];
+  };
+
+  # Don't auto-start; require gocryptfs vault to be mounted
+  systemd.user.services.syncthing = {
+    Unit.ConditionPathIsMountPoint = "%h/Personal";
+    Install.WantedBy = lib.mkForce [ ];
   };
 }

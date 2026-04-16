@@ -42,7 +42,8 @@
   networking.firewall = {
     enable = true;
     trustedInterfaces = [ "tailscale0" ];
-    allowedTCPPorts = [ 22 ];
+    allowedTCPPorts = [ 22 22000 ];
+    allowedUDPPorts = [ 21027 ];
   };
 
   services.openssh = {
@@ -92,34 +93,7 @@
     HibernateDelaySec = "1h";
   };
 
-  # --- Syncthing (file sync — only when encrypted vault is mounted) ---
-  services.syncthing = {
-    enable = true;
-    user = "gdmsl";
-    dataDir = "/home/gdmsl";
-    configDir = "/home/gdmsl/Personal/.config/syncthing";
-    openDefaultPorts = true; # 22000/tcp, 21027/udp
-    settings.gui.insecureSkipHostcheck = true;
-  };
-
-  # Guard: never auto-start, require gocryptfs vault on ~/Personal
-  systemd.services.syncthing = {
-    wantedBy = lib.mkForce [];
-    serviceConfig.ExecStartPre =
-      "${pkgs.bash}/bin/bash -c 'grep -q \"/home/gdmsl/Personal fuse.gocryptfs\" /proc/mounts && mkdir -p /home/gdmsl/Personal/.config/syncthing'";
-  };
-
-  # Watchdog: stop syncthing if the vault is unmounted out-of-band
-  systemd.services.syncthing-vault-guard = {
-    description = "Stop syncthing when gocryptfs vault is unmounted";
-    wantedBy = [ "syncthing.service" ];
-    after = [ "syncthing.service" ];
-    unitConfig.BindsTo = "syncthing.service";
-    serviceConfig = {
-      ExecStart = "${pkgs.bash}/bin/bash -c 'while grep -q \"/home/gdmsl/Personal fuse.gocryptfs\" /proc/mounts; do sleep 5; done'";
-      ExecStopPost = "${pkgs.systemd}/bin/systemctl stop syncthing.service";
-    };
-  };
+  # Syncthing service is managed by Home Manager as a user unit
 
   # --- OneDrive (QPerfect file sync) ---
   systemd.user.services.onedrive = {
@@ -146,6 +120,27 @@
   hardware.bluetooth.enable = true;
   # Bluetooth UI provided by noctalia-shell
   services.blueman.enable = false;
+
+  # Restart bluetooth after suspend/hibernate to fix RTL8852CU USB re-enumeration.
+  # The dead hci0 causes bluetoothd to hang on stop, so we kill it first.
+  systemd.services.bluetooth-resume = {
+    description = "Restart Bluetooth after resume";
+    after = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" "suspend-then-hibernate.target" ];
+    wantedBy = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" "suspend-then-hibernate.target" ];
+    path = [ pkgs.util-linux pkgs.bluez ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = pkgs.writeShellScript "bluetooth-resume" ''
+        # Kill hung bluetoothd so we don't wait for the dead HCI timeout
+        ${pkgs.systemd}/bin/systemctl kill -s SIGKILL bluetooth 2>/dev/null || true
+        # Remove the stale hci0 device if it still exists
+        hciconfig hci0 down 2>/dev/null || true
+        sleep 1
+        # Start fresh
+        ${pkgs.systemd}/bin/systemctl start bluetooth
+      '';
+    };
+  };
 
   # --- PKI / trusted certificates ---
   security.pki.certificateFiles = [ ./ca.pem ];
@@ -309,8 +304,8 @@
 
   # Convenience aliases for vault management (syncthing lifecycle tied to vault)
   environment.shellAliases = {
-    unlock-personal = "gocryptfs ~/.personal-encrypted ~/Personal && sudo systemctl start syncthing";
-    lock-personal = "sudo systemctl stop syncthing; fusermount -u ~/Personal";
+    unlock-personal = "gocryptfs ~/.personal-encrypted ~/Personal && systemctl --user start syncthing";
+    lock-personal = "systemctl --user stop syncthing; fusermount -u ~/Personal";
   };
 
   # Allow specific unfree packages
