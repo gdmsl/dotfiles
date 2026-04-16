@@ -121,6 +121,13 @@
   # Bluetooth UI provided by noctalia-shell
   services.blueman.enable = false;
 
+  # Disable USB autosuspend for RTL8852CU — causes corrupted frames and mass disconnects
+  boot.extraModprobeConfig = "options btusb enable_autosuspend=0";
+  services.udev.extraRules = ''
+    # Realtek RTL8852CU Bluetooth: disable USB autosuspend
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="5852", ATTR{power/autosuspend}="-1"
+  '';
+
   # Restart bluetooth after suspend/hibernate to fix RTL8852CU USB re-enumeration.
   # The dead hci0 causes bluetoothd to hang on stop, so we kill it first.
   systemd.services.bluetooth-resume = {
