@@ -65,7 +65,7 @@
     gnome-keyring
     seahorse
 
-    # Neovim LSP servers (for LazyVim)
+    # Neovim LSP servers & tools (for LazyVim)
     lua-language-server
     nil
     pyright
@@ -77,6 +77,8 @@
     shfmt
     shellcheck
     stylua
+    latexindent
+    tree-sitter
 
     # Languages & toolchains
     julia
