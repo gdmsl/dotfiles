@@ -6,8 +6,13 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
+    withRuby = false;
+    withPython3 = false;
     extraWrapperArgs = [
       "--suffix" "LD_LIBRARY_PATH" ":" "${pkgs.sqlite.out}/lib"
+    ];
+    plugins = with pkgs.vimPlugins; [
+      nvim-treesitter.withAllGrammars
     ];
   };
 
