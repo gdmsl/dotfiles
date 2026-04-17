@@ -66,20 +66,6 @@
     gnome-keyring
     seahorse
 
-    # Neovim LSP servers & tools (for LazyVim)
-    lua-language-server
-    nil
-    pyright
-    typescript-language-server
-    clang-tools
-    cmake-language-server
-    texlab
-    bash-language-server
-    shfmt
-    shellcheck
-    stylua
-    tree-sitter
-
     # Languages & toolchains
     julia
     lua

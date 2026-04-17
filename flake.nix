@@ -23,6 +23,11 @@
       url = "github:anyrun-org/anyrun";
       # Don't override nixpkgs — breaks their binary cache
     };
+
+    nvf = {
+      url = "github:NotAShelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { nixpkgs, nixos-hardware, home-manager, noctalia, ... }@inputs:
