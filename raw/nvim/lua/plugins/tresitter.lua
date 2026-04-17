@@ -1,8 +1,9 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    -- Parsers are provided by Nix (nvim-treesitter.withAllGrammars)
+    build = false,
     opts = {
-      -- Parsers are provided by Nix (nvim-treesitter.withAllGrammars)
       auto_install = false,
       ensure_installed = {},
     },
