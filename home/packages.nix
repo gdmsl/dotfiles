@@ -77,7 +77,6 @@
     shfmt
     shellcheck
     stylua
-    latexindent
     tree-sitter
 
     # Languages & toolchains
