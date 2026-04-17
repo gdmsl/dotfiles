@@ -55,6 +55,7 @@
     loupe
     satty
     libreoffice-fresh
+    zotero
     hyprpicker
     wf-recorder
     inkscape
