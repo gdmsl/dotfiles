@@ -20,6 +20,9 @@
     '';
 
     interactiveShellInit = ''
+      # Use fish inside nix-shell
+      ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
+
       # Exports
       set -gx EDITOR (which nvim)
       set -gx VISUAL $EDITOR
