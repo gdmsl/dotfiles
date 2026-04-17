@@ -1,27 +1,41 @@
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║  zsh.nix — Zsh shell configuration (fallback)                              ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+#
+# Zsh is configured as a fallback shell — some environments (shared clusters,
+# CI) default to it. Shares the same aliases as Fish/Bash for consistency.
+#
+# Home Manager generates Zsh config files in $XDG_CONFIG_HOME/zsh/ (instead
+# of cluttering $HOME with dotfiles) thanks to the dotDir option.
+
 { pkgs, config, ... }:
 
 {
   programs.zsh = {
     enable = true;
+    # Store Zsh config in ~/.config/zsh instead of ~/
     dotDir = "${config.xdg.configHome}/zsh";
 
     history = {
       size = 50000;
       save = 50000;
-      ignoreDups = true;
-      share = true;
+      ignoreDups = true;   # don't store consecutive duplicate commands
+      share = true;        # share history between concurrent sessions
       extended = false;
     };
 
+    # Vi-mode keybindings (insert mode by default, Esc for normal mode)
     defaultKeymap = "viins";
 
+    # Extra zshrc content
     initContent = ''
-      # Reset zsh state (useful on shared clusters)
+      # Reset zsh state (useful on shared clusters where system zshrc is weird)
       emulate -R zsh
 
-      # Load local overrides
+      # Load local overrides (machine-specific config not in Nix)
       [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
 
+      # Shorter timeout for key sequences (faster Esc in vi mode)
       export KEYTIMEOUT=1
 
       # History options
@@ -30,12 +44,13 @@
       # Shell options
       setopt auto_cd interactive_comments glob_dots
 
-      # Completion (built-in, no plugin manager needed)
+      # Tab completion (built-in, no plugin manager needed)
       autoload -Uz compinit && compinit
-      zstyle ':completion:*' menu select
-      zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+      zstyle ':completion:*' menu select                    # arrow-key menu
+      zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'  # case-insensitive
     '';
 
+    # Same aliases as Fish and Bash
     shellAliases = {
       # Files & directories
       mv = "mv -iv";
@@ -71,7 +86,7 @@
       gpp = "git push";
       gp = "git pull";
 
-      # Grep / find
+      # Modern CLI replacements
       grep = "rg";
       fda = "fd -IH";
       rga = "rg -uu";
@@ -91,7 +106,7 @@
       ju = "journalctl --unit";
       jm = "journalctl --user";
 
-      # paru
+      # paru (AUR helper)
       p = "paru";
       pai = "paru -S";
       par = "paru -R";

@@ -1,3 +1,14 @@
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║  firefox.nix — Firefox Personal profile desktop entry                      ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+#
+# Creates a custom .desktop launcher that opens Firefox with a specific
+# profile stored inside the encrypted ~/Personal vault. This keeps personal
+# browsing data (bookmarks, cookies, history) encrypted at rest.
+#
+# `xdg.desktopEntries` creates .desktop files in
+# ~/.local/share/applications/ — these show up in app launchers.
+
 { config, ... }:
 
 {

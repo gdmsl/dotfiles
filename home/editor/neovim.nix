@@ -1,9 +1,29 @@
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║  neovim.nix — Neovim editor configuration (via nvf)                        ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+#
+# This configures Neovim using nvf (Neovim Flake) — a framework that lets you
+# declare your entire Neovim setup in Nix instead of writing init.lua by hand.
+# Plugins, LSP servers, keymaps, and options are all expressed as Nix attrsets.
+#
+# nvf is imported as a flake input (see flake.nix) and provides a Home Manager
+# module. The `programs.nvf.settings.vim` attrset maps to nvf's module options.
+#
+# Benefits over manual Lua config:
+#   - All plugins and LSP servers are pinned by the flake lock
+#   - No need for a plugin manager (lazy.nvim, etc.) — Nix handles it
+#   - Treesitter parsers come from Nix (no :TSInstall needed)
+#
+# `inherit (lib) mkForce;` pulls `mkForce` from lib into scope — it overrides
+# a value set by nvf's defaults with higher priority.
+
 { pkgs, lib, inputs, ... }:
 let
   inherit (lib) mkForce;
 in
 
 {
+  # Import nvf's Home Manager module (provides programs.nvf options)
   imports = [
     inputs.nvf.homeManagerModules.default
   ];
@@ -12,14 +32,15 @@ in
     enable = true;
     settings.vim = {
       # ── Aliases ──────────────────────────────────────────────────────
+      # Typing `vi` or `vim` in the shell opens Neovim
       viAlias = true;
       vimAlias = true;
 
-      # ── Options ──────────────────────────────────────────────────────
+      # ── Editor options ───────────────────────────────────────────────
       options = {
-        shiftwidth = 4;
-        tabstop = 4;
-        clipboard = "";
+        shiftwidth = 4;    # indent width
+        tabstop = 4;       # tab display width
+        clipboard = "";    # don't auto-sync with system clipboard (use tmux)
       };
 
       # ── Theme ────────────────────────────────────────────────────────
@@ -29,18 +50,24 @@ in
         style = "darker";
       };
 
-      # ── LSP ──────────────────────────────────────────────────────────
+      # ── LSP (Language Server Protocol) ───────────────────────────────
+      # LSP provides IDE features: completion, go-to-definition, rename,
+      # diagnostics, etc. Each language below enables its own LSP server.
       lsp.enable = true;
 
       # ── Treesitter ───────────────────────────────────────────────────
+      # Treesitter provides syntax-aware highlighting, indentation, and
+      # text objects. Parsers are installed via Nix (no :TSInstall needed).
       treesitter = {
         enable = true;
-        autotagHtml = true;
+        autotagHtml = true;  # auto-close/rename HTML tags
       };
 
-      # ── Languages ────────────────────────────────────────────────────
+      # ── Language support ─────────────────────────────────────────────
+      # Each language entry enables syntax, LSP, and/or formatting for
+      # that language. nvf installs the required LSP servers from nixpkgs.
       languages = {
-        clang = {
+        clang = {                  # C/C++
           enable = true;
           lsp.enable = true;
         };
@@ -53,7 +80,7 @@ in
           enable = true;
           lsp = {
             enable = true;
-            servers = [ "pyright" ];
+            servers = [ "pyright" ];  # type-checking LSP
           };
           format.enable = true;
         };
@@ -67,7 +94,7 @@ in
           lsp.enable = true;
           format.enable = true;
         };
-        tex = {
+        tex = {                    # LaTeX
           enable = true;
           lsp.enable = true;
           format.enable = true;
@@ -77,7 +104,7 @@ in
           lsp.enable = true;
           format.enable = true;
         };
-        ts = {
+        ts = {                     # TypeScript/JavaScript
           enable = true;
           lsp.enable = true;
           format.enable = true;
@@ -86,7 +113,7 @@ in
           enable = true;
           lsp = {
             enable = true;
-            servers = [ "nil" ];
+            servers = [ "nil" ];   # nil is a Nix LSP
           };
           format.enable = true;
         };
@@ -96,7 +123,8 @@ in
         };
       };
 
-      # Julia LSP needs a custom command
+      # Julia LSP needs a custom startup command because it runs a Julia
+      # script that instantiates the LanguageServer.jl package.
       lsp.servers.julials = {
         cmd = [
           "julia"
@@ -130,64 +158,76 @@ in
         root_markers = [ "Project.toml" "JuliaProject.toml" ];
       };
 
-      # Clangd offset encoding
+      # clangd needs UTF-16 offset encoding for compatibility with some clients
       lsp.servers.clangd.cmd = mkForce [ "clangd" "--offset-encoding=utf-16" ];
 
       # ── Formatter ────────────────────────────────────────────────────
+      # conform-nvim is a lightweight formatter runner. It calls external
+      # formatters (clang-format, black, etc.) on save or on demand.
       formatter.conform-nvim = {
         enable = true;
         setupOpts.formatters_by_ft.cpp = [ "clang_format" ];
       };
 
       # ── Completion ───────────────────────────────────────────────────
+      # blink-cmp provides autocompletion (LSP, buffer words, paths, etc.)
       autocomplete.blink-cmp.enable = true;
 
       # ── Fuzzy finder ──────────────────────────────────────────────────
+      # Telescope: fuzzy search files, grep, buffers, symbols, and more
       telescope.enable = true;
 
       # ── File tree ────────────────────────────────────────────────────
+      # Neo-tree: sidebar file explorer (<leader>e to toggle)
       filetree.neo-tree.enable = true;
 
       # ── Dashboard ────────────────────────────────────────────────────
+      # Alpha: startup screen with recent files and shortcuts
       dashboard.alpha.enable = true;
 
       # ── Session ──────────────────────────────────────────────────────
+      # Auto-save/restore sessions per project directory
       session.nvim-session-manager.enable = true;
 
       # ── UI ───────────────────────────────────────────────────────────
-      statusline.lualine.enable = true;
-      tabline.nvimBufferline.enable = true;
-      ui.noice.enable = true;
-      utility.snacks-nvim.enable = true;
+      statusline.lualine.enable = true;       # status bar at the bottom
+      tabline.nvimBufferline.enable = true;   # buffer tabs at the top
+      ui.noice.enable = true;                 # enhanced command line and notifications
+      utility.snacks-nvim.enable = true;      # collection of small UI improvements
 
       # ── Git ──────────────────────────────────────────────────────────
+      # Gitsigns shows git diff indicators in the sign column
       git.gitsigns.enable = true;
 
       # ── Navigation & editing ─────────────────────────────────────────
-      utility.motion.flash-nvim.enable = true;
-      utility.grug-far-nvim.enable = true;
-      binds.whichKey.enable = true;
+      utility.motion.flash-nvim.enable = true;   # fast cursor motion (like hop/leap)
+      utility.grug-far-nvim.enable = true;        # search and replace UI
+      binds.whichKey.enable = true;               # popup showing available keybindings
 
-      # ── Mini ─────────────────────────────────────────────────────────
-      mini.ai.enable = true;
-      mini.icons.enable = true;
-      mini.pairs.enable = true;
+      # ── Mini plugins ─────────────────────────────────────────────────
+      # Mini is a collection of small, focused plugins:
+      mini.ai.enable = true;      # enhanced text objects (around/inside)
+      mini.icons.enable = true;   # icon provider for other plugins
+      mini.pairs.enable = true;   # auto-close brackets and quotes
 
       # ── Diagnostics ──────────────────────────────────────────────────
-      diagnostics.nvim-lint.enable = true;
-      lsp.trouble.enable = true;
-      notes.todo-comments.enable = true;
+      diagnostics.nvim-lint.enable = true;    # async linting
+      lsp.trouble.enable = true;              # diagnostics list panel
+      notes.todo-comments.enable = true;      # highlight and list TODO/FIXME comments
 
-      # ── Yanky ────────────────────────────────────────────────────────
+      # ── Yanky (clipboard manager for Neovim) ─────────────────────────
+      # Yanky keeps a ring of yanked text and lets you cycle through pastes.
       utility.yanky-nvim = {
         enable = true;
         setupOpts = {
-          highlight.timer = 150;
-          ring.storage = "sqlite";
+          highlight.timer = 150;      # highlight duration after paste (ms)
+          ring.storage = "sqlite";    # persist yank ring to disk
         };
       };
 
-      # ── Extra plugins (no built-in module) ───────────────────────────
+      # ── Extra plugins (not available as nvf modules) ─────────────────
+      # `extraPlugins` lets you add any Vim plugin from nixpkgs. The
+      # `setup` field runs Lua code to configure the plugin.
       extraPlugins = {
         plenary-nvim = { package = pkgs.vimPlugins.plenary-nvim; };
         persistence-nvim = {
@@ -198,6 +238,7 @@ in
           package = pkgs.vimPlugins.ts-comments-nvim;
           setup = "require('ts-comments').setup()";
         };
+        # Julia formatter plugin (not in nixpkgs, so we build it from GitHub)
         JuliaFormatter-vim = {
           package = pkgs.vimUtils.buildVimPlugin {
             pname = "JuliaFormatter-vim";
@@ -213,8 +254,11 @@ in
       };
 
       # ── Keymaps ──────────────────────────────────────────────────────
+      # Each keymap is an attrset with mode, key, action, and optional desc.
+      # Modes: "n" = normal, "i" = insert, "v" = visual, "x" = visual block.
+      # <leader> is Space by default.
       keymaps = [
-        # ── Yanky ────────────────────────────────────────────────────
+        # ── Yanky (yank/paste with history) ──────────────────────────
         { mode = [ "n" "x" ]; key = "y";  action = "<Plug>(YankyYank)"; }
         { mode = [ "n" "x" ]; key = "p";  action = "<Plug>(YankyPutAfter)"; }
         { mode = [ "n" "x" ]; key = "P";  action = "<Plug>(YankyPutBefore)"; }
@@ -369,7 +413,9 @@ in
         { mode = "n"; key = "<leader>qq"; action = "<cmd>qa<cr>"; desc = "Quit all"; }
       ];
 
-      # ── Lua config (tmux clipboard) ──────────────────────────────────
+      # ── Lua config (runs before plugin setup) ────────────────────────
+      # Custom clipboard integration that routes yanks through tmux,
+      # so copy/paste works between Neovim and tmux panes.
       luaConfigPre = ''
         -- tmux clipboard integration
         vim.g.clipboard = {

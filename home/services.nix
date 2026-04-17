@@ -1,14 +1,33 @@
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║  services.nix — systemd user services                                      ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+#
+# This module defines systemd user services — background daemons that run in
+# your user session (not as root). They're tied to the graphical session so
+# they start/stop with your desktop.
+#
+# Home Manager writes these to ~/.config/systemd/user/<name>.service and
+# enables them automatically.
+#
+# Key systemd concepts:
+#   Unit.PartOf   — if the target stops, this service stops too
+#   Unit.After    — start this service after the target is up
+#   Install.WantedBy — auto-start when this target is reached
+#   graphical-session.target — active when your compositor is running
+#
+# `${pkgs.foo}/bin/bar` is Nix string interpolation — it resolves to the
+# full Nix store path of the binary, ensuring the correct version is used.
+
 { config, pkgs, lib, inputs, ... }:
 
 let
   system = pkgs.stdenv.hostPlatform.system;
 in
 {
-  # Systemd user services converted from run_once_install-niri.sh and run_once_install-hyprland.sh
-  # These services were previously enabled imperatively via chezmoi run_once scripts.
-  # Now they are declared in Home Manager.
-
   systemd.user.services = {
+    # ── Clipboard history ─────────────────────────────────────────────────
+    # wl-paste watches the Wayland clipboard; cliphist stores each entry.
+    # Use `cliphist list` to see history, or the cliphist-pick script.
     cliphist = {
       Unit = {
         Description = "Clipboard history manager";
@@ -24,6 +43,8 @@ in
       };
     };
 
+    # ── Vicinae launcher daemon ───────────────────────────────────────────
+    # Runs in server mode so the UI appears instantly when triggered.
     vicinae = {
       Unit = {
         Description = "Vicinae launcher daemon";
@@ -40,7 +61,7 @@ in
       };
     };
 
-    # TODO: niriswitcher is not in nixpkgs -- uncomment once packaged or use overlay
+    # TODO: niriswitcher is not in nixpkgs — uncomment once packaged or use overlay
     # niriswitcher = {
     #   Unit = {
     #     Description = "Niriswitcher window switcher";
@@ -56,6 +77,9 @@ in
     #   };
     # };
 
+    # ── Idle manager ──────────────────────────────────────────────────────
+    # hypridle triggers actions on inactivity: lock screen, turn off display,
+    # suspend. Configured via hypridle.conf in the Hyprland config dir.
     hypridle = {
       Unit = {
         Description = "Idle manager (lock, DPMS, suspend)";
@@ -72,6 +96,8 @@ in
       };
     };
 
+    # ── Noctalia desktop shell ────────────────────────────────────────────
+    # Panel, system tray, and desktop shell from the noctalia flake.
     noctalia-shell = {
       Unit = {
         Description = "Noctalia desktop shell";
@@ -88,6 +114,9 @@ in
       };
     };
 
+    # ── Auto-mount removable media ────────────────────────────────────────
+    # udiskie watches for USB drives and auto-mounts them. --tray shows
+    # a system tray icon for safe eject.
     udiskie = {
       Unit = {
         Description = "Auto-mount removable media";
@@ -104,7 +133,11 @@ in
       };
     };
 
-    # --- Syncthing (config lives inside encrypted vault for security) ---
+    # ── Syncthing vault guard ─────────────────────────────────────────────
+    # This companion service watches the encrypted ~/Personal mount.
+    # When the vault is unmounted (locked), it stops Syncthing to prevent
+    # sync errors against a missing directory.
+    # BindsTo means: if syncthing dies, this dies too (and vice versa).
     syncthing-vault-guard = {
       Unit = {
         Description = "Stop syncthing when gocryptfs vault is unmounted";
@@ -121,7 +154,9 @@ in
     };
   };
 
-  # Syncthing user service — only runs when vault is mounted
+  # ── Syncthing ───────────────────────────────────────────────────────────
+  # Syncthing provides continuous file synchronization between devices.
+  # Its config lives inside the encrypted vault for security.
   services.syncthing = {
     enable = true;
     extraOptions = [
@@ -129,7 +164,10 @@ in
     ];
   };
 
-  # Don't auto-start; require gocryptfs vault to be mounted
+  # Override Syncthing's auto-start: only run when the vault is mounted.
+  # ConditionPathIsMountPoint checks that ~/Personal is a mountpoint.
+  # WantedBy = mkForce [] removes it from default.target (no auto-start).
+  # Instead, it's started manually via the `unlock-personal` alias.
   systemd.user.services.syncthing = {
     Unit.ConditionPathIsMountPoint = "%h/Personal";
     Install.WantedBy = lib.mkForce [ ];

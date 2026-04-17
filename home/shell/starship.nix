@@ -1,20 +1,37 @@
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║  starship.nix — Cross-shell prompt configuration                           ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+#
+# Starship is a fast, customizable prompt written in Rust. It works across
+# Fish, Bash, and Zsh — so all three shells get the same beautiful prompt.
+#
+# The `settings` attrset maps directly to Starship's TOML config format.
+# Home Manager converts this Nix attrset → TOML and writes it to
+# ~/.config/starship.toml.
+#
+# Each language/tool module auto-activates when it detects relevant files
+# (e.g., the Rust module shows up when Cargo.toml is present).
+#
+# Full reference: https://starship.rs/config/
+
 { pkgs, ... }:
 
 {
   programs.starship = {
     enable = true;
+    # Enable Starship in all three shells
     enableFishIntegration = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
 
     settings = {
       "$schema" = "https://starship.rs/config-schema.json";
-      format = "$all";
+      format = "$all";       # show all enabled modules
       right_format = "";
       continuation_prompt = "[∙](bright-black) ";
-      scan_timeout = 30;
-      command_timeout = 500;
-      add_newline = true;
+      scan_timeout = 30;     # ms to scan for files that trigger modules
+      command_timeout = 500;  # ms before a module command is killed
+      add_newline = true;    # blank line between prompts
 
       aws = {
         format = "on [$symbol($profile )(\\($region\\) )(\\[$duration\\])]($style)";
@@ -60,6 +77,7 @@
         detect_folders = [ ];
       };
 
+      # ── Prompt character (the arrow you type after) ───────────────────
       character = {
         format = "$symbol ";
         success_symbol = "[╰─>](bold cyan)";
@@ -145,6 +163,7 @@
         detect_folders = [ ];
       };
 
+      # ── Directory display ─────────────────────────────────────────────
       directory = {
         truncation_length = 3;
         truncate_to_repo = true;
@@ -235,6 +254,7 @@
         project_aliases = { };
       };
 
+      # ── Git modules ──────────────────────────────────────────────────
       git_branch = {
         format = "on [$symbol$branch]($style)(:[$remote]($style)) ";
         symbol = " ";
@@ -338,6 +358,7 @@
         disabled = true;
       };
 
+      # ── Host / User identity ──────────────────────────────────────────
       hostname = {
         ssh_only = false;
         trim_at = ".";
@@ -440,6 +461,8 @@
         detect_folders = [ ];
       };
 
+      # ── Nix shell indicator ──────────────────────────────────────────
+      # Shows when you're inside a `nix-shell` or `nix develop` environment
       nix_shell = {
         format = "via [$symbol$state( \\($name\\))]($style) ";
         symbol = "❄️  ";
@@ -634,6 +657,7 @@
         disabled = false;
       };
 
+      # ── Exit status / error indicators ────────────────────────────────
       status = {
         format = "[$symbol$status]($style) ";
         symbol = "✖";

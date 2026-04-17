@@ -1,29 +1,43 @@
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║  bash.nix — Bash shell configuration (fallback)                            ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+#
+# Bash is configured as a fallback shell — some scripts and tools expect it.
+# It shares the same aliases as Fish/Zsh for a consistent experience.
+#
+# Home Manager generates ~/.bashrc and ~/.bash_profile from these options.
+
 { pkgs, ... }:
 
 {
   programs.bash = {
     enable = true;
 
-    historyControl = [ "ignoreboth" "erasedups" ];
+    # History settings — keep lots of history, deduplicate entries
+    historyControl = [ "ignoreboth" "erasedups" ];  # ignore dupes and space-prefixed cmds
     historySize = 50000;
     historyFileSize = 50000;
 
+    # Shell options (shopt)
     shellOptions = [
-      "histappend"
-      "checkwinsize"
-      "globstar"
+      "histappend"     # append to history file instead of overwriting
+      "checkwinsize"   # update LINES/COLUMNS after each command
+      "globstar"       # ** matches recursively in glob patterns
     ];
 
+    # Extra bashrc content (runs after HM-generated config)
     initExtra = ''
-      # Load local overrides
+      # Load local overrides (machine-specific config not in Nix)
       [ -f "$HOME/.bashrc.local" ] && source "$HOME/.bashrc.local"
 
-      # Vi mode
+      # Vi mode for command-line editing (same as Fish)
       set -o vi
 
+      # Flush history after each command so other terminals see it
       PROMPT_COMMAND="history -a; ''${PROMPT_COMMAND:-}"
     '';
 
+    # Aliases — same set as Fish and Zsh for consistency across shells
     shellAliases = {
       # Files & directories
       mv = "mv -iv";
@@ -59,7 +73,7 @@
       gpp = "git push";
       gp = "git pull";
 
-      # Grep / find
+      # Modern CLI replacements
       grep = "rg";
       fda = "fd -IH";
       rga = "rg -uu";
@@ -79,7 +93,7 @@
       ju = "journalctl --unit";
       jm = "journalctl --user";
 
-      # paru
+      # paru (AUR helper)
       p = "paru";
       pai = "paru -S";
       par = "paru -R";

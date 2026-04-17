@@ -1,9 +1,21 @@
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║  kitty.nix — Kitty terminal emulator                                       ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+#
+# Kitty is a GPU-accelerated terminal emulator. Home Manager's
+# `programs.kitty` generates ~/.config/kitty/kitty.conf from these options.
+#
+# The `settings` attrset maps to kitty.conf key=value pairs.
+# The `keybindings` attrset maps to `map <key> <action>` lines.
+# `extraConfig` is appended raw to the end of the generated config.
+
 { pkgs, ... }:
 
 {
   programs.kitty = {
     enable = true;
 
+    # ── Font ──────────────────────────────────────────────────────────────
     font = {
       name = "FiraCode Nerd Font Mono";
       size = 12;
@@ -11,36 +23,42 @@
 
     settings = {
       bold_font = "auto";
-      italic_font = "Maple Mono";
+      italic_font = "Maple Mono";       # use Maple Mono for italics
       bold_italic_font = "Maple Mono";
-      disable_ligatures = "cursor";
+      disable_ligatures = "cursor";      # disable ligatures at cursor position
+
+      # Map Nerd Font symbol ranges to a dedicated font (ensures icons render
+      # correctly even if the primary font doesn't include them)
       symbol_map = "U+23FB-U+23FE,U+2665,U+26A1,U+2B58,U+E000-U+E00A,U+E0A0-U+E0A3,U+E0B0-U+E0C8,U+E0CA,U+E0CC-U+E0D2,U+E0D4,U+E200-U+E2A9,U+E300-U+E3E3,U+E5FA-U+E634,U+E700-U+E7C5,U+EA60-U+EBEB,U+F000-U+F2E0,U+F300-U+F32F,U+F400-U+F4A9,U+F500-U+F8FF Symbols Nerd Font Mono";
 
-      # Misc
+      # ── Behavior ────────────────────────────────────────────────────────
       scrollback_lines = 10000;
       touch_scroll_multiplier = "2.0";
-      copy_on_select = "yes";
+      copy_on_select = "yes";       # selecting text copies it automatically
       enable_audio_bell = "no";
       remember_window_size = "yes";
       initial_window_width = 800;
       initial_window_height = 600;
-      enabled_layouts = "Splits,Stack";
+      enabled_layouts = "Splits,Stack";  # Splits = panes, Stack = fullscreen toggle
       hide_window_decorations = "no";
       tab_bar_style = "powerline";
       tab_separator = "\" \"";
       dynamic_background_opacity = "yes";
-      scrollback_pager = "nvim";
+      scrollback_pager = "nvim";     # use Neovim to browse scrollback
       tab_title_template = "{title}{fmt.bold}{'  ' if num_windows > 1 and layout_name == 'stack' else ''}";
     };
 
+    # ── Keybindings ───────────────────────────────────────────────────────
+    # `kitty_mod` is Ctrl+Shift by default. These bindings set up vim-style
+    # navigation and split management.
     keybindings = {
       "kitty_mod+l" = "next_tab";
       "kitty_mod+h" = "previous_tab";
-      "kitty_mod+m" = "toggle_layout stack";
+      "kitty_mod+m" = "toggle_layout stack";   # maximize/restore current pane
       "kitty_mod+z" = "toggle_layout stack";
-      "kitty_mod+enter" = "launch --location=split --cwd=current";
-      "kitty_mod+\\" = "launch --location=vsplit --cwd=current";
-      "kitty_mod+minus" = "launch --location=hsplit --cwd=current";
+      "kitty_mod+enter" = "launch --location=split --cwd=current";   # new split
+      "kitty_mod+\\" = "launch --location=vsplit --cwd=current";     # vertical split
+      "kitty_mod+minus" = "launch --location=hsplit --cwd=current";  # horizontal split
       "kitty_mod+left" = "neighboring_window left";
       "kitty_mod+right" = "neighboring_window right";
       "kitty_mod+up" = "neighboring_window up";
@@ -49,7 +67,9 @@
       "kitty_mod+r" = "show_scrollback";
     };
 
-    # One Dark theme by Giuseppe Cesarano
+    # ── Color theme (One Dark) ────────────────────────────────────────────
+    # Raw kitty config appended after all generated settings.
+    # Color theme by Giuseppe Cesarano.
     extraConfig = ''
       # Theme - One Dark
       background #1f2329
