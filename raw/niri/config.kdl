@@ -4,8 +4,6 @@
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Introduction
 
 environment {
-    DCONF_PROFILE "niri"
-
     CLUTTER_BACKEND "wayland"
     GDK_BACKEND "wayland"
 
