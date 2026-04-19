@@ -364,7 +364,7 @@
   # Unlocking mounts the gocryptfs vault and starts Syncthing;
   # locking stops Syncthing and unmounts the vault.
   environment.shellAliases = {
-    unlock-personal = "gocryptfs ~/.personal-encrypted ~/Personal && systemctl --user start syncthing";
+    unlock-personal = "gocryptfs ~/.personal-encrypted ~/Personal && systemctl --user start syncthing && systemctl --user restart gcr-ssh-agent.socket";
     lock-personal = "systemctl --user stop syncthing; fusermount -u ~/Personal";
   };
 
