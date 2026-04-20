@@ -82,7 +82,26 @@
     seahorse         # GUI for managing keyring secrets
 
     # ── Languages & toolchains ────────────────────────────────────────────
-    julia
+    # Julia wrapped with extra shared libraries on LD_LIBRARY_PATH.
+    # Julia's package manager downloads prebuilt binaries (JLL artifacts) that
+    # expect FHS-standard library paths. On NixOS those paths don't exist, so
+    # dlopen fails (e.g. libquadmath.so.0 not found when loading OpenSpecFun_jll).
+    # symlinkJoin + wrapProgram produces a new `julia` on PATH whose every
+    # invocation gets these libs appended to LD_LIBRARY_PATH.
+    (pkgs.symlinkJoin {
+      name = "julia-wrapped";
+      paths = [ pkgs.julia ];
+      nativeBuildInputs = [ pkgs.makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/julia \
+          --suffix LD_LIBRARY_PATH : ${pkgs.lib.makeLibraryPath [
+            pkgs.gcc-unwrapped.lib   # libquadmath, libgfortran, libgcc_s
+            pkgs.stdenv.cc.cc.lib    # libstdc++
+            pkgs.zlib
+            pkgs.glibc
+          ]}
+      '';
+    })
     lua
     rustup     # Rust toolchain manager (provides rustc, cargo)
     python3
