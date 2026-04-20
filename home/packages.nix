@@ -37,6 +37,8 @@
     bottom        # htop alternative (system monitor)
     direnv        # auto-load env vars when entering a directory
     jq            # JSON processor (query, filter, transform)
+    glow          # terminal markdown renderer (pager + TUI browser)
+    mdcat         # inline markdown for the terminal (images via kitty protocol)
     unzip
     wget
     curl
