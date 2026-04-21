@@ -70,8 +70,8 @@
       # When working in the QPerfect work directory, use a different
       # email address. Git's includeIf applies the config file only
       # when the repo is under the matching directory.
-      "includeIf \"gitdir:~/QPerfect/Code/\"" = {
-        path = "~/QPerfect/Code/.gitconfig";
+      "includeIf \"gitdir:~/Code/\"" = {
+        path = "~/Code/.gitconfig";
       };
 
       # URL shortcut: `git clone aur:package-name`
