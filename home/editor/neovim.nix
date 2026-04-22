@@ -216,6 +216,24 @@ in
             "vim.lsp.util.stylize_markdown" = true;
             "cmp.entry.get_documentation" = true;
           };
+          # Route all regular/error/warn messages through nvim-notify so
+          # they appear as popups instead of triggering Neovim's built-in
+          # hit-enter prompt (":press ENTER to continue").
+          messages = {
+            view = "notify";
+            view_error = "notify";
+            view_warn = "notify";
+          };
+          # LazyVim presets: search stays at the bottom, ":" becomes a
+          # floating palette, long messages go to a split (this is the
+          # one that kills the "press any key" prompt on overflow).
+          presets = {
+            bottom_search = true;
+            command_palette = true;
+            long_message_to_split = true;
+            inc_rename = false;
+            lsp_doc_border = false;
+          };
           # Send short "written/loaded" messages (e.g. "42L, 1024B") to the
           # tiny mini view in the corner instead of the full notify box.
           routes = [
@@ -224,7 +242,8 @@ in
                 event = "msg_show";
                 any = [
                   { find = "%d+L, %d+B"; }
-                  { event = "msg_show"; kind = "search_count"; }
+                  { find = "; after #%d+"; }
+                  { find = "; before #%d+"; }
                 ];
               };
               view = "mini";
@@ -463,6 +482,15 @@ in
         { mode = "n"; key = "<leader>ud"; action = "<cmd>lua vim.diagnostic.enable(not vim.diagnostic.is_enabled())<cr>"; desc = "Toggle diagnostics"; }
         { mode = "n"; key = "<leader>uh"; action = "<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<cr>"; desc = "Toggle inlay hints"; }
         { mode = "n"; key = "<leader>un"; action = "<cmd>Noice dismiss<cr>"; desc = "Dismiss notifications"; }
+
+        # ── Terminal (LazyVim-style toggle on Ctrl+/) ────────────────
+        # Snacks' terminal opens a bottom split; <C-/> toggles it, and
+        # while inside the terminal the same chord closes it. Terminals
+        # usually send <C-_> for Ctrl+/ too, so bind both for portability.
+        { mode = "n"; key = "<C-/>"; action = "<cmd>lua Snacks.terminal(nil, { win = { position = 'bottom', height = 0.35 } })<cr>"; desc = "Terminal"; }
+        { mode = "n"; key = "<C-_>"; action = "<cmd>lua Snacks.terminal(nil, { win = { position = 'bottom', height = 0.35 } })<cr>"; desc = "Terminal"; }
+        { mode = "t"; key = "<C-/>"; action = "<cmd>close<cr>"; desc = "Hide terminal"; }
+        { mode = "t"; key = "<C-_>"; action = "<cmd>close<cr>"; desc = "Hide terminal"; }
 
         # ── Quit / Session (<leader>q) ───────────────────────────────
         { mode = "n"; key = "<leader>qq"; action = "<cmd>qa<cr>"; desc = "Quit all"; }
