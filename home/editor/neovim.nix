@@ -186,12 +186,26 @@ in
       dashboard.alpha.enable = true;
 
       # ── Session ──────────────────────────────────────────────────────
-      # Auto-save/restore sessions per project directory
-      session.nvim-session-manager.enable = true;
+      # nvim-session-manager is available, but we disable its auto-load
+      # so that starting `nvim` with no arguments lands on the alpha
+      # dashboard instead of reopening the last session. Sessions can
+      # still be restored manually via :SessionManager load_session.
+      # (persistence-nvim is also configured further below as a lighter
+      # alternative — it doesn't auto-load either.)
+      session.nvim-session-manager = {
+        enable = true;
+        setupOpts.autoload_mode = "Disabled";
+      };
 
       # ── UI ───────────────────────────────────────────────────────────
       statusline.lualine.enable = true;       # status bar at the bottom
-      tabline.nvimBufferline.enable = true;   # buffer tabs at the top
+      tabline.nvimBufferline = {
+        enable = true;                        # buffer tabs at the top
+        # Hide the per-buffer ordinal indicator (the superscript "³·"
+        # that was rendered before the file icon). Set to "ordinal",
+        # "buffer_id", or "both" to bring it back.
+        setupOpts.options.numbers = "none";
+      };
       ui.noice.enable = true;                 # enhanced command line and notifications
       utility.snacks-nvim.enable = true;      # collection of small UI improvements
 
