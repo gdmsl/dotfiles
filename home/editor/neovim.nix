@@ -206,7 +206,48 @@ in
         # "buffer_id", or "both" to bring it back.
         setupOpts.options.numbers = "none";
       };
-      ui.noice.enable = true;                 # enhanced command line and notifications
+      ui.noice = {
+        enable = true;                        # enhanced command line and notifications
+        # Route `vim.notify` through nvim-notify (LazyVim defaults) and
+        # teach noice how to render LSP hover/signatureHelp markdown.
+        setupOpts = {
+          lsp.override = {
+            "vim.lsp.util.convert_input_to_markdown_lines" = true;
+            "vim.lsp.util.stylize_markdown" = true;
+            "cmp.entry.get_documentation" = true;
+          };
+          # Send short "written/loaded" messages (e.g. "42L, 1024B") to the
+          # tiny mini view in the corner instead of the full notify box.
+          routes = [
+            {
+              filter = {
+                event = "msg_show";
+                any = [
+                  { find = "%d+L, %d+B"; }
+                  { event = "msg_show"; kind = "search_count"; }
+                ];
+              };
+              view = "mini";
+            }
+          ];
+        };
+      };
+
+      # nvim-notify: the pretty boxed notification popups LazyVim uses.
+      # noice routes `vim.notify` here automatically (see lsp.override above).
+      notify.nvim-notify = {
+        enable = true;
+        setupOpts = {
+          top_down = true;                    # new notifications appear at the top
+          timeout = 5000;                     # dismiss after 5 seconds
+          fps = 30;
+          stages = "fade_in_slide_out";       # fade + slide animation
+          render = "default";                 # full-border box style
+          max_height = 10;
+          max_width = 80;
+        };
+      };
+
       utility.snacks-nvim.enable = true;      # collection of small UI improvements
 
       # ── Git ──────────────────────────────────────────────────────────
