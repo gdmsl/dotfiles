@@ -66,19 +66,31 @@
         ];
       };
 
-      # ── Conditional include ─────────────────────────────────────────
-      # When working in the QPerfect work directory, use a different
-      # email address. Git's includeIf applies the config file only
-      # when the repo is under the matching directory.
-      "includeIf \"gitdir:~/Code/\"" = {
-        path = "~/Code/.gitconfig";
-      };
-
       # URL shortcut: `git clone aur:package-name`
       "url \"https://aur.archlinux.org/\"" = {
         insteadOf = "aur:";
       };
     };
+
+    # ── Conditional include ─────────────────────────────────────────
+    # When working in the QPerfect work directory, use a different
+    # email address. `programs.git.includes` appends the [includeIf]
+    # block *after* the main [user] section in ~/.config/git/config,
+    # so the included settings actually win (entries later in the
+    # file override earlier ones). Using `contents = { … }` also lets
+    # home-manager generate the include file itself, so we don't have
+    # to manage its path separately with `home.file`.
+    includes = [
+      {
+        condition = "gitdir:~/Code/";
+        contents = {
+          user = {
+            email = "guido.masella@qperfect.io";
+            name = "Guido Masella";
+          };
+        };
+      }
+    ];
   };
 
   # ── Delta (diff pager) ──────────────────────────────────────────────────
@@ -96,11 +108,4 @@
     };
   };
 
-  # The QPerfect work gitconfig — applied via conditional include above.
-  # Uses a different email for work repos.
-  home.file."QPerfect/Code/.gitconfig".text = ''
-    [user]
-    	email = guido.masella@qperfect.io
-    	name = Guido Masella
-  '';
 }
