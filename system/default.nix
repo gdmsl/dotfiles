@@ -356,10 +356,13 @@
     zoom-us
 
     # Productivity
-    logseq
     onedrive
     microsoft-edge
     spotify
+
+    # Logseq with workaround for 0.10.15
+    logseq
+    (logseq.override { electron = electron_39; })
 
     # AI / LLM
     claude-code
