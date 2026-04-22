@@ -114,7 +114,13 @@
   };
 
   systemd.sleep.settings.Sleep = {
-    HibernateDelaySec = "1h";  # hibernate after 1 hour of suspend
+    # Upper bound on how long the system may stay in plain suspend before
+    # falling through to hibernate. systemd (v253+) will hibernate earlier
+    # on its own if the battery-runtime estimator (SuspendEstimationSec,
+    # default 1h) predicts the charge will not last until this deadline.
+    # So the practical behaviour is: hibernate after 12h of suspend, or
+    # sooner if the battery is about to die — whichever comes first.
+    HibernateDelaySec = "12h";
   };
 
   # Syncthing service is managed by Home Manager as a user unit (see services.nix)
