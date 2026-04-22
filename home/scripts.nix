@@ -50,7 +50,7 @@
     ".local/bin/git-mkversion" = {
       executable = true;
       text = ''
-        #!/bin/bash
+        #!/use/bin/env bash
 
         # Function to display usage
         usage() {
