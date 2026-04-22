@@ -361,7 +361,7 @@
     spotify
 
     # Logseq with workaround for 0.10.15
-    logseq
+    #logseq
     (logseq.override { electron = electron_39; })
 
     # AI / LLM
