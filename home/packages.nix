@@ -60,6 +60,7 @@
     libnotify             # provides notify-send command
     networkmanagerapplet  # Wi-Fi tray icon
     pavucontrol           # PulseAudio/PipeWire volume control GUI
+    solaar                # pair/manage Logitech Unifying receivers (non-BT)
 
     # ── Applications ──────────────────────────────────────────────────────
     fastfetch        # system info display (like neofetch, but fast)

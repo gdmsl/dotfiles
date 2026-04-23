@@ -153,6 +153,13 @@
   hardware.bluetooth.enable = true;
   services.blueman.enable = false;  # UI provided by noctalia-shell instead
 
+  # Experimental = battery reporting + newer codec negotiation paths in BlueZ.
+  # KernelExperimental enables the kernel-side LE features BlueZ relies on.
+  hardware.bluetooth.settings.General = {
+    Experimental = true;
+    KernelExperimental = true;
+  };
+
   # Workaround for RTL8852CU Bluetooth USB adapter: disable autosuspend to
   # prevent corrupted frames and mass disconnects.
   boot.extraModprobeConfig = "options btusb enable_autosuspend=0";
