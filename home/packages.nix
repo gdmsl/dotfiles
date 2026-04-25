@@ -12,7 +12,46 @@
 # To search for packages: nix search nixpkgs <name>
 # To see a package's info: nix eval nixpkgs#<name>.meta.description
 
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
+
+let
+  # ── mempalace ───────────────────────────────────────────────────────────
+  # Local-first AI memory system (https://github.com/mempalace/mempalace).
+  # Not in nixpkgs, so we build it ourselves from PyPI. `buildPythonApplication`
+  # is the right choice (vs. `buildPythonPackage`) because it produces a
+  # wrapped CLI on $PATH without polluting any Python environment with the
+  # library — the binary uses its own private interpreter with the deps below.
+  mempalace = pkgs.python3Packages.buildPythonApplication rec {
+    pname = "mempalace";
+    version = "3.3.3";
+    pyproject = true;  # tells nix the project uses pyproject.toml + PEP 517
+
+    src = pkgs.fetchPypi {
+      inherit pname version;
+      hash = "sha256-ttMVcabQIb7kKOQBmO61xXQohfsXLSSDvbtjoaFFhIc=";
+    };
+
+    # hatchling is the build backend declared in mempalace's pyproject.toml
+    build-system = [ pkgs.python3Packages.hatchling ];
+
+    # Runtime dependencies. tomli is only needed on Python <3.11, and our
+    # pkgs.python3 is newer than that, so we can skip it.
+    dependencies = with pkgs.python3Packages; [
+      chromadb
+      pyyaml
+    ];
+
+    # Sanity-check the build by importing the top-level module.
+    pythonImportsCheck = [ "mempalace" ];
+
+    meta = {
+      description = "Local-first AI memory system with semantic search";
+      homepage = "https://github.com/mempalace/mempalace";
+      license = lib.licenses.mit;
+      mainProgram = "mempalace";
+    };
+  };
+in
 
 {
   home.packages = with pkgs; [
@@ -118,6 +157,7 @@
     git-lfs    # Git Large File Storage
     gh         # GitHub CLI
     glab       # GitLab CLI
+    mempalace  # local-first AI memory system (defined in let-binding above)
 
     # ── Fonts ─────────────────────────────────────────────────────────────
     # User-level fonts (also see system/default.nix for system-wide fonts).
