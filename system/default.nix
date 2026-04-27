@@ -388,6 +388,7 @@
   # Nix defaults to only allowing FOSS packages. To install proprietary
   # software you must explicitly allowlist each package by name.
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
+    "acli"
     "claude-code"
     "corefonts"
     "discord"
