@@ -389,6 +389,7 @@
   # software you must explicitly allowlist each package by name.
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
     "acli"
+    "acli-unwrapped"
     "claude-code"
     "corefonts"
     "discord"
