@@ -93,7 +93,7 @@ won't let nixpkgs redistribute. The recipe:
 | Office 2007 ClearType (Calibri etc.) | already covered by `vista-fonts` in nixpkgs |
 | Web core fonts (Arial, Times…) | already covered by `corefonts` in nixpkgs |
 | Cascadia Code | already covered by `cascadia-code` in nixpkgs |
-| "Segoe-ish" open substitute | already covered by `selawik` in nixpkgs |
+| Selawik (open Segoe UI clone) | not in nixpkgs and not shipped as binaries; build from <https://github.com/microsoft/Selawik> with `fontmake` and drop the .ttfs here |
 
 If a font is *open-source from Microsoft* (Cascadia, Selawik, Aptos
 Mono variants in the official zip), nixpkgs usually has it — check

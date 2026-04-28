@@ -38,7 +38,6 @@
     ./editor/neovim.nix         # Neovim (via nvf framework)
     ./desktop/hyprland.nix      # Hyprland window manager
     ./desktop/niri.nix          # Niri window manager
-    ./desktop/waybar.nix        # Waybar status bar
     ./desktop/mako.nix          # Mako notification daemon
     ./desktop/gtk.nix           # GTK theme, icons, cursor
     ./desktop/kanshi.nix        # Kanshi display profile manager
@@ -68,6 +67,8 @@
   # by the compositor, not just shells).
   home.sessionVariables = {
     EDITOR = "nvim";
+    VISUAL = "nvim";
+    SUDO_EDITOR = "nvim";
     BROWSER = "firefox";
     TERMINAL = "kitty";
     LESS = "-rF";                    # -r = raw control chars, -F = quit if one screen

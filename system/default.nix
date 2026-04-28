@@ -123,41 +123,38 @@
     HibernateDelaySec = "12h";
   };
 
-  # Syncthing service is managed by Home Manager as a user unit (see services.nix)
-
-  # ── OneDrive (QPerfect file sync) ───────────────────────────────────────
-  # A systemd user service that runs OneDrive in monitor mode (watches for
-  # changes and syncs continuously). `wantedBy = default.target` means it
-  # starts automatically on login.
-  systemd.user.services.onedrive = {
-    description = "OneDrive sync for QPerfect";
-    wantedBy = [ "default.target" ];
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
-    serviceConfig = {
-      ExecStart = "${pkgs.onedrive}/bin/onedrive --monitor";
-      Restart = "on-failure";
-      RestartSec = "10s";
-    };
-  };
+  # User-level services (syncthing vault guard, polkit-gnome-agent, onedrive,
+  # vicinae, noctalia-shell, hypridle, cliphist, udiskie) are all managed in
+  # home/services.nix. We keep them on the user side because they rely on
+  # the user's session/keyring, and grouping them there avoids splitting one
+  # service definition across two modules.
 
   # ── Ollama (local LLM inference) ────────────────────────────────────────
   services.ollama.enable = true;
 
   # ── Laptop hardware essentials ──────────────────────────────────────────
   services.fwupd.enable = true;       # firmware update daemon
-  services.upower.enable = true;      # battery monitoring (used by waybar, etc.)
+  services.upower.enable = true;      # battery monitoring (consumed by noctalia/quickshell)
   hardware.sensor.iio.enable = true;  # accelerometer / ambient light sensor
 
   # ── Bluetooth ───────────────────────────────────────────────────────────
   hardware.bluetooth.enable = true;
   services.blueman.enable = false;  # UI provided by noctalia-shell instead
 
-  # Experimental = battery reporting + newer codec negotiation paths in BlueZ.
-  # KernelExperimental enables the kernel-side LE features BlueZ relies on.
-  hardware.bluetooth.settings.General = {
-    Experimental = true;
-    KernelExperimental = true;
+  # BlueZ daemon settings. These end up in /etc/bluetooth/main.conf.
+  hardware.bluetooth.settings = {
+    General = {
+      # Experimental = battery reporting + newer codec negotiation paths in BlueZ.
+      # KernelExperimental enables the kernel-side LE features BlueZ relies on.
+      Experimental = true;
+      KernelExperimental = true;
+    };
+    Policy = {
+      # When bluetoothd starts (boot or post-resume restart), automatically
+      # power on the adapter and reconnect trusted devices. Without this the
+      # adapter stays "off" until you toggle it manually in the shell tray.
+      AutoEnable = true;
+    };
   };
 
   # Workaround for RTL8852CU Bluetooth USB adapter: disable autosuspend to
@@ -168,26 +165,22 @@
     ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="5852", ATTR{power/autosuspend}="-1"
   '';
 
-  # After suspend, the Bluetooth USB device re-enumerates badly. This service
-  # force-restarts bluetoothd on resume so it picks up the device cleanly.
-  systemd.services.bluetooth-resume = {
-    description = "Restart Bluetooth after resume";
-    after = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" "suspend-then-hibernate.target" ];
-    wantedBy = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" "suspend-then-hibernate.target" ];
-    path = [ pkgs.util-linux pkgs.bluez ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = pkgs.writeShellScript "bluetooth-resume" ''
-        # Kill hung bluetoothd so we don't wait for the dead HCI timeout
-        ${pkgs.systemd}/bin/systemctl kill -s SIGKILL bluetooth 2>/dev/null || true
-        # Remove the stale hci0 device if it still exists
-        hciconfig hci0 down 2>/dev/null || true
-        sleep 1
-        # Start fresh
-        ${pkgs.systemd}/bin/systemctl start bluetooth
-      '';
-    };
-  };
+  # After suspend the Realtek BT USB device re-enumerates and bluetoothd loses
+  # the adapter. `powerManagement.resumeCommands` is NixOS's canonical
+  # post-resume hook — it ends up in /etc/systemd/system-sleep/, which
+  # systemd-suspend.service runs with $1 = "post" right after wake-up.
+  # (The previous `systemd.services.bluetooth-resume` unit used
+  #  `wantedBy = [ "suspend.target" ]`, which actually fires *before* the
+  #  sleep call, not after resume — that's why BT was staying off.)
+  powerManagement.resumeCommands = ''
+    # In case suspend left a soft-block on the radio.
+    ${pkgs.util-linux}/bin/rfkill unblock bluetooth || true
+    # SIGKILL first — a clean stop would block on bluetoothd's 90s
+    # TimeoutStopSec waiting for the dead HCI handle to reply. Killing
+    # outright lets the new instance start immediately.
+    ${pkgs.systemd}/bin/systemctl kill -s SIGKILL bluetooth.service || true
+    ${pkgs.systemd}/bin/systemctl start bluetooth.service
+  '';
 
   # ── PKI / trusted certificates ──────────────────────────────────────────
   # Adds a custom CA certificate (e.g., for corporate MITM proxy or internal
@@ -272,12 +265,6 @@
       # and the PL/NF variants with ligatures + powerline glyphs.
       cascadia-code
 
-      # Selawik — Microsoft's open-source metric clone of Segoe UI. Apps
-      # that ask for "Segoe UI" by name will fall back to this via
-      # fontconfig once it's installed, so Windows-styled UIs render
-      # without the proprietary Segoe family.
-      selawik
-
       # Aptos — Microsoft's default Office font, not in nixpkgs because of
       # its proprietary EULA. Defined in ./aptos.nix; the first rebuild will
       # tell you exactly how to add the zip from third-party/ to /nix/store.
@@ -300,112 +287,30 @@
   security.polkit.enable = true;
   services.gnome.gnome-keyring.enable = true;
 
-  # Polkit agent — shows the graphical "enter password" dialog when an app
-  # requests elevated privileges. Runs as a user service tied to the
-  # graphical session.
-  systemd.user.services.polkit-gnome-agent = {
-    description = "polkit-gnome-authentication-agent-1";
-    wantedBy = [ "graphical-session.target" ];
-    wants = [ "graphical-session.target" ];
-    after = [ "graphical-session.target" ];
-    serviceConfig = {
-      Type = "simple";
-      ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-      Restart = "on-failure";
-      RestartSec = 1;
-      TimeoutStopSec = 10;
-    };
-  };
-
   # ── System packages ─────────────────────────────────────────────────────
-  # Packages installed system-wide (available to all users).
-  # `with pkgs;` opens the pkgs namespace so you can write `git` instead of
-  # `pkgs.git` — it's just a convenience for shorter lists.
+  # Packages installed system-wide. We keep this list small on purpose:
+  # only tools we'd want available in single-user mode, in a TTY recovery
+  # session, or to root. Everything user-facing — browsers, chat apps,
+  # GUI/Wayland utilities, dev tooling — lives in home/packages.nix so
+  # the same package isn't built into two profiles.
   environment.systemPackages = with pkgs; [
-    # Core CLI
+    # Core CLI available in any TTY (including for root)
     neovim
     git
     htop
     tmux
     zellij
     curl
-    tailscale
-    kitty.terminfo  # so remote SSH hosts know kitty's terminal capabilities
 
-    # Encrypted vault
+    # Networking (the matching daemons are enabled below)
+    tailscale
+
+    # Encrypted vault — referenced from the user's unlock-personal alias
     gocryptfs
 
-    # Desktop essentials
-    firefox
-    kitty
-
-    # Wayland clipboard
-    wl-clipboard
-    cliphist
-
-    # Screen / media control
-    brightnessctl
-    playerctl
-
-    # Screenshots
-    grim    # grab an image
-    slurp   # select a screen region
-
-    # Launcher / notifications / bar
-    tofi
-    mako
-    waybar
-    libnotify  # provides notify-send
-
-    # Display management
-    kanshi
-
-    # Auto-mount removable media
-    udiskie
-    gvfs    # virtual filesystem (trash, MTP, etc.)
-
-    # Screen locking / idle
-    hyprlock
-    hypridle
-
-    # Polkit agent (graphical privilege escalation)
-    polkit_gnome
-
-    # Network / audio GUI
-    networkmanagerapplet
-    pavucontrol
-
-    # Keyring GUI
-    seahorse
-    gnome-keyring
-
-    # Communication
-    discord
-    slack
-    telegram-desktop
-    zoom-us
-
-    # Productivity
-    onedrive
-    microsoft-edge
-    spotify
-
-    # Logseq with workaround for 0.10.15
-    #logseq
-    (logseq.override { electron = electron_39; })
-
-    # AI / LLM
-    claude-code
-    gemini-cli
+    # Terminfo so SSH'ing *into* this box from a kitty terminal Just Works
+    kitty.terminfo
   ];
-
-  # Shell aliases available to all users for managing the encrypted vault.
-  # Unlocking mounts the gocryptfs vault and starts Syncthing;
-  # locking stops Syncthing and unmounts the vault.
-  environment.shellAliases = {
-    unlock-personal = "gocryptfs ~/.personal-encrypted ~/Personal && systemctl --user start syncthing && systemctl --user restart gcr-ssh-agent.socket";
-    lock-personal = "systemctl --user stop syncthing; fusermount -u ~/Personal";
-  };
 
   # ── Unfree packages ─────────────────────────────────────────────────────
   # Nix defaults to only allowing FOSS packages. To install proprietary

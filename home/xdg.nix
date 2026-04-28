@@ -94,6 +94,5 @@
     "mpv/mpv.conf".source = ../raw/mpv/mpv.conf;
     "mpv/input.conf".source = ../raw/mpv/input.conf;
     "gdb/gdbinit".source = ../raw/gdb/gdbinit;
-    "ranger/commands.py".source = ../raw/ranger/commands.py;
   };
 }

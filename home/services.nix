@@ -133,6 +133,48 @@ in
       };
     };
 
+    # ── Polkit graphical agent ────────────────────────────────────────────
+    # Shows the "enter password" dialog when an app asks for elevated
+    # privileges (mounting drives, modifying system settings, etc.).
+    # Tied to graphical-session.target so it follows the compositor.
+    polkit-gnome-agent = {
+      Unit = {
+        Description = "polkit-gnome-authentication-agent-1";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" ];
+      };
+      Service = {
+        Type = "simple";
+        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        Restart = "on-failure";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
+      };
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
+      };
+    };
+
+    # ── OneDrive (QPerfect file sync) ─────────────────────────────────────
+    # Runs the OneDrive client in monitor mode so changes sync continuously.
+    # Auto-starts at user login (default.target), independent of the
+    # graphical session — sync should work even on a TTY login.
+    onedrive = {
+      Unit = {
+        Description = "OneDrive sync for QPerfect";
+        After = [ "network-online.target" ];
+        Wants = [ "network-online.target" ];
+      };
+      Service = {
+        ExecStart = "${pkgs.onedrive}/bin/onedrive --monitor";
+        Restart = "on-failure";
+        RestartSec = "10s";
+      };
+      Install = {
+        WantedBy = [ "default.target" ];
+      };
+    };
+
     # ── Syncthing vault guard ─────────────────────────────────────────────
     # This companion service watches the encrypted ~/Personal mount.
     # When the vault is unmounted (locked), it stops Syncthing to prevent

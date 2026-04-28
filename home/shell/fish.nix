@@ -2,54 +2,32 @@
 # ║  fish.nix — Fish shell configuration (primary shell)                       ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# Fish is the primary interactive shell. This module configures:
-#   - PATH setup and environment variables
-#   - Abbreviations (abbrs) — like aliases but expand inline as you type
-#   - Aliases — command substitutions that don't expand visually
-#   - Functions — multi-line shell functions (for git worktrees, etc.)
-#   - Plugins — Fish packages installed from nixpkgs
+# Fish is the primary interactive shell. Common aliases live in ./_aliases.nix
+# and are installed here as *abbreviations* so they expand inline as you type
+# (instead of staying hidden behind an alias name). Fish-only shortcuts and
+# multi-line functions live below.
 #
-# Home Manager's `programs.fish` generates ~/.config/fish/config.fish from
-# the options below. You never edit that file directly.
+# Home Manager already deploys home.sessionVariables and home.sessionPath via
+# ~/.config/fish/conf.d/hm-session-vars.fish, so this module no longer
+# re-exports EDITOR/LESS/PATH — that was just duplicating what HM emits.
 
 { pkgs, ... }:
 
+let
+  aliases = import ./_aliases.nix;
+in
 {
   programs.fish = {
     enable = true;
 
-    # ── Shell init (runs for all fish instances, including scripts) ────────
-    shellInit = ''
-      # PATH — add directories for local scripts, language toolchains, etc.
-      set -x fish_user_paths
-      fish_add_path ~/.local/bin
-      fish_add_path ~/.luarocks/bin
-      fish_add_path ~/.cargo/bin
-      fish_add_path /var/lib/flatpak/exports/bin/
-
-      # Go and npm paths
-      set GOPATH "$HOME/Variable/go"
-      set NPM_PACKAGES "$HOME/.npm-packages"
-      set PATH $PATH $NPM_PACKAGES/bin
-      set MANPATH $NPM_PACKAGES/share/man (manpath)
-    '';
-
-    # ── Interactive shell init (runs only for interactive terminals) ───────
+    # ── Interactive shell init (interactive terminals only) ────────────────
     interactiveShellInit = ''
       # any-nix-shell makes `nix-shell` drop you into fish instead of bash.
       # Without this, entering a nix-shell would switch you to bash.
       ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
 
-      # Editor settings
-      set -gx EDITOR (which nvim)
-      set -gx VISUAL $EDITOR
-      set -gx SUDO_EDITOR $EDITOR
-      set -x LESS -rF
-      set -x MANPAGER "nvim +Man!"
-      set -x MANROFFOPT -c
-
       # Vi-mode cursor styles — different cursor shapes indicate the current
-      # vi mode (block = normal, line = insert, underscore = replace)
+      # vi mode (block = normal, line = insert, underscore = replace).
       set -gx fish_vi_force_cursor 1
       set -gx fish_cursor_default block
       set -gx fish_cursor_insert line blink
@@ -62,91 +40,30 @@
       # Pipe --help output through bat with syntax highlighting (folke's trick)
       abbr -a --position anywhere --set-cursor -- -h "-h 2>&1 | bat --plain --language=help"
 
-      # Hook up direnv (auto-loads .envrc files when you cd into a directory)
-      direnv hook fish | source
+      # Prepend npm man pages to MANPATH. We do this in fish (not in
+      # home.sessionVariables) because computing the existing MANPATH
+      # requires calling the `manpath` builtin at shell-init time.
+      set -x MANPATH "$HOME/.npm-packages/share/man" (manpath)
     '';
 
-    # ── Abbreviations ─────────────────────────────────────────────────────
-    # Abbreviations expand inline as you type (you see the full command before
-    # pressing Enter). This is nicer than aliases because you learn what the
-    # commands actually do.
-    shellAbbrs = {
-      # Tmux session management
-      t = "tmux";
-      tc = "tmux attach";
-      ta = "tmux attach -t";
+    # ── Abbreviations ────────────────────────────────────────────────────
+    # `commands` from _aliases.nix — same shortcuts as bash/zsh. Fish gets
+    # them as abbrs so the full command shows up before you hit Enter.
+    shellAbbrs = aliases.commands // {
+      # Fish-only conveniences
       tad = "tmux attach -d -t";
-      tl = "tmux ls";
-      ts = "tmux new-session -s";
-      tk = "tmux kill-session -t";
       mux = "tmuxinator";
-
-      # Files & directories (safer defaults: -i = interactive, -v = verbose)
-      mv = "mv -iv";
-      cp = "cp -riv";
-      mkdir = "mkdir -vp";
-      l = "ll";
       ncdu = "ncdu --color dark";
-
-      # Editor shortcuts
-      vim = "nvim";
-      vi = "nvim";
-      v = "nvim";
-      sv = "sudoedit";
-      vudo = "sudoedit";
-      lv = "lazyvim";
-
-      # Git shortcuts
-      gg = "lazygit";
-      gl = "git l --color | devmoji --log --color | less -rXF";
-      gs = "git st";
-      gb = "git checkout -b";
-      gc = "git commit";
-      gpr = "gh pr checkout";
-      gm = "git branch -l main | rg main > /dev/null 2>&1 && git checkout main || git checkout master";
-      gcp = "git commit -p";   # commit with interactive patch selection
-      gpp = "git push";
-      gp = "git pull";
-
-      # Modern CLI tool replacements
-      grep = "rg";
       df = "grc /bin/df -h";
-      fda = "fd -IH";   # fd: include ignored and hidden files
-      rga = "rg -uu";   # rg: search everything (no ignore, include hidden)
-
-      # systemctl shortcuts
-      s = "systemctl";
-      su = "systemctl --user";
-      ss = "systemctl status";
-      sl = "systemctl --type service --state running";
-      slu = "systemctl --user --type service --state running";
-      sf = "systemctl --failed --all";
-
-      # journalctl shortcuts (reading system logs)
-      jb = "journalctl -b";            # current boot
-      jf = "journalctl -f";            # follow (tail)
-      jg = "journalctl -b --grep";     # grep current boot
-      ju = "journalctl --unit";         # specific unit
-      jm = "journalctl --user";         # user services
-
-      # paru (AUR helper for Arch Linux)
-      p = "paru";
-      pai = "paru -S";    # install
-      par = "paru -R";    # remove
-      pas = "paru -Ss";   # search
-      pal = "paru -Q";    # list installed
-      paf = "paru -Ql";   # list files in package
-      pao = "paru -Qo";   # which package owns a file
+      gl = "git l --color | devmoji --log --color | less -rXF";
+      gm = "git branch -l main | rg main > /dev/null 2>&1 && git checkout main || git checkout master";
+      lv = "lazyvim";
     };
 
-    # ── Aliases ───────────────────────────────────────────────────────────
-    # Unlike abbreviations, aliases don't expand inline — they stay as-is.
-    # Used here for commands that are too complex to show expanded.
-    shellAliases = {
-      ls = "eza --color=always --icons --group-directories-first";
-      la = "eza --color=always --icons --group-directories-first --all";
-      ll = "eza --color=always --icons --group-directories-first --all --long";
-      tree = "eza --color=always --icons --group-directories-first --tree";
+    # ── Aliases ──────────────────────────────────────────────────────────
+    # Use plain aliases for commands we never want to see expanded inline
+    # (long eza invocations, multi-pipe one-liners).
+    shellAliases = aliases.listing // {
       vimpager = "nvim - -c \"lua require('util').colorize()\"";
       lazyvim = "NVIM_APPNAME=lazyvim nvim";  # run a separate Neovim config
       bt = "coredumpctl -1 gdb -A '-ex \"bt\" -q -batch' 2>/dev/null | awk '/Program terminated with signal/,0' | bat -l cpp --no-pager --style plain";
@@ -272,8 +189,7 @@
     };
 
     # ── Plugins ───────────────────────────────────────────────────────────
-    # Fish plugins installed from nixpkgs. Each `src` points to a Nix
-    # package that provides the plugin source.
+    # Fish plugins installed from nixpkgs.
     plugins = [
       {
         name = "done";     # sends a notification when long-running commands finish

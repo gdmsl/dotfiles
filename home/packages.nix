@@ -95,15 +95,19 @@ in
     mako                  # notification daemon
     kanshi                # automatic display profile switching
     udiskie               # auto-mount removable drives
-    waybar                # status bar
+    gvfs                  # virtual filesystem (trash, MTP, etc.)
     libnotify             # provides notify-send command
     networkmanagerapplet  # Wi-Fi tray icon
     pavucontrol           # PulseAudio/PipeWire volume control GUI
+    polkit_gnome          # graphical polkit auth agent (started in services.nix)
     solaar                # pair/manage Logitech Unifying receivers (non-BT)
+
+    # ── Browser & terminal ────────────────────────────────────────────────
+    firefox
+    kitty
 
     # ── Applications ──────────────────────────────────────────────────────
     fastfetch        # system info display (like neofetch, but fast)
-    ranger           # terminal file manager (vim-like keybindings)
     mpv              # media player
     cosmic-files     # COSMIC file manager
     cosmic-edit      # COSMIC text editor
@@ -118,6 +122,20 @@ in
     inkscape         # vector graphics editor
     gimp             # image editor
     darktable        # photo editing / RAW processing
+
+    # ── Communication / productivity ──────────────────────────────────────
+    discord
+    slack
+    telegram-desktop
+    zoom-us
+    microsoft-edge
+    spotify
+    # Logseq pinned to electron_39 — newer electrons broke 0.10.15 rendering.
+    (logseq.override { electron = electron_39; })
+
+    # ── AI / LLM ──────────────────────────────────────────────────────────
+    claude-code
+    gemini-cli
 
     # ── GNOME keyring / secrets ───────────────────────────────────────────
     gnome-keyring    # password/key storage daemon

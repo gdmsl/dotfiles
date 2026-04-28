@@ -3,13 +3,17 @@
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
 # Zsh is configured as a fallback shell — some environments (shared clusters,
-# CI) default to it. Shares the same aliases as Fish/Bash for consistency.
+# CI) default to it. Aliases come from ./_aliases.nix so all three shells
+# stay in sync.
 #
 # Home Manager generates Zsh config files in $XDG_CONFIG_HOME/zsh/ (instead
 # of cluttering $HOME with dotfiles) thanks to the dotDir option.
 
 { pkgs, config, ... }:
 
+let
+  aliases = import ./_aliases.nix;
+in
 {
   programs.zsh = {
     enable = true;
@@ -50,70 +54,6 @@
       zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'  # case-insensitive
     '';
 
-    # Same aliases as Fish and Bash
-    shellAliases = {
-      # Files & directories
-      mv = "mv -iv";
-      cp = "cp -riv";
-      mkdir = "mkdir -vp";
-      ls = "eza --color=always --icons --group-directories-first";
-      la = "eza --color=always --icons --group-directories-first --all";
-      ll = "eza --color=always --icons --group-directories-first --all --long";
-      tree = "eza --color=always --icons --group-directories-first --tree";
-      l = "ll";
-
-      # Editor
-      vim = "nvim";
-      vi = "nvim";
-      v = "nvim";
-      sv = "sudoedit";
-      vudo = "sudoedit";
-
-      # Tmux
-      t = "tmux";
-      tc = "tmux attach";
-      ta = "tmux attach -t";
-      tl = "tmux ls";
-      ts = "tmux new-session -s";
-      tk = "tmux kill-session -t";
-
-      # Git
-      gg = "lazygit";
-      gs = "git st";
-      gb = "git checkout -b";
-      gc = "git commit";
-      gcp = "git commit -p";
-      gpp = "git push";
-      gp = "git pull";
-
-      # Modern CLI replacements
-      grep = "rg";
-      fda = "fd -IH";
-      rga = "rg -uu";
-
-      # systemctl
-      s = "systemctl";
-      su = "systemctl --user";
-      ss = "systemctl status";
-      sl = "systemctl --type service --state running";
-      slu = "systemctl --user --type service --state running";
-      sf = "systemctl --failed --all";
-
-      # journalctl
-      jb = "journalctl -b";
-      jf = "journalctl -f";
-      jg = "journalctl -b --grep";
-      ju = "journalctl --unit";
-      jm = "journalctl --user";
-
-      # paru (AUR helper)
-      p = "paru";
-      pai = "paru -S";
-      par = "paru -R";
-      pas = "paru -Ss";
-      pal = "paru -Q";
-      paf = "paru -Ql";
-      pao = "paru -Qo";
-    };
+    shellAliases = aliases.commands // aliases.listing;
   };
 }

@@ -137,7 +137,6 @@ home/
   desktop/
     hyprland.nix                  # Hyprland WM (deploys raw modular config)
     niri.nix                      # Niri WM (raw KDL config)
-    waybar.nix                    # Waybar status bar (raw JSONC + CSS)
     mako.nix                      # Mako notification daemon
     gtk.nix                       # GTK/cursor/icon theming
     kanshi.nix                    # Automatic display profile switching
@@ -148,8 +147,6 @@ raw/                              # Raw config files (not nixified)
   hypr/                           # Hyprland modular config + scripts
   niri/                           # Niri KDL config
   zellij/                         # Zellij KDL config
-  waybar/                         # Waybar config + CSS
-  ranger/                         # Ranger file manager
   mpv/                            # MPV media player
   fontconfig/                     # Font configuration
   qt5ct/, qt6ct/, Kvantum/        # Qt theming
@@ -257,10 +254,10 @@ sudo nixos-rebuild switch --flake .#yara    # rebuild system + user config
 - **Editor**: Neovim (nvf framework — fully Nix-native)
 - **Prompt**: Starship (cross-shell)
 - **Browser**: Firefox
-- **File manager**: Yazi / Ranger
+- **File manager**: Yazi (terminal) / Cosmic Files (GUI)
 - **Media**: MPV
 - **Notifications**: Mako
-- **Bar**: Waybar
+- **Shell / bar**: Noctalia (Quickshell-based, used on both Niri and Hyprland)
 - **Launcher**: Vicinae / Anyrun
 - **Clipboard**: Cliphist + wl-clipboard
 - **Theme**: Tokyo Night (GTK) + One Dark (terminal/editor)
