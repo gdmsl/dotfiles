@@ -260,6 +260,29 @@
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-color-emoji
+
+      # Rajdhani — pulled from the `google-fonts` collection. The full
+      # collection is huge (~1.5GB), so we use `.override { fonts = [...] }`
+      # to install only the families we need. Add more names here later if
+      # other Google fonts go missing.
+      (google-fonts.override { fonts = [ "Rajdhani" ]; })
+
+      # Cascadia Code — Microsoft's open-source monospaced font (the
+      # Windows Terminal default). Includes Cascadia Code, Cascadia Mono,
+      # and the PL/NF variants with ligatures + powerline glyphs.
+      cascadia-code
+
+      # Selawik — Microsoft's open-source metric clone of Segoe UI. Apps
+      # that ask for "Segoe UI" by name will fall back to this via
+      # fontconfig once it's installed, so Windows-styled UIs render
+      # without the proprietary Segoe family.
+      selawik
+
+      # Aptos — Microsoft's default Office font, not in nixpkgs because of
+      # its proprietary EULA. Defined in ./aptos.nix; the first rebuild will
+      # tell you exactly how to add the zip from third-party/ to /nix/store.
+      (pkgs.callPackage ./aptos.nix { })
+
       # TODO: Maple Mono not in nixpkgs — add via overlay if needed
     ];
     # Default font fallback chain — apps that don't specify a font use these
@@ -390,6 +413,7 @@
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
     "acli"
     "acli-unwrapped"
+    "aptos-fonts"
     "claude-code"
     "corefonts"
     "discord"

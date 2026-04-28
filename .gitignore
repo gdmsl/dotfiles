@@ -1,1 +1,8 @@
 *.claude
+
+# Proprietary font drops and other vendor archives — the .nix derivations
+# in system/ reference these by sha256 via `requireFile`, so they don't
+# need to be committed (and we shouldn't redistribute them anyway).
+third-party/*.zip
+third-party/*.tar.*
+third-party/*.iso
