@@ -38,6 +38,7 @@
     ./editor/neovim.nix         # Neovim (via nvf framework)
     ./desktop/hyprland.nix      # Hyprland window manager
     ./desktop/niri.nix          # Niri window manager
+    ./desktop/portal.nix        # XDG Desktop Portal backends (screen sharing)
     ./desktop/mako.nix          # Mako notification daemon
     ./desktop/gtk.nix           # GTK theme, icons, cursor
     ./desktop/kanshi.nix        # Kanshi display profile manager
