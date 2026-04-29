@@ -95,6 +95,7 @@ in
     mako                  # notification daemon
     kanshi                # automatic display profile switching
     udiskie               # auto-mount removable drives
+    xwayland-satellite    # X11 compatibility for niri (Zoom, Qt5/xcb apps)
     gvfs                  # virtual filesystem (trash, MTP, etc.)
     libnotify             # provides notify-send command
     networkmanagerapplet  # Wi-Fi tray icon

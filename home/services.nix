@@ -114,6 +114,35 @@ in
       };
     };
 
+    # ── XWayland for niri (xwayland-satellite) ────────────────────────────
+    # niri is a pure-Wayland compositor and doesn't bundle XWayland the way
+    # Hyprland does. xwayland-satellite is a small daemon that boots an
+    # XWayland server on demand and proxies X11 windows back to niri as
+    # individual Wayland surfaces. Without it, Qt5/xcb-only apps (Zoom,
+    # older proprietary tools) crash at startup with
+    #   qt.qpa.xcb: could not connect to display
+    #
+    # Type=notify: xwayland-satellite calls sd_notify(READY=1) once the
+    # X socket is listening, so dependents only start after `:0` is up.
+    # The trailing `:0` arg forces a known display number — must match the
+    # `DISPLAY` env var exported by niri's environment{} block in config.kdl.
+    xwayland-satellite = {
+      Unit = {
+        Description = "XWayland satellite (X11 compatibility for niri)";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" ];
+      };
+      Service = {
+        Type = "notify";
+        ExecStart = "${pkgs.xwayland-satellite}/bin/xwayland-satellite :0";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
+      };
+    };
+
     # ── Auto-mount removable media ────────────────────────────────────────
     # udiskie watches for USB drives and auto-mounts them. --tray shows
     # a system tray icon for safe eject.

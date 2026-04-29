@@ -14,6 +14,11 @@ environment {
     SDL_VIDEODRIVER "wayland"
 
     MOZ_ENABLE_WAYLAND "1"
+
+    // X11 compatibility via xwayland-satellite (started as a user systemd
+    // service — see home/services.nix). The display number here must match
+    // the `:0` argument passed to the satellite binary.
+    DISPLAY ":0"
 }
 
 // Input device configuration.
