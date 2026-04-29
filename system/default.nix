@@ -231,15 +231,29 @@
 
   # ── XDG Desktop Portal ──────────────────────────────────────────────────
   # Portals provide a standardized API for sandboxed apps to access system
-  # features (file chooser, screen sharing, etc.). Each compositor needs its
-  # own portal backend + the GTK fallback for general dialogs.
+  # features (file chooser, screen sharing, etc.). The right backend depends
+  # on the compositor:
+  #   - hyprland → xdg-desktop-portal-hyprland (talks to Hyprland's IPC)
+  #   - niri     → xdg-desktop-portal-gnome (Niri has no portal of its own;
+  #                gnome's backend is the only one that implements
+  #                org.freedesktop.impl.portal.ScreenCast on wlroots-style
+  #                compositors, so screen sharing in Firefox/Edge needs it)
+  #   - gtk      → general-purpose fallback (file chooser, settings, etc.);
+  #                does NOT implement ScreenCast on its own.
+  # `config.<desktop>.default` keys off $XDG_CURRENT_DESKTOP, which the niri
+  # and hyprland sessions set automatically.
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
+      xdg-desktop-portal-gnome
       xdg-desktop-portal-hyprland
     ];
-    config.common.default = "*";  # use any available portal
+    config = {
+      common.default = [ "gtk" ];
+      niri.default = [ "gnome" "gtk" ];
+      hyprland.default = [ "hyprland" "gtk" ];
+    };
   };
 
   # ── Fonts ───────────────────────────────────────────────────────────────
