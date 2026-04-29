@@ -45,6 +45,7 @@
     ./desktop/vicinae.nix       # Vicinae launcher
     ./desktop/anyrun.nix        # Anyrun launcher
     ./firefox.nix               # Firefox custom desktop entry
+    ./libreoffice.nix           # LibreOffice + TexMaths LaTeX equation editor
     ./services.nix              # systemd user services
     ./xdg.nix                   # XDG MIME types and default apps
     ./scripts.nix               # custom scripts in ~/.local/bin

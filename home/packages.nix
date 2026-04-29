@@ -115,7 +115,6 @@ in
     evince           # GNOME PDF viewer
     loupe            # GNOME image viewer
     satty            # screenshot annotation tool
-    libreoffice-fresh
     zotero           # reference manager
     hyprpicker       # color picker
     wf-recorder      # screen recorder
