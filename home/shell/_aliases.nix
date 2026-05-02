@@ -56,6 +56,13 @@
     fda = "fd -IH";
     rga = "rg -uu";
 
+    # Hardware info — readable defaults. In fish these expand inline as
+    # abbreviations, so you can edit the flags before running.
+    inxi = "inxi -Fxxxz";   # full report (-z redacts MACs/IPs)
+    lshw = "lshw -short";   # brief table (prepend sudo for full detail)
+    lspci = "lspci -tv";    # tree view with verbose device names
+    lsusb = "lsusb -tv";    # tree view of USB topology
+
     # systemctl
     s = "systemctl";
     su = "systemctl --user";
