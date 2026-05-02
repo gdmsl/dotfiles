@@ -65,25 +65,26 @@ in
       installed_marker="${stateFile}"
       desired="${texmathsOxt}"
 
-      # Skip if the recorded version already matches what we want to install.
-      if [ -e "$installed_marker" ] && [ "$(cat "$installed_marker" 2>/dev/null)" = "$desired" ]; then
-        exit 0
-      fi
-
-      # `$DRY_RUN_CMD` is empty in normal runs and `:` (the no-op builtin) when
-      # you pass `-n` to home-manager. Prefixing real commands with it makes
-      # dry-run print/skip them; we only do "real" work in non-dry-run mode so
-      # the marker file stays consistent with what unopkg actually did.
-      if [ -z "$DRY_RUN_CMD" ]; then
-        mkdir -p "$(dirname "$installed_marker")"
-        # `-f` force-replaces any existing copy of the same extension; this is
-        # what lets us upgrade TexMaths in place when the version changes.
-        # `--suppress-license` accepts the GPLv2 prompt non-interactively.
-        ${pkgs.libreoffice-fresh}/bin/unopkg add \
-          --suppress-license -f "$desired"
-        echo "$desired" > "$installed_marker"
-      else
-        echo "Would install TexMaths from $desired"
+      # Run only when the recorded version differs from what we want. This
+      # block is *concatenated* with other home.activation steps into one big
+      # bash script — using `exit 0` here would abort the entire activation
+      # and skip later steps like linkGeneration that update ~/.config links.
+      if [ ! -e "$installed_marker" ] || [ "$(cat "$installed_marker" 2>/dev/null)" != "$desired" ]; then
+        # `$DRY_RUN_CMD` is empty in normal runs and `:` (the no-op builtin) when
+        # you pass `-n` to home-manager. Prefixing real commands with it makes
+        # dry-run print/skip them; we only do "real" work in non-dry-run mode so
+        # the marker file stays consistent with what unopkg actually did.
+        if [ -z "$DRY_RUN_CMD" ]; then
+          mkdir -p "$(dirname "$installed_marker")"
+          # `-f` force-replaces any existing copy of the same extension; this is
+          # what lets us upgrade TexMaths in place when the version changes.
+          # `--suppress-license` accepts the GPLv2 prompt non-interactively.
+          ${pkgs.libreoffice-fresh}/bin/unopkg add \
+            --suppress-license -f "$desired"
+          echo "$desired" > "$installed_marker"
+        else
+          echo "Would install TexMaths from $desired"
+        fi
       fi
     '';
 }
