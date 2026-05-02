@@ -104,7 +104,7 @@ in
           lsp.enable = true;
           format.enable = true;
         };
-        ts = {                     # TypeScript/JavaScript
+        typescript = {             # TypeScript/JavaScript
           enable = true;
           lsp.enable = true;
           format.enable = true;
