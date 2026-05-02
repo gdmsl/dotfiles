@@ -82,6 +82,19 @@ in
     wget
     curl
 
+    # ── Hardware / system info ────────────────────────────────────────────
+    # `inxi -Fxxxz` is the modern one-shot hardware report (CPU/GPU/RAM/disks/
+    # sensors/network). The lspci/lsusb/lshw classics haven't been replaced —
+    # they're still the canonical detail sources, just less pretty.
+    inxi              # all-in-one hardware/system report (try: inxi -Fxxxz)
+    lshw              # hardware tree (try: lshw -short)
+    pciutils          # provides lspci (PCI device enumeration)
+    usbutils          # provides lsusb (USB device enumeration)
+    hwinfo            # verbose hardware probe (alternative to lshw)
+    dmidecode         # BIOS/SMBIOS dump — RAM slots, firmware, board info
+    nvtopPackages.amd # live GPU monitor — htop for the Radeon iGPU
+    cpufetch          # CPU info with ASCII art (uarch, AVX, cache)
+
     # ── Wayland / Desktop utilities ───────────────────────────────────────
     wl-clipboard          # clipboard CLI (wl-copy / wl-paste)
     cliphist              # clipboard history manager
@@ -105,6 +118,7 @@ in
 
     # ── Browser & terminal ────────────────────────────────────────────────
     firefox
+    chromium       # FOSS upstream of Chrome (no Google branding/services)
     kitty
 
     # ── Applications ──────────────────────────────────────────────────────
@@ -117,6 +131,7 @@ in
     loupe            # GNOME image viewer
     satty            # screenshot annotation tool
     zotero           # reference manager
+    keepassxc        # offline password manager (KDBX database files)
     hyprpicker       # color picker
     wf-recorder      # screen recorder
     inkscape         # vector graphics editor
