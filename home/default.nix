@@ -109,7 +109,12 @@
     "Kvantum/kvantum.kvconfig".source = ../raw/Kvantum/kvantum.kvconfig;
     "qt5ct/qt5ct.conf".source = ../raw/qt5ct/qt5ct.conf;
     "qt6ct/qt6ct.conf".source = ../raw/qt6ct/qt6ct.conf;
+    # Chromium-family browsers all read a per-binary flags file from XDG_CONFIG_HOME.
+    # Same flags work for all three (Chrome/Edge are Chromium derivatives), so we
+    # point them at one source of truth in raw/chromium-flags.conf.
     "chromium-flags.conf".source = ../raw/chromium-flags.conf;
+    "chrome-flags.conf".source = ../raw/chromium-flags.conf;
+    "microsoft-edge-flags.conf".source = ../raw/chromium-flags.conf;
     "electron-flags.conf".source = ../raw/electron-flags.conf;
     "locale.conf".source = ../raw/locale.conf;
     "onedrive/config".source = ../raw/onedrive/config;
