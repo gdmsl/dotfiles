@@ -156,6 +156,13 @@ in
     # ── GNOME keyring / secrets ───────────────────────────────────────────
     gnome-keyring    # password/key storage daemon
     seahorse         # GUI for managing keyring secrets
+    # GnuPG provides the `gpg` CLI for encryption, signing, and key management.
+    # `pass` is a CLI password manager: each entry is a small gpg-encrypted file
+    # under ~/.password-store/, so it depends on gnupg. To use it you'll need a
+    # GPG key — generate one with `gpg --full-generate-key`, then initialize the
+    # store with `pass init <your-key-id-or-email>`.
+    gnupg
+    pass
 
     # ── Languages & toolchains ────────────────────────────────────────────
     # Julia wrapped with extra shared libraries on LD_LIBRARY_PATH.
