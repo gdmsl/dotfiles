@@ -160,9 +160,26 @@
   # Workaround for RTL8852CU Bluetooth USB adapter: disable autosuspend to
   # prevent corrupted frames and mass disconnects.
   boot.extraModprobeConfig = "options btusb enable_autosuspend=0";
+  # udev rules. udev is the kernel-side userspace daemon that reacts to
+  # hardware events (device added/removed) and applies rules: things like
+  # "set permissions on this hidraw node" or "disable autosuspend on this
+  # USB device". Anything in `extraRules` lands in /etc/udev/rules.d/99-local.rules.
   services.udev.extraRules = ''
     # Realtek RTL8852CU Bluetooth: disable USB autosuspend
     ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="5852", ATTR{power/autosuspend}="-1"
+
+    # NuPhy keyboards (vendor 0x19f5): give the wheel group RW access on the
+    # raw USB device. Needed so VIA / Vial / vial-cli can talk to the keyboard
+    # without sudo. ATTRS{} (plural) walks up the device tree, so this matches
+    # every interface — usb, hidraw, the input nodes — under a NuPhy device.
+    ATTRS{idVendor}=="19f5", MODE="0666", GROUP="wheel"
+
+    # VIA / WebHID: any hidraw node is reachable by the active local user.
+    # `TAG+="uaccess"` is the modern way — systemd-logind grants the seat's
+    # current user an ACL on the device, scoped to their session. The legacy
+    # `udev-acl` tag is the same thing for older ConsoleKit setups; harmless
+    # to keep. MODE=0666 is a belt-and-braces fallback for non-seat sessions.
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", MODE="0666", TAG+="uaccess", TAG+="udev-acl"
   '';
 
   # After suspend the Realtek BT USB device re-enumerates and bluetoothd loses
