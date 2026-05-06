@@ -105,7 +105,6 @@ in
     slurp                 # screen region selector (used with grim)
     hyprlock              # screen locker for Hyprland
     hypridle              # idle daemon (triggers lock, DPMS, suspend)
-    mako                  # notification daemon
     kanshi                # automatic display profile switching
     udiskie               # auto-mount removable drives
     xwayland-satellite    # X11 compatibility for niri (Zoom, Qt5/xcb apps)
