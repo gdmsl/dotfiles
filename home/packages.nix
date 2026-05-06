@@ -132,7 +132,9 @@ in
     zotero           # reference manager
     keepassxc        # offline password manager (KDBX database files)
     hyprpicker       # color picker
-    wf-recorder      # screen recorder
+    wf-recorder            # simple Wayland screen recorder
+    gpu-screen-recorder    # hardware-accelerated recorder (used by Noctalia's screen-recorder plugin)
+    obs-studio             # full streaming/recording suite (scenes, sources, RTMP)
     inkscape         # vector graphics editor
     gimp             # image editor
     darktable        # photo editing / RAW processing
