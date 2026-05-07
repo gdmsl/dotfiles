@@ -338,6 +338,20 @@ window-rule {
     default-window-height { fixed 700; }
 }
 
+// Microsoft Edge (v144+) creates a transient xdg-toplevel with an empty
+// app-id to render tooltips, then destroys it within milliseconds. Without
+// this rule, niri tiles and focuses the ghost window, producing a visible
+// flicker every time a tooltip appears.
+//
+// Niri rules can't match by parent app-id, so this fires on any toplevel
+// with an empty app-id — in practice almost only Edge's tooltip windows,
+// since well-behaved apps set one.
+window-rule {
+    match app-id="^$"
+    open-floating true
+    open-focused false
+}
+
 binds {
     // Keys consist of modifiers separated by + signs, followed by an XKB key name
     // in the end. To find an XKB name for a particular key, you may use a program
