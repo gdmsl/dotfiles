@@ -54,7 +54,14 @@
   programs.fish.enable = true;
 
   # ── Networking ──────────────────────────────────────────────────────────
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    # VPN plugins extend NetworkManager so the GUI/CLI can configure VPN
+    # connections of that type. fortisslvpn = Fortinet SSL VPN (FortiClient
+    # compatible) — used here for the Unistra VPN. The plugin pulls in
+    # openfortivpn as its backend daemon automatically.
+    plugins = with pkgs; [ networkmanager-fortisslvpn ];
+  };
   networking.firewall = {
     enable = true;
     trustedInterfaces = [ "tailscale0" ];  # trust all traffic from the VPN
