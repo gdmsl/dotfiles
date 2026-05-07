@@ -68,8 +68,29 @@
     let
       system = "x86_64-linux";
 
-      # `legacyPackages` gives us the full nixpkgs package set for our platform.
-      pkgs = nixpkgs.legacyPackages.${system};
+      # We need a pkgs with `allowUnfreePredicate` baked in so the standalone
+      # home-manager paths (gdmsl, gdmsl-tty) can install unfree CLIs/apps
+      # without `NIXPKGS_ALLOW_UNFREE=1 ... --impure`. The NixOS module path
+      # already sets this in system/default.nix, but `homeConfigurations` runs
+      # outside that scope and would otherwise refuse `claude-code`, `discord`,
+      # etc. Keep this list in sync with system/default.nix's allowlist.
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
+          "acli"
+          "acli-unwrapped"
+          "aptos-fonts"
+          "claude-code"
+          "corefonts"
+          "discord"
+          "microsoft-edge"
+          "logseq"
+          "slack"
+          "spotify"
+          "vista-fonts"
+          "zoom"
+        ];
+      };
 
       # Absolute path to this repo on disk. Used by mkOutOfStoreSymlink to
       # create live symlinks (so changes to raw/ files take effect without
@@ -111,6 +132,19 @@
         inherit pkgs;
         extraSpecialArgs = { inherit inputs dotfilesPath; };
         modules = [ ./home ];
+      };
+
+      # ── Headless / SSH-only profile ─────────────────────────────────────
+      # Trimmed home-manager config for machines you only ever SSH into:
+      # shell stack + neovim + zellij/tmux + git + CLI tools, no desktop.
+      # See home/tty.nix for the full module.
+      # Usage on a fresh box (Nix installed, no global home-manager):
+      #   nix run github:nix-community/home-manager -- switch \
+      #       --flake github:gdmsl/dotfiles#gdmsl-tty
+      homeConfigurations."gdmsl-tty" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = { inherit inputs dotfilesPath; };
+        modules = [ ./home/tty.nix ];
       };
 
       # ── Flake templates ─────────────────────────────────────────────────
