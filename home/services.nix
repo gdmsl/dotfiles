@@ -204,6 +204,31 @@ in
       };
     };
 
+    # ── Podman weekly cleanup ─────────────────────────────────────────────
+    # Reclaims disk from stopped containers, dangling images, unused networks,
+    # and build cache. Fired by the matching timer below (see systemd.user.timers).
+    #
+    # `Type = "oneshot"` means: run the command, exit, done — no long-lived
+    # process. The unit has no Install.WantedBy because it's not started at
+    # boot or login; the timer is what activates it.
+    #
+    # We deliberately do NOT pass `--volumes` or `-a`:
+    #   --volumes  would delete named volumes (e.g. your postgres data dir)
+    #              if no container currently references them — too dangerous
+    #              for an automatic weekly job.
+    #   -a         would remove every unused image, forcing a re-pull next
+    #              time you start a stack. Save bandwidth, prune manually
+    #              when you actually want that.
+    podman-prune = {
+      Unit = {
+        Description = "Weekly Podman cleanup (stopped containers, dangling images, build cache)";
+      };
+      Service = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.podman}/bin/podman system prune -f";
+      };
+    };
+
     # ── Syncthing vault guard ─────────────────────────────────────────────
     # This companion service watches the encrypted ~/Personal mount.
     # When the vault is unmounted (locked), it stops Syncthing to prevent
@@ -223,6 +248,23 @@ in
         WantedBy = [ "syncthing.service" ];
       };
     };
+  };
+
+  # ── Systemd user timers ─────────────────────────────────────────────────
+  # Timers are systemd's cron replacement. Each timer activates a service of
+  # the same name (here: podman-prune.service, defined above).
+  systemd.user.timers.podman-prune = {
+    Unit.Description = "Weekly Podman cleanup timer";
+    Timer = {
+      # OnCalendar uses systemd's calendar syntax. "weekly" expands to
+      # "Mon *-*-* 00:00:00" — every Monday at midnight local time.
+      OnCalendar = "weekly";
+      # If the laptop was off when the timer should have fired, run it as
+      # soon as possible after boot instead of skipping that week. Crucial
+      # for a laptop that's not always on.
+      Persistent = true;
+    };
+    Install.WantedBy = [ "timers.target" ];
   };
 
   # ── Syncthing ───────────────────────────────────────────────────────────

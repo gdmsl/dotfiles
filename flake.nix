@@ -64,7 +64,7 @@
   # The output function receives all resolved inputs and produces the actual
   # configurations. The `@inputs` syntax captures all inputs into one attrset
   # so we can pass them to modules that need them (e.g., nvf, vicinae).
-  outputs = { nixpkgs, nixos-hardware, home-manager, noctalia, ... }@inputs:
+  outputs = { self, nixpkgs, nixos-hardware, home-manager, noctalia, ... }@inputs:
     let
       system = "x86_64-linux";
 
@@ -111,6 +111,22 @@
         inherit pkgs;
         extraSpecialArgs = { inherit inputs dotfilesPath; };
         modules = [ ./home ];
+      };
+
+      # ── Flake templates ─────────────────────────────────────────────────
+      # `nix flake init -t /home/gdmsl/dotfiles#<name>` copies the template's
+      # files into the current directory. Use this to bootstrap new projects
+      # with our standard tooling.
+      #
+      # Available templates:
+      #   podman-project — compose.yaml + flake.nix + .envrc for a manually-
+      #                    controlled per-project Podman dev environment.
+      templates = {
+        podman-project = {
+          path = ./templates/podman-project;
+          description = "Per-project Podman dev shell (compose.yaml + flake.nix + .envrc)";
+        };
+        default = self.templates.podman-project;
       };
     };
 }

@@ -1,0 +1,42 @@
+# Compose file for local development. podman-compose reads `compose.yaml`,
+# `compose.yml`, `docker-compose.yaml`, or `docker-compose.yml` — all four
+# are equivalent. The unversioned `compose.yaml` is the modern convention.
+#
+# Common operations (provided by the devShell):
+#   pc-up      bring services up in the background
+#   pc-down    stop and remove containers (named volumes are kept)
+#   pc-logs    tail logs from all services
+#   pc-ps      list running services
+
+services:
+  # Replace this stub with your real services. The two examples below
+  # (postgres + redis) are the most common dev dependencies — uncomment and
+  # adapt as needed.
+  app:
+    image: alpine:latest
+    command: sh -c "echo 'Replace this stub with your real app service' && sleep infinity"
+
+  # postgres:
+  #   image: postgres:16
+  #   environment:
+  #     POSTGRES_USER: dev
+  #     POSTGRES_PASSWORD: dev
+  #     POSTGRES_DB: app
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     # Named volume — survives `pc-down`. Use a host bind mount
+  #     # (./pgdata:/var/lib/postgresql/data) only if you need to inspect
+  #     # the files directly; named volumes are usually nicer.
+  #     - postgres_data:/var/lib/postgresql/data
+
+  # redis:
+  #   image: redis:7
+  #   ports:
+  #     - "6379:6379"
+
+# Named volumes referenced above. Listing them here makes podman-compose
+# create them as managed volumes (visible via `podman volume ls`) rather
+# than as anonymous one-off mounts.
+# volumes:
+#   postgres_data:

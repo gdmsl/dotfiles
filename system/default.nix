@@ -132,6 +132,27 @@
   # ── Ollama (local LLM inference) ────────────────────────────────────────
   services.ollama.enable = true;
 
+  # ── Containers (Podman) ─────────────────────────────────────────────────
+  # Podman is a daemonless, rootless-capable container engine. Unlike Docker,
+  # there is *no* system-wide daemon process running at boot — containers are
+  # spawned by your user on demand and exit when you stop them. That's the
+  # property we want here: nothing runs unless you explicitly asked for it.
+  #
+  #   dockerCompat = true
+  #     Adds a `docker` -> `podman` symlink and aliases `docker-compose` etc.
+  #     so any tool that hardcodes the `docker` binary (build scripts, IDE
+  #     dev-container integrations, CI tooling) works transparently.
+  #
+  #   defaultNetwork.settings.dns_enabled = true
+  #     Enables Podman's built-in DNS for container networks, so services in
+  #     a compose stack can find each other by name (e.g. `postgres:5432`)
+  #     instead of by IP. Required for almost any multi-service compose file.
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+    defaultNetwork.settings.dns_enabled = true;
+  };
+
   # ── Laptop hardware essentials ──────────────────────────────────────────
   services.fwupd.enable = true;       # firmware update daemon
   services.upower.enable = true;      # battery monitoring (consumed by noctalia/quickshell)

@@ -195,12 +195,16 @@ in
     gnumake
 
     # ── Dev tools ─────────────────────────────────────────────────────────
-    git-lfs       # Git Large File Storage
-    gh            # GitHub CLI
-    glab          # GitLab CLI
-    jira-cli-go   # interactive Jira CLI (the `jira` command)
-    acli          # Atlassian CLI (Jira/Confluence/Bitbucket)
-    mempalace     # local-first AI memory system (defined in let-binding above)
+    git-lfs        # Git Large File Storage
+    gh             # GitHub CLI
+    glab           # GitLab CLI
+    jira-cli-go    # interactive Jira CLI (the `jira` command)
+    acli           # Atlassian CLI (Jira/Confluence/Bitbucket)
+    mempalace      # local-first AI memory system (defined in let-binding above)
+    # Podman itself is enabled in system/default.nix; this is the Python wrapper
+    # that reads compose.yaml files and drives podman directly. Lighter than the
+    # Go `docker compose` plugin and works fine for typical multi-service stacks.
+    podman-compose
 
     # ── Fonts ─────────────────────────────────────────────────────────────
     # User-level fonts (also see system/default.nix for system-wide fonts).
