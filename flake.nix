@@ -58,6 +58,13 @@
       url = "github:NotAShelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # bimbumbam: a Wayland fullscreen toddler keyboard-basher (Rust). Built
+    # from its own flake; `follows = "nixpkgs"` so we don't pull a second copy.
+    bimbumbam = {
+      url = "github:gdmsl/bimbumbam";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # ── Outputs ───────────────────────────────────────────────────────────────

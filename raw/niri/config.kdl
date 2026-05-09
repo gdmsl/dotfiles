@@ -373,6 +373,7 @@ binds {
     Mod+Alt+Space hotkey-overlay-title="Launcher: Anyrun" { spawn "anyrun"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "hyprlock"; }
     Mod+G hotkey-overlay-title="Switch windows" { spawn "vicinae" "vicinae://extensions/vicinae/window-management/switch"; }
+    Mod+Shift+B hotkey-overlay-title="Toddler keyboard-basher" { spawn "bimbumbam"; }
 
     // Dev workspace (spawns terminal if empty)
     Mod+Alt+Return hotkey-overlay-title="Dev workspace" { spawn "fish" "-c" "dev"; }

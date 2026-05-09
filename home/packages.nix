@@ -12,12 +12,17 @@
 # To search for packages: nix search nixpkgs <name>
 # To see a package's info: nix eval nixpkgs#<name>.meta.description
 
-{ pkgs, lib, ... }:
+{ pkgs, lib, inputs, ... }:
 
 let
   # mempalace (local-first AI memory system) is built from PyPI. The recipe
   # lives in pkgs/mempalace.nix so the headless tty profile can reuse it.
   mempalace = import ./pkgs/mempalace.nix { inherit pkgs lib; };
+
+  # bimbumbam comes from its own flake (declared as an input in flake.nix).
+  # Each flake exposes a `packages.<system>.default` for `nix run`-style use,
+  # which is what we want here.
+  bimbumbam = inputs.bimbumbam.packages.${pkgs.system}.default;
 in
 
 {
@@ -88,6 +93,7 @@ in
     kitty
 
     # ── Applications ──────────────────────────────────────────────────────
+    bimbumbam        # fullscreen Wayland keyboard-basher (toddler-proof mode)
     fastfetch        # system info display (like neofetch, but fast)
     mpv              # media player
     cosmic-files     # COSMIC file manager
