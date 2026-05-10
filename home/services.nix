@@ -267,6 +267,34 @@ in
     Install.WantedBy = [ "timers.target" ];
   };
 
+  # ── Pueue: personal job queue ───────────────────────────────────────────
+  # Pueue is a small daemon (`pueued`) plus a CLI (`pueue`) for queueing
+  # shell commands on a single machine — think of it as a private batch
+  # scheduler. Common workflow:
+  #
+  #   pueue add -- long-build.sh --release      # enqueue a job
+  #   pueue status                              # see the queue
+  #   pueue follow <id>                         # tail a running job's output
+  #   pueue log <id>                            # show finished output
+  #   pueue parallel <N> [-g <group>]           # how many run at once
+  #   pueue group add gpu                       # separate queue for GPU work
+  #   pueue add -g gpu -- train.py              # enqueue into the gpu group
+  #
+  # The home-manager module below installs the `pueue` CLI, drops a config
+  # at ~/.config/pueue/pueue.yml, and registers `pueued.service` as a
+  # systemd user unit. WantedBy=default.target means the daemon starts at
+  # any user login (graphical or pure TTY/SSH), so jobs survive logouts as
+  # long as the user session lingers — to make them survive a full logout,
+  # enable systemd lingering for this user (`loginctl enable-linger gdmsl`).
+  services.pueue = {
+    enable = true;
+    settings = {
+      # Default group runs one job at a time. Bump per-group at runtime
+      # with `pueue parallel N` instead of editing this file.
+      daemon.default_parallel_tasks = 1;
+    };
+  };
+
   # ── Syncthing ───────────────────────────────────────────────────────────
   # Syncthing provides continuous file synchronization between devices.
   # Its config lives inside the encrypted vault for security.
