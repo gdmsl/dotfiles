@@ -1,2 +1,7 @@
+# OneDrive client config for the QPerfect sync folder.
+# skip_dir uses pipe-separated patterns matched against directory names anywhere
+# in the tree. We skip dev-tool dirs that contain Nix-store symlinks or generated
+# artifacts — those produced "Read-only file system" errors on every scan and
+# kept the client at ~33% CPU.
 sync_dir = "~/QPerfect"
-skip_dir = "Code"
+skip_dir = "Code|.git|.venv|venv|.direnv|node_modules|__pycache__|.cache|.pytest_cache|.mypy_cache|.ruff_cache|.tox|.next|.parcel-cache"
