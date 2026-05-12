@@ -15,9 +15,9 @@ environment {
 
     MOZ_ENABLE_WAYLAND "1"
 
-    // X11 compatibility via xwayland-satellite (started as a user systemd
-    // service — see home/services.nix). The display number here must match
-    // the `:0` argument passed to the satellite binary.
+    // X11 compatibility via xwayland-satellite: niri spawns it automatically
+    // as long as the binary is on PATH (provided by home/packages.nix) and
+    // hands it pre-created listenfds for `:0`. Must match this DISPLAY.
     DISPLAY ":0"
 }
 
