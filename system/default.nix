@@ -160,6 +160,36 @@
     defaultNetwork.settings.dns_enabled = true;
   };
 
+  # ── nix-ld (run foreign dynamic binaries) ───────────────────────────────
+  # NixOS binaries are patched to find their libraries in /nix/store, so
+  # generic Linux binaries (VSCode extensions, language toolchains, AI tools,
+  # proprietary blobs) fail to start because their hardcoded interpreter path
+  # `/lib64/ld-linux-x86-64.so.2` doesn't exist on NixOS.
+  #
+  # nix-ld provides exactly that path: a tiny shim that re-execs the real
+  # glibc dynamic linker from nixpkgs and exposes the libraries below via
+  # LD_LIBRARY_PATH. Any non-Nix binary that's dynamically linked against
+  # glibc now Just Works.
+  #
+  # `libraries` is the set of shared libs made available to those binaries.
+  # If a tool errors with `cannot open shared object file: libfoo.so.N`, add
+  # the package providing libfoo.so.N here and rebuild.
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      stdenv.cc.cc.lib  # libstdc++, libgcc_s — needed by almost everything
+      zlib              # libz — extremely common
+      openssl           # libssl, libcrypto
+      curl              # libcurl
+      icu               # libicu — Node, .NET, Java tooling
+      libxml2
+      libxslt
+      nss               # network security services (browsers, Electron)
+      nspr              # NSS companion runtime
+      libGL             # OpenGL stub — graphical tools
+    ];
+  };
+
   # ── Laptop hardware essentials ──────────────────────────────────────────
   services.fwupd.enable = true;       # firmware update daemon
   services.upower.enable = true;      # battery monitoring (consumed by noctalia/quickshell)
