@@ -119,8 +119,7 @@ in
     zoom-us
     microsoft-edge
     spotify
-    # Logseq pinned to electron_39 — newer electrons broke 0.10.15 rendering.
-    (logseq.override { electron = electron_39; })
+    logseq
 
     # ── AI / LLM ──────────────────────────────────────────────────────────
     claude-code

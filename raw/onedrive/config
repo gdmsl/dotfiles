@@ -4,4 +4,4 @@
 # artifacts — those produced "Read-only file system" errors on every scan and
 # kept the client at ~33% CPU.
 sync_dir = "~/QPerfect"
-skip_dir = "Code|.git|.venv|venv|.direnv|node_modules|__pycache__|.cache|.pytest_cache|.mypy_cache|.ruff_cache|.tox|.next|.parcel-cache"
+skip_dir = "Code|.git|.venv|venv|.direnv|.CondaPkg|.uv-cache|node_modules|__pycache__|.cache|.pytest_cache|.mypy_cache|.ruff_cache|.tox|.next|.parcel-cache"
