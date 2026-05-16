@@ -21,8 +21,10 @@ let
 
   # bimbumbam comes from its own flake (declared as an input in flake.nix).
   # Each flake exposes a `packages.<system>.default` for `nix run`-style use,
-  # which is what we want here.
-  bimbumbam = inputs.bimbumbam.packages.${pkgs.system}.default;
+  # which is what we want here. `pkgs.stdenv.hostPlatform.system` is the
+  # current way to ask "what platform string ('x86_64-linux', …) is this
+  # pkgs built for?" — it replaces the deprecated `pkgs.system`.
+  bimbumbam = inputs.bimbumbam.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in
 
 {
