@@ -2,39 +2,44 @@
 # ║  hyprland.nix — Hyprland window manager configuration                      ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# Hyprland's config format uses `source=` directives for modularity (similar
-# to CSS @import). Rather than nixifying it, we deploy the raw config files
-# from raw/hypr/ into ~/.config/hypr/.
+# Since Hyprland 0.55 / Home Manager 26.05 the config is written in Lua. The
+# canonical entry-point is `~/.config/hypr/hyprland.lua`, which `require()`s
+# sibling modules (Hyprland adds `~/.config/hypr/` to package.path).
 #
-# The two subtrees `conf/` (modular fragments sourced by hyprland.conf) and
-# `scripts/` (helper scripts called from keybindings) are deployed via
-# `recursive = true`, which symlinks everything inside in one shot — much
-# tidier than listing each file. Scripts in raw/hypr/scripts are checked in
-# with the executable bit set so Nix preserves it through the store import.
+# We deploy the raw Lua files from raw/hypr/ as symlinks. The helper scripts
+# in raw/hypr/scripts/ are checked in with the executable bit set so Nix
+# preserves it through the store import.
+#
+# Note: hypridle / hyprlock / hyprpaper still use hyprlang — they're separate
+# daemons with their own parsers and weren't migrated by 0.55.
 
 { config, pkgs, ... }:
 
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    # Read the entry-point config file as the HM-managed hyprland.conf;
-    # it `source=`s everything in conf/ which we deploy below.
-    extraConfig = builtins.readFile ../../raw/hypr/hyprland.conf;
+    # Generate `~/.config/hypr/hyprland.lua` instead of the legacy `.conf`.
+    configType = "lua";
+    # The entry-point Lua file gets appended verbatim into the HM-rendered
+    # hyprland.lua. From there it `require()`s everything in conf/.
+    extraConfig = builtins.readFile ../../raw/hypr/hyprland.lua;
   };
 
   xdg.configFile = {
-    # Top-level fragments referenced directly from hyprland.conf
-    "hypr/monitors.conf".source = ../../raw/hypr/monitors.conf;
-    "hypr/workspaces.conf".source = ../../raw/hypr/workspaces.conf;
+    # Top-level Lua modules referenced directly from hyprland.lua
+    "hypr/vars.lua".source = ../../raw/hypr/vars.lua;
+    "hypr/monitors.lua".source = ../../raw/hypr/monitors.lua;
+    "hypr/workspaces.lua".source = ../../raw/hypr/workspaces.lua;
+
+    # Standalone hyprlang configs for the auxiliary daemons.
     "hypr/hyprlock.conf".source = ../../raw/hypr/hyprlock.conf;
     "hypr/hypridle.conf".source = ../../raw/hypr/hypridle.conf;
     "hypr/hyprpaper.conf".source = ../../raw/hypr/hyprpaper.conf;
     "hypr/hyprshade.toml".source = ../../raw/hypr/hyprshade.toml;
 
-    # Modular fragments (animations, keybindings, etc.) and helper scripts.
-    # `recursive = true` deploys the directory contents one-by-one as
-    # symlinks, instead of symlinking the whole directory — that means new
-    # files added later still show up after `home-manager switch`.
+    # Modular fragments and helper scripts. `recursive = true` deploys the
+    # directory contents one-by-one as symlinks, instead of symlinking the
+    # whole directory — that means new files show up after a `switch`.
     "hypr/conf" = {
       source = ../../raw/hypr/conf;
       recursive = true;
