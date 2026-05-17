@@ -131,6 +131,12 @@
     ".dircolors".source = ../raw/dircolors;
     ".makepkg.conf".source = ../raw/makepkg.conf;
 
+    # Julia REPL/IJulia startup files. Julia looks for
+    # ~/.julia/config/startup.jl on every launch; ours auto-loads Revise so
+    # edits to packages are picked up without restarting the REPL.
+    ".julia/config/startup.jl".source = ../raw/julia/startup.jl;
+    ".julia/config/startup_ijulia.jl".source = ../raw/julia/startup_ijulia.jl;
+
     # Symlink app data into the encrypted Personal vault.
     # mkOutOfStoreSymlink creates a real symlink (not a Nix store copy), so
     # the apps read/write data directly inside ~/Personal/. This keeps

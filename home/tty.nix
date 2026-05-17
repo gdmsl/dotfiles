@@ -165,4 +165,10 @@ in
   # worth carrying. Other raw/* files (qt5ct, kvantum, chromium-flags,
   # fontconfig, locale.conf) are display-only and skipped here.
   home.file.".dircolors".source = ../raw/dircolors;
+
+  # Julia REPL/IJulia startup files — Julia reads ~/.julia/config/startup.jl
+  # on every launch and ours auto-loads Revise. Same recipe as the yara
+  # profile (home/default.nix); the file lives in raw/julia/.
+  home.file.".julia/config/startup.jl".source = ../raw/julia/startup.jl;
+  home.file.".julia/config/startup_ijulia.jl".source = ../raw/julia/startup_ijulia.jl;
 }
