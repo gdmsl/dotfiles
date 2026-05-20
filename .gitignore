@@ -6,3 +6,4 @@
 third-party/*.zip
 third-party/*.tar.*
 third-party/*.iso
+result*
