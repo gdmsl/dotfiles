@@ -22,9 +22,13 @@
       package = pkgs.tokyonight-gtk-theme;  # Nix installs the theme package
     };
 
+    # Colloid-Dark — modern flat icon theme by Vinceliuice (same author as Tela).
+    # More complete than Tela-circle and ships a `scalable/` variant of most
+    # icons, which lets Qt's icon engine render cleanly at non-standard sizes
+    # like the 19×19 noctalia-shell requests.
     iconTheme = {
-      name = "Tela-circle-dark";
-      package = pkgs.tela-circle-icon-theme;
+      name = "Colloid-Dark";
+      package = pkgs.colloid-icon-theme;
     };
 
     cursorTheme = {

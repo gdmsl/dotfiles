@@ -6,7 +6,7 @@ local M = {}
 M.system_theme = "Arc-Dark"
 M.cursor_theme = "Bibata-Modern-Ice"
 M.cursor_size  = 24
-M.icon_theme   = "Tela-circle-dark"
+M.icon_theme   = "Colloid-Dark"
 M.dpi_scale    = 1
 M.text_scale   = 1
 

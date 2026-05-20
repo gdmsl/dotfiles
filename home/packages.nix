@@ -176,7 +176,13 @@ in
 
     # ── Theming ───────────────────────────────────────────────────────────
     tokyonight-gtk-theme        # GTK theme
-    tela-circle-icon-theme      # icon theme
+    colloid-icon-theme          # icon theme (active — set in home/desktop/gtk.nix)
+    # Fallback icon set. Not the active theme — installed so that any app
+    # asking for an icon by name like "user-desktop" (which Qt's noctalia-shell
+    # does) can resolve it even if Colloid lacks that specific name/size.
+    # GTK and many Qt apps look up "Adwaita" by name when their primary theme
+    # misses an icon, so having it present silences ~850 warnings/day.
+    adwaita-icon-theme
     bibata-cursors              # cursor theme
     nwg-look                    # GTK theme settings GUI for Wayland
     dconf                       # GNOME settings backend (needed for GTK config)
