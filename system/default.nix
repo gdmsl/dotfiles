@@ -202,10 +202,15 @@
   # BlueZ daemon settings. These end up in /etc/bluetooth/main.conf.
   hardware.bluetooth.settings = {
     General = {
-      # Experimental = battery reporting + newer codec negotiation paths in BlueZ.
-      # KernelExperimental enables the kernel-side LE features BlueZ relies on.
+      # Experimental = userspace experimental features (battery reporting,
+      # AAC/aptX codec negotiation). Safe and useful.
       Experimental = true;
-      KernelExperimental = true;
+      # KernelExperimental was on, but it activates BlueZ's LE Audio (BAP/CAP)
+      # endpoints. Our RTL8852CU + current kernel combo can't fully back those,
+      # which produced `bap_detached: Unable to find bap session` on every
+      # shutdown. Disabling unless we actually need LE Audio (Auracast, hearing
+      # aids, etc.).
+      # KernelExperimental = true;
     };
     Policy = {
       # When bluetoothd starts (boot or post-resume restart), automatically
@@ -240,20 +245,42 @@
     KERNEL=="hidraw*", SUBSYSTEM=="hidraw", MODE="0666", TAG+="uaccess", TAG+="udev-acl"
   '';
 
-  # After suspend the Realtek BT USB device re-enumerates and bluetoothd loses
-  # the adapter. `powerManagement.resumeCommands` is NixOS's canonical
-  # post-resume hook — it ends up in /etc/systemd/system-sleep/, which
-  # systemd-suspend.service runs with $1 = "post" right after wake-up.
-  # (The previous `systemd.services.bluetooth-resume` unit used
-  #  `wantedBy = [ "suspend.target" ]`, which actually fires *before* the
-  #  sleep call, not after resume — that's why BT was staying off.)
+  # After suspend the Realtek RTL8852CU BT USB device re-enumerates AND the
+  # adapter firmware sometimes wedges, so just restarting bluetoothd isn't
+  # enough — bluetoothd binds before /sys/class/bluetooth/hci0 reappears
+  # (or finds an adapter the kernel driver thinks is alive but actually
+  # isn't). Both produce a "started but doesn't work" state.
+  #
+  # The robust sequence is:
+  #   1. Kill bluetoothd hard (avoids 90s TimeoutStopSec on dead HCI handle).
+  #   2. Reload the btusb kernel driver. This unbinds the stale adapter and
+  #      forces a clean re-enumeration with fresh firmware state.
+  #   3. Unblock rfkill in case suspend left a soft-block on the radio.
+  #   4. Poll /sys/class/bluetooth/hci0 until the adapter appears (or 5s).
+  #   5. Start bluetoothd. `AutoEnable=true` powers it on and reconnects
+  #      trusted devices.
+  #
+  # `powerManagement.resumeCommands` is NixOS's canonical post-resume hook:
+  # it ends up as the ExecStop of sleep-actions.service, which runs when
+  # sleep.target deactivates on wake-up.
   powerManagement.resumeCommands = ''
-    # In case suspend left a soft-block on the radio.
-    ${pkgs.util-linux}/bin/rfkill unblock bluetooth || true
-    # SIGKILL first — a clean stop would block on bluetoothd's 90s
-    # TimeoutStopSec waiting for the dead HCI handle to reply. Killing
-    # outright lets the new instance start immediately.
     ${pkgs.systemd}/bin/systemctl kill -s SIGKILL bluetooth.service || true
+
+    # Force a clean driver/adapter re-init. -r unloads, modprobe reloads.
+    # The btusb option from boot.extraModprobeConfig (enable_autosuspend=0)
+    # is re-applied automatically by the kernel's modprobe.d lookup.
+    ${pkgs.kmod}/bin/modprobe -r btusb || true
+    ${pkgs.kmod}/bin/modprobe btusb || true
+
+    ${pkgs.util-linux}/bin/rfkill unblock bluetooth || true
+
+    # Wait up to 5s for the adapter to enumerate. Without this wait,
+    # bluetoothd starts before hci0 exists and silently fails to bind.
+    for i in $(seq 1 50); do
+      [ -e /sys/class/bluetooth/hci0 ] && break
+      sleep 0.1
+    done
+
     ${pkgs.systemd}/bin/systemctl start bluetooth.service
   '';
 
