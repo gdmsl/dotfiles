@@ -61,13 +61,18 @@ layout "us"
     }
 
     trackpoint {
+        // Repurpose the red nub: pressing the middle button below the spacebar
+        // and nudging the stick scrolls — vertical push = vertical scroll,
+        // horizontal push = horizontal scroll. BTN_MIDDLE in evdev is 274.
+        scroll-method "on-button-down"
+        scroll-button 274
+        // Two-finger middle-click (left+right together) still emits a real
+        // middle click, since the physical middle button is now the scroll key.
+        middle-emulation
         // off
         // natural-scroll
         // accel-speed 0.2
         // accel-profile "flat"
-        // scroll-method "on-button-down"
-        // scroll-button 273
-        // middle-emulation
     }
 
     // Uncomment this to make the mouse warp to the center of newly focused windows.
