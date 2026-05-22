@@ -177,12 +177,19 @@ in
     # ── Theming ───────────────────────────────────────────────────────────
     tokyonight-gtk-theme        # GTK theme
     colloid-icon-theme          # icon theme (active — set in home/desktop/gtk.nix)
-    # Fallback icon set. Not the active theme — installed so that any app
-    # asking for an icon by name like "user-desktop" (which Qt's noctalia-shell
-    # does) can resolve it even if Colloid lacks that specific name/size.
-    # GTK and many Qt apps look up "Adwaita" by name when their primary theme
-    # misses an icon, so having it present silences ~850 warnings/day.
+    # Parent theme in Colloid-Dark's inheritance chain
+    # (Inherits=hicolor,breeze in its index.theme). Without it, COSMIC apps
+    # like cosmic-files miss window controls / folder icons and degrade into
+    # full-theme scans on every icon lookup — visibly slow.
+    kdePackages.breeze-icons
+    # Universal-fallback icon set. Not in Colloid's Inherits= chain, but many
+    # GTK/Qt apps (e.g. noctalia-shell) request icons from "Adwaita" by name
+    # directly when their primary theme misses one.
     adwaita-icon-theme
+    # COSMIC apps (cosmic-files, etc.) don't honour the GTK iconTheme setting —
+    # they default to looking up the "Cosmic" theme by name. Without this
+    # package window controls and folder icons render as blanks.
+    cosmic-icons
     bibata-cursors              # cursor theme
     nwg-look                    # GTK theme settings GUI for Wayland
     dconf                       # GNOME settings backend (needed for GTK config)
