@@ -435,6 +435,7 @@
     "acli"
     "acli-unwrapped"
     "aptos-fonts"
+    "aptos-fonts.zip"  # the requireFile src derivation now inherits the unfree license too
     "claude-code"
     "corefonts"
     "discord"
@@ -444,6 +445,16 @@
     "spotify"
     "vista-fonts"
     "zoom"
+  ];
+
+  # ── Insecure packages ───────────────────────────────────────────────────
+  # Nix refuses to build packages whose dependencies are past end-of-life
+  # (known-vulnerable) unless you explicitly opt in by name+version here.
+  # Logseq bundles an old Electron runtime that upstream hasn't updated, so
+  # we accept the risk to keep it installable. Revisit when Logseq ships a
+  # newer Electron (bump the version string or drop this line).
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-39.8.10"
   ];
 
   # ── Nix daemon settings ─────────────────────────────────────────────────

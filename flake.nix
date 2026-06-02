@@ -87,6 +87,7 @@
           "acli"
           "acli-unwrapped"
           "aptos-fonts"
+          "aptos-fonts.zip"  # requireFile src derivation also inherits the unfree license
           "claude-code"
           "corefonts"
           "discord"
@@ -96,6 +97,11 @@
           "spotify"
           "vista-fonts"
           "zoom"
+        ];
+        # Logseq bundles an end-of-life Electron that Nix would otherwise refuse
+        # to build. Keep in sync with system/default.nix's permittedInsecurePackages.
+        config.permittedInsecurePackages = [
+          "electron-39.8.10"
         ];
       };
 
