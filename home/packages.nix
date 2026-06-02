@@ -116,6 +116,7 @@ in
 
     # ── Communication / productivity ──────────────────────────────────────
     discord
+    signal-desktop
     slack
     telegram-desktop
     zoom-us
