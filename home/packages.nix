@@ -47,7 +47,9 @@ in
     hyperfine     # command benchmarking tool
     tokei         # count lines of code by language
     yazi          # terminal file manager (fast, async)
-    bottom        # htop alternative (system monitor)
+    bottom        # htop alternative (system monitor; the command is `btm`)
+    btop          # resource monitor with a polished TUI (CPU/mem/net/procs)
+    glances       # broad single-screen system overview (also has a web mode)
     direnv        # auto-load env vars when entering a directory
     jq            # JSON processor (query, filter, transform)
     glow          # terminal markdown renderer (pager + TUI browser)
@@ -58,12 +60,9 @@ in
 
     # ── Hardware / system info ────────────────────────────────────────────
     # `inxi -Fxxxz` is the modern one-shot hardware report (CPU/GPU/RAM/disks/
-    # sensors/network). The lspci/lsusb/lshw classics haven't been replaced —
-    # they're still the canonical detail sources, just less pretty.
+    # sensors/network). The lspci/lsusb/lshw classics live in system/default.nix
+    # so they're also on root's PATH (e.g. `sudo lspci -k` to show drivers).
     inxi              # all-in-one hardware/system report (try: inxi -Fxxxz)
-    lshw              # hardware tree (try: lshw -short)
-    pciutils          # provides lspci (PCI device enumeration)
-    usbutils          # provides lsusb (USB device enumeration)
     hwinfo            # verbose hardware probe (alternative to lshw)
     dmidecode         # BIOS/SMBIOS dump — RAM slots, firmware, board info
     nvtopPackages.amd # live GPU monitor — htop for the Radeon iGPU
