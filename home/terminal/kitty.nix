@@ -37,7 +37,9 @@
       # watches that target — exhausting the system's inotify watches (which
       # starves other watchers like Julia's Revise). The config only changes
       # on a rebuild anyway, so just restart kitty to pick up new settings.
-      auto_reload_config = "no";
+      # This option is a float (seconds between checks); a negative value
+      # disables the watcher entirely.
+      auto_reload_config = "-1";
       scrollback_lines = 10000;
       touch_scroll_multiplier = "2.0";
       copy_on_select = "yes";       # selecting text copies it automatically
