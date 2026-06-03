@@ -100,6 +100,7 @@ in
     mpv              # media player
     cosmic-files     # COSMIC file manager
     cosmic-edit      # COSMIC text editor
+    file-roller      # GUI archive manager (zip, tar, 7z, … — browse/extract)
     zathura          # minimal PDF/ebook viewer (vim keybindings)
     evince           # GNOME PDF viewer
     loupe            # GNOME image viewer
