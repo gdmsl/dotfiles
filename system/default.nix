@@ -418,6 +418,14 @@
     zellij
     curl
 
+    # Hardware diagnostics — kept system-wide (not in the user profile) so
+    # they're on root's PATH too: `sudo lspci -k`, `sudo lshw`, etc. need
+    # root to report kernel drivers and full detail, and these are exactly
+    # the tools you reach for in a TTY recovery session.
+    lshw              # hardware tree (try: lshw -short)
+    pciutils          # provides lspci (PCI device enumeration)
+    usbutils          # provides lsusb (USB device enumeration)
+
     # Networking (the matching daemons are enabled below)
     tailscale
 
