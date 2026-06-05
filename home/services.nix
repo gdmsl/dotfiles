@@ -25,18 +25,25 @@ let
 in
 {
   systemd.user.services = {
-    # ── Clipboard history ─────────────────────────────────────────────────
-    # wl-paste watches the Wayland clipboard; cliphist stores each entry.
-    # Use `cliphist list` to see history, or the cliphist-pick script.
-    cliphist = {
+    # ── Clipboard persistence ─────────────────────────────────────────────
+    # On Wayland the clipboard is owned by the source app: when you copy from
+    # an app and then close it, whatever you copied vanishes. wl-clip-persist
+    # takes ownership of the clipboard so its contents survive the source app
+    # closing. Clipboard *history* itself is handled by Vicinae's own built-in
+    # clipboard server (see vicinae.service), so no separate history daemon.
+    #
+    # --clipboard regular = the normal Ctrl+C/Ctrl+V clipboard (not the
+    # middle-click "primary selection", which some apps misbehave with).
+    wl-clip-persist = {
       Unit = {
-        Description = "Clipboard history manager";
+        Description = "Keep clipboard contents alive after the source app closes";
         PartOf = [ "graphical-session.target" ];
         After = [ "graphical-session.target" ];
       };
       Service = {
-        ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --watch ${pkgs.cliphist}/bin/cliphist store";
+        ExecStart = "${pkgs.wl-clip-persist}/bin/wl-clip-persist --clipboard regular";
         Restart = "on-failure";
+        RestartSec = 2;
       };
       Install = {
         WantedBy = [ "graphical-session.target" ];

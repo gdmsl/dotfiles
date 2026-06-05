@@ -70,7 +70,7 @@ in
 
     # ── Wayland / Desktop utilities ───────────────────────────────────────
     wl-clipboard          # clipboard CLI (wl-copy / wl-paste)
-    cliphist              # clipboard history manager
+    wl-clip-persist       # keeps clipboard contents alive after the source app closes
     tofi                  # fast Wayland launcher/menu (like dmenu)
     brightnessctl         # backlight control
     playerctl             # MPRIS media player control (play/pause/next)

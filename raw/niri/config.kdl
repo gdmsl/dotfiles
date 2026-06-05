@@ -249,7 +249,7 @@ layout {
 // See the binds section below for more spawn examples.
 
 // ── Daemons managed by systemd (see run_once_install-niri.sh) ──────
-// noctalia-shell, kanshi, hyprpolkitagent, vicinae, cliphist, niriswitcher, hypridle
+// noctalia-shell, kanshi, hyprpolkitagent, vicinae, wl-clip-persist, niriswitcher, hypridle
 
 // GTK/cursor theming managed by Home Manager (desktop/gtk.nix + dconf)
 
@@ -555,9 +555,8 @@ binds {
     Alt+Tab repeat=false { spawn "gdbus" "call" "--session" "--dest" "io.github.isaksamsten.Niriswitcher" "--object-path" "/io/github/isaksamsten/Niriswitcher" "--method" "io.github.isaksamsten.Niriswitcher.application" ; }
     Alt+Shift+Tab repeat=false { spawn "gdbus" "call" "--session" "--dest" "io.github.isaksamsten.Niriswitcher" "--object-path" "/io/github/isaksamsten/Niriswitcher" "--method" "io.github.isaksamsten.Niriswitcher.application" ; }
 
-    // Clipboard history (vicinae primary, cliphist+tofi fallback)
+    // Clipboard history (Vicinae's built-in clipboard server)
     Mod+P repeat=false { spawn "vicinae" "vicinae://extensions/vicinae/clipboard/history"; }
-    Mod+Shift+P repeat=false { spawn "cliphist-pick"; }
 
     // File manager
     Mod+X repeat=false { spawn "kitty" "-e" "yazi" ; }
