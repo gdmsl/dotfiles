@@ -1,0 +1,45 @@
+# tofi theme for the niri keybinding cheat-sheet (used by ~/.local/bin/niri-keys).
+# A wide, centred panel with a monospace font so the "key → action" columns
+# line up. Passed explicitly with `tofi --config`, so it never clobbers a
+# default tofi config. Colours follow the Tokyo Night palette and the #ff9e64
+# accent used by niri's focus ring.
+
+# ── Window geometry ──────────────────────────────────────────────────────
+anchor = center
+width = 60%
+height = 70%
+horizontal = false
+num-results = 0
+result-spacing = 6
+min-input-width = 240
+
+# ── Frame ────────────────────────────────────────────────────────────────
+background-color = #1a1b26f2
+corner-radius = 14
+border-width = 2
+border-color = #ff9e64
+outline-width = 0
+padding-top = 28
+padding-bottom = 28
+padding-left = 36
+padding-right = 36
+
+# ── Font ─────────────────────────────────────────────────────────────────
+font = Maple Mono NF
+font-size = 13
+
+# ── Colours ──────────────────────────────────────────────────────────────
+text-color = #a9b1d6
+default-result-color = #a9b1d6
+prompt-text = "search ❯ "
+prompt-color = #ff9e64
+placeholder-text = "filter shortcuts…"
+placeholder-color = #565f89
+selection-color = #1a1b26
+selection-background = #ff9e64
+selection-background-padding = 6
+selection-match-color = #7aa2f7
+
+# ── Matching ─────────────────────────────────────────────────────────────
+fuzzy-match = true
+hint-font = false
