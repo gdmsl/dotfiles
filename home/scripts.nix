@@ -38,12 +38,33 @@
       '';
     };
 
-    # Delete a clipboard entry — fuzzy-search and remove from history
-    ".local/bin/cliphist-delete" = {
+    # Searchable cheat-sheet of niri keybindings. Parses the binds {} block of
+    # the live niri config and shows "key  →  description" lines in tofi, where
+    # you can fuzzy-search them. For each bind it prefers the hotkey-overlay-title
+    # (the human label), falling back to the raw action when there's no title.
+    # The selection is discarded (>/dev/null) — this is a viewer, not a launcher.
+    ".local/bin/niri-keys" = {
       executable = true;
       text = ''
         #!/bin/sh
-        cliphist list | tofi --prompt-text "delete: " | cliphist delete
+        config="$HOME/.config/niri/config.kdl"
+        awk '
+          function trim(s){ sub(/^[ \t]+/,"",s); sub(/[ \t]+$/,"",s); return s }
+          /^binds[ \t]*\{/ { inb=1; next }
+          inb && /^\}/      { inb=0; next }
+          inb {
+            l=trim($0)
+            if (l ~ /^\/\// || l=="" || l !~ /\{/) next
+            key=l; sub(/[ \t{].*/,"",key)
+            if (match(l, /hotkey-overlay-title="[^"]*"/)) {
+              d=substr(l,RSTART,RLENGTH); sub(/^hotkey-overlay-title="/,"",d); sub(/"$/,"",d)
+            } else {
+              d=l; sub(/^[^{]*\{/,"",d); sub(/\}[^}]*$/,"",d); gsub(/[\\"]/,"",d)
+              d=trim(d); sub(/;$/,"",d); d=trim(d)
+            }
+            printf "%-26s  →  %s\n", key, d
+          }
+        ' "$config" | tofi --prompt-text "keys: " --fuzzy-match true --width 60% --height 60% >/dev/null
       '';
     };
 
