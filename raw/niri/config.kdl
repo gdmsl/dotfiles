@@ -538,11 +538,15 @@ binds {
 
     Mod+W { toggle-column-tabbed-display; }
 
-    // Screenshots (grim → satty for annotation/crop)
-    Print { spawn "sh" "-c" "grim - | satty --filename -"; }
-    Shift+Print { spawn "sh" "-c" "grim -g \"$(slurp)\" - | satty --filename -"; }
+    // Screenshots — quick save+copy, no annotation (full screen / region)
+    Print { spawn "screenshot-save" "full"; }
+    Shift+Print { spawn "screenshot-save"; }
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
+
+    // Screenshots — annotate (grim → satty for crop/markup)
+    Mod+Print { spawn "sh" "-c" "grim - | satty --filename -"; }
+    Mod+Shift+Print { spawn "sh" "-c" "grim -g \"$(slurp)\" - | satty --filename -"; }
 
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 

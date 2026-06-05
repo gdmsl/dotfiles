@@ -13,12 +13,28 @@
 
 {
   home.file = {
-    # Interactive clipboard picker — fuzzy-search clipboard history with tofi
-    ".local/bin/cliphist-pick" = {
+    # Quick screenshot — capture, save to disk, AND copy to the clipboard, with
+    # no annotation step (that's what the Satty binds are for). Pass "full" to
+    # grab the whole output; with no argument it lets you select a region.
+    #   grim   captures the pixels    (region via -g, or the full screen)
+    #   wl-copy puts the PNG on the clipboard so you can paste it immediately
+    #   notify-send confirms, using the shot itself as the notification icon
+    ".local/bin/screenshot-save" = {
       executable = true;
       text = ''
         #!/bin/sh
-        cliphist list | tofi --prompt-text "clipboard: " | cliphist decode | wl-copy
+        dir="$HOME/Pictures/Screenshots"
+        mkdir -p "$dir"
+        file="$dir/Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png"
+        case "$1" in
+          full) grim "$file" ;;
+          # slurp returns the selected geometry; a non-zero exit means the
+          # user pressed Escape, so we bail out without writing a file.
+          *)    geom=$(slurp) || exit 0
+                grim -g "$geom" "$file" ;;
+        esac
+        wl-copy --type image/png < "$file"
+        notify-send -i "$file" "Screenshot saved" "$file"
       '';
     };
 
