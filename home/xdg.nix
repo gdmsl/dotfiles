@@ -91,6 +91,7 @@
   # nixifying (Python scripts, INI files, etc.).
   xdg.configFile = {
     "fastfetch/config.jsonc".source = ../raw/fastfetch/config.jsonc;
+    "tofi/cheatsheet".source = ../raw/tofi/cheatsheet;
     "mpv/mpv.conf".source = ../raw/mpv/mpv.conf;
     "mpv/input.conf".source = ../raw/mpv/input.conf;
     "gdb/gdbinit".source = ../raw/gdb/gdbinit;

@@ -42,7 +42,9 @@
     # the live niri config and shows "key  →  description" lines in tofi, where
     # you can fuzzy-search them. For each bind it prefers the hotkey-overlay-title
     # (the human label), falling back to the raw action when there's no title.
-    # The selection is discarded (>/dev/null) — this is a viewer, not a launcher.
+    # Styling lives in the dedicated tofi/cheatsheet theme (a wide, centred panel
+    # in a monospace font so the columns align). The selection is discarded
+    # (>/dev/null) — this is a viewer, not a launcher.
     ".local/bin/niri-keys" = {
       executable = true;
       text = ''
@@ -64,7 +66,7 @@
             }
             printf "%-26s  →  %s\n", key, d
           }
-        ' "$config" | tofi --prompt-text "keys: " --fuzzy-match true --width 60% --height 60% >/dev/null
+        ' "$config" | tofi --config "$HOME/.config/tofi/cheatsheet" >/dev/null
       '';
     };
 
