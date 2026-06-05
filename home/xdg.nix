@@ -13,11 +13,38 @@
 # The `.desktop` file names (like "firefox.desktop") correspond to .desktop
 # entries installed by packages in /share/applications/.
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   xdg = {
     enable = true;
+
+    # ── XDG user directories ──────────────────────────────────────────────
+    # Writes ~/.config/user-dirs.dirs, which GTK/Qt apps read to populate the
+    # file-manager sidebar and "Save as" shortcuts. Most live directly in
+    # $HOME; Documents and Pictures live in the encrypted ~/Personal vault so
+    # they sync via Syncthing.
+    #
+    # createDirectories is OFF on purpose: it would `mkdir` every path at
+    # activation, including the vault ones. If the vault were locked during a
+    # rebuild, that would create Documents/Pictures inside the bare mountpoint
+    # and shadow the real data once unlocked. We scaffold the dirs ourselves
+    # below, guarding the vault paths behind a mount check.
+    userDirs = {
+      enable = true;
+      createDirectories = false;
+      # Export XDG_*_DIR into the session environment so apps can read them
+      # (the pre-26.05 default; set explicitly to silence the migration warning).
+      setSessionVariables = true;
+      desktop = "${config.home.homeDirectory}/Desktop";
+      documents = "${config.home.homeDirectory}/Personal/Documents";
+      download = "${config.home.homeDirectory}/Downloads";
+      music = "${config.home.homeDirectory}/Music";
+      pictures = "${config.home.homeDirectory}/Personal/Pictures";
+      videos = "${config.home.homeDirectory}/Videos";
+      templates = "${config.home.homeDirectory}/Templates";
+      publicShare = "${config.home.homeDirectory}/Public";
+    };
 
     mimeApps = {
       enable = true;
@@ -96,4 +123,16 @@
     "mpv/input.conf".source = ../raw/mpv/input.conf;
     "gdb/gdbinit".source = ../raw/gdb/gdbinit;
   };
+
+  # ── Scaffold the XDG user directories ─────────────────────────────────────
+  # Create the dirs declared in xdg.userDirs (createDirectories is off, see
+  # above). The $HOME ones are always safe to create. The vault ones are only
+  # created when ~/Personal is actually mounted, so we never write into the
+  # bare mountpoint. `run` is Home Manager's wrapper that honours dry-run.
+  home.activation.scaffoldUserDirs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    run mkdir -p "$HOME/Desktop" "$HOME/Public"
+    if ${pkgs.util-linux}/bin/mountpoint -q "$HOME/Personal"; then
+      run mkdir -p "$HOME/Personal/Documents" "$HOME/Personal/Pictures"
+    fi
+  '';
 }
