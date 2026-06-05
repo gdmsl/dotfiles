@@ -379,7 +379,7 @@ binds {
     Mod+Space hotkey-overlay-title="Launcher: Vicinae" { spawn "vicinae" "toggle"; }
     Mod+Alt+Space hotkey-overlay-title="Launcher: Anyrun" { spawn "anyrun"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "hyprlock"; }
-    Mod+G hotkey-overlay-title="Switch windows" { spawn "vicinae" "deeplink" "vicinae://extensions/vicinae/window-management"; }
+    Mod+G hotkey-overlay-title="Switch windows" { spawn "vicinae" "deeplink" "vicinae://launch/wm/switch-windows"; }
     Mod+Shift+B hotkey-overlay-title="Toddler keyboard-basher" { spawn "bimbumbam"; }
 
     // Dev workspace (spawns terminal if empty)
@@ -561,10 +561,10 @@ binds {
     Alt+Tab repeat=false { spawn "gdbus" "call" "--session" "--dest" "io.github.isaksamsten.Niriswitcher" "--object-path" "/io/github/isaksamsten/Niriswitcher" "--method" "io.github.isaksamsten.Niriswitcher.application" ; }
     Alt+Shift+Tab repeat=false { spawn "gdbus" "call" "--session" "--dest" "io.github.isaksamsten.Niriswitcher" "--object-path" "/io/github/isaksamsten/Niriswitcher" "--method" "io.github.isaksamsten.Niriswitcher.application" ; }
 
-    // Clipboard history (Vicinae's built-in clipboard server).
-    // Deeplinks must be opened via `vicinae deeplink <url>` and the URL is
-    // exactly vicinae://extensions/<author>/<extension> — no command segment.
-    Mod+P repeat=false { spawn "vicinae" "deeplink" "vicinae://extensions/vicinae/clipboard"; }
+    // Clipboard history. Vicinae's built-in commands open via the launch
+    // deeplink scheme `vicinae://launch/<provider>/<entrypoint>` (NOT the
+    // extensions/ scheme, which only resolves third-party store extensions).
+    Mod+P repeat=false { spawn "vicinae" "deeplink" "vicinae://launch/clipboard/history"; }
 
     // File manager
     Mod+X repeat=false { spawn "kitty" "-e" "yazi" ; }
