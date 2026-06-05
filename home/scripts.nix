@@ -23,7 +23,16 @@
       executable = true;
       text = ''
         #!/bin/sh
-        dir="$HOME/Pictures/Screenshots"
+        # Resolve the Pictures dir from the XDG user-dirs config. It points into
+        # the encrypted ~/Personal vault, so if that vault is locked (unmounted)
+        # fall back to a plain ~/Pictures rather than writing into the bare
+        # mountpoint. The notification below always shows the final path.
+        pics="$HOME/Pictures"
+        [ -r "$HOME/.config/user-dirs.dirs" ] && . "$HOME/.config/user-dirs.dirs" && pics="''${XDG_PICTURES_DIR:-$pics}"
+        case "$pics" in
+          "$HOME/Personal"/*) mountpoint -q "$HOME/Personal" 2>/dev/null || pics="$HOME/Pictures" ;;
+        esac
+        dir="$pics/Screenshots"
         mkdir -p "$dir"
         file="$dir/Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png"
         case "$1" in
