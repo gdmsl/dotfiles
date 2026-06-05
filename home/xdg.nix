@@ -44,6 +44,9 @@
       videos = "${config.home.homeDirectory}/Videos";
       templates = "${config.home.homeDirectory}/Templates";
       publicShare = "${config.home.homeDirectory}/Public";
+      # Home Manager emits a non-standard XDG_PROJECTS_DIR (default ~/Projects).
+      # Point it at the OneDrive-synced work projects tree, which already exists.
+      extraConfig.XDG_PROJECTS_DIR = "${config.home.homeDirectory}/QPerfect/Projects";
     };
 
     mimeApps = {
