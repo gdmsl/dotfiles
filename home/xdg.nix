@@ -61,11 +61,11 @@
         "image/x-icns" = "org.gnome.Loupe.desktop";
 
         # ── Text, PDF, files ──────────────────────────────────────────
-        "text/plain" = "com.system76.CosmicEdit.desktop";
+        "text/plain" = "org.gnome.TextEditor.desktop";
         "application/pdf" = "org.pwmt.zathura.desktop";
         "x-scheme-handler/mailto" = "chromium.desktop";
         "x-scheme-handler/tonsite" = "org.telegram.desktop.desktop";
-        "inode/directory" = "com.system76.CosmicFiles.desktop";
+        "inode/directory" = "org.gnome.Nautilus.desktop";
 
         # ── LibreOffice (documents, presentations, spreadsheets) ──────
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = "libreoffice-writer.desktop";

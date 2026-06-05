@@ -561,5 +561,5 @@ binds {
 
     // File manager
     Mod+X repeat=false { spawn "kitty" "-e" "yazi" ; }
-    Mod+Shift+X repeat=false { spawn "cosmic-files" ; }
+    Mod+Shift+X repeat=false { spawn "nautilus" ; }
 }

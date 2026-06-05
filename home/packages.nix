@@ -97,8 +97,8 @@ in
     bimbumbam        # fullscreen Wayland keyboard-basher (toddler-proof mode)
     fastfetch        # system info display (like neofetch, but fast)
     mpv              # media player
-    cosmic-files     # COSMIC file manager
-    cosmic-edit      # COSMIC text editor
+    nautilus         # GNOME file manager (GTK4/Adwaita)
+    gnome-text-editor # GNOME text editor (GTK4/Adwaita)
     file-roller      # GUI archive manager (zip, tar, 7z, … — browse/extract)
     zathura          # minimal PDF/ebook viewer (vim keybindings)
     evince           # GNOME PDF viewer
@@ -179,18 +179,13 @@ in
     tokyonight-gtk-theme        # GTK theme
     colloid-icon-theme          # icon theme (active — set in home/desktop/gtk.nix)
     # Parent theme in Colloid-Dark's inheritance chain
-    # (Inherits=hicolor,breeze in its index.theme). Without it, COSMIC apps
-    # like cosmic-files miss window controls / folder icons and degrade into
-    # full-theme scans on every icon lookup — visibly slow.
+    # (Inherits=hicolor,breeze in its index.theme). Without it, icon lookups
+    # that fall through to the breeze parent degrade into full-theme scans.
     kdePackages.breeze-icons
     # Universal-fallback icon set. Not in Colloid's Inherits= chain, but many
-    # GTK/Qt apps (e.g. noctalia-shell) request icons from "Adwaita" by name
-    # directly when their primary theme misses one.
+    # GTK/Qt apps (e.g. noctalia-shell, nautilus) request icons from "Adwaita"
+    # by name directly when their primary theme misses one.
     adwaita-icon-theme
-    # COSMIC apps (cosmic-files, etc.) don't honour the GTK iconTheme setting —
-    # they default to looking up the "Cosmic" theme by name. Without this
-    # package window controls and folder icons render as blanks.
-    cosmic-icons
     bibata-cursors              # cursor theme
     nwg-look                    # GTK theme settings GUI for Wayland
     dconf                       # GNOME settings backend (needed for GTK config)
