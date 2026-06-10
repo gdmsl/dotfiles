@@ -112,7 +112,7 @@ in
         After = [ "graphical-session.target" ];
       };
       Service = {
-        ExecStart = "${inputs.noctalia.packages.${system}.default}/bin/noctalia-shell";
+        ExecStart = "${inputs.noctalia.packages.${system}.default}/bin/noctalia";
         Restart = "on-failure";
         RestartSec = 2;
       };
