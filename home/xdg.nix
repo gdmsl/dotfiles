@@ -46,7 +46,8 @@
       publicShare = "${config.home.homeDirectory}/Public";
       # Home Manager emits a non-standard XDG_PROJECTS_DIR (default ~/Projects).
       # Point it at the OneDrive-synced work projects tree, which already exists.
-      extraConfig.XDG_PROJECTS_DIR = "${config.home.homeDirectory}/QPerfect/Projects";
+      # The key is the bare name (PROJECTS); HM expands it to XDG_PROJECTS_DIR.
+      extraConfig.PROJECTS = "${config.home.homeDirectory}/QPerfect/Projects";
     };
 
     mimeApps = {
