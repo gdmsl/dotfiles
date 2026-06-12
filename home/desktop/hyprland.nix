@@ -10,8 +10,8 @@
 # in raw/hypr/scripts/ are checked in with the executable bit set so Nix
 # preserves it through the store import.
 #
-# Note: hypridle / hyprlock / hyprpaper still use hyprlang — they're separate
-# daemons with their own parsers and weren't migrated by 0.55.
+# Note: hyprpaper still uses hyprlang — it's a separate daemon with its own
+# parser and wasn't migrated by 0.55.
 
 { config, pkgs, ... }:
 
@@ -31,9 +31,8 @@
     "hypr/monitors.lua".source = ../../raw/hypr/monitors.lua;
     "hypr/workspaces.lua".source = ../../raw/hypr/workspaces.lua;
 
-    # Standalone hyprlang configs for the auxiliary daemons.
-    "hypr/hyprlock.conf".source = ../../raw/hypr/hyprlock.conf;
-    "hypr/hypridle.conf".source = ../../raw/hypr/hypridle.conf;
+    # Standalone hyprlang configs for the auxiliary daemons. (Lock and idle are
+    # handled by noctalia now, so no hyprlock.conf / hypridle.conf.)
     "hypr/hyprpaper.conf".source = ../../raw/hypr/hyprpaper.conf;
     "hypr/hyprshade.toml".source = ../../raw/hypr/hyprshade.toml;
 

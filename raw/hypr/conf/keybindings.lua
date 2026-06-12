@@ -18,14 +18,14 @@ hl.bind(mod .. " + SHIFT + B",     hl.dsp.exec_cmd("uwsm app -- bimbumbam"))
 hl.bind(mod .. " + X",             hl.dsp.exec_cmd("uwsm app -- kitty -e yazi"))
 hl.bind(mod .. " + SHIFT + X",     hl.dsp.exec_cmd("uwsm app -- cosmic-files"))
 hl.bind(mod .. " + Space",         hl.dsp.exec_cmd("vicinae toggle"))
+hl.bind(mod .. " + SHIFT + Space", hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
 hl.bind(mod .. " + ALT + Space",   hl.dsp.exec_cmd("uwsm app -- anyrun"))
-hl.bind(mod .. " + Comma",         hl.dsp.exec_cmd("uwsm app -- hyprlock"))
+hl.bind(mod .. " + Comma",         hl.dsp.exec_cmd("noctalia msg session lock"))
 
--- Clipboard history (vicinae primary, cliphist+tofi fallback). Note that
--- the SUPER+P binding gets overwritten further down by the "prev workspace"
--- mapping; the SHIFT variant is the practical fallback.
-hl.bind("SUPER + P",         hl.dsp.exec_cmd("vicinae vicinae://extensions/vicinae/clipboard/history"))
-hl.bind("SUPER + SHIFT + P", hl.dsp.exec_cmd("cliphist-pick"))
+-- Clipboard history. Noctalia owns the clipboard manager itself (its own
+-- wlr-data-control daemon + history store), opened via its IPC panel toggle.
+-- Bound on the SHIFT slot because bare SUPER+P is shadowed by a later mapping.
+hl.bind("SUPER + SHIFT + P", hl.dsp.exec_cmd("noctalia msg panel-toggle clipboard"))
 
 -- ── Session ──────────────────────────────────────────────────────────────
 hl.bind("CTRL + ALT + Delete", hl.dsp.exit())
@@ -131,7 +131,7 @@ hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl s 10%-"))
 hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl s 10%+"))
 
 -- ── Misc hardware keys ───────────────────────────────────────────────────
-hl.bind("XF86Lock",       hl.dsp.exec_cmd("uwsm app -- hyprlock"))
+hl.bind("XF86Lock",       hl.dsp.exec_cmd("noctalia msg session lock"))
 hl.bind("XF86Calculator", hl.dsp.exec_cmd("uwsm app -- ghostty -e julia"))
 hl.bind("XF86Favorites",  hl.dsp.exec_cmd("uwsm app -- firefox"))
 

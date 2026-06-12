@@ -25,30 +25,9 @@ let
 in
 {
   systemd.user.services = {
-    # ── Clipboard persistence ─────────────────────────────────────────────
-    # On Wayland the clipboard is owned by the source app: when you copy from
-    # an app and then close it, whatever you copied vanishes. wl-clip-persist
-    # takes ownership of the clipboard so its contents survive the source app
-    # closing. Clipboard *history* itself is handled by Vicinae's own built-in
-    # clipboard server (see vicinae.service), so no separate history daemon.
-    #
-    # --clipboard regular = the normal Ctrl+C/Ctrl+V clipboard (not the
-    # middle-click "primary selection", which some apps misbehave with).
-    wl-clip-persist = {
-      Unit = {
-        Description = "Keep clipboard contents alive after the source app closes";
-        PartOf = [ "graphical-session.target" ];
-        After = [ "graphical-session.target" ];
-      };
-      Service = {
-        ExecStart = "${pkgs.wl-clip-persist}/bin/wl-clip-persist --clipboard regular";
-        Restart = "on-failure";
-        RestartSec = 2;
-      };
-      Install = {
-        WantedBy = [ "graphical-session.target" ];
-      };
-    };
+    # Clipboard persistence and history are both owned by noctalia now (its
+    # built-in wlr-data-control clipboard manager survives the source app
+    # closing and keeps its own history), so no separate wl-clip-persist daemon.
 
     # ── Vicinae launcher daemon ───────────────────────────────────────────
     # Runs in server mode so the UI appears instantly when triggered.
@@ -84,24 +63,9 @@ in
     #   };
     # };
 
-    # ── Idle manager ──────────────────────────────────────────────────────
-    # hypridle triggers actions on inactivity: lock screen, turn off display,
-    # suspend. Configured via hypridle.conf in the Hyprland config dir.
-    hypridle = {
-      Unit = {
-        Description = "Idle manager (lock, DPMS, suspend)";
-        PartOf = [ "graphical-session.target" ];
-        After = [ "graphical-session.target" ];
-      };
-      Service = {
-        ExecStart = "${pkgs.hypridle}/bin/hypridle";
-        Restart = "on-failure";
-        RestartSec = 2;
-      };
-      Install = {
-        WantedBy = [ "graphical-session.target" ];
-      };
-    };
+    # Idle management (dim, lock, DPMS off, suspend) is handled by noctalia's
+    # own ext-idle-notify daemon now — configured under Settings → Idle in the
+    # noctalia GUI — so no separate hypridle service.
 
     # ── Noctalia desktop shell ────────────────────────────────────────────
     # Panel, system tray, and desktop shell from the noctalia flake.

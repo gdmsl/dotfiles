@@ -249,7 +249,8 @@ layout {
 // See the binds section below for more spawn examples.
 
 // ── Daemons managed by systemd (see run_once_install-niri.sh) ──────
-// noctalia-shell, kanshi, hyprpolkitagent, vicinae, wl-clip-persist, niriswitcher, hypridle
+// noctalia-shell, kanshi, hyprpolkitagent, vicinae, niriswitcher
+// (noctalia handles clipboard, lock, and idle itself — no wl-clip-persist/hypridle)
 
 // GTK/cursor theming managed by Home Manager (desktop/gtk.nix + dconf)
 
@@ -377,8 +378,9 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+Return hotkey-overlay-title="Open a Terminal" { spawn "kitty"; }
     Mod+Space hotkey-overlay-title="Launcher: Vicinae" { spawn "vicinae" "toggle"; }
+    Mod+Shift+Space hotkey-overlay-title="Launcher: Noctalia" { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
     Mod+Alt+Space hotkey-overlay-title="Launcher: Anyrun" { spawn "anyrun"; }
-    Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "hyprlock"; }
+    Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "noctalia" "msg" "session" "lock"; }
     Mod+G hotkey-overlay-title="Switch windows" { spawn "vicinae" "deeplink" "vicinae://launch/wm/switch-windows"; }
     Mod+Shift+B hotkey-overlay-title="Toddler keyboard-basher" { spawn "bimbumbam"; }
 
@@ -561,10 +563,9 @@ binds {
     Alt+Tab repeat=false { spawn "gdbus" "call" "--session" "--dest" "io.github.isaksamsten.Niriswitcher" "--object-path" "/io/github/isaksamsten/Niriswitcher" "--method" "io.github.isaksamsten.Niriswitcher.application" ; }
     Alt+Shift+Tab repeat=false { spawn "gdbus" "call" "--session" "--dest" "io.github.isaksamsten.Niriswitcher" "--object-path" "/io/github/isaksamsten/Niriswitcher" "--method" "io.github.isaksamsten.Niriswitcher.application" ; }
 
-    // Clipboard history. Vicinae's built-in commands open via the launch
-    // deeplink scheme `vicinae://launch/<provider>/<entrypoint>` (NOT the
-    // extensions/ scheme, which only resolves third-party store extensions).
-    Mod+P repeat=false { spawn "vicinae" "deeplink" "vicinae://launch/clipboard/history"; }
+    // Clipboard history. Noctalia owns the clipboard manager itself (its own
+    // wlr-data-control daemon + history store), opened via its IPC panel toggle.
+    Mod+P repeat=false { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }
 
     // File manager
     Mod+X repeat=false { spawn "kitty" "-e" "yazi" ; }

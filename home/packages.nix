@@ -69,15 +69,12 @@ in
     cpufetch          # CPU info with ASCII art (uarch, AVX, cache)
 
     # ── Wayland / Desktop utilities ───────────────────────────────────────
-    wl-clipboard          # clipboard CLI (wl-copy / wl-paste)
-    wl-clip-persist       # keeps clipboard contents alive after the source app closes
+    wl-clipboard          # clipboard CLI (wl-copy / wl-paste) — used by screenshot script
     tofi                  # fast Wayland launcher/menu (like dmenu)
     brightnessctl         # backlight control
     playerctl             # MPRIS media player control (play/pause/next)
     grim                  # screenshot tool (whole screen or region)
     slurp                 # screen region selector (used with grim)
-    hyprlock              # screen locker for Hyprland
-    hypridle              # idle daemon (triggers lock, DPMS, suspend)
     kanshi                # automatic display profile switching
     udiskie               # auto-mount removable drives
     xwayland-satellite    # X11 compatibility for niri (Zoom, Qt5/xcb apps)
