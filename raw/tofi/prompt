@@ -1,0 +1,31 @@
+# tofi theme for small single-line text prompts (e.g. rename-workspace).
+# A compact, centred input box. Scripts pass their own --prompt-text, so this
+# file only sets geometry, font, and colours. Colours follow the Tokyo Night
+# palette and the #ff9e64 accent used by niri's focus ring.
+
+# ── Window geometry ──────────────────────────────────────────────────────
+anchor = center
+width = 520
+horizontal = false
+num-results = 0
+min-input-width = 400
+
+# ── Frame ────────────────────────────────────────────────────────────────
+background-color = #1a1b26f2
+corner-radius = 14
+border-width = 2
+border-color = #ff9e64
+outline-width = 0
+padding-top = 18
+padding-bottom = 18
+padding-left = 24
+padding-right = 24
+
+# ── Font ─────────────────────────────────────────────────────────────────
+font = Maple Mono NF
+font-size = 15
+
+# ── Colours ──────────────────────────────────────────────────────────────
+text-color = #a9b1d6
+prompt-color = #ff9e64
+placeholder-color = #565f89
