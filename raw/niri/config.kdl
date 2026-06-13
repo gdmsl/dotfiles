@@ -315,11 +315,15 @@ window-rule {
     // block-out-from "screencast"
 }
 
-// Example: enable rounded corners for all windows.
-// (This example rule is commented out with a "/-" in front.)
+// Rounded corners for all windows.
+//
+// NOTE: do NOT add `clip-to-geometry true` here. It clips a window's rendering
+// to its bounds, including child subsurfaces. Firefox draws many menus
+// (right-click, tab previews, extension popups) as emulated *subsurface*
+// popups, not real xdg-popups — clipping makes them appear misplaced and
+// dismiss instantly. Corner radius alone rounds the border/shadow safely.
 window-rule {
     geometry-corner-radius 10
-    clip-to-geometry true
 }
 
 debug {
