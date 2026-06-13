@@ -111,8 +111,8 @@
       executable = true;
       text = ''
         #!/bin/sh
-        name=$(printf '' | tofi --prompt-text "Workspace name: " \
-          --require-match=false --width 25% --height 10%)
+        name=$(tofi --prompt-text "Workspace name: " \
+          --require-match=false --width 25% --height 10% </dev/null)
         [ -n "$name" ] && niri msg action set-workspace-name "$name"
       '';
     };
