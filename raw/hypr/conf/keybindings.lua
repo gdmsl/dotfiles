@@ -80,6 +80,10 @@ end
 -- Jump to the first empty workspace
 hl.bind(mod .. " + M", hl.dsp.focus({ workspace = "empty" }))
 
+-- Rename the active workspace via a tofi prompt (SHIFT+N is taken by
+-- "move window to next workspace", so this lives on ALT+N)
+hl.bind(mod .. " + ALT + N", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/scripts/rename-workspace.sh"))
+
 -- Special workspace ("scratchpad") with mod + /
 hl.bind(mod .. " + slash",         hl.dsp.workspace.toggle_special(""))
 hl.bind(mod .. " + SHIFT + slash", hl.dsp.window.move({ workspace = "special" }))

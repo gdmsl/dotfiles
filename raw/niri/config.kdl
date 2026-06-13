@@ -396,6 +396,9 @@ binds {
     // Dev workspace (spawns terminal if empty)
     Mod+Alt+Return hotkey-overlay-title="Dev workspace" { spawn "fish" "-c" "dev"; }
 
+    // Rename the focused workspace via a tofi prompt
+    Mod+Shift+N hotkey-overlay-title="Rename workspace" repeat=false { spawn "niri-rename-workspace"; }
+
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument in the end.
     // Mod+T { spawn "bash" "-c" "notify-send hello && exec alacritty"; }

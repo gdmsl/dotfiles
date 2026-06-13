@@ -100,5 +100,21 @@
       executable = true;
       source = ../raw/scripts/git-mkversion.sh;
     };
+
+    # Rename the focused niri workspace. Pops a tofi prompt and feeds whatever
+    # you type to `set-workspace-name`. tofi normally forces a choice from its
+    # list; --require-match=false makes it return the typed text (the list is
+    # empty here, so it's a plain input box). Empty input — Escape, or Enter on
+    # an empty box — leaves the name untouched. Names are dynamic and reset when
+    # niri restarts; use static `workspace "name"` blocks in config to persist.
+    ".local/bin/niri-rename-workspace" = {
+      executable = true;
+      text = ''
+        #!/bin/sh
+        name=$(printf '' | tofi --prompt-text "Workspace name: " \
+          --require-match=false --width 25% --height 10%)
+        [ -n "$name" ] && niri msg action set-workspace-name "$name"
+      '';
+    };
   };
 }
