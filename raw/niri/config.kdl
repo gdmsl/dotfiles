@@ -315,13 +315,20 @@ window-rule {
     // block-out-from "screencast"
 }
 
-// Rounded corners + clipping for all windows. DISABLED for now: `clip-to-geometry`
-// clips child subsurfaces, and Firefox draws menus (right-click, tab previews,
-// extension popups) as emulated subsurface popups — clipping makes them appear
-// misplaced and dismiss instantly. Re-instate once that's fixed upstream.
-/-window-rule {
+// Rounded corners + clipping for all windows.
+window-rule {
     geometry-corner-radius 10
     clip-to-geometry true
+}
+
+// ...but disable clipping for Firefox. It draws menus (right-click, tab
+// previews, extension popups) as emulated subsurface popups, not real
+// xdg-popups — clip-to-geometry cuts those off, making them appear misplaced
+// and dismiss instantly. Later rules override earlier ones, so Firefox keeps
+// the rounded border/shadow but its content (and popups) aren't clipped.
+window-rule {
+    match app-id=r#"firefox$"#
+    clip-to-geometry false
 }
 
 debug {
