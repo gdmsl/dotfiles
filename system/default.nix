@@ -131,7 +131,7 @@
   };
 
   # User-level services (syncthing vault guard, polkit-gnome-agent, onedrive,
-  # vicinae, noctalia-shell, udiskie) are all managed in
+  # vicinae, noctalia-shell, hypridle, udiskie) are all managed in
   # home/services.nix. We keep them on the user side because they rely on
   # the user's session/keyring, and grouping them there avoids splitting one
   # service definition across two modules.

@@ -63,9 +63,32 @@ in
     #   };
     # };
 
-    # Idle management (dim, lock, DPMS off, suspend) is handled by noctalia's
-    # own ext-idle-notify daemon now — configured under Settings → Idle in the
-    # noctalia GUI — so no separate hypridle service.
+    # ── Idle manager ──────────────────────────────────────────────────────
+    # hypridle triggers actions on inactivity: dim, lock, turn off display,
+    # suspend. Configured via hypridle.conf in the Hyprland config dir.
+    #
+    # We use hypridle (not noctalia's built-in idle) because it is logind-native:
+    # it registers a systemd sleep inhibitor so the screen locks *before* the
+    # machine suspends, and it listens for logind's Lock signal so
+    # `loginctl lock-session` (and lid-close, via before_sleep_cmd) reliably
+    # runs hyprlock. noctalia talks only to the compositor (ext-session-lock /
+    # ext-idle-notify) and ignores logind, so its idle daemon must stay disabled
+    # (Settings → Idle → off) to avoid two daemons fighting over the same events.
+    hypridle = {
+      Unit = {
+        Description = "Idle manager (dim, lock, DPMS, suspend)";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" ];
+      };
+      Service = {
+        ExecStart = "${pkgs.hypridle}/bin/hypridle";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
+      };
+    };
 
     # ── Noctalia desktop shell ────────────────────────────────────────────
     # Panel, system tray, and desktop shell from the noctalia flake.
