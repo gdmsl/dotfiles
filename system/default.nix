@@ -403,6 +403,33 @@
   security.polkit.enable = true;
   services.gnome.gnome-keyring.enable = true;
 
+  # ── Fingerprint reader (Goodix 27c6:659a) ───────────────────────────────
+  # fprintd is the D-Bus daemon that drives the sensor through libfprint.
+  # This Goodix sensor is "match-on-chip" (the fingerprint template is stored
+  # and compared on the sensor itself) and is supported by mainline libfprint,
+  # so no out-of-tree driver or vendor blob is needed — just the daemon.
+  #
+  # One-time setup after the rebuild: enroll a finger with
+  #     fprintd-enroll          # follow the prompts, lift+touch repeatedly
+  # then sanity-check it with
+  #     fprintd-verify
+  #
+  # Enabling fprintd also turns on PAM fingerprint auth: the NixOS option
+  # security.pam.services.<svc>.fprintAuth defaults to services.fprintd.enable,
+  # so every PAM-using service (greetd login, sudo, hyprlock, …) gets it.
+  # NixOS wires in the stock pam_fprintd.so as `auth sufficient`, i.e. the
+  # flow is sequential: the service asks you to touch the sensor first, and
+  # if that fails or times out it falls through to the password prompt.
+  # tuigreet (we ship 0.9.1) understands these non-password PAM prompts since
+  # 0.7.0, so the "swipe your finger" message renders correctly at the login
+  # screen too — no need to special-case it off.
+  #
+  # Note: this is NOT the fprintd-grosshack module (the one that prompts for
+  # password and fingerprint *at the same time*). That module is known to be
+  # unsafe/broken with greetd; the stock sequential pam_fprintd used here is
+  # not affected.
+  services.fprintd.enable = true;
+
   # ── System packages ─────────────────────────────────────────────────────
   # Packages installed system-wide. We keep this list small on purpose:
   # only tools we'd want available in single-user mode, in a TTY recovery
