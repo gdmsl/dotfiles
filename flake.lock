@@ -50,11 +50,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778333363,
-        "narHash": "sha256-IEaj+7aR1eIdRcXk9uVltdZbIHCyktiHBhfLeALPayI=",
+        "lastModified": 1782421244,
+        "narHash": "sha256-Z61QUF6Xg6TrfWGpfFSGtl5Q2dnHJKGlBK8DJs388d0=",
         "owner": "gdmsl",
         "repo": "bimbumbam",
-        "rev": "f23959640b5631dfb0ff15f8308ff118a44d3b15",
+        "rev": "06ae361248c4e5f3e4236185c6ae4b46fdb0dcd7",
         "type": "github"
       },
       "original": {
