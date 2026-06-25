@@ -319,6 +319,15 @@
   };
   # greetd PAM needs gnome-keyring integration to auto-unlock secrets on login
   security.pam.services.greetd.enableGnomeKeyring = true;
+
+  # hyprlock needs its own PAM service (it looks for /etc/pam.d/hyprlock by
+  # default — without this it would fall through to the restrictive "other"
+  # stack). We deliberately make it PASSWORD-ONLY: fprintAuth = false keeps
+  # pam_fprintd out of this stack. Fingerprint unlocking is instead handled by
+  # hyprlock's own native fprintd backend (see raw/hypr/hyprlock.conf), which
+  # runs concurrently with the password field. Keeping fingerprint out of PAM
+  # here avoids two code paths fighting over the sensor.
+  security.pam.services.hyprlock.fprintAuth = false;
   # Ensure these directories exist with the right permissions
   systemd.tmpfiles.rules = [
     "d /var/cache/tuigreet 0755 greeter greeter -"
@@ -416,10 +425,12 @@
   #
   # Enabling fprintd also turns on PAM fingerprint auth: the NixOS option
   # security.pam.services.<svc>.fprintAuth defaults to services.fprintd.enable,
-  # so every PAM-using service (greetd login, sudo, hyprlock, …) gets it.
+  # so most PAM-using services (greetd login, sudo, …) get it automatically.
   # NixOS wires in the stock pam_fprintd.so as `auth sufficient`, i.e. the
   # flow is sequential: the service asks you to touch the sensor first, and
   # if that fails or times out it falls through to the password prompt.
+  # (hyprlock is the exception — it opts out of PAM fingerprint above and uses
+  # its own native fprintd backend so the sensor and password run in parallel.)
   # tuigreet (we ship 0.9.1) understands these non-password PAM prompts since
   # 0.7.0, so the "swipe your finger" message renders correctly at the login
   # screen too — no need to special-case it off.
