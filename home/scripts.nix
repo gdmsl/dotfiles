@@ -79,6 +79,48 @@
       '';
     };
 
+    # Searchable unicode symbol picker. Lists a curated set of useful blocks
+    # (arrows, maths, currency, punctuation, symbols, shapes, box-drawing, …)
+    # as "glyph  U+XXXX  OFFICIAL NAME" lines via the `uni` CLI, and shows them
+    # in the same wide tofi panel as the keybinding cheat-sheet. Because the
+    # official Unicode name is on every line you can fuzzy-search by meaning
+    # ("arrow", "euro", "heart") as well as by codepoint. Selecting a row copies
+    # just the glyph to the clipboard (wl-copy), ready to paste anywhere.
+    #
+    # `uni print` query syntax: `block:NAME` / `cat:NAME` (names may be
+    # abbreviated). Add or remove blocks below to taste; `uni list blocks`
+    # shows every block name.
+    ".local/bin/unicode-symbols" = {
+      executable = true;
+      text = ''
+        #!/bin/sh
+        sel=$(uni print -c -f '%(char)  %(cpoint l:auto)  %(name)' \
+          block:arrows \
+          block:'supplemental arrows-a' \
+          block:'mathematical operators' \
+          block:'miscellaneous mathematical symbols-a' \
+          cat:'Currency Symbol' \
+          block:'letterlike symbols' \
+          block:'general punctuation' \
+          block:'superscripts and subscripts' \
+          block:'miscellaneous symbols' \
+          block:'dingbats' \
+          block:'geometric shapes' \
+          block:'box drawing' \
+          block:'block elements' \
+          block:'greek and coptic' \
+          | tofi --config "$HOME/.config/tofi/cheatsheet" \
+                 --prompt-text "symbol ❯ " --placeholder-text "search unicode…")
+
+        # tofi echoes the whole chosen line; the glyph is the first field
+        # (everything before the first space). Empty means Escape was pressed.
+        [ -z "$sel" ] && exit 0
+        glyph=$(printf '%s' "$sel" | cut -d' ' -f1)
+        printf '%s' "$glyph" | wl-copy
+        notify-send "Copied to clipboard" "$sel"
+      '';
+    };
+
     # Add all private SSH keys to the SSH agent
     ".local/bin/ssh-add-all.sh" = {
       executable = true;

@@ -1,13 +1,24 @@
-# tofi theme for the niri keybinding cheat-sheet (used by ~/.local/bin/niri-keys).
-# A wide, centred panel with a monospace font so the "key → action" columns
-# line up. Passed explicitly with `tofi --config`, so it never clobbers a
-# default tofi config. Colours follow the Tokyo Night palette and the #ff9e64
-# accent used by niri's focus ring.
+# tofi theme for the niri keybinding cheat-sheet (used by ~/.local/bin/niri-keys)
+# and the unicode symbol picker (~/.local/bin/unicode-symbols). A wide panel
+# with a monospace font so the columns line up. Passed explicitly with
+# `tofi --config`, so it never clobbers a default tofi config. Colours follow
+# the Tokyo Night palette and the #ff9e64 accent used by niri's focus ring.
+#
+# CENTERING: `anchor = center` is NOT honoured for tofi's layer surface under
+# niri 26.04 — the window collapses to the top-left corner (this is what made
+# the sheet appear off-centre and cramped). Only edge/corner anchors work, so
+# we anchor top-left and fake-centre with margins:
+#   margin-left = (100% - width%)  / 2 = (100 - 60) / 2 = 20%
+#   margin-top  = (100% - height%) / 2 = (100 - 70) / 2 = 15%
+# Margins are %-of-output, so this stays centred on either monitor. Keep them
+# in sync if you change width/height. (Same trick as the `prompt` theme.)
 
 # ── Window geometry ──────────────────────────────────────────────────────
-anchor = center
+anchor = top-left
 width = 60%
 height = 70%
+margin-left = 20%
+margin-top = 15%
 horizontal = false
 num-results = 0
 result-spacing = 6
@@ -26,7 +37,7 @@ padding-right = 36
 
 # ── Font ─────────────────────────────────────────────────────────────────
 font = Maple Mono NF
-font-size = 13
+font-size = 16
 
 # ── Colours ──────────────────────────────────────────────────────────────
 text-color = #a9b1d6

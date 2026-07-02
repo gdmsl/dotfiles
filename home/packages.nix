@@ -71,6 +71,7 @@ in
     # ── Wayland / Desktop utilities ───────────────────────────────────────
     wl-clipboard          # clipboard CLI (wl-copy / wl-paste) — used by screenshot script
     tofi                  # fast Wayland launcher/menu (like dmenu)
+    uni                   # unicode database CLI — feeds the symbol picker (unicode-symbols)
     brightnessctl         # backlight control
     playerctl             # MPRIS media player control (play/pause/next)
     grim                  # screenshot tool (whole screen or region)

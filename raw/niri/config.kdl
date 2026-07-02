@@ -383,6 +383,8 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
     // Mod-/ opens a searchable, fuzzy-filterable cheat-sheet of these binds.
     Mod+Slash hotkey-overlay-title="Search keybindings" repeat=false { spawn "niri-keys"; }
+    // Mod-S (S for Symbol) opens a searchable unicode picker; Enter copies the glyph.
+    Mod+S hotkey-overlay-title="Unicode symbol picker" repeat=false { spawn "unicode-symbols"; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+Return hotkey-overlay-title="Open a Terminal" { spawn "kitty"; }
