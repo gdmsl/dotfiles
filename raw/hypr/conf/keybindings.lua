@@ -20,7 +20,7 @@ hl.bind(mod .. " + SHIFT + X",     hl.dsp.exec_cmd("uwsm app -- cosmic-files"))
 hl.bind(mod .. " + Space",         hl.dsp.exec_cmd("vicinae toggle"))
 hl.bind(mod .. " + SHIFT + Space", hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
 hl.bind(mod .. " + ALT + Space",   hl.dsp.exec_cmd("uwsm app -- anyrun"))
-hl.bind(mod .. " + Comma",         hl.dsp.exec_cmd("noctalia msg session lock"))
+hl.bind(mod .. " + Comma",         hl.dsp.exec_cmd("loginctl lock-session"))
 
 -- Clipboard history. Noctalia owns the clipboard manager itself (its own
 -- wlr-data-control daemon + history store), opened via its IPC panel toggle.
@@ -135,7 +135,7 @@ hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl s 10%-"))
 hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl s 10%+"))
 
 -- ── Misc hardware keys ───────────────────────────────────────────────────
-hl.bind("XF86Lock",       hl.dsp.exec_cmd("noctalia msg session lock"))
+hl.bind("XF86Lock",       hl.dsp.exec_cmd("loginctl lock-session"))
 hl.bind("XF86Calculator", hl.dsp.exec_cmd("uwsm app -- ghostty -e julia"))
 hl.bind("XF86Favorites",  hl.dsp.exec_cmd("uwsm app -- firefox"))
 
