@@ -52,6 +52,7 @@
 
   # Fish must be enabled at the system level for it to work as a login shell
   programs.fish.enable = true;
+  programs.fuse.enable = true; # creates the setuid wrapper so unprivileged users can mount FUSE filesystems
 
   # ── Networking ──────────────────────────────────────────────────────────
   networking.networkmanager = {
@@ -472,6 +473,9 @@
 
     # Terminfo so SSH'ing *into* this box from a kitty terminal Just Works
     kitty.terminfo
+
+    # Fuse should be installed by default
+    fuse
   ];
 
   # ── Unfree packages ─────────────────────────────────────────────────────
