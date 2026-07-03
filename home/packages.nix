@@ -25,6 +25,16 @@ let
   # current way to ask "what platform string ('x86_64-linux', …) is this
   # pkgs built for?" — it replaces the deprecated `pkgs.system`.
   bimbumbam = inputs.bimbumbam.packages.${pkgs.stdenv.hostPlatform.system}.default;
+
+  # logseq is pinned to an older nixpkgs (see the nixpkgs-logseq input in
+  # flake.nix). On current nixpkgs it has no cached build and compiling from
+  # source hangs; this revision's logseq output is already in our store, so it
+  # resolves instantly. We reuse `pkgs.config` so its unfree license and the
+  # end-of-life Electron (electron-39.8.10) are permitted just like everywhere
+  # else. This let-binding shadows `pkgs.logseq` for the bare `logseq` below.
+  logseq = (import inputs.nixpkgs-logseq {
+    inherit (pkgs) system config;
+  }).logseq;
 in
 
 {
@@ -102,6 +112,7 @@ in
     file-roller      # GUI archive manager (zip, tar, 7z, … — browse/extract)
     zathura          # minimal PDF/ebook viewer (vim keybindings)
     evince           # GNOME PDF viewer
+    xournalpp        # handwritten notes / PDF annotation (stylus-friendly)
     loupe            # GNOME image viewer
     satty            # screenshot annotation tool
     zotero           # reference manager

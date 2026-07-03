@@ -27,6 +27,14 @@
     # channel with the latest packages (as opposed to stable release branches).
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    # Pinned nixpkgs used *only* for logseq. On current nixpkgs, logseq isn't on
+    # the binary cache and its from-source build hangs at the Electron packaging
+    # step. This older revision produces a logseq output that's already built in
+    # our /nix/store, so the rebuild reuses it instead of recompiling. No
+    # `follows` on purpose — we want its own logseq and matching dependencies.
+    # Revisit (and drop this input) once upstream logseq builds/caches cleanly.
+    nixpkgs-logseq.url = "github:NixOS/nixpkgs/567a49d1913ce81ac6e9582e3553dd90a955875f";
+
     # Hardware-specific tweaks (kernel params, firmware, power) for well-known
     # laptop/desktop models. Provides a NixOS module for our ThinkPad.
     nixos-hardware.url = "github:NixOS/nixos-hardware";
