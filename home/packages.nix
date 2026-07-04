@@ -86,7 +86,8 @@ in
     playerctl             # MPRIS media player control (play/pause/next)
     grim                  # screenshot tool (whole screen or region)
     slurp                 # screen region selector (used with grim)
-    hypridle              # idle/sleep manager (logind-native: sleep inhibitor + fires loginctl lock-session)
+    hyprlock              # screen locker (ext-session-lock); launched by hypridle
+    hypridle              # idle daemon — loginctl/logind-native (sleep inhibitor + Lock signal)
     kanshi                # automatic display profile switching
     udiskie               # auto-mount removable drives
     xwayland-satellite    # X11 compatibility for niri (Zoom, Qt5/xcb apps)

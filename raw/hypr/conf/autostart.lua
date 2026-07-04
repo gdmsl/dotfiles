@@ -14,10 +14,10 @@ hl.on("hyprland.start", function()
     -- gnome-keyring is D-Bus activated, but pkcs11/secrets/ssh need an explicit hint.
     hl.exec_cmd("uwsm app -- gnome-keyring-daemon --start --components=pkcs11,secrets,ssh")
 
-    -- noctalia-shell, kanshi, hyprpolkitagent, vicinae, hyprpaper, hypridle,
-    -- udiskie are launched via systemd user units (see run_once_install-hyprland.sh).
-    -- nm-applet is started by xdg-autostart. noctalia owns the clipboard and the
-    -- lock screen; hypridle is the logind-native idle/sleep manager.
+    -- noctalia-shell, kanshi, hyprpolkitagent, vicinae, hyprpaper, udiskie are
+    -- launched via systemd user units (see run_once_install-hyprland.sh).
+    -- nm-applet is started by xdg-autostart. (noctalia handles clipboard, lock,
+    -- and idle itself — no cliphist/hypridle.)
 
     -- Auto-applied screen shader (night light, etc.)
     hl.exec_cmd("uwsm app -- hyprshade auto")

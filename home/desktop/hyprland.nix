@@ -31,11 +31,10 @@
     "hypr/monitors.lua".source = ../../raw/hypr/monitors.lua;
     "hypr/workspaces.lua".source = ../../raw/hypr/workspaces.lua;
 
-    # Standalone hyprlang config for hypridle, the idle/sleep manager. Its idle
-    # actions — dim, DPMS off, suspend, and firing `loginctl lock-session` —
-    # live in hypridle.conf. The lock *screen* is noctalia's: it catches the
-    # logind Lock signal and raises its own locker. noctalia also owns the bar,
-    # clipboard, and notifications.
+    # Standalone hyprlang configs for the auxiliary daemons. Lock and idle use
+    # hyprlock/hypridle (logind-native: loginctl lock-session + sleep inhibitor);
+    # noctalia keeps the bar, clipboard, and notifications.
+    "hypr/hyprlock.conf".source = ../../raw/hypr/hyprlock.conf;
     "hypr/hypridle.conf".source = ../../raw/hypr/hypridle.conf;
     "hypr/hyprpaper.conf".source = ../../raw/hypr/hyprpaper.conf;
     "hypr/hyprshade.toml".source = ../../raw/hypr/hyprshade.toml;
