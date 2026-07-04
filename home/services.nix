@@ -67,13 +67,13 @@ in
     # hypridle triggers actions on inactivity: dim, lock, turn off display,
     # suspend. Configured via hypridle.conf in the Hyprland config dir.
     #
-    # We use hypridle (not noctalia's built-in idle) because it is logind-native:
-    # it registers a systemd sleep inhibitor so the screen locks *before* the
-    # machine suspends, and it listens for logind's Lock signal so
-    # `loginctl lock-session` (and lid-close, via before_sleep_cmd) reliably
-    # runs hyprlock. noctalia talks only to the compositor (ext-session-lock /
-    # ext-idle-notify) and ignores logind, so its idle daemon must stay disabled
-    # (Settings → Idle → off) to avoid two daemons fighting over the same events.
+    # Lock/idle run on hypridle + hyprlock, not noctalia's built-in equivalents.
+    # noctalia 5.0 does integrate with logind now (session lock, LockedHint,
+    # lock-on-suspend), but we currently find it too unstable — so it stays off
+    # (lockscreen.enabled = false in desktop/noctalia.nix) and hypridle drives
+    # things: it registers a systemd sleep inhibitor so the screen locks *before*
+    # suspend, and fires `loginctl lock-session` on idle and before sleep, which
+    # hypridle turns into hyprlock (see raw/hypr/hypridle.conf).
     hypridle = {
       Unit = {
         Description = "Idle manager (dim, lock, DPMS, suspend)";

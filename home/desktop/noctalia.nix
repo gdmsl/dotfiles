@@ -28,12 +28,14 @@
   programs.noctalia = {
     enable = true;
     settings = {
-      # Keep noctalia's built-in lock screen OFF. Locking is handled by
-      # hyprlock + hypridle (logind-native — see home/services.nix and
-      # raw/hypr/hypridle.conf). With lockscreen.enabled = false, noctalia does
-      # NOT register the logind session-lock listener, so `loginctl lock-session`
-      # reaches hypridle → hyprlock instead of being grabbed by noctalia's own
-      # locker (which is what happened after the noctalia 5.0 update).
+      # Keep noctalia's built-in lock screen OFF. noctalia 5.0 gained logind
+      # lock integration (session lock, LockedHint, lock-on-suspend), but we
+      # currently find it too unstable, so locking stays on hyprlock + hypridle
+      # (see home/services.nix and raw/hypr/hypridle.conf). With
+      # lockscreen.enabled = false, noctalia does not register the logind
+      # session-lock listener, so `loginctl lock-session` reaches hypridle →
+      # hyprlock instead of being grabbed by noctalia (which is what happened
+      # after the 5.0 update).
       #
       # This is written to ~/.config/noctalia/config.toml (noctalia v5's
       # declarative config). Being Nix-managed and read-only, it survives

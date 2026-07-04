@@ -250,7 +250,7 @@ layout {
 
 // ── Daemons managed by systemd (see run_once_install-niri.sh) ──────
 // noctalia-shell, kanshi, hyprpolkitagent, vicinae, niriswitcher, hypridle
-// (noctalia handles clipboard; lock/idle use hyprlock + hypridle, logind-native)
+// (noctalia handles clipboard; lock/idle use hyprlock + hypridle — noctalia's own lock is off for now)
 
 // GTK/cursor theming managed by Home Manager (desktop/gtk.nix + dconf)
 
@@ -391,7 +391,7 @@ binds {
     Mod+Space hotkey-overlay-title="Launcher: Vicinae" { spawn "vicinae" "toggle"; }
     Mod+Shift+Space hotkey-overlay-title="Launcher: Noctalia" { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
     Mod+Alt+Space hotkey-overlay-title="Launcher: Anyrun" { spawn "anyrun"; }
-    // loginctl-native lock: logind emits the Lock signal, hypridle runs hyprlock.
+    // loginctl lock-session → logind Lock signal → hypridle runs hyprlock.
     Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "loginctl" "lock-session"; }
     Mod+G hotkey-overlay-title="Switch windows" { spawn "vicinae" "deeplink" "vicinae://launch/wm/switch-windows"; }
     Mod+Shift+B hotkey-overlay-title="Toddler keyboard-basher" { spawn "bimbumbam"; }
