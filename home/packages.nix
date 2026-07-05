@@ -124,6 +124,7 @@ in
     inkscape         # vector graphics editor
     gimp             # image editor
     darktable        # photo editing / RAW processing
+    prismlauncher    # Minecraft launcher (FOSS; bundles its own Java, manages instances/mods)
 
     # ── Communication / productivity ──────────────────────────────────────
     discord
