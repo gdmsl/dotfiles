@@ -79,6 +79,12 @@
     };
   };
 
+  # Mosh — roaming, latency-tolerant remote shell over SSH. Installs the `mosh`
+  # client (to connect out) and `mosh-server` (to connect in), and opens the
+  # UDP 60000–61000 port range mosh uses for its own encrypted datagram
+  # connection (the initial handshake still goes over SSH on port 22).
+  programs.mosh.enable = true;
+
   # ── Tailscale (mesh VPN to homelab) ─────────────────────────────────────
   # Tailscale creates a WireGuard-based mesh network between your devices.
   # "checkReversePath = loose" is needed so return packets from Tailscale
