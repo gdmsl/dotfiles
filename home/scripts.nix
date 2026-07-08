@@ -208,5 +208,56 @@
             done
       '';
     };
+
+    # Run a one-shot OneDrive sync of ~/QPerfect, with start/finish desktop
+    # notifications. THIS IS ALSO THE MANUAL COMMAND: run `onedrive-sync` from a
+    # terminal to force a sync any time, regardless of what's open. The systemd
+    # timers call it too — the "skip while an editor is open" gate lives in the
+    # onedrive-sync-ifidle service (home/services.nix), not here, so invoking the
+    # script directly always syncs.
+    #
+    # We do NOT use OneDrive's continuous --monitor: a live bidirectional syncer
+    # thrashes files that editors are actively writing (that's what made Logseq
+    # unusable). A short one-shot burst on a schedule keeps the collision window
+    # tiny. flock serialises runs so a manual sync and a timer sync can't overlap
+    # (the client refuses to run twice at once anyway).
+    #
+    # Binaries are referenced by full store path because systemd user timers run
+    # with a leaner PATH than an interactive shell (onedrive isn't even on the
+    # login PATH). D-Bus for notify-send is already in the user-service env.
+    ".local/bin/onedrive-sync" = {
+      executable = true;
+      text = ''
+        #!/bin/sh
+        lock="$HOME/.cache/onedrive-sync.lock"
+        exec 9>"$lock"
+        if ! ${pkgs.util-linux}/bin/flock -n 9; then
+          ${pkgs.libnotify}/bin/notify-send -a OneDrive "OneDrive sync" "Already running — skipped this trigger"
+          exit 0
+        fi
+        ${pkgs.libnotify}/bin/notify-send -a OneDrive "OneDrive sync" "Starting…  (best to pause edits in ~/QPerfect)"
+        if ${pkgs.onedrive}/bin/onedrive --sync; then
+          ${pkgs.libnotify}/bin/notify-send -a OneDrive "OneDrive sync" "Finished ✓"
+        else
+          ${pkgs.libnotify}/bin/notify-send -u critical -a OneDrive "OneDrive sync" "Failed ✗ — journalctl --user -u 'onedrive-sync*'"
+        fi
+      '';
+    };
+
+    # Gate for the every-30-min timer: exit non-zero when a "fast editor" is
+    # running, which makes systemd skip that sync run cleanly (ExecCondition
+    # semantics: exit 0 = proceed, exit 1–254 = skip, not fail). "Fast editors"
+    # are apps that write ~/QPerfect files continuously or hold locks, where a
+    # concurrent OneDrive write risks corruption/conflicts. Add more matchers as
+    # needed. The 4am forced sync and the manual command do NOT use this guard.
+    ".local/bin/onedrive-sync-guard" = {
+      executable = true;
+      text = ''
+        #!/bin/sh
+        ${pkgs.procps}/bin/pgrep -f 'share/logseq/resources/app' >/dev/null && exit 1  # Logseq
+        ${pkgs.procps}/bin/pgrep -x soffice.bin                    >/dev/null && exit 1  # LibreOffice
+        exit 0
+      '';
+    };
   };
 }

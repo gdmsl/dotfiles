@@ -173,23 +173,49 @@ in
       };
     };
 
-    # ── OneDrive (QPerfect file sync) ─────────────────────────────────────
-    # Runs the OneDrive client in monitor mode so changes sync continuously.
-    # Auto-starts at user login (default.target), independent of the
-    # graphical session — sync should work even on a TTY login.
-    onedrive = {
+    # ── OneDrive: scheduled one-shot sync (replaces continuous --monitor) ──
+    # We deliberately do NOT run `onedrive --monitor`. A live bidirectional
+    # syncer rewrites files while editors are mid-write, which corrupted Logseq
+    # (constant "in-memory vs saved" conflicts, vanishing pages) and churns
+    # LibreOffice lock files. Instead we sync in short one-shot bursts driven by
+    # the two timers further below. Both call the same ~/.local/bin/onedrive-sync
+    # wrapper (start/finish notify-send + flock); that wrapper is also the manual
+    # command you can run any time.
+    #
+    #   onedrive-sync         — forced sync, no editor check. Driven by the 04:00
+    #                           timer and by `systemctl --user start onedrive-sync`.
+    #   onedrive-sync-ifidle  — same sync, but ExecCondition skips the run when a
+    #                           fast editor (Logseq/LibreOffice) is open. Driven
+    #                           by the :26/:56 timer.
+    #
+    # These are oneshot units triggered by timers, so (like podman-prune) they
+    # have no Install.WantedBy of their own. network-online is wanted so a sync
+    # doesn't fire before the link is up.
+    onedrive-sync = {
       Unit = {
-        Description = "OneDrive sync for QPerfect";
+        Description = "OneDrive one-shot sync (forced)";
         After = [ "network-online.target" ];
         Wants = [ "network-online.target" ];
       };
       Service = {
-        ExecStart = "${pkgs.onedrive}/bin/onedrive --monitor";
-        Restart = "on-failure";
-        RestartSec = "10s";
+        Type = "oneshot";
+        ExecStart = "%h/.local/bin/onedrive-sync";
+        TimeoutStartSec = "1h";
       };
-      Install = {
-        WantedBy = [ "default.target" ];
+    };
+
+    onedrive-sync-ifidle = {
+      Unit = {
+        Description = "OneDrive one-shot sync (skipped while an editor is open)";
+        After = [ "network-online.target" ];
+        Wants = [ "network-online.target" ];
+      };
+      Service = {
+        Type = "oneshot";
+        # exit != 0 from the guard → systemd skips this run cleanly (not failed).
+        ExecCondition = "%h/.local/bin/onedrive-sync-guard";
+        ExecStart = "%h/.local/bin/onedrive-sync";
+        TimeoutStartSec = "1h";
       };
     };
 
@@ -251,6 +277,31 @@ in
       # If the laptop was off when the timer should have fired, run it as
       # soon as possible after boot instead of skipping that week. Crucial
       # for a laptop that's not always on.
+      Persistent = true;
+    };
+    Install.WantedBy = [ "timers.target" ];
+  };
+
+  # OneDrive sync every hour at :26 and :56 — this lands in the short breaks of a
+  # 25/5 pomodoro rhythm. Runs onedrive-sync-ifidle, which skips itself if a fast
+  # editor (Logseq/LibreOffice) is open. NOT Persistent: a slot missed while the
+  # machine was off shouldn't stack up and fire mid-work on resume.
+  systemd.user.timers.onedrive-sync-ifidle = {
+    Unit.Description = "OneDrive sync at :26 and :56 past the hour (idle only)";
+    Timer = {
+      OnCalendar = "*:26,56";
+      Persistent = false;
+    };
+    Install.WantedBy = [ "timers.target" ];
+  };
+
+  # Forced daily sync at 04:00, ignoring open editors, so there's always at least
+  # one full reconciliation per day. Persistent so a night the laptop was off
+  # still gets caught up on next boot.
+  systemd.user.timers.onedrive-sync = {
+    Unit.Description = "Daily forced OneDrive sync (04:00)";
+    Timer = {
+      OnCalendar = "*-*-* 04:00:00";
       Persistent = true;
     };
     Install.WantedBy = [ "timers.target" ];

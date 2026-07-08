@@ -5,3 +5,20 @@
 # kept the client at ~33% CPU.
 sync_dir = "~/QPerfect"
 skip_dir = "Code|.git|.venv|venv|.direnv|.CondaPkg|.uv-cache|node_modules|__pycache__|.cache|.pytest_cache|.mypy_cache|.ruff_cache|.tox|.next|.parcel-cache"
+
+# Soften the re-download behaviour that made Logseq (and any fast-writing editor)
+# unusable. After each upload the client normally re-hashes the file against the
+# server copy; if the file changed *during* upload it declares an "integrity
+# failure" and RE-DOWNLOADS the server version, clobbering what you just wrote.
+# Disabling upload validation removes those false-positive re-downloads.
+disable_upload_validation = "true"
+
+# Keep the safe default explicit: on a *genuine* conflict (local and remote both
+# changed) the client preserves your local copy by renaming it to a safe-backup
+# file instead of discarding it. "true" here would overwrite local = data loss.
+bypass_data_preservation = "false"
+
+# We drive sync from a wrapper script (~/.local/bin/onedrive-sync) that fires its
+# own start/finish desktop notifications via notify-send, so silence the client's
+# built-in ones to avoid duplicates. See home/scripts.nix + home/services.nix.
+disable_notifications = "true"
