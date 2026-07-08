@@ -183,6 +183,11 @@
     # deliberately ignoring WindowOpenedOrChanged (it also fires on every window
     # title change, which would be needless churn). Runs as a systemd user
     # service — see home/services.nix.
+    #
+    # We emit the workspace *name* (not the numeric id): unset-workspace-name
+    # takes a REFERENCE, which niri resolves as an index-or-name — passing the
+    # internal id just matches nothing and silently no-ops. `read -r name` with a
+    # single variable captures the whole line, so names containing spaces survive.
     ".local/bin/niri-workspace-autoclean" = {
       executable = true;
       text = ''
@@ -196,9 +201,9 @@
                          and .active_window_id == null
                          and (.is_active  | not)
                          and (.is_focused | not))
-                | .id' \
-              | while read -r id; do
-                  niri msg action unset-workspace-name "$id" || true
+                | .name' \
+              | while read -r name; do
+                  niri msg action unset-workspace-name "$name" || true
                 done
             done
       '';
