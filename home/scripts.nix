@@ -158,5 +158,50 @@
         [ -n "$name" ] && niri msg action set-workspace-name "$name"
       '';
     };
+
+    # Auto-clean empty *named* niri workspaces so they behave like numbered ones.
+    #
+    # niri only auto-removes *unnamed* (dynamic) workspaces when they empty;
+    # named workspaces are persistent and stick around forever, even empty. That
+    # leaves an emptied named workspace in the scroll order — the bar hides it,
+    # but `focus-workspace-down`/up still lands on it. This daemon closes that
+    # gap: it watches the compositor event stream and, when a named workspace is
+    # empty *and* you're not on it, unsets its name. An unnamed empty workspace
+    # is dynamic, so niri then drops it on its own.
+    #
+    # The jq filter picks workspaces that are:
+    #   name != null            → don't touch the trailing unnamed scratch ws
+    #   active_window_id == null → empty (no windows)
+    #   not is_active           → not the visible ws on its monitor
+    #   not is_focused          → not the keyboard-focused ws
+    # Skipping the active/focused ws means an emptied workspace survives while
+    # you're standing on it (so you don't lose the name mid-use) and is cleaned
+    # up the moment you leave — WorkspaceActivated fires then and re-runs the
+    # check, exactly mirroring how empty numbered workspaces already behave.
+    #
+    # We only react to the three events that can change emptiness/where you are,
+    # deliberately ignoring WindowOpenedOrChanged (it also fires on every window
+    # title change, which would be needless churn). Runs as a systemd user
+    # service — see home/services.nix.
+    ".local/bin/niri-workspace-autoclean" = {
+      executable = true;
+      text = ''
+        #!/bin/sh
+        niri msg -j event-stream \
+          | grep --line-buffered -E 'WindowClosed|WorkspacesChanged|WorkspaceActivated' \
+          | while read -r _; do
+              niri msg -j workspaces | jq -r '
+                .[]
+                | select(.name != null
+                         and .active_window_id == null
+                         and (.is_active  | not)
+                         and (.is_focused | not))
+                | .id' \
+              | while read -r id; do
+                  niri msg action unset-workspace-name "$id" || true
+                done
+            done
+      '';
+    };
   };
 }

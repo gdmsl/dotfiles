@@ -90,6 +90,30 @@ in
       };
     };
 
+    # ── niri workspace auto-clean ─────────────────────────────────────────
+    # Removes empty *named* niri workspaces so they behave like numbered ones
+    # (niri keeps named workspaces around even when empty — see the script for
+    # the full rationale). The niri-workspace-autoclean script (home/scripts.nix)
+    # is a long-lived reader of niri's event stream. It's niri-specific, but
+    # rides graphical-session.target like the rest since niri is the only
+    # compositor we run — that target is what makes `niri msg` reachable here,
+    # the same way hypridle's niri calls work.
+    niri-workspace-autoclean = {
+      Unit = {
+        Description = "Remove empty named niri workspaces";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" ];
+      };
+      Service = {
+        ExecStart = "%h/.local/bin/niri-workspace-autoclean";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
+      };
+    };
+
     # ── Noctalia desktop shell ────────────────────────────────────────────
     # Panel, system tray, and desktop shell from the noctalia flake.
     noctalia-shell = {
