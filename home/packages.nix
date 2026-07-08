@@ -64,6 +64,7 @@ in
     jq            # JSON processor (query, filter, transform)
     glow          # terminal markdown renderer (pager + TUI browser)
     mdcat         # inline markdown for the terminal (images via kitty protocol)
+    psmisc        # process utilities — provides killall, pstree, fuser
     unzip
     wget
     curl
