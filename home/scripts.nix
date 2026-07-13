@@ -192,19 +192,33 @@
       executable = true;
       text = ''
         #!/bin/sh
+        # Unset the name of every empty workspace we're not standing on, so niri
+        # drops it. Used both once at startup and on every relevant event.
+        sweep() {
+          niri msg -j workspaces | jq -r '
+            .[]
+            | select(.name != null
+                     and .active_window_id == null
+                     and (.is_active  | not)
+                     and (.is_focused | not))
+            | .name' \
+          | while read -r name; do
+              niri msg action unset-workspace-name "$name" || true
+            done
+        }
+
+        # Reconcile once on (re)start — catches anything emptied while the reader
+        # was down (a systemd relaunch, or the periodic RuntimeMaxSec recycle).
+        sweep
+
+        # Then react to live events. When the stream ends OR silently stalls, the
+        # unit is relaunched (Restart=always + RuntimeMaxSec, see services.nix),
+        # which re-runs the startup sweep above — that's what makes this recover
+        # instead of wedging forever, as a bare long-lived reader eventually does.
         niri msg -j event-stream \
           | grep --line-buffered -E 'WindowClosed|WorkspacesChanged|WorkspaceActivated' \
           | while read -r _; do
-              niri msg -j workspaces | jq -r '
-                .[]
-                | select(.name != null
-                         and .active_window_id == null
-                         and (.is_active  | not)
-                         and (.is_focused | not))
-                | .name' \
-              | while read -r name; do
-                  niri msg action unset-workspace-name "$name" || true
-                done
+              sweep
             done
       '';
     };
@@ -244,16 +258,25 @@
       '';
     };
 
-    # Gate for the every-30-min timer: exit non-zero when a "fast editor" is
-    # running, which makes systemd skip that sync run cleanly (ExecCondition
-    # semantics: exit 0 = proceed, exit 1–254 = skip, not fail). "Fast editors"
-    # are apps that write ~/QPerfect files continuously or hold locks, where a
-    # concurrent OneDrive write risks corruption/conflicts. Add more matchers as
-    # needed. The 4am forced sync and the manual command do NOT use this guard.
+    # Gate for the every-30-min timer: exit non-zero when it's unsafe to sync,
+    # which makes systemd skip that run cleanly (ExecCondition semantics: exit 0
+    # = proceed, exit 1–254 = skip, not fail). The 4am forced sync and the manual
+    # command do NOT use this guard.
+    #
+    # "Unsafe" means a "fast editor" (an app that writes ~/QPerfect continuously
+    # or holds locks) is *actively in use*, where a concurrent OneDrive write
+    # risks corruption/conflicts. Crucially, an editor being *open* is not enough
+    # — only active editing is risky. So we first check whether the session is
+    # idle: hypridle drops ~/.cache/user-idle after ~2.5 min of no input and
+    # removes it the instant you touch a key/mouse (see raw/hypr/hypridle.conf).
+    # If that marker exists you've stepped away, nothing is being written, and we
+    # let the sync through even with Logseq open. Only when you're actively at the
+    # machine do the editor checks below apply. Add more matchers as needed.
     ".local/bin/onedrive-sync-guard" = {
       executable = true;
       text = ''
         #!/bin/sh
+        [ -e "$HOME/.cache/user-idle" ] && exit 0   # idle → nobody editing → safe
         ${pkgs.procps}/bin/pgrep -f 'share/logseq/resources/app' >/dev/null && exit 1  # Logseq
         ${pkgs.procps}/bin/pgrep -x soffice.bin                    >/dev/null && exit 1  # LibreOffice
         exit 0

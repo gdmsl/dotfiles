@@ -106,8 +106,17 @@ in
       };
       Service = {
         ExecStart = "%h/.local/bin/niri-workspace-autoclean";
-        Restart = "on-failure";
+        # "always", not "on-failure": when the event stream ends, the script's
+        # `while read` loop hits EOF and exits 0 — a *success* — so on-failure
+        # would never relaunch it. always does.
+        Restart = "always";
         RestartSec = 2;
+        # Belt-and-suspenders for the nastier failure: the reader can stay alive
+        # yet silently stop delivering events (a stalled stream), which no Restart
+        # policy catches because the process never exits. Recycling it on a timer
+        # bounds how long such a stall can last; the script re-sweeps on each
+        # (re)start, so a recycle also reconciles current state.
+        RuntimeMaxSec = "15min";
       };
       Install = {
         WantedBy = [ "graphical-session.target" ];
