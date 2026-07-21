@@ -33,7 +33,8 @@ let
   # end-of-life Electron (electron-39.8.10) are permitted just like everywhere
   # else. This let-binding shadows `pkgs.logseq` for the bare `logseq` below.
   logseq = (import inputs.nixpkgs-logseq {
-    inherit (pkgs) system config;
+    inherit (pkgs) config;
+    inherit (pkgs.stdenv.hostPlatform) system;   # `pkgs.system` is deprecated
   }).logseq;
 in
 

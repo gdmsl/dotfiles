@@ -86,6 +86,7 @@
   # home.pointerCursor sets the cursor for Wayland compositors (Niri, Hyprland).
   # gtk.enable = false avoids duplicate cursor config (already handled above).
   home.pointerCursor = {
+    enable = true;
     name = "Bibata-Modern-Ice";
     package = pkgs.bibata-cursors;
     size = 24;
