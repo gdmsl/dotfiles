@@ -299,6 +299,31 @@
   # ── Printing ────────────────────────────────────────────────────────────
   services.printing.enable = true;  # CUPS print server
 
+  # ── Graphics tablet (XP-Pen Star G640S) ──────────────────────────────────
+  # OpenTabletDriver (OTD) is a userspace tablet driver. On Wayland/niri it's
+  # the right choice over the kernel's hid-uclogic path: its daemon reads the
+  # tablet's raw HID and emits a virtual absolute pointer, so behaviour is the
+  # same on any compositor — and its GUI (otd-gui) is where you map the pen to
+  # ONE monitor (or any sub-rectangle) and rebind the buttons. niri can only
+  # map a tablet to a whole output and can't rebind its buttons, so OTD is what
+  # gets you the "one display / pick an area / custom buttons" you're after.
+  #
+  # This single option does the lot:
+  #   • installs the opentabletdriver package — otd (CLI), otd-gui (config GUI)
+  #     and otd-daemon all land on PATH, so nothing goes in home/packages.nix;
+  #   • ships OTD's udev rules so your session can talk to the device;
+  #   • runs the daemon as a per-user service (opentabletdriver.service, bound
+  #     to graphical-session.target, so it starts with your niri session);
+  #   • boot-blacklists hid-uclogic + wacom (the module's default) so the kernel
+  #     driver doesn't grab the tablet and fight OTD over it.
+  #
+  # Setup, once: plug the tablet in, run `otd-gui`, set the mapping on the
+  # Output tab (display + area) and the buttons on the Bindings tab, then save
+  # named presets (Presets → Save As), e.g. "laptop" and "external". After that
+  # Mod+Alt+T in niri pops a picker to switch presets (see the tablet-preset
+  # script in home/scripts.nix). `otd detect` confirms the tablet is seen.
+  hardware.opentabletdriver.enable = true;
+
   # ── Audio (PipeWire) ────────────────────────────────────────────────────
   # PipeWire replaces PulseAudio and JACK with a single modern audio server.
   # The pulse.enable and alsa.enable options provide backwards compatibility

@@ -121,6 +121,50 @@
       '';
     };
 
+    # Switch the XP-Pen tablet between OpenTabletDriver presets. A preset bundles
+    # the display/area mapping AND the button bindings, and is created + named in
+    # otd-gui (Presets → Save As); this script only *applies* one:
+    #   tablet-preset <name>  → apply that preset directly
+    #   tablet-preset         → pop a tofi menu of the presets you've saved
+    # Bound to Mod+Alt+T in niri. `otd` is on PATH courtesy of the system option
+    # hardware.opentabletdriver (see system/default.nix). Bare command names
+    # (otd, tofi, notify-send) resolve fine because niri binds inherit the
+    # interactive session PATH — same as the screenshot scripts above.
+    ".local/bin/tablet-preset" = {
+      executable = true;
+      text = ''
+        #!/bin/sh
+        presets="$HOME/.config/OpenTabletDriver/Presets"
+        name="$1"
+
+        if [ -z "$name" ]; then
+          # OTD writes one <name>.json per preset. Build the menu from those
+          # filenames; the `[ -e ]` guard stops the glob expanding to a literal
+          # "*.json" when the directory is empty or doesn't exist yet.
+          list=$(cd "$presets" 2>/dev/null && for f in *.json; do
+            [ -e "$f" ] && printf '%s\n' "''${f%.json}"
+          done)
+          if [ -z "$list" ]; then
+            notify-send -a OpenTabletDriver "Tablet preset" \
+              "No presets yet — open otd-gui and save one (Presets → Save As)."
+            exit 1
+          fi
+          # Reuse the wide cheatsheet tofi theme (a proper selectable list),
+          # overriding its prompt/placeholder text like the unicode picker does.
+          name=$(printf '%s\n' "$list" | tofi --config "$HOME/.config/tofi/cheatsheet" \
+            --prompt-text "tablet preset ❯ " --placeholder-text "pick a preset…")
+          [ -n "$name" ] || exit 0   # Escape / empty selection → do nothing
+        fi
+
+        if otd applypreset "$name"; then
+          notify-send -a OpenTabletDriver "Tablet preset" "Applied: $name"
+        else
+          notify-send -u critical -a OpenTabletDriver "Tablet preset" \
+            "Failed to apply: $name"
+        fi
+      '';
+    };
+
     # Add all private SSH keys to the SSH agent
     ".local/bin/ssh-add-all.sh" = {
       executable = true;

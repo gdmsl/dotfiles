@@ -396,6 +396,10 @@ binds {
     Mod+G hotkey-overlay-title="Switch windows" { spawn "vicinae" "deeplink" "vicinae://launch/wm/switch-windows"; }
     Mod+Shift+B hotkey-overlay-title="Toddler keyboard-basher" { spawn "bimbumbam"; }
 
+    // Graphics tablet: apply an OpenTabletDriver preset (display mapping +
+    // button bindings) via a tofi picker. Save/name presets in otd-gui first.
+    Mod+Alt+T hotkey-overlay-title="Tablet: apply OTD preset" repeat=false { spawn "tablet-preset"; }
+
     // Dev workspace (spawns terminal if empty)
     Mod+Alt+Return hotkey-overlay-title="Dev workspace" { spawn "fish" "-c" "dev"; }
 
