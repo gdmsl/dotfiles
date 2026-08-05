@@ -1,5 +1,5 @@
 # ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║  libreoffice.nix — LibreOffice + TexMaths (LaTeX equation editor)          ║
+# ║  libreoffice.nix — LibreOffice + OnlyOffice + TexMaths                    ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
 # TexMaths is a LibreOffice extension that lets you embed LaTeX equations as
@@ -49,6 +49,11 @@ in
 {
   home.packages = with pkgs; [
     libreoffice-fresh
+    # OnlyOffice treats OOXML (.docx/.xlsx/.pptx) as its native on-disk format
+    # rather than converting to ODF and back, so documents round-trip through it
+    # with less layout drift than LibreOffice manages. Handy when a file has to
+    # go back to someone using Microsoft Office. AGPL-3.0, x86_64-linux only.
+    onlyoffice-desktopeditors
     # texliveMedium bundles a LaTeX engine plus the math packages TexMaths
     # commonly uses (amsmath, amssymb, mathtools) and dvipng/dvisvgm for
     # converting DVI output to images. ~750 MB. If you only ever need basic
