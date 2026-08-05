@@ -11,6 +11,20 @@
 
 { config, pkgs, ... }:
 
+let
+  # Shared preamble for the *-personal AI wrappers at the bottom of this file.
+  # ~/Personal is a gocryptfs mount (see the `unlock-personal` alias in
+  # shell/_aliases.nix). While it's locked the path still exists as an empty
+  # 0700 directory, so a wrapper that ran anyway would create a second,
+  # *unencrypted* config there — one that silently vanishes behind the real
+  # vault the next time you unlock. Refuse to start instead.
+  requireVault = cmd: ''
+    ${pkgs.util-linux}/bin/mountpoint -q "$HOME/Personal" || {
+      echo "${cmd}: ~/Personal is locked — run 'unlock-personal' first." >&2
+      exit 1
+    }
+  '';
+in
 {
   home.file = {
     # Quick screenshot — capture, save to disk, AND copy to the clipboard, with
@@ -324,6 +338,62 @@
         ${pkgs.procps}/bin/pgrep -f 'share/logseq/resources/app' >/dev/null && exit 1  # Logseq
         ${pkgs.procps}/bin/pgrep -x soffice.bin                    >/dev/null && exit 1  # LibreOffice
         exit 0
+      '';
+    };
+
+    # ── Personal-account wrappers for the AI CLIs ─────────────────────────
+    # Each runs the same binary as the bare `claude`/`codex`/`gemini` command
+    # but reads and writes its config inside the encrypted ~/Personal vault.
+    # Bare command = work account, `-personal` suffix = personal account; the
+    # two never share credentials, history, or settings. You log in once per
+    # wrapper, and both can run side by side in different terminals.
+
+    # Claude Code and Codex both honour an environment variable pointing at
+    # their config directory, so these two are a one-line redirect.
+    ".local/bin/claude-personal" = {
+      executable = true;
+      text = ''
+        #!/bin/sh
+        ${requireVault "claude-personal"}
+        export CLAUDE_CONFIG_DIR="$HOME/Personal/.claude"
+        mkdir -p "$CLAUDE_CONFIG_DIR"
+        exec ${pkgs.claude-code}/bin/claude "$@"
+      '';
+    };
+
+    ".local/bin/codex-personal" = {
+      executable = true;
+      text = ''
+        #!/bin/sh
+        ${requireVault "codex-personal"}
+        export CODEX_HOME="$HOME/Personal/.codex"
+        mkdir -p "$CODEX_HOME"
+        exec ${pkgs.codex}/bin/codex "$@"
+      '';
+    };
+
+    # Gemini has no such variable — it builds its config path as
+    # `join(homedir(), ".gemini")` with the directory name baked in. Rather
+    # than fake $HOME (which would also strip the git identity and SSH keys
+    # from anything Gemini shells out to), bubblewrap swaps just that one
+    # directory. `--dev-bind / /` passes the whole filesystem through
+    # unchanged, then `--bind` overlays the vault copy onto ~/.gemini.
+    #
+    # The swap lives in a private mount namespace, so it is visible only to
+    # this process and its children: a plain `gemini` running in another
+    # terminal still sees the real ~/.gemini, and nothing persists after exit.
+    ".local/bin/gemini-personal" = {
+      executable = true;
+      text = ''
+        #!/bin/sh
+        ${requireVault "gemini-personal"}
+        dir="$HOME/Personal/.gemini"
+        # Both paths must exist before bwrap can bind one onto the other.
+        mkdir -p "$dir" "$HOME/.gemini"
+        exec ${pkgs.bubblewrap}/bin/bwrap \
+          --dev-bind / / \
+          --bind "$dir" "$HOME/.gemini" \
+          -- ${pkgs.gemini-cli}/bin/gemini "$@"
       '';
     };
   };
