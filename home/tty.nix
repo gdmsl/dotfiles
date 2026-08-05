@@ -119,6 +119,7 @@ in
 
     # ── AI / LLM CLIs ─────────────────────────────────────────────────────
     claude-code
+    codex             # OpenAI's terminal coding agent (the `codex` command)
     gemini-cli
 
     # ── Secrets ───────────────────────────────────────────────────────────

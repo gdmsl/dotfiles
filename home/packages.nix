@@ -140,6 +140,7 @@ in
 
     # ── AI / LLM ──────────────────────────────────────────────────────────
     claude-code
+    codex            # OpenAI's terminal coding agent (the `codex` command)
     gemini-cli
 
     # ── GNOME keyring / secrets ───────────────────────────────────────────
