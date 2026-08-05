@@ -175,6 +175,7 @@ in
     jira-cli-go    # interactive Jira CLI (the `jira` command)
     acli           # Atlassian CLI (Jira/Confluence/Bitbucket)
     kubectl        # Kubernetes cluster CLI; reads ~/.kube/config
+    opentofu       # Terraform-compatible IaC tool (the `tofu` command)
     mempalace      # local-first AI memory system (defined in let-binding above)
     # Podman itself is enabled in system/default.nix; this is the Python wrapper
     # that reads compose.yaml files and drives podman directly. Lighter than the
