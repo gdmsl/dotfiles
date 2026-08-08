@@ -202,6 +202,19 @@
   services.upower.enable = true;      # battery monitoring (consumed by noctalia/quickshell)
   hardware.sensor.iio.enable = true;  # accelerometer / ambient light sensor
 
+  # ── Extra filesystem support ────────────────────────────────────────────
+  # The kernel ships these three as loadable modules, so `mount` already
+  # autoloads the driver on demand. What this option adds is the userspace
+  # half the kernel can't provide — the mkfs/fsck/repair binaries — by putting
+  # btrfs-progs, f2fs-tools and xfsprogs into the system profile. Setting it
+  # also makes the drivers available in the initrd, which is what you'd need
+  # if a disk of one of these types ever had to be mounted during early boot.
+  boot.supportedFilesystems = {
+    btrfs = true;
+    f2fs = true;
+    xfs = true;
+  };
+
   # ── Bluetooth ───────────────────────────────────────────────────────────
   hardware.bluetooth.enable = true;
   services.blueman.enable = false;  # UI provided by noctalia-shell instead
