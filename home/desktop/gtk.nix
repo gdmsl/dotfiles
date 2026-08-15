@@ -17,9 +17,18 @@
     enable = true;
 
     # ── GTK theme ─────────────────────────────────────────────────────
+    # Colloid-Dark, by Vinceliuice — the same author as the Colloid icon theme
+    # below, so widgets and icons are designed as a matching set.
+    #
+    # `name` is the directory the package installs under share/themes, and GTK
+    # looks the theme up by that exact string. A typo here does not error; it
+    # silently falls back to the default theme.
+    #
+    # Home Manager installs `package` into home.packages for you, so the theme
+    # does not need a separate entry in home/packages.nix.
     theme = {
-      name = "Tokyonight-Dark";
-      package = pkgs.tokyonight-gtk-theme;  # Nix installs the theme package
+      name = "Colloid-Dark";
+      package = pkgs.colloid-gtk-theme;
     };
 
     # Colloid-Dark — modern flat icon theme by Vinceliuice (same author as Tela).
@@ -52,8 +61,8 @@
     # GTK4 has its own theme mechanism
     gtk4 = {
       theme = {
-        name = "Tokyonight-Dark";
-        package = pkgs.tokyonight-gtk-theme;
+        name = "Colloid-Dark";
+        package = pkgs.colloid-gtk-theme;
       };
       extraConfig = {
         gtk-application-prefer-dark-theme = true;

@@ -193,7 +193,6 @@ in
     vista-fonts                 # Consolas, Cambria, etc.
 
     # ── Theming ───────────────────────────────────────────────────────────
-    tokyonight-gtk-theme        # GTK theme
     colloid-icon-theme          # icon theme (active — set in home/desktop/gtk.nix)
     # Parent theme in Colloid-Dark's inheritance chain
     # (Inherits=hicolor,breeze in its index.theme). Without it, icon lookups
