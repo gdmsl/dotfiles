@@ -99,6 +99,7 @@
           "claude-code"
           "corefonts"
           "discord"
+          "discord-unwrapped"  # discord is a wrapper; the inner drv is evaluated too
           "microsoft-edge"
           "logseq"
           "slack"
