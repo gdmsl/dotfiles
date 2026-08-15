@@ -120,7 +120,14 @@ in
     zotero           # reference manager
     keepassxc        # offline password manager (KDBX database files)
     hyprpicker       # color picker
-    wf-recorder            # simple Wayland screen recorder
+    # simple Wayland screen recorder.
+    # Pinned to FFmpeg 7 because nixpkgs' default `ffmpeg` moved to 9.0, and
+    # wf-recorder 0.6.0 still reads `AVCodec.sample_fmts`, a struct field that
+    # FFmpeg removed in 8.0 — so it no longer compiles against the default.
+    # This is an upstream breakage, not a config problem. Drop the override and
+    # go back to a bare `wf-recorder` once nixpkgs ships a version that builds
+    # against FFmpeg 9 (`sample_fmts` was replaced by `avcodec_get_supported_config`).
+    (wf-recorder.override { ffmpeg = ffmpeg_7; })
     gpu-screen-recorder    # hardware-accelerated recorder (used by Noctalia's screen-recorder plugin)
     obs-studio             # full streaming/recording suite (scenes, sources, RTMP)
     inkscape         # vector graphics editor
