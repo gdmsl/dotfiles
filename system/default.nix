@@ -267,6 +267,22 @@
     # Realtek RTL8852CU Bluetooth: disable USB autosuspend
     ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="5852", ATTR{power/autosuspend}="-1"
 
+    # Crucial P3 Plus (portable SSD) behind its RTL9210 USB bridge: enable TRIM.
+    #
+    # The kernel defaults this drive's provisioning_mode to "full", meaning
+    # "emulate discard by writing zeros" — which surfaces as *no* discard
+    # support at all (DISC-MAX=0B) and silently disables TRIM. The bridge does
+    # translate SCSI UNMAP correctly, so force "unmap" to re-enable it.
+    #
+    # Verify with:  lsblk -D /dev/sda   → DISC-GRAN 512B, DISC-MAX 4G
+    #
+    # ATTRS{} walks up to the parent SCSI device for vendor/model; ATTR{} then
+    # writes the attribute on the scsi_disk device itself. The bridge reports
+    # the model space-padded ('SSD8            '), hence the glob — an exact
+    # match silently never fires. Scoped to this drive so it can't affect the
+    # internal NVMe or any other disk.
+    ACTION=="add|change", SUBSYSTEM=="scsi_disk", ATTRS{vendor}=="CT500P3P", ATTRS{model}=="SSD8*", ATTR{provisioning_mode}="unmap"
+
     # NuPhy keyboards (vendor 0x19f5): give the wheel group RW access on the
     # raw USB device. Needed so VIA / Vial / vial-cli can talk to the keyboard
     # without sudo. ATTRS{} (plural) walks up the device tree, so this matches
