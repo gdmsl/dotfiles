@@ -87,11 +87,11 @@
     paf = "paru -Ql";
     pao = "paru -Qo";
 
-    # Encrypted vault — mounts gocryptfs at ~/Personal and starts Syncthing.
-    # Lives here (not in fish/bash/zsh modules) because we want the same
-    # commands available regardless of which shell the user is in.
-    unlock-personal = "gocryptfs ~/.personal-encrypted ~/Personal && systemctl --user start syncthing && systemctl --user restart gcr-ssh-agent.socket";
-    lock-personal = "systemctl --user stop syncthing; fusermount -u ~/Personal";
+    # NOTE: unlock-personal / lock-personal used to live here. They moved to
+    # ../personal-vault.nix because the commands differ per machine (gocryptfs
+    # on yara, LUKS on the nomad SSD) and this file is a plain attrset with no
+    # access to the module system. They are still installed for all three
+    # shells, so nothing about using them changed.
   };
 
   listing = {

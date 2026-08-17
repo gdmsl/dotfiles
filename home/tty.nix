@@ -36,6 +36,7 @@ in
     ./shell/starship.nix     # cross-shell prompt
     ./shell/atuin.nix        # synced shell history
     ./shell/direnv.nix       # per-directory env loader
+    ./personal-vault.nix     # unlock-personal / lock-personal (~/Personal)
 
     # Editor / VCS / multiplexers
     ./git.nix                # git config, delta, aliases
