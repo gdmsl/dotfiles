@@ -135,8 +135,12 @@
         modules = [
           # Hardware-specific NixOS module for this exact laptop model
           nixos-hardware.nixosModules.lenovo-thinkpad-e14-amd
-          # Our system configuration (see system/default.nix)
+          # Shared system configuration (see system/default.nix)
           ./system
+          # yara's own hardware: boot loader, LUKS UUIDs, filesystems, swap.
+          # Passed explicitly because ./system is now a base shared with nomad
+          # and so no longer imports this itself.
+          ./system/hardware.nix
           # Integrate Home Manager as a NixOS module — this means the user
           # environment is rebuilt together with the system in one command.
           home-manager.nixosModules.home-manager

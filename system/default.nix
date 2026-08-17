@@ -1,5 +1,5 @@
 # ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║  system/default.nix — NixOS system configuration for "yara"                ║
+# ║  system/default.nix — Shared NixOS system configuration                    ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
 # This file configures the operating system itself: users, networking, audio,
@@ -9,18 +9,22 @@
 # returns an attribute set. NixOS merges all modules together to produce one
 # final system configuration.
 #
-# Machine: Lenovo ThinkPad E14 Gen 7 (AMD)
-# Role:    work laptop (QPerfect) with encrypted personal vault
-# Setup:   full-disk LUKS encryption + gocryptfs personal vault
+# ── Shared by every host ────────────────────────────────────────────────────
+# This module is the *common base*. It deliberately does NOT import any
+# per-machine file, and does not set a hostname. The flake picks a host file
+# alongside it:
+#
+#   nixosConfigurations.yara  → this + ./hardware.nix     (ThinkPad E14, AMD)
+#   nixosConfigurations.nomad → this + ./nomad.nix        (portable SSD)
+#                                    + ./disko-nomad.nix
+#
+# Some options here are still specific to yara's hardware (fingerprint reader,
+# graphics tablet, ollama). Rather than untangle all of that at once — which
+# would risk changing yara — `nomad.nix` explicitly turns off what it doesn't
+# want with `lib.mkForce`. See SSD_PLAN.md §8.
 { config, pkgs, lib, ... }:
 
 {
-  imports = [
-    ./hardware.nix  # hardware-specific config (boot, disks, LUKS)
-  ];
-
-  networking.hostName = "yara";
-
   # ── Locale & timezone ───────────────────────────────────────────────────
   time.timeZone = "Europe/Paris";
   i18n.defaultLocale = "en_US.UTF-8";

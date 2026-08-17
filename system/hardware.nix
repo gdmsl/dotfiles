@@ -23,6 +23,10 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
+  # Lives here rather than in system/default.nix because that file is now the
+  # shared base for both yara and nomad.
+  networking.hostName = "yara";
+
   # ── Boot loader ─────────────────────────────────────────────────────────
   # systemd-boot is a simple UEFI boot manager (alternative to GRUB).
   boot.loader.systemd-boot.enable = true;
