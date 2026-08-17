@@ -550,18 +550,27 @@
     "logseq"
     "slack"
     "spotify"
+    "ventoy-gtk3"  # the GTK variant renames the derivation from `ventoy`
     "vista-fonts"
     "zoom"
   ];
 
   # ── Insecure packages ───────────────────────────────────────────────────
-  # Nix refuses to build packages whose dependencies are past end-of-life
-  # (known-vulnerable) unless you explicitly opt in by name+version here.
+  # Nix refuses to build packages flagged as known-vulnerable unless you
+  # explicitly opt in by name+version here. Note these are exact names with
+  # versions, so a package bump breaks the entry and you must update it.
+  #
   # Logseq bundles an old Electron runtime that upstream hasn't updated, so
   # we accept the risk to keep it installable. Revisit when Logseq ships a
   # newer Electron (bump the version string or drop this line).
+  #
+  # Ventoy is flagged for a different reason: it ships prebuilt binary blobs
+  # that nixpkgs considers unauditable for malware or license compliance
+  # (nixpkgs issue #404663). Accepted deliberately — it only runs when we
+  # explicitly write a USB stick.
   nixpkgs.config.permittedInsecurePackages = [
     "electron-39.8.10"
+    "ventoy-gtk3-1.1.12"
   ];
 
   # ── Nix daemon settings ─────────────────────────────────────────────────

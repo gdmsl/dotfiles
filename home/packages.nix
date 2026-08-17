@@ -135,6 +135,22 @@ in
     darktable        # photo editing / RAW processing
     prismlauncher    # Minecraft launcher (FOSS; bundles its own Java, manages instances/mods)
 
+    # Multiboot USB creator — writes a bootable drive you then just copy ISOs
+    # onto. Launch the GUI with `ventoy-gui` (desktop entry: "Ventoy").
+    #
+    # `ventoy-full-gtk` is the batteries-included variant: nixpkgs' bare
+    # `ventoy` builds without a GUI and without ext4/NTFS/XFS/LUKS support,
+    # since those are all off by default. `-full` turns the filesystem flags on
+    # and `-gtk` selects the GTK3 interface.
+    #
+    # Two opt-ins are required for this to build, both keyed on the derivation
+    # name `ventoy-gtk3` (the GUI variant renames itself):
+    #   - allowUnfreePredicate      — nixpkgs marks Ventoy unfree
+    #   - permittedInsecurePackages — Ventoy ships prebuilt binary blobs that
+    #     nixpkgs flags as unauditable (nixpkgs issue #404663)
+    # Both live in system/default.nix and flake.nix.
+    ventoy-full-gtk
+
     # ── Communication / productivity ──────────────────────────────────────
     discord
     signal-desktop

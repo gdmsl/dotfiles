@@ -104,13 +104,17 @@
           "logseq"
           "slack"
           "spotify"
+          "ventoy-gtk3"  # the GTK variant renames the derivation from `ventoy`
           "vista-fonts"
           "zoom"
         ];
-        # Logseq bundles an end-of-life Electron that Nix would otherwise refuse
-        # to build. Keep in sync with system/default.nix's permittedInsecurePackages.
+        # Logseq bundles an end-of-life Electron, and Ventoy ships unauditable
+        # binary blobs; Nix would otherwise refuse to build either. These are
+        # exact name+version strings, so a package bump breaks them.
+        # Keep in sync with system/default.nix's permittedInsecurePackages.
         config.permittedInsecurePackages = [
           "electron-39.8.10"
+          "ventoy-gtk3-1.1.12"
         ];
       };
 
