@@ -215,6 +215,18 @@
     xfs = true;
   };
 
+  # ── Disk management GUI ─────────────────────────────────────────────────
+  # GNOME Disks — graphical partitioning/formatting tool. It formats using the
+  # mkfs binaries the option above provides, so it can write any of those
+  # filesystems.
+  #
+  # This option installs the app and registers its D-Bus service. The app
+  # itself runs as your normal user; the privileged work happens in the
+  # udisks2 daemon (services.udisks2, already on), which it drives over D-Bus.
+  # Each privileged action raises a polkit prompt, answered by the
+  # polkit-gnome agent started in home/services.nix.
+  programs.gnome-disks.enable = true;
+
   # ── Bluetooth ───────────────────────────────────────────────────────────
   hardware.bluetooth.enable = true;
   services.blueman.enable = false;  # UI provided by noctalia-shell instead
