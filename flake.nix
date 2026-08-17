@@ -39,6 +39,15 @@
     # laptop/desktop models. Provides a NixOS module for our ThinkPad.
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
+    # disko: declares disk layouts (partitions, LUKS, filesystems) in Nix
+    # instead of running fdisk/cryptsetup/mkfs by hand. Used by the `nomad`
+    # portable SSD so the layout is documented and reproducible.
+    # See SSD_PLAN.md and system/disko-nomad.nix.
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Home Manager: manages dotfiles and user-level programs declaratively.
     # `inputs.nixpkgs.follows = "nixpkgs"` ensures it uses our nixpkgs above.
     home-manager = {
@@ -150,6 +159,53 @@
             home-manager.backupFileExtension = "hm-backup"; # back up conflicting files
             home-manager.extraSpecialArgs = { inherit inputs dotfilesPath; };
             home-manager.users.gdmsl = import ./home;  # user config entry point
+          }
+        ];
+      };
+
+      # ── Portable SSD system ─────────────────────────────────────────────
+      # NixOS on the external 500 GB SSD: carry-on storage, a daily-driver
+      # environment that boots on arbitrary x86_64 hardware, and a bootstrap
+      # tool for installing NixOS onto other machines.
+      #
+      # Reuses ./system and ./home wholesale, so it inherits the same Firefox,
+      # Neovim, fish and CLI environment as yara. nomad.nix then re-points the
+      # hardware-specific parts and opts out of what belongs to the ThinkPad.
+      #
+      # Note there is no nixos-hardware module here — that's the whole point.
+      #
+      # Design doc: SSD_PLAN.md
+      # Usage (from yara, installing onto the mounted SSD):
+      #   sudo nixos-install --flake .#nomad --root /mnt
+      # Usage (once running on the SSD):
+      #   sudo nixos-rebuild switch --flake .#nomad
+      nixosConfigurations.nomad = nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit inputs; };
+        modules = [
+          # disko owns the partitions, LUKS containers and every fileSystems
+          # entry for this host. Importing the module is inert — it only
+          # *describes* the disk until the formatter is run explicitly.
+          inputs.disko.nixosModules.disko
+          ./system/disko-nomad.nix
+          # Shared system configuration
+          ./system
+          # Portable-hardware host config (boot loader, initrd, opt-outs)
+          ./system/nomad.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "hm-backup";
+            home-manager.extraSpecialArgs = { inherit inputs dotfilesPath; };
+            home-manager.users.gdmsl = {
+              imports = [ ./home ];
+              # ~/Personal here is the SSD's LUKS container bind-mounted by
+              # system/nomad.nix, not yara's gocryptfs vault — so the
+              # unlock/lock commands differ. Everything else in ./home is
+              # mount-mechanism agnostic and needs no changes.
+              my.personalVault.backend = "luks";
+            };
           }
         ];
       };
