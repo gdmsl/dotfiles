@@ -80,13 +80,35 @@ in
         # dry-run print/skip them; we only do "real" work in non-dry-run mode so
         # the marker file stays consistent with what unopkg actually did.
         if [ -z "$DRY_RUN_CMD" ]; then
-          mkdir -p "$(dirname "$installed_marker")"
-          # `-f` force-replaces any existing copy of the same extension; this is
-          # what lets us upgrade TexMaths in place when the version changes.
-          # `--suppress-license` accepts the GPLv2 prompt non-interactively.
-          ${pkgs.libreoffice-fresh}/bin/unopkg add \
-            --suppress-license -f "$desired"
-          echo "$desired" > "$installed_marker"
+          # unopkg needs XDG_RUNTIME_DIR (/run/user/$UID) for its lock/socket.
+          # systemd-logind creates that on login, so it does NOT exist when this
+          # service runs at boot before anyone has logged in — unopkg then dies
+          # with "mkdir: cannot create directory '/run/user/1000'".
+          #
+          # That is fatal: activation steps are concatenated into one bash
+          # script run under `set -e`, so a non-zero exit here aborts the whole
+          # activation and every later step (linkGeneration, the ~/.config
+          # symlinks, niri/kitty/starship configs) is silently skipped. This is
+          # exactly what happened on nomad's first boot.
+          #
+          # So: skip when there is no runtime dir, and never let a failure here
+          # take the rest of activation down with it. TexMaths is a LibreOffice
+          # nicety; the desktop config is not.
+          if [ ! -d "/run/user/$(${pkgs.coreutils}/bin/id -u)" ]; then
+            echo "TexMaths: no XDG_RUNTIME_DIR yet (boot-time activation) — deferring."
+          else
+            mkdir -p "$(dirname "$installed_marker")"
+            # `-f` force-replaces any existing copy of the same extension; this is
+            # what lets us upgrade TexMaths in place when the version changes.
+            # `--suppress-license` accepts the GPLv2 prompt non-interactively.
+            if ${pkgs.libreoffice-fresh}/bin/unopkg add \
+                 --suppress-license -f "$desired"; then
+              echo "$desired" > "$installed_marker"
+            else
+              # Leave the marker alone so the next activation retries.
+              echo "TexMaths: unopkg failed — continuing activation anyway." >&2
+            fi
+          fi
         else
           echo "Would install TexMaths from $desired"
         fi
