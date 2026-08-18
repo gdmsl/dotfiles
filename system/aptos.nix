@@ -1,14 +1,11 @@
 # Aptos — Microsoft's default Office font (since 2023).
 #
-# Aptos isn't in nixpkgs because Microsoft ships it under a proprietary
-# EULA that forbids public redistribution, so there's no stable URL we
-# can hand to `fetchurl`. Instead we use `requireFile`, the Nix idiom
-# for "user must obtain this file themselves and add it to /nix/store".
+# Not in nixpkgs: Microsoft's licence forbids redistribution, so there's no URL
+# to fetch. `requireFile` covers this case — you supply the file yourself and
+# Nix identifies it by hash rather than by path.
 #
-# The .zip lives at  ../third-party/Microsoft Aptos Fonts.zip , but
-# `third-party/*.zip` is gitignored — and flakes only see git-tracked
-# files. So we can't import the path directly. `requireFile` sidesteps
-# that: it identifies the source by its sha256, not its path.
+# That indirection is also necessary because the zip sits in third-party/, which
+# is gitignored, and flakes only see git-tracked files.
 #
 # One-time setup (you should only need to do this once per machine):
 #

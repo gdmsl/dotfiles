@@ -2,13 +2,10 @@
 # ║  pkgs/mempalace.nix — mempalace package definition                         ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# Local-first AI memory system (https://github.com/mempalace/mempalace). Not in
-# nixpkgs, so we build it ourselves from PyPI. Extracted into its own file so
-# multiple home-manager profiles (full desktop + headless tty) can pull in the
-# same package without duplicating the build recipe.
+# Not in nixpkgs, so it's built from PyPI here. In its own file so both the
+# desktop and headless profiles get the same derivation.
 #
-# Usage: callers do `import ./pkgs/mempalace.nix { inherit pkgs lib; }` and
-# stick the result into `home.packages`.
+#   import ./pkgs/mempalace.nix { inherit pkgs lib; }
 
 { pkgs, lib }:
 

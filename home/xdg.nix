@@ -2,16 +2,12 @@
 # ║  xdg.nix — XDG MIME types, default applications, and raw config files      ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# XDG (Cross-Desktop Group) standards define how Linux desktops handle:
-#   - MIME types — which app opens which file type
-#   - Default applications — what happens when you click a link or file
-#   - Config/data directories — ~/.config, ~/.local/share, etc.
+# Which application opens which file type, and where the standard user
+# directories point.
 #
-# Home Manager's `xdg.mimeApps` generates ~/.config/mimeapps.list, which
-# desktops read to determine default applications.
-#
-# The `.desktop` file names (like "firefox.desktop") correspond to .desktop
-# entries installed by packages in /share/applications/.
+# `xdg.mimeApps` writes ~/.config/mimeapps.list. The values are .desktop file
+# names, which packages install into share/applications — so
+# `ls ~/.nix-profile/share/applications` is how you find the right name.
 
 { config, pkgs, lib, ... }:
 

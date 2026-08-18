@@ -2,13 +2,12 @@
 # ║  direnv.nix — Automatic environment loading                                ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# direnv watches for .envrc files in directories. When you `cd` into one, it
-# automatically loads the environment (variables, paths, etc.) and unloads it
-# when you leave.
+# Loads a directory's .envrc when you cd in and unloads it when you leave.
 #
-# nix-direnv extends this with first-class Nix support: put `use flake` in a
-# .envrc and direnv will load the flake's devShell — with caching so it
-# doesn't re-evaluate every time you cd in.
+# nix-direnv adds Nix support: `use flake` in an .envrc gets you that flake's
+# devShell, cached so it isn't re-evaluated on every cd.
+#
+# New .envrc files need `direnv allow` once before they'll load.
 
 { pkgs, ... }:
 

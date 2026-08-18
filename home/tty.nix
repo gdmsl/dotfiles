@@ -2,32 +2,27 @@
 # ║  home/tty.nix — Headless / SSH-only home-manager profile                   ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# A trimmed home-manager configuration meant for machines you only ever SSH
-# into: no Wayland, no compositor, no GUI apps. Reuses the per-tool modules
-# (fish, neovim, zellij, …) so the terminal experience matches yara, but
-# skips everything that depends on a display.
+# Trimmed profile for machines you only SSH into: no compositor, no GUI apps.
+# It imports the same per-tool modules as the desktop profile, so the shell and
+# editor behave identically.
 #
-# Bootstrap on a fresh box (Nix already installed, no global home-manager):
+# On a fresh box with Nix but no home-manager:
 #
 #   nix run github:nix-community/home-manager -- switch \
 #       --flake github:gdmsl/dotfiles#gdmsl-tty
 #
-# After the first activation, subsequent runs work the same way; if you keep
-# a local checkout of this repo, point --flake at that path instead.
+# Point --flake at a local checkout instead if you have one.
 
 { config, pkgs, lib, inputs, ... }:
 
 let
-  # mempalace is built from PyPI (not in nixpkgs). The recipe lives next to
-  # this file so both home/default.nix (yara) and home/tty.nix (headless)
-  # consume the exact same derivation.
+  # Same derivation home/packages.nix uses, so both profiles get one build.
   mempalace = import ./pkgs/mempalace.nix { inherit pkgs lib; };
 in
 {
   # ── Imports ─────────────────────────────────────────────────────────────
-  # Each per-tool module is self-contained and display-agnostic — safe to
-  # pull into a headless profile. We deliberately do NOT import packages.nix,
-  # services.nix, scripts.nix, or any home/desktop/* — those carry GUI deps.
+  # Only display-agnostic modules. packages.nix, services.nix, scripts.nix and
+  # everything under desktop/ pull in GUI dependencies, so they stay out.
   imports = [
     # Shell stack
     ./shell/fish.nix         # primary shell + abbreviations
@@ -45,17 +40,16 @@ in
     ./editor/neovim.nix      # neovim via nvf framework
   ];
 
-  # ── Identity ────────────────────────────────────────────────────────────
-  # Override per-host if your work-machine username differs from gdmsl.
+  # Override these if the username on that machine differs.
   home.username = "gdmsl";
   home.homeDirectory = "/home/gdmsl";
   home.stateVersion = "24.11";
 
   programs.home-manager.enable = true;
 
-  # ── Session variables (terminal subset of home/default.nix) ─────────────
-  # Skipped vs. yara: BROWSER, TERMINAL, MOZ_*, SAL_DISABLE_OPENCL — those
-  # only matter inside a graphical session.
+  # ── Session variables ───────────────────────────────────────────────────
+  # The terminal subset of home/default.nix; the browser and Firefox ones only
+  # matter in a graphical session.
   home.sessionVariables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
@@ -106,9 +100,8 @@ in
     curl
 
     # ── Hardware / system info ────────────────────────────────────────────
-    # Useful when SSHing into an unfamiliar box. nvtopPackages.amd is omitted
-    # — work hardware may be Intel or Nvidia, so the AMD-specific tool has
-    # no value here.
+    # For working out what an unfamiliar box actually is. No nvtop here, since
+    # the GPU vendor is unknown.
     inxi              # all-in-one hardware/system report (try: inxi -Fxxxz)
     lshw              # hardware tree (try: lshw -short)
     pciutils          # provides lspci
@@ -124,17 +117,13 @@ in
     gemini-cli
 
     # ── Secrets ───────────────────────────────────────────────────────────
-    # `pass` is a CLI password manager backed by gpg-encrypted files. No
-    # graphical keyring on a tty box — the GPG agent's TTY pinentry handles
-    # passphrases. To use, generate a key with `gpg --full-generate-key`
-    # then `pass init <key-id>`.
+    # No graphical keyring here, so GPG's terminal pinentry asks for
+    # passphrases. Setup: `gpg --full-generate-key`, then `pass init <key-id>`.
     gnupg
     pass
 
     # ── Languages & toolchains ────────────────────────────────────────────
-    # Same Julia wrapper as yara — JLL artifacts dlopen FHS paths that don't
-    # exist on NixOS, so we wrap LD_LIBRARY_PATH around `julia`. Recipe in
-    # pkgs/julia-wrapped.nix.
+    # Same Julia wrapper as the desktop profile, see pkgs/julia-wrapped.nix.
     (import ./pkgs/julia-wrapped.nix { inherit pkgs; })
     lua
     rustup     # Rust toolchain manager (provides rustc, cargo)
@@ -158,21 +147,17 @@ in
   ];
 
   # ── Scripts ─────────────────────────────────────────────────────────────
-  # Body shared with home/scripts.nix so both profiles ship the same script.
+  # Shared with home/scripts.nix, so both profiles ship the same one.
   home.file.".local/bin/git-mkversion" = {
     executable = true;
     source = ../raw/scripts/git-mkversion.sh;
   };
 
   # ── Raw config ──────────────────────────────────────────────────────────
-  # .dircolors tunes ls/eza colors via $LS_COLORS. Display-agnostic, so
-  # worth carrying. Other raw/* files (qt5ct, kvantum, chromium-flags,
-  # fontconfig, locale.conf) are display-only and skipped here.
+  # ls and eza colours. The rest of raw/ is graphical, so it's skipped.
   home.file.".dircolors".source = ../raw/dircolors;
 
-  # Julia REPL/IJulia startup files — Julia reads ~/.julia/config/startup.jl
-  # on every launch and ours auto-loads Revise. Same recipe as the yara
-  # profile (home/default.nix); the file lives in raw/julia/.
+  # Loads Revise on every REPL start, as in home/default.nix.
   home.file.".julia/config/startup.jl".source = ../raw/julia/startup.jl;
   home.file.".julia/config/startup_ijulia.jl".source = ../raw/julia/startup_ijulia.jl;
 }

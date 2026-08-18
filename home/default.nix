@@ -1,27 +1,24 @@
 # ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║  home/default.nix — Root Home Manager module                               ║
+# ║  home/default.nix — Home Manager entry point                               ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# This is the entry point for all user-level configuration. Home Manager works
-# like NixOS modules but for your home directory: it manages dotfiles, user
-# packages, shell config, services, and more — all declaratively.
+# All user-level configuration starts here. Home Manager works like NixOS
+# modules but for your home directory: dotfiles, user packages, shell config,
+# user services.
 #
-# The function signature `{ config, pkgs, lib, inputs, ... }:` means:
-#   config  — the final merged configuration (lets you reference other options)
-#   pkgs    — the Nix package set (all available packages)
-#   lib     — Nix utility functions (mkIf, mkForce, etc.)
-#   inputs  — our flake inputs (passed via extraSpecialArgs in flake.nix)
-#   ...     — catch any extra arguments we don't use here
+# The arguments every module in here receives:
+#   config  — the merged configuration, for referencing other options
+#   pkgs    — the package set
+#   lib     — helper functions (mkIf, mkForce, …)
+#   inputs  — this flake's inputs, passed through from flake.nix
 #
-# The `imports` list pulls in other .nix files. Each one is a module that
-# configures a specific program or concern. Home Manager merges them all
-# together — you can split your config across as many files as you like.
-
+# Rebuild after editing anything under home/:
+#   sudo nixos-rebuild switch --flake .#yara
+#
 { config, pkgs, lib, inputs, ... }:
 
 {
   # ── Imports ─────────────────────────────────────────────────────────────
-  # Each import is a module that configures one aspect of the user environment.
   # The directory structure mirrors the concern: shell/, terminal/, editor/, etc.
   imports = [
     ./packages.nix              # user-level packages (CLI tools, apps, fonts)
@@ -56,17 +53,16 @@
   home.username = "gdmsl";
   home.homeDirectory = "/home/gdmsl";
 
-  # State version for Home Manager — same concept as system.stateVersion.
-  # Tells HM which defaults to assume. Don't change unless upgrading.
+  # Same idea as system.stateVersion. Leave it alone.
   home.stateVersion = "24.11";
 
-  # Let Home Manager install and manage itself as a program
+  # Puts the home-manager command itself on PATH.
   programs.home-manager.enable = true;
 
   # ── Session variables ───────────────────────────────────────────────────
-  # These are exported as environment variables via ~/.config/environment.d/
-  # so they're available to all programs (including graphical ones launched
-  # by the compositor, not just shells).
+  # Written to ~/.config/environment.d/, so they reach graphical apps launched
+  # by the compositor as well as shells. Changes need a re-login, not just a
+  # new terminal.
   home.sessionVariables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
@@ -84,12 +80,12 @@
     MOZ_USE_OMTC = "1";              # Firefox: off-main-thread compositing
     MOZ_WEBRENDER = "1";             # Firefox: GPU-accelerated rendering
     MOZ_ENABLE_WAYLAND = "1";        # Firefox: native Wayland mode
-    # SSH_AUTH_SOCK not set here — let gnome-keyring or SSH agent forwarding
-    # set it at runtime. Hardcoding breaks agent forwarding over SSH.
+    # SSH_AUTH_SOCK is deliberately absent: gnome-keyring or agent forwarding
+    # sets it at runtime, and hardcoding it breaks forwarding over SSH.
   };
 
-  # ── Additional PATH entries ─────────────────────────────────────────────
-  # Directories added to $PATH (in addition to the Nix profile paths).
+  # ── Extra PATH entries ──────────────────────────────────────────────────
+  # Added on top of the Nix profile directories.
   home.sessionPath = [
     "$HOME/.local/bin"             # custom scripts (see scripts.nix)
     "$HOME/.luarocks/bin"          # Lua package manager
@@ -100,18 +96,17 @@
   ];
 
   # ── Raw config files ────────────────────────────────────────────────────
-  # Some config files use formats that are hard to express in Nix (INI, custom
-  # syntax). We store them as-is in raw/ and deploy them to ~/.config/ using
-  # xdg.configFile. The `.source` attribute points to the file in this repo.
+  # Config in formats not worth expressing in Nix. Kept verbatim in raw/ and
+  # linked into ~/.config. These are store copies, so edits to raw/ need a
+  # rebuild to take effect — unlike the mkOutOfStoreSymlink ones further down.
   xdg.configFile = {
     "fontconfig/fonts.conf".source = ../raw/fontconfig/fonts.conf;
     "paru/paru.conf".source = ../raw/paru/paru.conf;
     "Kvantum/kvantum.kvconfig".source = ../raw/Kvantum/kvantum.kvconfig;
     "qt5ct/qt5ct.conf".source = ../raw/qt5ct/qt5ct.conf;
     "qt6ct/qt6ct.conf".source = ../raw/qt6ct/qt6ct.conf;
-    # Chromium-family browsers all read a per-binary flags file from XDG_CONFIG_HOME.
-    # Same flags work for all three (Chrome/Edge are Chromium derivatives), so we
-    # point them at one source of truth in raw/chromium-flags.conf.
+    # Chrome and Edge are Chromium derivatives and read the same flags, each
+    # from its own filename, so all three point at one file.
     "chromium-flags.conf".source = ../raw/chromium-flags.conf;
     "chrome-flags.conf".source = ../raw/chromium-flags.conf;
     "microsoft-edge-flags.conf".source = ../raw/chromium-flags.conf;
@@ -120,9 +115,8 @@
     "onedrive/config".source = ../raw/onedrive/config;
   };
 
-  # ── Dotfiles in home directory ──────────────────────────────────────────
-  # home.file deploys files to ~/. Same idea as xdg.configFile but for files
-  # that live directly in $HOME (like .latexmkrc, .screenrc, etc.).
+  # ── Dotfiles directly in $HOME ──────────────────────────────────────────
+  # Same as xdg.configFile, for things that don't live under ~/.config.
   home.file = {
     # .profile, .bash_profile managed by programs.bash
     # .zprofile, .zshenv managed by programs.zsh
@@ -132,16 +126,14 @@
     ".dircolors".source = ../raw/dircolors;
     ".makepkg.conf".source = ../raw/makepkg.conf;
 
-    # Julia REPL/IJulia startup files. Julia looks for
-    # ~/.julia/config/startup.jl on every launch; ours auto-loads Revise so
-    # edits to packages are picked up without restarting the REPL.
+    # Julia reads these on every launch. Ours load Revise, so edits to a
+    # package apply without restarting the REPL.
     ".julia/config/startup.jl".source = ../raw/julia/startup.jl;
     ".julia/config/startup_ijulia.jl".source = ../raw/julia/startup_ijulia.jl;
 
-    # Symlink app data into the encrypted Personal vault.
-    # mkOutOfStoreSymlink creates a real symlink (not a Nix store copy), so
-    # the apps read/write data directly inside ~/Personal/. This keeps
-    # sensitive data within the gocryptfs-encrypted directory.
+    # mkOutOfStoreSymlink makes a plain symlink instead of copying into the Nix
+    # store, so these apps read and write inside ~/Personal and their data stays
+    # encrypted. It also means the target has to exist at that exact path.
     ".local/share/TelegramDesktop".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Personal/.local/share/TelegramDesktop";
     ".config/discord".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Personal/.config/discord";
   };

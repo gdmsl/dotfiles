@@ -2,14 +2,12 @@
 # ║  fish.nix — Fish shell configuration (primary shell)                       ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# Fish is the primary interactive shell. Common aliases live in ./_aliases.nix
-# and are installed here as *abbreviations* so they expand inline as you type
-# (instead of staying hidden behind an alias name). Fish-only shortcuts and
-# multi-line functions live below.
+# The primary interactive shell. Shared shortcuts come from ./_aliases.nix and
+# are installed as abbreviations; fish-only ones and the longer functions are
+# below.
 #
-# Home Manager already deploys home.sessionVariables and home.sessionPath via
-# ~/.config/fish/conf.d/hm-session-vars.fish, so this module no longer
-# re-exports EDITOR/LESS/PATH — that was just duplicating what HM emits.
+# Environment variables and PATH are not set here — Home Manager already writes
+# them to ~/.config/fish/conf.d/hm-session-vars.fish from home/default.nix.
 
 { pkgs, ... }:
 
@@ -22,8 +20,7 @@ in
 
     # ── Interactive shell init (interactive terminals only) ────────────────
     interactiveShellInit = ''
-      # any-nix-shell makes `nix-shell` drop you into fish instead of bash.
-      # Without this, entering a nix-shell would switch you to bash.
+      # Without this, `nix-shell` drops you into bash.
       ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
 
       # Vi-mode cursor styles — different cursor shapes indicate the current

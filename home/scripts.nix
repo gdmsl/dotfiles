@@ -2,22 +2,25 @@
 # ║  scripts.nix — Custom shell scripts in ~/.local/bin                        ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# Small utility scripts deployed to ~/.local/bin (which is on $PATH).
+# Utility scripts written to ~/.local/bin, which is on $PATH.
 #
-# Using `home.file` with `executable = true` and inline `text` is a convenient
-# way to manage small scripts. The `text` attribute uses Nix multi-line strings
-# (delimited by '' ... '') — note that Nix escapes '' sequences, so `''$` is
-# used to write a literal `$` in some contexts.
+# `home.file` with `executable = true` and inline `text` is the simple way to
+# manage a small script. Longer ones live in raw/scripts/ and are pulled in with
+# `source` instead.
+#
+# Two things about Nix's '' … '' strings, which bite when editing these:
+# `''${` is how you write a literal `${` (otherwise Nix interpolates it), and
+# `${pkgs.foo}/bin/foo` expands to a store path, which is why some commands are
+# fully qualified and others rely on PATH.
 
 { config, pkgs, ... }:
 
 let
-  # Shared preamble for the *-personal AI wrappers at the bottom of this file.
-  # ~/Personal is a gocryptfs mount (see the `unlock-personal` alias in
-  # shell/_aliases.nix). While it's locked the path still exists as an empty
-  # 0700 directory, so a wrapper that ran anyway would create a second,
-  # *unencrypted* config there — one that silently vanishes behind the real
-  # vault the next time you unlock. Refuse to start instead.
+  # Used by the -personal wrappers at the bottom of the file.
+  #
+  # When ~/Personal is locked the path still exists as an empty directory, so a
+  # wrapper that ran anyway would write an unencrypted config there — which then
+  # disappears behind the real mount next time it's unlocked. Refuse instead.
   requireVault = cmd: ''
     ${pkgs.util-linux}/bin/mountpoint -q "$HOME/Personal" || {
       echo "${cmd}: ~/Personal is locked — run 'unlock-personal' first." >&2
@@ -27,20 +30,16 @@ let
 in
 {
   home.file = {
-    # Quick screenshot — capture, save to disk, AND copy to the clipboard, with
-    # no annotation step (that's what the Satty binds are for). Pass "full" to
-    # grab the whole output; with no argument it lets you select a region.
-    #   grim   captures the pixels    (region via -g, or the full screen)
-    #   wl-copy puts the PNG on the clipboard so you can paste it immediately
-    #   notify-send confirms, using the shot itself as the notification icon
+    # Screenshot to a file and the clipboard, with no annotation step (the
+    # Satty binds cover that). "full" grabs the whole output; no argument lets
+    # you select a region.
     ".local/bin/screenshot-save" = {
       executable = true;
       text = ''
         #!/bin/sh
-        # Resolve the Pictures dir from the XDG user-dirs config. It points into
-        # the encrypted ~/Personal vault, so if that vault is locked (unmounted)
-        # fall back to a plain ~/Pictures rather than writing into the bare
-        # mountpoint. The notification below always shows the final path.
+        # Pictures points inside ~/Personal, so fall back to a plain
+        # ~/Pictures when that's locked rather than writing into the empty
+        # mountpoint. The notification shows wherever it ended up.
         pics="$HOME/Pictures"
         [ -r "$HOME/.config/user-dirs.dirs" ] && . "$HOME/.config/user-dirs.dirs" && pics="''${XDG_PICTURES_DIR:-$pics}"
         case "$pics" in
@@ -51,8 +50,7 @@ in
         file="$dir/Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png"
         case "$1" in
           full) grim "$file" ;;
-          # slurp returns the selected geometry; a non-zero exit means the
-          # user pressed Escape, so we bail out without writing a file.
+          # slurp exits non-zero on Escape, so bail out without writing.
           *)    geom=$(slurp) || exit 0
                 grim -g "$geom" "$file" ;;
         esac
@@ -61,13 +59,9 @@ in
       '';
     };
 
-    # Searchable cheat-sheet of niri keybindings. Parses the binds {} block of
-    # the live niri config and shows "key  →  description" lines in tofi, where
-    # you can fuzzy-search them. For each bind it prefers the hotkey-overlay-title
-    # (the human label), falling back to the raw action when there's no title.
-    # Styling lives in the dedicated tofi/cheatsheet theme (a wide, centred panel
-    # in a monospace font so the columns align). The selection is discarded
-    # (>/dev/null) — this is a viewer, not a launcher.
+    # Searchable list of niri keybindings, read out of the live niri config and
+    # shown in tofi. Prefers each bind's hotkey-overlay-title, falling back to
+    # the raw action. The selection is thrown away — this only displays.
     ".local/bin/niri-keys" = {
       executable = true;
       text = ''
@@ -93,17 +87,12 @@ in
       '';
     };
 
-    # Searchable unicode symbol picker. Lists a curated set of useful blocks
-    # (arrows, maths, currency, punctuation, symbols, shapes, box-drawing, …)
-    # as "glyph  U+XXXX  OFFICIAL NAME" lines via the `uni` CLI, and shows them
-    # in the same wide tofi panel as the keybinding cheat-sheet. Because the
-    # official Unicode name is on every line you can fuzzy-search by meaning
-    # ("arrow", "euro", "heart") as well as by codepoint. Selecting a row copies
-    # just the glyph to the clipboard (wl-copy), ready to paste anywhere.
+    # Unicode picker. Lists selected blocks as "glyph U+XXXX NAME" so you can
+    # search by meaning ("arrow", "euro") as well as codepoint; the choice is
+    # copied to the clipboard.
     #
-    # `uni print` query syntax: `block:NAME` / `cat:NAME` (names may be
-    # abbreviated). Add or remove blocks below to taste; `uni list blocks`
-    # shows every block name.
+    # Queries are `block:NAME` or `cat:NAME`, abbreviations allowed. Edit the
+    # list below to taste — `uni list blocks` shows what's available.
     ".local/bin/unicode-symbols" = {
       executable = true;
       text = ''
@@ -126,8 +115,8 @@ in
           | tofi --config "$HOME/.config/tofi/cheatsheet" \
                  --prompt-text "symbol ❯ " --placeholder-text "search unicode…")
 
-        # tofi echoes the whole chosen line; the glyph is the first field
-        # (everything before the first space). Empty means Escape was pressed.
+        # tofi echoes the whole line; the glyph is the first field. Empty
+        # output means Escape.
         [ -z "$sel" ] && exit 0
         glyph=$(printf '%s' "$sel" | cut -d' ' -f1)
         printf '%s' "$glyph" | wl-copy
@@ -135,15 +124,15 @@ in
       '';
     };
 
-    # Switch the XP-Pen tablet between OpenTabletDriver presets. A preset bundles
-    # the display/area mapping AND the button bindings, and is created + named in
-    # otd-gui (Presets → Save As); this script only *applies* one:
-    #   tablet-preset <name>  → apply that preset directly
-    #   tablet-preset         → pop a tofi menu of the presets you've saved
-    # Bound to Mod+Alt+T in niri. `otd` is on PATH courtesy of the system option
-    # hardware.opentabletdriver (see system/default.nix). Bare command names
-    # (otd, tofi, notify-send) resolve fine because niri binds inherit the
-    # interactive session PATH — same as the screenshot scripts above.
+    # Apply an OpenTabletDriver preset — a saved display mapping plus button
+    # bindings. Create them in otd-gui (Presets → Save As); this only applies
+    # them.
+    #
+    #   tablet-preset <name>   apply it
+    #   tablet-preset          pick from a menu
+    #
+    # Bound to Mod+Alt+T. Commands are unqualified here because niri binds
+    # inherit the session PATH.
     ".local/bin/tablet-preset" = {
       executable = true;
       text = ''
@@ -152,9 +141,8 @@ in
         name="$1"
 
         if [ -z "$name" ]; then
-          # OTD writes one <name>.json per preset. Build the menu from those
-          # filenames; the `[ -e ]` guard stops the glob expanding to a literal
-          # "*.json" when the directory is empty or doesn't exist yet.
+          # One <name>.json per preset. The [ -e ] guard stops the glob being
+          # passed through literally when nothing matches.
           list=$(cd "$presets" 2>/dev/null && for f in *.json; do
             [ -e "$f" ] && printf '%s\n' "''${f%.json}"
           done)
@@ -163,8 +151,7 @@ in
               "No presets yet — open otd-gui and save one (Presets → Save As)."
             exit 1
           fi
-          # Reuse the wide cheatsheet tofi theme (a proper selectable list),
-          # overriding its prompt/placeholder text like the unicode picker does.
+          # Same wide tofi theme as the cheatsheet, with different prompts.
           name=$(printf '%s\n' "$list" | tofi --config "$HOME/.config/tofi/cheatsheet" \
             --prompt-text "tablet preset ❯ " --placeholder-text "pick a preset…")
           [ -n "$name" ] || exit 0   # Escape / empty selection → do nothing
@@ -179,12 +166,11 @@ in
       '';
     };
 
-    # Add all private SSH keys to the SSH agent
+    # Load every private key in ~/.ssh into the agent.
     ".local/bin/ssh-add-all.sh" = {
       executable = true;
       text = ''
         #!/bin/sh
-        # Add all private keys to the SSH agent
         for key in "$HOME"/.ssh/id_*; do
           case "$key" in
             *.pub) continue ;;
@@ -194,19 +180,16 @@ in
       '';
     };
 
-    # Command to generate new versions in git. Body lives in raw/scripts/
-    # so it can be shared with the headless tty profile (home/tty.nix).
+    # Body lives in raw/scripts/ so home/tty.nix can share it.
     ".local/bin/git-mkversion" = {
       executable = true;
       source = ../raw/scripts/git-mkversion.sh;
     };
 
-    # Rename the focused niri workspace. Pops a tofi prompt and feeds whatever
-    # you type to `set-workspace-name`. tofi normally forces a choice from its
-    # list; --require-match=false makes it return the typed text (the list is
-    # empty here, so it's a plain input box). Empty input — Escape, or Enter on
-    # an empty box — leaves the name untouched. Names are dynamic and reset when
-    # niri restarts; use static `workspace "name"` blocks in config to persist.
+    # Rename the focused niri workspace via a tofi prompt.
+    # --require-match=false turns tofi into a plain input box. Empty input
+    # changes nothing. Names set this way are lost when niri restarts — use
+    # `workspace "name"` blocks in the niri config for permanent ones.
     ".local/bin/niri-rename-workspace" = {
       executable = true;
       text = ''
@@ -217,41 +200,31 @@ in
       '';
     };
 
-    # Auto-clean empty *named* niri workspaces so they behave like numbered ones.
+    # Remove empty named niri workspaces, so they behave like numbered ones.
     #
-    # niri only auto-removes *unnamed* (dynamic) workspaces when they empty;
-    # named workspaces are persistent and stick around forever, even empty. That
-    # leaves an emptied named workspace in the scroll order — the bar hides it,
-    # but `focus-workspace-down`/up still lands on it. This daemon closes that
-    # gap: it watches the compositor event stream and, when a named workspace is
-    # empty *and* you're not on it, unsets its name. An unnamed empty workspace
-    # is dynamic, so niri then drops it on its own.
+    # niri drops unnamed workspaces when they empty but keeps named ones
+    # forever. An emptied named workspace stays in the scroll order — hidden in
+    # the bar, but focus-workspace-down still lands on it. This watches the
+    # event stream and unsets the name of any named workspace that's empty and
+    # not the one you're on; once unnamed, niri removes it itself.
     #
-    # The jq filter picks workspaces that are:
-    #   name != null            → don't touch the trailing unnamed scratch ws
-    #   active_window_id == null → empty (no windows)
-    #   not is_active           → not the visible ws on its monitor
-    #   not is_focused          → not the keyboard-focused ws
-    # Skipping the active/focused ws means an emptied workspace survives while
-    # you're standing on it (so you don't lose the name mid-use) and is cleaned
-    # up the moment you leave — WorkspaceActivated fires then and re-runs the
-    # check, exactly mirroring how empty numbered workspaces already behave.
+    # The jq filter wants workspaces that are named, have no windows, and are
+    # neither visible nor focused. Skipping the focused one means a workspace
+    # you've just emptied keeps its name until you leave it, then gets cleaned
+    # up when WorkspaceActivated fires.
     #
-    # We only react to the three events that can change emptiness/where you are,
-    # deliberately ignoring WindowOpenedOrChanged (it also fires on every window
-    # title change, which would be needless churn). Runs as a systemd user
-    # service — see home/services.nix.
+    # Only three events are worth reacting to. WindowOpenedOrChanged also fires
+    # on every title change, which would be constant churn for nothing.
     #
-    # We emit the workspace *name* (not the numeric id): unset-workspace-name
-    # takes a REFERENCE, which niri resolves as an index-or-name — passing the
-    # internal id just matches nothing and silently no-ops. `read -r name` with a
-    # single variable captures the whole line, so names containing spaces survive.
+    # It emits the workspace name rather than its id, because
+    # unset-workspace-name resolves references by index or name — an internal id
+    # matches nothing and silently does nothing. Run as a service, see
+    # home/services.nix.
     ".local/bin/niri-workspace-autoclean" = {
       executable = true;
       text = ''
         #!/bin/sh
-        # Unset the name of every empty workspace we're not standing on, so niri
-        # drops it. Used both once at startup and on every relevant event.
+        # Used once at startup and again on every relevant event.
         sweep() {
           niri msg -j workspaces | jq -r '
             .[]
@@ -265,14 +238,11 @@ in
             done
         }
 
-        # Reconcile once on (re)start — catches anything emptied while the reader
-        # was down (a systemd relaunch, or the periodic RuntimeMaxSec recycle).
+        # Sweep once at startup, catching anything emptied while this was down.
         sweep
 
-        # Then react to live events. When the stream ends OR silently stalls, the
-        # unit is relaunched (Restart=always + RuntimeMaxSec, see services.nix),
-        # which re-runs the startup sweep above — that's what makes this recover
-        # instead of wedging forever, as a bare long-lived reader eventually does.
+        # Then follow the stream. The unit restarts if it ends or stalls (see
+        # services.nix), and each restart re-runs the sweep above.
         niri msg -j event-stream \
           | grep --line-buffered -E 'WindowClosed|WorkspacesChanged|WorkspaceActivated' \
           | while read -r _; do
@@ -281,22 +251,15 @@ in
       '';
     };
 
-    # Run a one-shot OneDrive sync of ~/QPerfect, with start/finish desktop
-    # notifications. THIS IS ALSO THE MANUAL COMMAND: run `onedrive-sync` from a
-    # terminal to force a sync any time, regardless of what's open. The systemd
-    # timers call it too — the "skip while an editor is open" gate lives in the
-    # onedrive-sync-ifidle service (home/services.nix), not here, so invoking the
-    # script directly always syncs.
+    # One-shot OneDrive sync of ~/QPerfect with desktop notifications. Also the
+    # manual command: running `onedrive-sync` syncs immediately, whatever is
+    # open. The "skip while an editor is running" check is in the
+    # onedrive-sync-ifidle unit, not here.
     #
-    # We do NOT use OneDrive's continuous --monitor: a live bidirectional syncer
-    # thrashes files that editors are actively writing (that's what made Logseq
-    # unusable). A short one-shot burst on a schedule keeps the collision window
-    # tiny. flock serialises runs so a manual sync and a timer sync can't overlap
-    # (the client refuses to run twice at once anyway).
+    # flock stops a manual run and a timer run overlapping.
     #
-    # Binaries are referenced by full store path because systemd user timers run
-    # with a leaner PATH than an interactive shell (onedrive isn't even on the
-    # login PATH). D-Bus for notify-send is already in the user-service env.
+    # Full store paths because systemd timers run with a much smaller PATH than
+    # an interactive shell — onedrive isn't on the login PATH at all.
     ".local/bin/onedrive-sync" = {
       executable = true;
       text = ''
@@ -316,20 +279,17 @@ in
       '';
     };
 
-    # Gate for the every-30-min timer: exit non-zero when it's unsafe to sync,
-    # which makes systemd skip that run cleanly (ExecCondition semantics: exit 0
-    # = proceed, exit 1–254 = skip, not fail). The 4am forced sync and the manual
-    # command do NOT use this guard.
+    # Condition for the half-hourly timer: exit non-zero and systemd skips that
+    # run without marking it failed. The 04:00 sync and the manual command don't
+    # use this.
     #
-    # "Unsafe" means a "fast editor" (an app that writes ~/QPerfect continuously
-    # or holds locks) is *actively in use*, where a concurrent OneDrive write
-    # risks corruption/conflicts. Crucially, an editor being *open* is not enough
-    # — only active editing is risky. So we first check whether the session is
-    # idle: hypridle drops ~/.cache/user-idle after ~2.5 min of no input and
-    # removes it the instant you touch a key/mouse (see raw/hypr/hypridle.conf).
-    # If that marker exists you've stepped away, nothing is being written, and we
-    # let the sync through even with Logseq open. Only when you're actively at the
-    # machine do the editor checks below apply. Add more matchers as needed.
+    # Syncing is unsafe while an app that continuously writes ~/QPerfect is
+    # being used — but merely being open isn't a problem, only active editing.
+    # So this first asks whether the session is idle: hypridle creates
+    # ~/.cache/user-idle after a couple of minutes without input and deletes it
+    # the moment you touch anything (raw/hypr/hypridle.conf).
+    # If the marker exists you've stepped away, so the sync goes ahead even with
+    # Logseq open. The editor checks below only apply when you're at the machine.
     ".local/bin/onedrive-sync-guard" = {
       executable = true;
       text = ''
@@ -342,14 +302,13 @@ in
     };
 
     # ── Personal-account wrappers for the AI CLIs ─────────────────────────
-    # Each runs the same binary as the bare `claude`/`codex`/`gemini` command
-    # but reads and writes its config inside the encrypted ~/Personal vault.
-    # Bare command = work account, `-personal` suffix = personal account; the
-    # two never share credentials, history, or settings. You log in once per
-    # wrapper, and both can run side by side in different terminals.
+    # Same binaries as the bare `claude` / `codex` / `gemini`, but with their
+    # config inside ~/Personal. Bare command is the work account, `-personal` is
+    # the personal one; they share no credentials or history and can run side by
+    # side. Each needs its own login once.
 
-    # Claude Code and Codex both honour an environment variable pointing at
-    # their config directory, so these two are a one-line redirect.
+    # These two read their config directory from an environment variable, so
+    # redirecting them is a one-liner.
     ".local/bin/claude-personal" = {
       executable = true;
       text = ''
@@ -372,23 +331,21 @@ in
       '';
     };
 
-    # Gemini has no such variable — it builds its config path as
-    # `join(homedir(), ".gemini")` with the directory name baked in. Rather
-    # than fake $HOME (which would also strip the git identity and SSH keys
-    # from anything Gemini shells out to), bubblewrap swaps just that one
-    # directory. `--dev-bind / /` passes the whole filesystem through
-    # unchanged, then `--bind` overlays the vault copy onto ~/.gemini.
+    # Gemini has no such variable — it hardcodes ~/.gemini. Overriding $HOME
+    # would also hide the git identity and SSH keys from anything it shells out
+    # to, so instead bubblewrap swaps just that one directory: --dev-bind passes
+    # the filesystem through unchanged, then --bind puts the vault copy over
+    # ~/.gemini.
     #
-    # The swap lives in a private mount namespace, so it is visible only to
-    # this process and its children: a plain `gemini` running in another
-    # terminal still sees the real ~/.gemini, and nothing persists after exit.
+    # That swap only exists inside this process and its children, so a plain
+    # `gemini` elsewhere still sees the real directory.
     ".local/bin/gemini-personal" = {
       executable = true;
       text = ''
         #!/bin/sh
         ${requireVault "gemini-personal"}
         dir="$HOME/Personal/.gemini"
-        # Both paths must exist before bwrap can bind one onto the other.
+        # bwrap needs both paths to exist before binding one over the other.
         mkdir -p "$dir" "$HOME/.gemini"
         exec ${pkgs.bubblewrap}/bin/bwrap \
           --dev-bind / / \
@@ -397,27 +354,24 @@ in
       '';
     };
 
-    # ── Portable SSD (nomad) maintenance mounts ─────────────────────────────
-    # Mount the nomad SSD at /mnt the way its own config describes, so you can
-    # `sudo nixos-enter --root /mnt` and fix or rebuild the installation.
+    # ── Mounting the portable SSD for maintenance ─────────────────────────
+    # Mounts the SSD at /mnt as its own config describes it, so you can
+    # `sudo nixos-enter --root /mnt` and repair or rebuild the installation.
     #
-    # Why not just use the udiskie mounts under /run/media? Because those are
-    # wrong for this job in three ways: they mount the btrfs *top level*
-    # (subvol=/) rather than the @/@home/@nix subvolumes, they add nosuid,nodev
-    # which breaks anything chrooted, and udisks opens the LUKS containers under
-    # its own `luks-<uuid>` names instead of nomad-os/carry.
+    # The udiskie mounts under /run/media are no good for this: they mount the
+    # btrfs top level instead of the subvolumes, add nosuid and nodev which
+    # break a chroot, and name the containers after their UUIDs.
     #
-    # The mount itself is delegated to disko, which generates it from
-    # system/disko-nomad.nix — the same declaration that created the disk. That
-    # means these scripts cannot drift from the real layout.
+    # The mounting itself is done by disko, from system/disko-nomad.nix, so
+    # these can't disagree with the actual layout.
     ".local/bin/nomad-mount" = {
       executable = true;
       text = ''
         #!/usr/bin/env bash
         set -euo pipefail
 
-        # Same by-id path as system/disko-nomad.nix. Keyed to the drive's serial
-        # so it cannot accidentally resolve to the internal NVMe.
+        # The drive's serial, same as in system/disko-nomad.nix, so this can't
+        # resolve to the internal disk.
         DISK=/dev/disk/by-id/ata-CT500P3PSSD8_2401463EF214
         FLAKE="''${FLAKE:-$HOME/dotfiles}"
 
@@ -430,15 +384,14 @@ in
           exit 1
         fi
 
-        # udiskie races us: it re-mounts any filesystem that appears, including
-        # the ones disko is about to open. Stop it for the duration.
+        # udiskie would mount the filesystems as disko opens them.
         if systemctl --user is-active --quiet udiskie; then
           echo "==> stopping udiskie (nomad-umount restarts it)"
           systemctl --user stop udiskie
         fi
 
-        # Hand back anything udisks already holds. Only devices that are
-        # children of $DISK are touched — never yara's own LUKS volumes.
+        # Release anything udisks holds. Only children of $DISK, so this can
+        # never close this machine's own encrypted volumes.
         crypt_children() {
           ${pkgs.util-linux}/bin/lsblk -rno NAME,TYPE "$DISK" | ${pkgs.gawk}/bin/awk '$2=="crypt"{print $1}'
         }
@@ -479,7 +432,7 @@ in
           sudo ${pkgs.util-linux}/bin/umount -R /mnt
         fi
 
-        # Close only containers backed by the SSD. Never yara's root or swap.
+        # Only containers on the SSD, never this machine's root or swap.
         if [ -e "$DISK" ]; then
           for name in $(${pkgs.util-linux}/bin/lsblk -rno NAME,TYPE "$DISK" \
                           | ${pkgs.gawk}/bin/awk '$2=="crypt"{print $1}'); do

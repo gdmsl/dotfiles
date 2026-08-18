@@ -1,35 +1,32 @@
 # ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║  system/default.nix — Shared NixOS system configuration                    ║
+# ║  system/default.nix — System config shared by every host                   ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# This file configures the operating system itself: users, networking, audio,
-# display manager, system services, fonts, security, and system-level packages.
+# The operating system itself: users, networking, audio, display manager,
+# services, fonts, security, system packages.
 #
-# It's a NixOS module — a function that takes `{ config, pkgs, lib, ... }` and
-# returns an attribute set. NixOS merges all modules together to produce one
-# final system configuration.
+# This is a NixOS module — a function taking `{ config, pkgs, lib, ... }` and
+# returning an attribute set of options. NixOS merges every module together
+# into one final configuration, which is why settings can be split across files
+# and why two modules setting the same option will conflict unless one uses
+# `lib.mkDefault` or `lib.mkForce`.
 #
-# ── Shared by every host ────────────────────────────────────────────────────
-# This module is the *common base*. It deliberately does NOT import any
-# per-machine file, and does not set a hostname. The flake picks a host file
-# alongside it:
+# It sets no hostname and imports no per-machine file. The flake pairs it with
+# one:
 #
-#   nixosConfigurations.yara  → this + ./hardware.nix     (ThinkPad E14, AMD)
-#   nixosConfigurations.nomad → this + ./nomad.nix        (portable SSD)
-#                                    + ./disko-nomad.nix
+#   yara  → this + ./hardware.nix                    (ThinkPad E14, AMD)
+#   nomad → this + ./nomad.nix + ./disko-nomad.nix   (portable SSD)
 #
-# Some options here are still specific to yara's hardware (fingerprint reader,
-# graphics tablet, ollama). Rather than untangle all of that at once — which
-# would risk changing yara — `nomad.nix` explicitly turns off what it doesn't
-# want with `lib.mkForce`. See SSD_PLAN.md §8.
+# A few things here are specific to the laptop — fingerprint reader, graphics
+# tablet, ollama. nomad.nix switches those off with `lib.mkForce` rather than
+# them being moved out.
 { config, pkgs, lib, ... }:
 
 {
   # ── Locale & timezone ───────────────────────────────────────────────────
   time.timeZone = "Europe/Paris";
   i18n.defaultLocale = "en_US.UTF-8";
-  # Override specific locale categories (date format, paper size, etc.)
-  # LC_TIME = en_DK gives ISO 8601 dates (YYYY-MM-DD) which is the sane choice
+  # Per-category overrides. en_DK for LC_TIME is the trick for ISO 8601 dates.
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_IE.UTF-8";
     LC_IDENTIFICATION = "en_IE.UTF-8";
@@ -61,10 +58,8 @@
   # ── Networking ──────────────────────────────────────────────────────────
   networking.networkmanager = {
     enable = true;
-    # VPN plugins extend NetworkManager so the GUI/CLI can configure VPN
-    # connections of that type. fortisslvpn = Fortinet SSL VPN (FortiClient
-    # compatible) — used here for the Unistra VPN. The plugin pulls in
-    # openfortivpn as its backend daemon automatically.
+    # Lets NetworkManager configure Fortinet SSL VPN connections (Unistra).
+    # Pulls in openfortivpn as its backend.
     plugins = with pkgs; [ networkmanager-fortisslvpn ];
   };
   networking.firewall = {
@@ -83,10 +78,8 @@
     };
   };
 
-  # Mosh — roaming, latency-tolerant remote shell over SSH. Installs the `mosh`
-  # client (to connect out) and `mosh-server` (to connect in), and opens the
-  # UDP 60000–61000 port range mosh uses for its own encrypted datagram
-  # connection (the initial handshake still goes over SSH on port 22).
+  # Remote shell that survives roaming and high latency. Installs client and
+  # server and opens UDP 60000–61000; the handshake still goes over SSH.
   programs.mosh.enable = true;
 
   # ── Tailscale (mesh VPN to homelab) ─────────────────────────────────────
@@ -132,59 +125,40 @@
   };
 
   systemd.sleep.settings.Sleep = {
-    # Upper bound on how long the system may stay in plain suspend before
-    # falling through to hibernate. systemd (v253+) will hibernate earlier
-    # on its own if the battery-runtime estimator (SuspendEstimationSec,
-    # default 1h) predicts the charge will not last until this deadline.
-    # So the practical behaviour is: hibernate after 12h of suspend, or
-    # sooner if the battery is about to die — whichever comes first.
+    # Longest it may stay suspended before hibernating. systemd hibernates
+    # sooner if it estimates the battery won't last that long.
     HibernateDelaySec = "12h";
   };
 
-  # User-level services (syncthing vault guard, polkit-gnome-agent, onedrive,
-  # vicinae, noctalia-shell, hypridle, udiskie) are all managed in
-  # home/services.nix. We keep them on the user side because they rely on
-  # the user's session/keyring, and grouping them there avoids splitting one
-  # service definition across two modules.
+  # Per-user services (syncthing, polkit agent, onedrive, vicinae, noctalia,
+  # hypridle, udiskie) live in home/services.nix — they need the user's
+  # session and keyring.
 
   # ── Ollama (local LLM inference) ────────────────────────────────────────
   services.ollama.enable = true;
 
-  # ── Containers (Podman) ─────────────────────────────────────────────────
-  # Podman is a daemonless, rootless-capable container engine. Unlike Docker,
-  # there is *no* system-wide daemon process running at boot — containers are
-  # spawned by your user on demand and exit when you stop them. That's the
-  # property we want here: nothing runs unless you explicitly asked for it.
+  # ── Containers ──────────────────────────────────────────────────────────
+  # Podman runs containers without a background daemon — nothing is running
+  # until you start a container yourself.
   #
-  #   dockerCompat = true
-  #     Adds a `docker` -> `podman` symlink and aliases `docker-compose` etc.
-  #     so any tool that hardcodes the `docker` binary (build scripts, IDE
-  #     dev-container integrations, CI tooling) works transparently.
-  #
-  #   defaultNetwork.settings.dns_enabled = true
-  #     Enables Podman's built-in DNS for container networks, so services in
-  #     a compose stack can find each other by name (e.g. `postgres:5432`)
-  #     instead of by IP. Required for almost any multi-service compose file.
+  #   dockerCompat    — symlinks `docker` to `podman`, so tools that hardcode
+  #                     the docker binary work unchanged.
+  #   dns_enabled     — container DNS, so compose services can reach each other
+  #                     by name (`postgres:5432`) instead of by IP.
   virtualisation.podman = {
     enable = true;
     dockerCompat = true;
     defaultNetwork.settings.dns_enabled = true;
   };
 
-  # ── nix-ld (run foreign dynamic binaries) ───────────────────────────────
-  # NixOS binaries are patched to find their libraries in /nix/store, so
-  # generic Linux binaries (VSCode extensions, language toolchains, AI tools,
-  # proprietary blobs) fail to start because their hardcoded interpreter path
-  # `/lib64/ld-linux-x86-64.so.2` doesn't exist on NixOS.
+  # ── nix-ld (running non-Nix binaries) ───────────────────────────────────
+  # Pre-built Linux binaries expect a dynamic linker at
+  # /lib64/ld-linux-x86-64.so.2, which doesn't exist on NixOS — so downloaded
+  # tools, VSCode extensions and language toolchains fail to start. nix-ld puts
+  # a shim at that path which hands off to the real linker.
   #
-  # nix-ld provides exactly that path: a tiny shim that re-execs the real
-  # glibc dynamic linker from nixpkgs and exposes the libraries below via
-  # LD_LIBRARY_PATH. Any non-Nix binary that's dynamically linked against
-  # glibc now Just Works.
-  #
-  # `libraries` is the set of shared libs made available to those binaries.
-  # If a tool errors with `cannot open shared object file: libfoo.so.N`, add
-  # the package providing libfoo.so.N here and rebuild.
+  # If something fails with `cannot open shared object file: libfoo.so.N`, add
+  # the package that provides it to the list below and rebuild.
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [
@@ -207,12 +181,9 @@
   hardware.sensor.iio.enable = true;  # accelerometer / ambient light sensor
 
   # ── Extra filesystem support ────────────────────────────────────────────
-  # The kernel ships these three as loadable modules, so `mount` already
-  # autoloads the driver on demand. What this option adds is the userspace
-  # half the kernel can't provide — the mkfs/fsck/repair binaries — by putting
-  # btrfs-progs, f2fs-tools and xfsprogs into the system profile. Setting it
-  # also makes the drivers available in the initrd, which is what you'd need
-  # if a disk of one of these types ever had to be mounted during early boot.
+  # The kernel can already mount these; what this adds is the userspace tools
+  # (mkfs, fsck, repair) and the drivers in the initrd, in case one of them
+  # ever has to be mounted during early boot.
   boot.supportedFilesystems = {
     btrfs = true;
     f2fs = true;
@@ -220,15 +191,12 @@
   };
 
   # ── Disk management GUI ─────────────────────────────────────────────────
-  # GNOME Disks — graphical partitioning/formatting tool. It formats using the
-  # mkfs binaries the option above provides, so it can write any of those
-  # filesystems.
+  # GNOME Disks (launcher: "Disks"), for partitioning and formatting. It shells
+  # out to the mkfs tools above, so it can write any of those filesystems.
   #
-  # This option installs the app and registers its D-Bus service. The app
-  # itself runs as your normal user; the privileged work happens in the
-  # udisks2 daemon (services.udisks2, already on), which it drives over D-Bus.
-  # Each privileged action raises a polkit prompt, answered by the
-  # polkit-gnome agent started in home/services.nix.
+  # The app runs as your user and asks the udisks2 daemon to do the privileged
+  # work, which raises a polkit prompt — answered by the agent in
+  # home/services.nix.
   programs.gnome-disks.enable = true;
 
   # ── Bluetooth ───────────────────────────────────────────────────────────
@@ -238,14 +206,12 @@
   # BlueZ daemon settings. These end up in /etc/bluetooth/main.conf.
   hardware.bluetooth.settings = {
     General = {
-      # Experimental = userspace experimental features (battery reporting,
-      # AAC/aptX codec negotiation). Safe and useful.
+      # Battery reporting and AAC/aptX codec negotiation.
       Experimental = true;
-      # KernelExperimental was on, but it activates BlueZ's LE Audio (BAP/CAP)
-      # endpoints. Our RTL8852CU + current kernel combo can't fully back those,
-      # which produced `bap_detached: Unable to find bap session` on every
-      # shutdown. Disabling unless we actually need LE Audio (Auracast, hearing
-      # aids, etc.).
+      # Leave KernelExperimental off. It turns on BlueZ LE Audio, which this
+      # adapter and kernel can't fully support — the symptom is
+      # `bap_detached: Unable to find bap session` on every shutdown. Only
+      # needed for Auracast or LE Audio hearing aids.
       # KernelExperimental = true;
     };
     Policy = {
@@ -256,65 +222,49 @@
     };
   };
 
-  # Workaround for RTL8852CU Bluetooth USB adapter: disable autosuspend to
-  # prevent corrupted frames and mass disconnects.
+  # The RTL8852CU Bluetooth adapter corrupts frames and mass-disconnects if it
+  # is allowed to autosuspend.
   boot.extraModprobeConfig = "options btusb enable_autosuspend=0";
-  # udev rules. udev is the kernel-side userspace daemon that reacts to
-  # hardware events (device added/removed) and applies rules: things like
-  # "set permissions on this hidraw node" or "disable autosuspend on this
-  # USB device". Anything in `extraRules` lands in /etc/udev/rules.d/99-local.rules.
+
+  # udev reacts to hardware appearing and disappearing. These rules land in
+  # /etc/udev/rules.d/99-local.rules.
   services.udev.extraRules = ''
     # Realtek RTL8852CU Bluetooth: disable USB autosuspend
     ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="5852", ATTR{power/autosuspend}="-1"
 
-    # Crucial P3 Plus (portable SSD) behind its RTL9210 USB bridge: enable TRIM.
+    # Enable TRIM on the portable SSD (Crucial P3 Plus in a Realtek RTL9210
+    # USB enclosure). The kernel defaults this drive to provisioning_mode
+    # "full", which reports as no discard support at all and silently disables
+    # TRIM. The bridge does handle SCSI UNMAP, so switch it to "unmap".
     #
-    # The kernel defaults this drive's provisioning_mode to "full", meaning
-    # "emulate discard by writing zeros" — which surfaces as *no* discard
-    # support at all (DISC-MAX=0B) and silently disables TRIM. The bridge does
-    # translate SCSI UNMAP correctly, so force "unmap" to re-enable it.
+    # Check with: lsblk -D /dev/sda   (DISC-MAX should be non-zero)
     #
-    # Verify with:  lsblk -D /dev/sda   → DISC-GRAN 512B, DISC-MAX 4G
-    #
-    # ATTRS{} walks up to the parent SCSI device for vendor/model; ATTR{} then
-    # writes the attribute on the scsi_disk device itself. The bridge reports
-    # the model space-padded ('SSD8            '), hence the glob — an exact
-    # match silently never fires. Scoped to this drive so it can't affect the
-    # internal NVMe or any other disk.
+    # ATTRS{} matches on the parent SCSI device, ATTR{} writes on the scsi_disk
+    # one. The model is space-padded, so the glob matters — an exact match just
+    # never fires. Matching on vendor+model keeps it off every other disk.
     ACTION=="add|change", SUBSYSTEM=="scsi_disk", ATTRS{vendor}=="CT500P3P", ATTRS{model}=="SSD8*", ATTR{provisioning_mode}="unmap"
 
-    # NuPhy keyboards (vendor 0x19f5): give the wheel group RW access on the
-    # raw USB device. Needed so VIA / Vial / vial-cli can talk to the keyboard
-    # without sudo. ATTRS{} (plural) walks up the device tree, so this matches
-    # every interface — usb, hidraw, the input nodes — under a NuPhy device.
+    # NuPhy keyboards: let the wheel group talk to them, so VIA / Vial work
+    # without sudo. ATTRS{} walks up the tree, matching every interface under
+    # the device.
     ATTRS{idVendor}=="19f5", MODE="0666", GROUP="wheel"
 
-    # VIA / WebHID: any hidraw node is reachable by the active local user.
-    # `TAG+="uaccess"` is the modern way — systemd-logind grants the seat's
-    # current user an ACL on the device, scoped to their session. The legacy
-    # `udev-acl` tag is the same thing for older ConsoleKit setups; harmless
-    # to keep. MODE=0666 is a belt-and-braces fallback for non-seat sessions.
+    # Let the logged-in user reach hidraw devices, which is what VIA in the
+    # browser needs. `uaccess` makes logind grant an ACL for the active
+    # session; the mode is a fallback for sessions without a seat.
     KERNEL=="hidraw*", SUBSYSTEM=="hidraw", MODE="0666", TAG+="uaccess", TAG+="udev-acl"
   '';
 
-  # After suspend the Realtek RTL8852CU BT USB device re-enumerates AND the
-  # adapter firmware sometimes wedges, so just restarting bluetoothd isn't
-  # enough — bluetoothd binds before /sys/class/bluetooth/hci0 reappears
-  # (or finds an adapter the kernel driver thinks is alive but actually
-  # isn't). Both produce a "started but doesn't work" state.
+  # Bluetooth after resume: the adapter re-enumerates and its firmware
+  # sometimes wedges, so restarting bluetoothd alone isn't enough — it binds
+  # before hci0 reappears, or binds to an adapter the driver wrongly thinks is
+  # alive. Either way it starts but doesn't work.
   #
-  # The robust sequence is:
-  #   1. Kill bluetoothd hard (avoids 90s TimeoutStopSec on dead HCI handle).
-  #   2. Reload the btusb kernel driver. This unbinds the stale adapter and
-  #      forces a clean re-enumeration with fresh firmware state.
-  #   3. Unblock rfkill in case suspend left a soft-block on the radio.
-  #   4. Poll /sys/class/bluetooth/hci0 until the adapter appears (or 5s).
-  #   5. Start bluetoothd. `AutoEnable=true` powers it on and reconnects
-  #      trusted devices.
+  # So: kill bluetoothd outright (a graceful stop waits 90s on a dead handle),
+  # reload the driver to force clean re-enumeration, clear any rfkill soft
+  # block, wait for the adapter, then start it again.
   #
-  # `powerManagement.resumeCommands` is NixOS's canonical post-resume hook:
-  # it ends up as the ExecStop of sleep-actions.service, which runs when
-  # sleep.target deactivates on wake-up.
+  # resumeCommands runs when the machine wakes up.
   powerManagement.resumeCommands = ''
     ${pkgs.systemd}/bin/systemctl kill -s SIGKILL bluetooth.service || true
 
@@ -344,35 +294,25 @@
   # ── Printing ────────────────────────────────────────────────────────────
   services.printing.enable = true;  # CUPS print server
 
-  # ── Graphics tablet (XP-Pen Star G640S) ──────────────────────────────────
-  # OpenTabletDriver (OTD) is a userspace tablet driver. On Wayland/niri it's
-  # the right choice over the kernel's hid-uclogic path: its daemon reads the
-  # tablet's raw HID and emits a virtual absolute pointer, so behaviour is the
-  # same on any compositor — and its GUI (otd-gui) is where you map the pen to
-  # ONE monitor (or any sub-rectangle) and rebind the buttons. niri can only
-  # map a tablet to a whole output and can't rebind its buttons, so OTD is what
-  # gets you the "one display / pick an area / custom buttons" you're after.
+  # ── Graphics tablet (XP-Pen Star G640S) ─────────────────────────────────
+  # OpenTabletDriver reads the tablet's raw HID in userspace and emits a
+  # virtual pointer, so it behaves the same on any compositor. Preferred over
+  # the kernel driver here because niri can only map a tablet to a whole output
+  # and can't rebind its buttons; otd-gui can do both.
   #
-  # This single option does the lot:
-  #   • installs the opentabletdriver package — otd (CLI), otd-gui (config GUI)
-  #     and otd-daemon all land on PATH, so nothing goes in home/packages.nix;
-  #   • ships OTD's udev rules so your session can talk to the device;
-  #   • runs the daemon as a per-user service (opentabletdriver.service, bound
-  #     to graphical-session.target, so it starts with your niri session);
-  #   • boot-blacklists hid-uclogic + wacom (the module's default) so the kernel
-  #     driver doesn't grab the tablet and fight OTD over it.
+  # This one option installs the CLI and GUI, ships the udev rules, runs the
+  # daemon with your graphical session, and blacklists the kernel drivers so
+  # they don't fight over the device.
   #
-  # Setup, once: plug the tablet in, run `otd-gui`, set the mapping on the
-  # Output tab (display + area) and the buttons on the Bindings tab, then save
-  # named presets (Presets → Save As), e.g. "laptop" and "external". After that
-  # Mod+Alt+T in niri pops a picker to switch presets (see the tablet-preset
-  # script in home/scripts.nix). `otd detect` confirms the tablet is seen.
+  # First time: plug in, run `otd-gui`, set the display and area on the Output
+  # tab and buttons on Bindings, then save presets (Presets → Save As) named
+  # e.g. "laptop" and "external". Mod+Alt+T switches between them (see the
+  # tablet-preset script in home/scripts.nix). `otd detect` checks it's seen.
   hardware.opentabletdriver.enable = true;
 
-  # ── Audio (PipeWire) ────────────────────────────────────────────────────
-  # PipeWire replaces PulseAudio and JACK with a single modern audio server.
-  # The pulse.enable and alsa.enable options provide backwards compatibility
-  # so PulseAudio and ALSA apps still work transparently.
+  # ── Audio ───────────────────────────────────────────────────────────────
+  # PipeWire replaces both PulseAudio and JACK. The compatibility layers below
+  # mean apps written for either still work.
   services.pulseaudio.enable = false;  # disable PulseAudio (PipeWire replaces it)
   services.pipewire = {
     enable = true;
@@ -381,10 +321,9 @@
     pulse.enable = true;       # PulseAudio compatibility layer
   };
 
-  # ── Display manager: greetd + tuigreet ──────────────────────────────────
-  # greetd is a minimal login manager. tuigreet provides a TUI (terminal-based)
-  # login screen. It remembers your last session (Niri or Hyprland) and starts
-  # it after authentication.
+  # ── Login screen ────────────────────────────────────────────────────────
+  # greetd is a minimal login manager; tuigreet is its terminal-based UI. It
+  # remembers which session you last used and starts that.
   services.greetd = {
     enable = true;
     settings = {
@@ -394,42 +333,37 @@
       };
     };
   };
-  # greetd PAM needs gnome-keyring integration to auto-unlock secrets on login
+  # So logging in also unlocks the keyring.
   security.pam.services.greetd.enableGnomeKeyring = true;
 
-  # hyprlock needs its own PAM service (it looks for /etc/pam.d/hyprlock by
-  # default — without this it would fall through to the restrictive "other"
-  # stack). We deliberately make it PASSWORD-ONLY: fprintAuth = false keeps
-  # pam_fprintd out of this stack. Fingerprint unlocking is instead handled by
-  # hyprlock's own native fprintd backend (see raw/hypr/hyprlock.conf), which
-  # runs concurrently with the password field. Keeping fingerprint out of PAM
-  # here avoids two code paths fighting over the sensor.
+  # hyprlock gets its own PAM stack, password-only. Fingerprint is handled by
+  # hyprlock's own fprintd support (raw/hypr/hyprlock.conf), which runs
+  # alongside the password field — having PAM do it too means two things
+  # competing for the sensor.
   security.pam.services.hyprlock.fprintAuth = false;
-  # Ensure these directories exist with the right permissions
+
+  # Directories that must exist, with these owners and modes.
   systemd.tmpfiles.rules = [
     "d /var/cache/tuigreet 0755 greeter greeter -"
     "d /home/gdmsl/Personal 0700 gdmsl users -"
   ];
 
-  # ── Compositors (window managers) ───────────────────────────────────────
-  # Enable both compositors at the system level. You can choose which one
-  # to start from the greetd login screen.
+  # ── Compositors ─────────────────────────────────────────────────────────
+  # Both are enabled; pick one at the login screen.
   programs.niri.enable = true;      # scrolling tiling compositor
   programs.hyprland.enable = true;  # dynamic tiling compositor
 
-  # ── XDG Desktop Portal ──────────────────────────────────────────────────
-  # Portals provide a standardized API for sandboxed apps to access system
-  # features (file chooser, screen sharing, etc.). The right backend depends
-  # on the compositor:
-  #   - hyprland → xdg-desktop-portal-hyprland (talks to Hyprland's IPC)
-  #   - niri     → xdg-desktop-portal-gnome (Niri has no portal of its own;
-  #                gnome's backend is the only one that implements
-  #                org.freedesktop.impl.portal.ScreenCast on wlroots-style
-  #                compositors, so screen sharing in Firefox/Edge needs it)
-  #   - gtk      → general-purpose fallback (file chooser, settings, etc.);
-  #                does NOT implement ScreenCast on its own.
-  # `config.<desktop>.default` keys off $XDG_CURRENT_DESKTOP, which the niri
-  # and hyprland sessions set automatically.
+  # ── Desktop portals ────────────────────────────────────────────────────
+  # Portals are how sandboxed apps get at file pickers, screen sharing and so
+  # on. Which backend to use depends on the compositor:
+  #
+  #   hyprland — its own portal, talks to Hyprland's IPC
+  #   gnome    — used under niri, which has no portal of its own. It's the only
+  #              backend implementing screen sharing on wlroots-style
+  #              compositors, so Firefox screen share needs it.
+  #   gtk      — fallback for file pickers and settings. No screen sharing.
+  #
+  # The keys below match $XDG_CURRENT_DESKTOP, which each session sets.
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [
@@ -456,25 +390,19 @@
       noto-fonts-cjk-sans
       noto-fonts-color-emoji
 
-      # Rajdhani — pulled from the `google-fonts` collection. The full
-      # collection is huge (~1.5GB), so we use `.override { fonts = [...] }`
-      # to install only the families we need. Add more names here later if
-      # other Google fonts go missing.
+      # The google-fonts collection is ~1.5 GB, so pick out just the families
+      # needed. Add more names to the list as required.
       (google-fonts.override { fonts = [ "Rajdhani" ]; })
 
-      # Cascadia Code — Microsoft's open-source monospaced font (the
-      # Windows Terminal default). Includes Cascadia Code, Cascadia Mono,
-      # and the PL/NF variants with ligatures + powerline glyphs.
+      # Microsoft's monospace font, with ligature and powerline variants.
       cascadia-code
 
-      # Aptos — Microsoft's default Office font, not in nixpkgs because of
-      # its proprietary EULA. Defined in ./aptos.nix; the first rebuild will
-      # tell you exactly how to add the zip from third-party/ to /nix/store.
+      # Microsoft's Office font. Not in nixpkgs because of its licence, so it's
+      # packaged in ./aptos.nix from a zip in third-party/. The first rebuild
+      # prints the commands to add that zip to the store.
       (pkgs.callPackage ./aptos.nix { })
-
-      # TODO: Maple Mono not in nixpkgs — add via overlay if needed
     ];
-    # Default font fallback chain — apps that don't specify a font use these
+    # What apps get when they don't ask for a specific font.
     fontconfig.defaultFonts = {
       serif = [ "Noto Serif" ];
       sansSerif = [ "Inter" "Noto Sans" ];
@@ -483,47 +411,28 @@
     };
   };
 
-  # ── Security / Authentication ───────────────────────────────────────────
-  # Polkit handles privilege escalation prompts (e.g., "enter password to
-  # mount a drive"). gnome-keyring stores passwords and SSH keys securely.
+  # ── Security ────────────────────────────────────────────────────────────
+  # polkit is what raises "enter your password to do X" prompts; the graphical
+  # agent that answers them is in home/services.nix. gnome-keyring stores
+  # passwords and SSH keys.
   security.polkit.enable = true;
   services.gnome.gnome-keyring.enable = true;
 
   # ── Fingerprint reader (Goodix 27c6:659a) ───────────────────────────────
-  # fprintd is the D-Bus daemon that drives the sensor through libfprint.
-  # This Goodix sensor is "match-on-chip" (the fingerprint template is stored
-  # and compared on the sensor itself) and is supported by mainline libfprint,
-  # so no out-of-tree driver or vendor blob is needed — just the daemon.
+  # Supported by mainline libfprint, so the daemon is all that's needed.
   #
-  # One-time setup after the rebuild: enroll a finger with
-  #     fprintd-enroll          # follow the prompts, lift+touch repeatedly
-  # then sanity-check it with
-  #     fprintd-verify
+  # Enroll a finger once with `fprintd-enroll`, check it with `fprintd-verify`.
   #
-  # Enabling fprintd also turns on PAM fingerprint auth: the NixOS option
-  # security.pam.services.<svc>.fprintAuth defaults to services.fprintd.enable,
-  # so most PAM-using services (greetd login, sudo, …) get it automatically.
-  # NixOS wires in the stock pam_fprintd.so as `auth sufficient`, i.e. the
-  # flow is sequential: the service asks you to touch the sensor first, and
-  # if that fails or times out it falls through to the password prompt.
-  # (hyprlock is the exception — it opts out of PAM fingerprint above and uses
-  # its own native fprintd backend so the sensor and password run in parallel.)
-  # tuigreet (we ship 0.9.1) understands these non-password PAM prompts since
-  # 0.7.0, so the "swipe your finger" message renders correctly at the login
-  # screen too — no need to special-case it off.
-  #
-  # Note: this is NOT the fprintd-grosshack module (the one that prompts for
-  # password and fingerprint *at the same time*). That module is known to be
-  # unsafe/broken with greetd; the stock sequential pam_fprintd used here is
-  # not affected.
+  # Turning this on also enables fingerprint auth for PAM services — sudo,
+  # the login screen and so on — because their fprintAuth option defaults to
+  # this one. The prompt is sequential: touch the sensor first, then fall
+  # through to the password if it fails. hyprlock is the exception, see above.
   services.fprintd.enable = true;
 
   # ── System packages ─────────────────────────────────────────────────────
-  # Packages installed system-wide. We keep this list small on purpose:
-  # only tools we'd want available in single-user mode, in a TTY recovery
-  # session, or to root. Everything user-facing — browsers, chat apps,
-  # GUI/Wayland utilities, dev tooling — lives in home/packages.nix so
-  # the same package isn't built into two profiles.
+  # Deliberately short: only what's wanted in a TTY recovery session or on
+  # root's PATH. Everything user-facing lives in home/packages.nix, so nothing
+  # ends up built into two profiles.
   environment.systemPackages = with pkgs; [
     # Core CLI available in any TTY (including for root)
     neovim
@@ -533,10 +442,8 @@
     zellij
     curl
 
-    # Hardware diagnostics — kept system-wide (not in the user profile) so
-    # they're on root's PATH too: `sudo lspci -k`, `sudo lshw`, etc. need
-    # root to report kernel drivers and full detail, and these are exactly
-    # the tools you reach for in a TTY recovery session.
+    # Hardware diagnostics. Here rather than in the user profile so they're on
+    # root's PATH — `sudo lspci -k` and friends need root for full detail.
     lshw              # hardware tree (try: lshw -short)
     pciutils          # provides lspci (PCI device enumeration)
     usbutils          # provides lsusb (USB device enumeration)
@@ -544,19 +451,22 @@
     # Networking (the matching daemons are enabled below)
     tailscale
 
-    # Encrypted vault — referenced from the user's unlock-personal alias
+    # Used by unlock-personal, see home/personal-vault.nix
     gocryptfs
 
-    # Terminfo so SSH'ing *into* this box from a kitty terminal Just Works
+    # So SSH'ing in from a kitty terminal gets the right terminfo
     kitty.terminfo
 
-    # Fuse should be installed by default
     fuse
   ];
 
   # ── Unfree packages ─────────────────────────────────────────────────────
-  # Nix defaults to only allowing FOSS packages. To install proprietary
-  # software you must explicitly allowlist each package by name.
+  # Nix only builds free software unless a package is named here. The name is
+  # the derivation name, which isn't always the attribute you installed —
+  # `nix eval nixpkgs#foo.name` tells you what to write.
+  #
+  # Keep this in sync with the same list in flake.nix, which the standalone
+  # home-manager profiles use.
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
     "acli"
     "acli-unwrapped"
@@ -576,18 +486,14 @@
   ];
 
   # ── Insecure packages ───────────────────────────────────────────────────
-  # Nix refuses to build packages flagged as known-vulnerable unless you
-  # explicitly opt in by name+version here. Note these are exact names with
-  # versions, so a package bump breaks the entry and you must update it.
+  # Nix refuses to build packages flagged as known-vulnerable unless named
+  # here. These include the version, so a package bump breaks the entry and
+  # the build tells you to update it.
   #
-  # Logseq bundles an old Electron runtime that upstream hasn't updated, so
-  # we accept the risk to keep it installable. Revisit when Logseq ships a
-  # newer Electron (bump the version string or drop this line).
+  #   electron — Logseq bundles an end-of-life Electron.
+  #   ventoy   — ships prebuilt binaries nixpkgs can't audit (nixpkgs #404663).
   #
-  # Ventoy is flagged for a different reason: it ships prebuilt binary blobs
-  # that nixpkgs considers unauditable for malware or license compliance
-  # (nixpkgs issue #404663). Accepted deliberately — it only runs when we
-  # explicitly write a USB stick.
+  # Also in flake.nix, same reason as the unfree list.
   nixpkgs.config.permittedInsecurePackages = [
     "electron-39.8.10"
     "ventoy-gtk3-1.1.12"
@@ -595,23 +501,22 @@
 
   # ── Nix daemon settings ─────────────────────────────────────────────────
   nix = {
-    # Automatic garbage collection removes old unused packages weekly
+    # Delete unreferenced store paths weekly.
     gc = {
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 14d";
     };
     settings = {
-      # Enable the modern `nix` CLI and flakes (still "experimental" in name,
-      # but universally used in practice).
+      # The modern CLI and flakes. Still called experimental; used everywhere.
       experimental-features = [ "nix-command" "flakes" ];
-      # Deduplicate identical files in the Nix store to save disk space
+      # Hard-link identical files in the store.
       auto-optimise-store = true;
     };
   };
 
-  # NixOS state version — tells NixOS which version's defaults to use for
-  # backwards compatibility. Bump this when you do a major NixOS upgrade.
-  # This does NOT control which packages you get (that's nixpkgs).
+  # Which release's defaults to use for stateful things like database layouts.
+  # It does not affect package versions. Leave it at the release you installed
+  # with unless you've read the release notes on changing it.
   system.stateVersion = "24.11";
 }

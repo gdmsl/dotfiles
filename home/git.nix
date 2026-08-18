@@ -2,12 +2,11 @@
 # ║  git.nix — Git configuration and delta pager                               ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# Home Manager's `programs.git` generates ~/.config/git/config from the
-# options below. This is equivalent to writing a .gitconfig by hand, but
-# it's versioned in Nix and can reference Nix store paths.
+# Generates ~/.config/git/config. Same as writing it by hand, except it can
+# reference store paths and is versioned with everything else.
 #
-# `programs.delta` configures delta as the git pager — a syntax-highlighting
-# diff viewer that makes `git diff` and `git log -p` much more readable.
+# delta is set up as the pager, which is what makes `git diff` and `git log -p`
+# readable.
 
 { pkgs, ... }:
 

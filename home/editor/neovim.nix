@@ -2,20 +2,18 @@
 # ║  neovim.nix — Neovim editor configuration (via nvf)                        ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# This configures Neovim using nvf (Neovim Flake) — a framework that lets you
-# declare your entire Neovim setup in Nix instead of writing init.lua by hand.
-# Plugins, LSP servers, keymaps, and options are all expressed as Nix attrsets.
+# Neovim configured through nvf, a framework for declaring the whole editor in
+# Nix rather than writing init.lua. Plugins, LSP servers, keymaps and options are
+# all attrsets under `programs.nvf.settings.vim`.
 #
-# nvf is imported as a flake input (see flake.nix) and provides a Home Manager
-# module. The `programs.nvf.settings.vim` attrset maps to nvf's module options.
+# What that buys: plugins and language servers are pinned by flake.lock, there's
+# no plugin manager to run, and treesitter parsers are built by Nix — so no
+# :TSInstall, and no plugin updates happening behind your back.
 #
-# Benefits over manual Lua config:
-#   - All plugins and LSP servers are pinned by the flake lock
-#   - No need for a plugin manager (lazy.nvim, etc.) — Nix handles it
-#   - Treesitter parsers come from Nix (no :TSInstall needed)
+# The cost is that anything nvf doesn't have an option for needs `extraPlugins`
+# or raw Lua via `luaConfigPre` / `luaConfigPost`, both used further down.
 #
-# `inherit (lib) mkForce;` pulls `mkForce` from lib into scope — it overrides
-# a value set by nvf's defaults with higher priority.
+# `mkForce` appears throughout to override values nvf sets by default.
 
 { pkgs, lib, inputs, ... }:
 let
@@ -23,7 +21,7 @@ let
 in
 
 {
-  # Import nvf's Home Manager module (provides programs.nvf options)
+  # nvf's own Home Manager module, from the flake input.
   imports = [
     inputs.nvf.homeManagerModules.default
   ];
@@ -31,8 +29,7 @@ in
   programs.nvf = {
     enable = true;
     settings.vim = {
-      # ── Aliases ──────────────────────────────────────────────────────
-      # Typing `vi` or `vim` in the shell opens Neovim
+      # `vi` and `vim` both open Neovim.
       viAlias = true;
       vimAlias = true;
 

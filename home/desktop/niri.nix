@@ -2,16 +2,16 @@
 # ║  niri.nix — Niri scrolling tiling compositor                               ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# Niri is a scrolling tiling Wayland compositor — windows arrange in an
-# infinite horizontal strip that you scroll through (unlike traditional tiling
-# where windows share the screen). It uses KDL config format.
+# Scrolling tiling Wayland compositor: windows sit in an endless horizontal
+# strip you scroll through, rather than sharing the screen.
 #
-# No Home Manager module exists for Niri, so we just deploy raw config files.
+# There's no Home Manager module for it, so the config is deployed as-is from
+# raw/niri/. The compositor itself is enabled in system/default.nix.
 
 { pkgs, ... }:
 
 {
-  # Deploy Niri's KDL config to ~/.config/niri/config.kdl
+  # Edit raw/niri/config.kdl, then rebuild.
   xdg.configFile."niri/config.kdl".source = ../../raw/niri/config.kdl;
 
   # Niriswitcher: Alt-Tab style window switcher for Niri

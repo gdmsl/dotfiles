@@ -1,170 +1,151 @@
 # ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║  nomad.nix — Host config for the portable encrypted SSD                     ║
+# ║  nomad.nix — Host config for the portable SSD                               ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# This is the counterpart to hardware.nix (which describes yara). Where that
-# file encodes *one known laptop*, this one has to boot on machines we've never
-# seen — so it is deliberately hardware-agnostic.
+# The counterpart to hardware.nix. That file describes one known laptop; this
+# one has to boot on machines it's never seen, so everything here avoids
+# assuming anything about the hardware.
 #
-# Pairs with ./disko-nomad.nix, which owns the partitions, LUKS containers and
-# all the `fileSystems` entries. Nothing about disk layout belongs here.
-#
-# Design rationale for every decision: SSD_PLAN.md
+# Disk layout lives in ./disko-nomad.nix — partitions, LUKS and all the
+# `fileSystems` entries. Don't add mount config here.
 
 { config, lib, pkgs, ... }:
 
 {
   networking.hostName = "nomad";
 
-  # ── Boot loader: GRUB, UEFI-only, host-agnostic ─────────────────────────
-  # GRUB rather than systemd-boot. The two options below are the single most
-  # important thing in this file:
+  # ── Boot loader ─────────────────────────────────────────────────────────
+  # GRUB, not systemd-boot. These two options are what make the disk portable,
+  # so if it ever boots on only one machine, check them first:
   #
-  #   efiInstallAsRemovable = true
-  #     Installs to the removable-media fallback path /EFI/BOOT/BOOTX64.EFI,
-  #     which firmware tries without needing a boot entry. This is what makes
-  #     the disk bootable on a machine that has never seen it.
+  #   efiInstallAsRemovable — installs to /EFI/BOOT/BOOTX64.EFI, the path
+  #     firmware tries for removable media without needing a boot entry.
   #
-  #   canTouchEfiVariables = false
-  #     Writes *nothing* to the host's NVRAM boot entries. The default (true)
-  #     would scribble a "nomad" entry into whatever PC you plugged into, and
-  #     the disk would then only really boot on that one machine.
-  #
-  # Get this pair wrong and everything else here is wasted.
+  #   canTouchEfiVariables = false — writes nothing to the host's NVRAM. Left
+  #     at its default of true, GRUB would add a "nomad" entry to whichever PC
+  #     you plugged into, and boot properly only on that one.
   boot.loader.grub = {
     enable = true;
     efiSupport = true;
     efiInstallAsRemovable = true;
-    device = "nodev"; # UEFI only — no MBR/BIOS target, per SSD_PLAN.md §2
+    device = "nodev"; # UEFI only, so there's no MBR to install to
 
-    # The ESP is 2 GiB and each generation stores a kernel + a large initrd
-    # there. Bound the count so /boot cannot fill up mid-trip.
+    # Each generation puts a kernel and initrd on the 2 GiB ESP, so cap how
+    # many are kept or /boot fills up.
     configurationLimit = 10;
   };
   boot.loader.efi.canTouchEfiVariables = false;
 
-  # If a host's graphics refuse to come up, press `e` at the GRUB menu and
-  # append `nomodeset` to the kernel line for that one boot. Kept as a manual
-  # escape hatch rather than a second menu entry — one less thing to break.
+  # If a machine's graphics won't come up, press `e` at the GRUB menu and add
+  # `nomodeset` to the kernel line for that boot.
 
-  # ── initrd: must find a USB disk on unfamiliar hardware ─────────────────
-  # This list is the difference between booting and a black screen. The initrd
-  # has to be able to reach the SSD over *any* controller and accept a
-  # passphrase from *any* keyboard, before the real root exists.
+  # ── initrd drivers ──────────────────────────────────────────────────────
+  # The initrd has to reach the SSD over whatever USB controller the machine
+  # has, and take a passphrase from whatever keyboard it has, before the real
+  # root exists. Missing drivers here look like a hang, not an error.
   boot.initrd.availableKernelModules = [
     # USB host controllers — xhci is USB3, ehci/ohci/uhci are older ports
     "xhci_pci"
     "ehci_pci"
     "ohci_pci"
     "uhci_hcd"
-    # USB mass storage: uas is the fast path (this enclosure uses it),
-    # usb_storage is the fallback for bridges with broken UAS
+    # uas is the fast path; usb_storage is the fallback for enclosures whose
+    # UAS implementation is buggy
     "uas"
     "usb_storage"
     "sd_mod"
     "sr_mod"
-    # Internal storage controllers — needed when *installing onto* another
-    # machine from this system, and for hosts that expose the USB disk oddly
+    # Internal storage controllers, for installing onto another machine from
+    # this one
     "nvme"
     "ahci"
     "sdhci_pci"
-    # USB keyboards. Without these you cannot type the LUKS passphrase on a
-    # desktop, and the failure looks like a hang rather than an error.
+    # USB keyboards — without these you can't type the passphrase on a desktop
     "usbhid"
     "hid_generic"
-    # dm-crypt plus AES acceleration for both CPU vendors
+    # dm-crypt plus AES acceleration
     "dm_crypt"
     "aesni_intel"
     "cryptd"
   ];
 
-  # Both KVM modules. Exactly one will match the host CPU; the other fails to
-  # load and is logged, which is harmless. Including both means virtualisation
-  # works wherever we land instead of depending on the vendor.
+  # Both KVM modules: one matches the host CPU, the other fails to load and
+  # logs a line. Harmless, and it means virtualisation works either way.
   boot.kernelModules = [ "kvm-intel" "kvm-amd" ];
 
   # ── Firmware and CPU ────────────────────────────────────────────────────
-  # linux-firmware ships with this and covers the overwhelming majority of
-  # Wi-Fi and GPU hardware you'd actually meet.
+  # This pulls in linux-firmware, which covers most Wi-Fi and GPU hardware.
   #
-  # Deliberately NOT hardware.enableAllFirmware: it only adds Broadcom BT, the
-  # legacy b43 Wi-Fi blobs, an Xbox dongle and FaceTime HD firmware — all
-  # unfree, so each would need naming in the allowUnfreePredicate lists. If a
-  # specific machine ever needs one, add that firmware package by name then.
+  # Not enableAllFirmware: that only adds Broadcom Bluetooth, legacy b43 Wi-Fi,
+  # an Xbox dongle and FaceTime HD — all unfree, so each would need adding to
+  # the allowUnfreePredicate lists. Add one by name if a machine needs it.
   hardware.enableRedistributableFirmware = true;
 
-  # Microcode for both vendors, since we don't know what we're booting on.
+  # Both vendors, since the CPU isn't known ahead of time.
   hardware.cpu.intel.updateMicrocode = true;
   hardware.cpu.amd.updateMicrocode = true;
 
-  # GPU drivers (amdgpu / i915 / nouveau) are all in-tree and udev loads the
-  # right one at stage 2. Deliberately not forced into the initrd: early KMS
-  # for a *specific* GPU is precisely the kind of host assumption to avoid.
+  # amdgpu / i915 / nouveau are all in-tree and udev loads whichever matches
+  # once the system is up. They're kept out of the initrd on purpose — early
+  # KMS means picking a GPU in advance, which is what we're avoiding.
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
-  # ── Swap: zram, never a partition ───────────────────────────────────────
-  # RAM differs per host, and a hibernation image written on one machine is
-  # meaningless on the next — so there is no swap device and no resumeDevice.
+  # ── Swap ────────────────────────────────────────────────────────────────
+  # Compressed RAM instead of a swap partition: RAM size varies per machine,
+  # and a hibernation image from one machine is useless on the next. That's
+  # also why there's no boot.resumeDevice.
   zramSwap.enable = true;
   swapDevices = [ ];
 
-  # Weekly batched TRIM. Works because both LUKS containers set
-  # allowDiscards (see disko-nomad.nix) and the udev rule in default.nix
-  # forces the USB bridge's provisioning_mode to "unmap".
+  # Weekly TRIM. Needs allowDiscards on the containers (disko-nomad.nix) and
+  # the udev rule in default.nix that enables discard on the USB bridge.
   services.fstrim.enable = true;
 
-  # ── Stage-2 unlock of the data container ────────────────────────────────
-  # NOT boot.initrd.luks — see the long comment in disko-nomad.nix. The initrd
-  # sits on the plaintext ESP, so a keyfile it can read would be readable by
-  # anyone who steals the disk. /etc/crypttab is processed in stage 2, once the
-  # root filesystem (and therefore the keyfile) has already been decrypted.
+  # ── Unlocking the data container ────────────────────────────────────────
+  # crypttab is read after the root filesystem is mounted, which is the point:
+  # the keyfile only exists on the encrypted root, so it's useless to anyone
+  # holding the disk. Putting this in boot.initrd.luks instead would place the
+  # key on the unencrypted ESP. See disko-nomad.nix.
   #
-  # The by-partlabel path is set by disko from the disk/partition names, so it
-  # is stable and known before the disk even exists.
+  # The by-partlabel path comes from the disk and partition names in
+  # disko-nomad.nix, so it's stable and predictable.
   #
-  #   luks    — the container format
-  #   discard — pass TRIM through dm-crypt to the SSD
-  #   nofail  — a locked or missing data container must never block boot
+  #   discard — pass TRIM through to the SSD
+  #   nofail  — don't block boot if the container won't open
   #
-  # The keyfile is keyslot 1; keyslot 0 stays a passphrase so the container can
-  # also be opened on yara. Created during install, see SSD_PLAN.md §7.
+  # This keyfile is a second key on the container; the passphrase you typed at
+  # install time still works, which is how you open it on another machine.
+  # Create it with:
+  #
+  #   mkdir -p /etc/secrets
+  #   dd if=/dev/urandom of=/etc/secrets/carry.key bs=512 count=8
+  #   chmod 0400 /etc/secrets/carry.key
+  #   cryptsetup luksAddKey /dev/disk/by-partlabel/disk-nomad-carry \
+  #     /etc/secrets/carry.key
   environment.etc."crypttab".text = ''
     carry /dev/disk/by-partlabel/disk-nomad-carry /etc/secrets/carry.key luks,discard,nofail
   '';
 
-  # ── ~/Personal ──────────────────────────────────────────────────────────
-  # No bind mount needed: ~/Personal is carry's @personal subvolume, mounted
-  # directly by disko-nomad.nix. It is therefore a genuine mountpoint, which is
-  # what every guard in home/ actually tests — `mountpoint -q ~/Personal`
-  # (home/scripts.nix) and ConditionPathIsMountPoint (home/services.nix).
-  #
-  # Both @home and @personal live in the same LUKS container, so on this host
-  # there is nothing to unlock separately once the container is open; see the
-  # "system" vault backend in home/personal-vault.nix.
+  # ── Turning off what belongs to the laptop ──────────────────────────────
+  # system/default.nix is shared with yara and still enables a few things tied
+  # to that hardware. Switch them off here rather than editing the shared file.
 
-  # ── Opting out of yara's hardware ───────────────────────────────────────
-  # system/default.nix is the shared base and still carries a few things tied
-  # to that specific laptop. Turning them off explicitly here is less risky
-  # than refactoring the shared file (which would mean re-verifying yara).
-  # SSD_PLAN.md §8 notes this as future cleanup.
-
-  # No fingerprint reader on an unknown machine.
+  # No fingerprint reader.
   services.fprintd.enable = lib.mkForce false;
 
-  # ollama pulls the ROCm stack — a large closure that assumes a GPU we won't
-  # have, on a disk where space is budgeted.
+  # ollama drags in the ROCm stack: a lot of disk space for a GPU that may not
+  # be there.
   services.ollama.enable = lib.mkForce false;
 
-  # thermald is Intel-only and simply fails on AMD hosts. power-profiles-daemon
-  # (also in the shared base) is vendor-neutral and stays enabled.
+  # thermald is Intel-only and fails on AMD. power-profiles-daemon, also in
+  # the shared config, works on both and stays on.
   services.thermald.enable = lib.mkForce false;
 
-  # Accelerometer / ambient light sensor: yara has them, a random desktop
-  # doesn't.
+  # Accelerometer and ambient light sensor — laptop hardware.
   hardware.sensor.iio.enable = lib.mkForce false;
 
-  # A fresh install made on 26.11, so state defaults should match that release
-  # rather than inheriting yara's original 24.11 from the shared base.
+  # Set to the release this was installed with, overriding the shared value.
+  # It picks defaults for stateful services; leave it alone once installed.
   system.stateVersion = lib.mkForce "26.11";
 }

@@ -2,36 +2,29 @@
 # ║  packages.nix — User-level packages                                        ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# Packages listed here are installed into the user's Nix profile (not system-wide).
-# They end up on your $PATH and are available only to this user.
+# Installed into the user profile rather than system-wide, so they're on your
+# $PATH but not root's. System-wide ones are in system/default.nix.
 #
-# `{ pkgs, ... }:` — this module only needs the package set.
-# `with pkgs;` inside the list opens the pkgs namespace so you can write `eza`
-# instead of `pkgs.eza`. It's purely a convenience for shorter code.
+# `with pkgs;` lets the list say `eza` instead of `pkgs.eza`.
 #
-# To search for packages: nix search nixpkgs <name>
-# To see a package's info: nix eval nixpkgs#<name>.meta.description
+# Finding things:
+#   nix search nixpkgs <name>
+#   nix eval nixpkgs#<name>.meta.description
 
 { pkgs, lib, inputs, ... }:
 
 let
-  # mempalace (local-first AI memory system) is built from PyPI. The recipe
-  # lives in pkgs/mempalace.nix so the headless tty profile can reuse it.
+  # Built from PyPI; recipe in pkgs/mempalace.nix so home/tty.nix can reuse it.
   mempalace = import ./pkgs/mempalace.nix { inherit pkgs lib; };
 
-  # bimbumbam comes from its own flake (declared as an input in flake.nix).
-  # Each flake exposes a `packages.<system>.default` for `nix run`-style use,
-  # which is what we want here. `pkgs.stdenv.hostPlatform.system` is the
-  # current way to ask "what platform string ('x86_64-linux', …) is this
-  # pkgs built for?" — it replaces the deprecated `pkgs.system`.
+  # From its own flake input. `packages.<system>.default` is the attribute a
+  # flake exposes for a single main package.
   bimbumbam = inputs.bimbumbam.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
-  # logseq is pinned to an older nixpkgs (see the nixpkgs-logseq input in
-  # flake.nix). On current nixpkgs it has no cached build and compiling from
-  # source hangs; this revision's logseq output is already in our store, so it
-  # resolves instantly. We reuse `pkgs.config` so its unfree license and the
-  # end-of-life Electron (electron-39.8.10) are permitted just like everywhere
-  # else. This let-binding shadows `pkgs.logseq` for the bare `logseq` below.
+  # Pinned to an older nixpkgs (the nixpkgs-logseq input): on current nixpkgs
+  # it isn't cached and building from source hangs. Reusing `pkgs.config` keeps
+  # the unfree and insecure allowances from applying. This shadows pkgs.logseq
+  # for the plain `logseq` in the list below.
   logseq = (import inputs.nixpkgs-logseq {
     inherit (pkgs) config;
     inherit (pkgs.stdenv.hostPlatform) system;   # `pkgs.system` is deprecated
@@ -41,7 +34,6 @@ in
 {
   home.packages = with pkgs; [
     # ── Modern CLI replacements ───────────────────────────────────────────
-    # These replace older Unix tools with faster, more user-friendly versions.
     eza           # ls replacement (colors, icons, git awareness)
     fd            # find replacement (simpler syntax, respects .gitignore)
     ripgrep       # grep replacement (fast, respects .gitignore)
@@ -71,9 +63,8 @@ in
     curl
 
     # ── Hardware / system info ────────────────────────────────────────────
-    # `inxi -Fxxxz` is the modern one-shot hardware report (CPU/GPU/RAM/disks/
-    # sensors/network). The lspci/lsusb/lshw classics live in system/default.nix
-    # so they're also on root's PATH (e.g. `sudo lspci -k` to show drivers).
+    # lspci, lsusb and lshw are in system/default.nix instead, so they're on
+    # root's PATH too.
     inxi              # all-in-one hardware/system report (try: inxi -Fxxxz)
     hwinfo            # verbose hardware probe (alternative to lshw)
     dmidecode         # BIOS/SMBIOS dump — RAM slots, firmware, board info
@@ -120,13 +111,10 @@ in
     zotero           # reference manager
     keepassxc        # offline password manager (KDBX database files)
     hyprpicker       # color picker
-    # simple Wayland screen recorder.
-    # Pinned to FFmpeg 7 because nixpkgs' default `ffmpeg` moved to 9.0, and
-    # wf-recorder 0.6.0 still reads `AVCodec.sample_fmts`, a struct field that
-    # FFmpeg removed in 8.0 — so it no longer compiles against the default.
-    # This is an upstream breakage, not a config problem. Drop the override and
-    # go back to a bare `wf-recorder` once nixpkgs ships a version that builds
-    # against FFmpeg 9 (`sample_fmts` was replaced by `avcodec_get_supported_config`).
+    # Screen recorder, pinned to FFmpeg 7. wf-recorder 0.6.0 still uses
+    # AVCodec.sample_fmts, which FFmpeg removed in 8.0, so it won't compile
+    # against the default ffmpeg. Drop the override once nixpkgs has a version
+    # that builds against current FFmpeg.
     (wf-recorder.override { ffmpeg = ffmpeg_7; })
     gpu-screen-recorder    # hardware-accelerated recorder (used by Noctalia's screen-recorder plugin)
     obs-studio             # full streaming/recording suite (scenes, sources, RTMP)
@@ -135,20 +123,13 @@ in
     darktable        # photo editing / RAW processing
     prismlauncher    # Minecraft launcher (FOSS; bundles its own Java, manages instances/mods)
 
-    # Multiboot USB creator — writes a bootable drive you then just copy ISOs
-    # onto. Launch the GUI with `ventoy-gui` (desktop entry: "Ventoy").
+    # Multiboot USB creator: write the drive once, then copy ISOs onto it.
+    # Run `ventoy-gui` (desktop entry "Ventoy").
     #
-    # `ventoy-full-gtk` is the batteries-included variant: nixpkgs' bare
-    # `ventoy` builds without a GUI and without ext4/NTFS/XFS/LUKS support,
-    # since those are all off by default. `-full` turns the filesystem flags on
-    # and `-gtk` selects the GTK3 interface.
-    #
-    # Two opt-ins are required for this to build, both keyed on the derivation
-    # name `ventoy-gtk3` (the GUI variant renames itself):
-    #   - allowUnfreePredicate      — nixpkgs marks Ventoy unfree
-    #   - permittedInsecurePackages — Ventoy ships prebuilt binary blobs that
-    #     nixpkgs flags as unauditable (nixpkgs issue #404663)
-    # Both live in system/default.nix and flake.nix.
+    # The -full-gtk variant is the one worth having — plain `ventoy` builds with
+    # no GUI and no ext4/NTFS/XFS/LUKS support. Note the derivation is called
+    # `ventoy-gtk3`, which is the name that has to appear in the unfree and
+    # insecure lists in system/default.nix and flake.nix.
     ventoy-full-gtk
 
     # ── Communication / productivity ──────────────────────────────────────
@@ -170,17 +151,15 @@ in
     gnome-keyring    # password/key storage daemon
     seahorse         # GUI for managing keyring secrets
     # GnuPG provides the `gpg` CLI for encryption, signing, and key management.
-    # `pass` is a CLI password manager: each entry is a small gpg-encrypted file
-    # under ~/.password-store/, so it depends on gnupg. To use it you'll need a
-    # GPG key — generate one with `gpg --full-generate-key`, then initialize the
-    # store with `pass init <your-key-id-or-email>`.
+    # Password manager: one gpg-encrypted file per entry under
+    # ~/.password-store. Needs a GPG key — `gpg --full-generate-key`, then
+    # `pass init <key-id>`.
     gnupg
     pass
 
     # ── Languages & toolchains ────────────────────────────────────────────
-    # Julia wrapped with extra shared libraries on LD_LIBRARY_PATH so JLL
-    # artifacts can dlopen libquadmath/libgfortran/libstdc++ on NixOS.
-    # Recipe in pkgs/julia-wrapped.nix (shared with the tty profile).
+    # Julia with extra libraries on LD_LIBRARY_PATH, so JLL artifacts can
+    # dlopen libgfortran and friends. Recipe in pkgs/julia-wrapped.nix.
     (import ./pkgs/julia-wrapped.nix { inherit pkgs; })
     lua
     rustup     # Rust toolchain manager (provides rustc, cargo)
@@ -200,13 +179,12 @@ in
     kubectl        # Kubernetes cluster CLI; reads ~/.kube/config
     opentofu       # Terraform-compatible IaC tool (the `tofu` command)
     mempalace      # local-first AI memory system (defined in let-binding above)
-    # Podman itself is enabled in system/default.nix; this is the Python wrapper
-    # that reads compose.yaml files and drives podman directly. Lighter than the
-    # Go `docker compose` plugin and works fine for typical multi-service stacks.
+    # Reads compose.yaml and drives podman. Podman itself is enabled in
+    # system/default.nix.
     podman-compose
 
     # ── Fonts ─────────────────────────────────────────────────────────────
-    # User-level fonts (also see system/default.nix for system-wide fonts).
+    # System-wide ones are in system/default.nix.
     maple-mono.NF               # Maple Mono with Nerd Font glyphs
     nerd-fonts.fira-code        # FiraCode with Nerd Font glyphs
     nerd-fonts.symbols-only     # just the icon glyphs (for symbol_map fallback)
@@ -217,13 +195,11 @@ in
 
     # ── Theming ───────────────────────────────────────────────────────────
     colloid-icon-theme          # icon theme (active — set in home/desktop/gtk.nix)
-    # Parent theme in Colloid-Dark's inheritance chain
-    # (Inherits=hicolor,breeze in its index.theme). Without it, icon lookups
-    # that fall through to the breeze parent degrade into full-theme scans.
+    # Colloid-Dark inherits from breeze, so without this every icon it doesn't
+    # have triggers a full-theme scan.
     kdePackages.breeze-icons
-    # Universal-fallback icon set. Not in Colloid's Inherits= chain, but many
-    # GTK/Qt apps (e.g. noctalia-shell, nautilus) request icons from "Adwaita"
-    # by name directly when their primary theme misses one.
+    # Plenty of GTK and Qt apps ask for Adwaita icons by name when their own
+    # theme is missing one, even though Colloid doesn't inherit from it.
     adwaita-icon-theme
     bibata-cursors              # cursor theme
     nwg-look                    # GTK theme settings GUI for Wayland

@@ -39,10 +39,9 @@
     # laptop/desktop models. Provides a NixOS module for our ThinkPad.
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
-    # disko: declares disk layouts (partitions, LUKS, filesystems) in Nix
-    # instead of running fdisk/cryptsetup/mkfs by hand. Used by the `nomad`
-    # portable SSD so the layout is documented and reproducible.
-    # See SSD_PLAN.md and system/disko-nomad.nix.
+    # disko: describes disk layouts (partitions, LUKS, filesystems) in Nix
+    # instead of running fdisk/cryptsetup/mkfs by hand. Used by `nomad`; see
+    # system/disko-nomad.nix.
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -146,9 +145,8 @@
           nixos-hardware.nixosModules.lenovo-thinkpad-e14-amd
           # Shared system configuration (see system/default.nix)
           ./system
-          # yara's own hardware: boot loader, LUKS UUIDs, filesystems, swap.
-          # Passed explicitly because ./system is now a base shared with nomad
-          # and so no longer imports this itself.
+          # This laptop's disks and boot loader. Listed here rather than
+          # imported by ./system, because ./system is shared with nomad.
           ./system/hardware.nix
           # Integrate Home Manager as a NixOS module — this means the user
           # environment is rebuilt together with the system in one command.
@@ -164,33 +162,29 @@
       };
 
       # ── Portable SSD system ─────────────────────────────────────────────
-      # NixOS on the external 500 GB SSD: carry-on storage, a daily-driver
-      # environment that boots on arbitrary x86_64 hardware, and a bootstrap
-      # tool for installing NixOS onto other machines.
+      # NixOS on the external SSD: encrypted storage plus a full desktop that
+      # boots on arbitrary x86_64 machines, and can install NixOS onto others.
       #
-      # Reuses ./system and ./home wholesale, so it inherits the same Firefox,
-      # Neovim, fish and CLI environment as yara. nomad.nix then re-points the
-      # hardware-specific parts and opts out of what belongs to the ThinkPad.
+      # It reuses ./system and ./home unchanged, so the shell, Neovim, Firefox
+      # and CLI tools are the same as yara's. nomad.nix supplies the boot and
+      # disk config and switches off the laptop-specific bits. No
+      # nixos-hardware module here on purpose — nothing may assume the machine.
       #
-      # Note there is no nixos-hardware module here — that's the whole point.
-      #
-      # Design doc: SSD_PLAN.md
-      # Usage (from yara, installing onto the mounted SSD):
+      # Installing onto the mounted SSD, from another machine:
       #   sudo nixos-install --flake .#nomad --root /mnt
-      # Usage (once running on the SSD):
+      # Rebuilding while running on it:
       #   sudo nixos-rebuild switch --flake .#nomad
       nixosConfigurations.nomad = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = { inherit inputs; };
         modules = [
-          # disko owns the partitions, LUKS containers and every fileSystems
-          # entry for this host. Importing the module is inert — it only
-          # *describes* the disk until the formatter is run explicitly.
+          # disko provides the partitions, LUKS containers and every
+          # fileSystems entry. Importing it changes nothing on disk.
           inputs.disko.nixosModules.disko
           ./system/disko-nomad.nix
           # Shared system configuration
           ./system
-          # Portable-hardware host config (boot loader, initrd, opt-outs)
+          # Boot loader, initrd drivers, hardware opt-outs
           ./system/nomad.nix
           home-manager.nixosModules.home-manager
           {
@@ -200,10 +194,9 @@
             home-manager.extraSpecialArgs = { inherit inputs dotfilesPath; };
             home-manager.users.gdmsl = {
               imports = [ ./home ];
-              # ~/Personal here is carry's @personal subvolume, mounted by the
-              # system at boot — not yara's gocryptfs vault. Nothing to unlock,
-              # since the user's home lives in the same container. Everything
-              # else in ./home is mount-mechanism agnostic and needs no changes.
+              # Here ~/Personal is a btrfs subvolume mounted at boot, not a
+              # gocryptfs vault, so there's nothing to unlock. Nothing else in
+              # ./home cares which of the two it is.
               my.personalVault.backend = "system";
             };
           }

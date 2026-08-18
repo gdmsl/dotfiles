@@ -2,23 +2,16 @@
 # ║  _aliases.nix — Shell aliases shared across fish, bash and zsh             ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# This is *not* a Home Manager module — it's a plain attrset that the shell
-# modules (fish.nix, bash.nix, zsh.nix) `import` to avoid duplicating the same
-# alias list three times.
+# Not a Home Manager module — a plain attrset that fish.nix, bash.nix and
+# zsh.nix each import, so the list isn't written three times.
 #
-# Two buckets:
+#   commands   short shortcuts. Fish installs these as abbreviations, which
+#              expand as you type so you can see and edit the real command;
+#              bash and zsh get plain aliases.
+#   listing    long eza invocations. Always aliases, never abbreviations —
+#              expanding them would fill the line with flags.
 #
-#   - `commands`  — short aliases for everyday commands. In fish these are
-#                   installed as *abbreviations* (so they expand inline as
-#                   you type and you can edit the full command before running);
-#                   in bash/zsh they're plain aliases.
-#
-#   - `listing`   — long-form `eza` invocations and similar. Always installed
-#                   as aliases (not abbrs) because we never want them to
-#                   expand to a wall of flags on screen.
-#
-# To add a shortcut everywhere, edit this file. To add one to a single shell,
-# put it in that shell's own module.
+# Add here for all three shells, or in one shell's own module for just that one.
 
 {
   commands = {
@@ -87,11 +80,8 @@
     paf = "paru -Ql";
     pao = "paru -Qo";
 
-    # NOTE: unlock-personal / lock-personal used to live here. They moved to
-    # ../personal-vault.nix because the commands differ per machine (gocryptfs
-    # on yara, LUKS on the nomad SSD) and this file is a plain attrset with no
-    # access to the module system. They are still installed for all three
-    # shells, so nothing about using them changed.
+    # unlock-personal / lock-personal are in ../personal-vault.nix — they
+    # differ per machine, which needs the module system this file doesn't have.
   };
 
   listing = {

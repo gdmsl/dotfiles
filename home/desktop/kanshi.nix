@@ -2,11 +2,10 @@
 # ║  kanshi.nix — Automatic display profile switching                          ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# Kanshi automatically applies display profiles when monitors are connected
-# or disconnected. For example: laptop-only uses the internal display at
-# native res, while docked switches to an external monitor layout.
+# Applies a display layout when monitors come and go — internal panel alone,
+# versus a docked arrangement with an external screen.
 #
-# The profile syntax is complex enough that we deploy a raw config file.
+# Profiles are in raw/kanshi/config.
 
 { pkgs, ... }:
 
@@ -15,6 +14,5 @@
     enable = true;  # runs as a systemd user service
   };
 
-  # Deploy the raw kanshi config to ~/.config/kanshi/config
   xdg.configFile."kanshi/config".source = ../../raw/kanshi/config;
 }

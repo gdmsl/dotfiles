@@ -2,12 +2,12 @@
 # ║  firefox.nix — Firefox Personal profile desktop entry                      ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# Creates a custom .desktop launcher that opens Firefox with a specific
-# profile stored inside the encrypted ~/Personal vault. This keeps personal
-# browsing data (bookmarks, cookies, history) encrypted at rest.
+# A launcher entry that starts Firefox on a profile kept inside ~/Personal, so
+# personal bookmarks, cookies and history stay encrypted at rest. The normal
+# Firefox entry is untouched.
 #
-# `xdg.desktopEntries` creates .desktop files in
-# ~/.local/share/applications/ — these show up in app launchers.
+# `xdg.desktopEntries` writes to ~/.local/share/applications, which is where
+# launchers look.
 
 { config, pkgs, ... }:
 
@@ -30,10 +30,9 @@
   };
 
   # ── PassFF native messaging host ──────────────────────────────────────────
-  # The PassFF browser extension can't call `pass` on its own — extensions run
-  # sandboxed. Instead it speaks to a "native messaging host": a small Python
-  # script (passff.py) described by a JSON manifest. Firefox finds that manifest
-  # by looking for ~/.mozilla/native-messaging-hosts/<name>.json.
+  # Browser extensions are sandboxed and can't run `pass` directly. They talk to
+  # a helper script instead, which Firefox finds through a JSON manifest in
+  # ~/.mozilla/native-messaging-hosts/.
   #
   # The passff-host package ships both the script and the manifest, and the
   # manifest already embeds the absolute /nix/store path to passff.py. We just

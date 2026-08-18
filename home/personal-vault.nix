@@ -1,33 +1,33 @@
 # ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║  personal-vault.nix — unlock/lock commands for the ~/Personal vault        ║
+# ║  personal-vault.nix — unlock/lock commands for ~/Personal                   ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# ~/Personal is an encrypted directory that has to be unlocked before use. The
-# rest of this config only ever cares that it *is a mountpoint*:
+# ~/Personal is encrypted and has to be mounted before use. Everything else in
+# this config only checks that it *is a mountpoint*:
 #
-#   home/scripts.nix   — `mountpoint -q "$HOME/Personal"` guards
+#   home/scripts.nix   — `mountpoint -q "$HOME/Personal"` before the -personal
+#                        wrappers will run
 #   home/services.nix  — Syncthing's ConditionPathIsMountPoint
-#   home/xdg.nix       — XDG Documents/Pictures point inside it
+#   home/xdg.nix       — Documents and Pictures live inside it
 #
-# None of those care *how* it got mounted, which is why two different machines
-# can use two different mechanisms with no other changes:
+# None of them care how it got mounted, so different machines can use different
+# mechanisms and only the two commands below change:
 #
-#   gocryptfs — yara. A FUSE overlay over ~/.personal-encrypted. Rootless.
-#   luks      — nomad. The SSD's LUKS data container, mounted by the system at
-#               /mnt/carry and bind-mounted to ~/Personal (see system/nomad.nix),
-#               so unlocking is about the *container*, not a user-space mount.
+#   gocryptfs — a FUSE directory over ~/.personal-encrypted, unlocked on demand
+#               without root.
+#   system    — a btrfs subvolume mounted at boot (the portable SSD, where your
+#               home is in the same encrypted container). Nothing to unlock.
 #
-# Only the two commands below differ between them. Default is gocryptfs, so
-# yara and the standalone home-manager profiles are unaffected.
+# Default is gocryptfs, so anything that doesn't set this option keeps working.
 
 { config, lib, pkgs, ... }:
 
 let
   cfg = config.my.personalVault;
 
-  # gocryptfs: mount the FUSE overlay, then bring up the services that store
-  # their state inside the vault. Syncthing's --home lives in there, and the
-  # ssh-agent socket is restarted so it picks up keys from the vault.
+  # Mount, then start the services whose state lives inside the vault:
+  # Syncthing's config directory is in there, and the ssh-agent socket is
+  # restarted so it picks up keys from it.
   gocryptfsCommands = {
     unlock-personal =
       "gocryptfs ~/.personal-encrypted ~/Personal"
@@ -36,16 +36,11 @@ let
     lock-personal = "systemctl --user stop syncthing; fusermount -u ~/Personal";
   };
 
-  # system: ~/Personal is mounted by the system at boot, from a LUKS container
-  # that is already open because the user's *home* lives in it too (nomad's
-  # carry: @home → /home/gdmsl, @personal → ~/Personal).
-  #
-  # There is deliberately nothing to unlock or lock here. Closing the container
-  # while logged in would pull the home directory out from under the session,
-  # and "locking" only ~/Personal while home stays decrypted in the same
-  # container would be security theatre. So these become informational — the
-  # names still exist, because muscle memory and the guard messages in
-  # home/scripts.nix both refer to them.
+  # Nothing to unlock: the container is already open, because the home
+  # directory is inside it too. Closing it would pull the running session's
+  # home out from under it, and unmounting only ~/Personal wouldn't encrypt
+  # anything. The commands still exist so the names work and the guard messages
+  # elsewhere still make sense.
   systemCommands = {
     unlock-personal =
       "echo '~/Personal is mounted at boot on this host (carry/@personal) — nothing to unlock.'";
@@ -67,9 +62,9 @@ in
   };
 
   config = {
-    # Installed for all three shells so the commands exist wherever you are.
-    # Fish gets them as abbreviations (matching how home/shell/_aliases.nix
-    # treats `commands`) so the full command is visible before you hit Enter.
+    # All three shells. Fish gets abbreviations rather than aliases, matching
+    # how _aliases.nix does it, so the real command is visible before you run
+    # it.
     programs.fish.shellAbbrs = commands;
     programs.bash.shellAliases = commands;
     programs.zsh.shellAliases = commands;

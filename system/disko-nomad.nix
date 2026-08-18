@@ -1,29 +1,44 @@
 # ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║  disko-nomad.nix — Declarative disk layout for the portable SSD            ║
+# ║  disko-nomad.nix — Disk layout for the portable SSD                        ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# `disko` turns this description into the actual partitioning/encryption/mkfs
-# commands, instead of you running sgdisk + cryptsetup + mkfs by hand. The same
-# description also generates the `fileSystems` entries NixOS needs at boot, so
-# the layout and the mount config can never drift apart.
+# disko turns this description into the sgdisk / cryptsetup / mkfs commands that
+# build the disk, and generates the `fileSystems` entries NixOS needs to mount
+# it. One description, both jobs — so the disk and the mount config can't drift.
 #
-# Importing this file is harmless — it only *describes* the disk. Nothing is
-# written until you explicitly run the disko formatter against it.
+# Importing this file does nothing on its own. It only describes the disk;
+# nothing is written until you run the formatter (see nomad-mount for the
+# read-only counterpart that just mounts an existing disk).
 #
-# Full rationale for every number and flag here lives in SSD_PLAN.md.
+# Before formatting, wipe the disk properly — disko skips mkfs on anything that
+# already has a filesystem signature, so a leftover one from a previous layout
+# means that partition is left untouched and the run dies later at the mount
+# with "wrong fs type, bad option, bad superblock". Partitions first, then the
+# table, because clearing the table hides the signatures without removing them:
 #
-#   Measured capacity: 976,773,168 sectors = 465.762 GiB (a "500 GB" drive)
+#   sudo wipefs -a /dev/sdaN ...      # every partition
+#   sudo wipefs -a /dev/sda           # then the table
+#   sudo blkid -p /dev/sdaN           # must print nothing, for each one
 #
-#      2 GiB   ESP, FAT32      /boot                 plaintext (firmware reads it)
-#    158 GiB   LUKS "nomad-os" @ → /  @nix → /nix  @snapshots → /.snapshots
-#    300 GiB   LUKS "carry"    @home → /home/gdmsl  @personal → ~/Personal
-#   5.76 GiB   unallocated                          alignment + SSD spare area
+# `blkid -p` probes the device directly. Plain `blkid` and `lsblk` both read
+# caches and will happily report a partition as clean when it isn't.
 #
-# Home lives on the *data* container, not the OS one, so reinstalling the OS
-# cannot destroy it — and /nix gets the 158 GiB to itself.
+#      2 GiB   ESP, FAT32      /boot                     unencrypted
+#    158 GiB   LUKS "nomad-os" @ → /   @nix → /nix   @snapshots → /.snapshots
+#    300 GiB   LUKS "carry"    @home → /home/gdmsl   @personal → ~/Personal
+#   5.8 GiB    unallocated
 #
-# NOTE ON UNITS: `size` is in sgdisk format, where G means **GiB**, not GB.
-# "300G" is 300 GiB (= 322 GB). Do not "fix" these to decimal values.
+# Two things worth knowing about the shape:
+#
+#   Home is on the *data* container, not the OS one. So you can reformat and
+#   reinstall the OS without touching your files, and /nix gets its 158 GiB
+#   without competing with your home.
+#
+#   The leftover ~5.8 GiB is deliberate. Blocks that are never written give the
+#   SSD controller spare area to work with.
+#
+# `size` is in sgdisk units, where G means GiB, not GB. "300G" is 300 GiB. A
+# "500 GB" drive is 465.8 GiB, so budget in GiB or the last partition won't fit.
 
 { ... }:
 
@@ -31,9 +46,9 @@
   disko.devices.disk.nomad = {
     type = "disk";
 
-    # By-id, not /dev/sda. Kernel names depend on enumeration order and would
-    # happily point at the internal KIOXIA on a different boot. This path is
-    # keyed to the drive's own serial, so it also survives an enclosure swap.
+    # By-id, never /dev/sda: kernel names depend on enumeration order, so sda
+    # could be the internal disk on another boot. This path is the drive's own
+    # serial, so it also survives moving the SSD to a different enclosure.
     device = "/dev/disk/by-id/ata-CT500P3PSSD8_2401463EF214";
 
     content = {
@@ -41,10 +56,10 @@
       partitions = {
 
         # ── EFI System Partition ──────────────────────────────────────────
-        # Unencrypted by necessity: firmware has to read the bootloader before
-        # any key exists. 2 GiB (not the usual 512 MiB) because GRUB keeps a
-        # kernel + initrd per generation here, and this initrd is large — wide
-        # module set plus enableAllFirmware. ~120 MiB × 10 generations.
+        # Can't be encrypted: firmware reads the bootloader before any key
+        # exists. 2 GiB rather than the usual 512 MiB because GRUB stores a
+        # kernel + initrd here per generation, and this initrd is a fat one
+        # (lots of drivers, see nomad.nix). Roughly 120 MiB × 10 generations.
         ESP = {
           size = "2G";
           type = "EF00";
@@ -57,26 +72,25 @@
         };
 
         # ── OS container ──────────────────────────────────────────────────
-        # Unlocked by passphrase in the initrd. btrfs subvolumes rather than
-        # separate partitions so / and /nix share space freely. Note there is no
-        # @home here: /home is a plain directory in @, acting only as the mount
-        # parent for carry's @home.
+        # Passphrase-unlocked in the initrd. Subvolumes instead of separate
+        # partitions so / and /nix draw from the same 158 GiB. There's no @home
+        # here — /home is just a directory inside @, a mount point for carry.
         os = {
           size = "158G";
           content = {
             type = "luks";
             name = "nomad-os";
 
-            # argon2id is the default, but pin the memory cost explicitly:
-            # cryptsetup normally calibrates against the machine doing the
-            # formatting. Formatted on yara (32 GB RAM), an uncapped cost can
-            # make unlocking painfully slow — or impossible — on a low-RAM
-            # host. 524288 KiB = 512 MiB.
+            # Pin the KDF memory cost. cryptsetup otherwise calibrates it
+            # against whatever machine does the formatting, and a value tuned on
+            # a 32 GB laptop can be unusably slow to unlock on a small host.
+            # 524288 KiB = 512 MiB.
             extraFormatArgs = [ "--pbkdf" "argon2id" "--pbkdf-memory" "524288" ];
 
-            # Lets TRIM reach the SSD through dm-crypt. Without this, fstrim
-            # inside the container is silently a no-op. Tradeoff: reveals which
-            # blocks are unused (not their contents). See SSD_PLAN.md §4.3.
+            # Lets TRIM reach the SSD through dm-crypt. Without it, fstrim
+            # inside the container silently does nothing. The cost is that an
+            # attacker holding the disk can see which blocks are unused — not
+            # what's in them.
             settings.allowDiscards = true;
 
             content = {
@@ -87,9 +101,8 @@
                   mountpoint = "/";
                   mountOptions = [ "compress=zstd:1" "noatime" ];
                 };
-                # zstd earns its place twice over here: the Nix store is highly
-                # compressible, and fewer bytes written means less write
-                # amplification on a QLC drive behind a USB bridge.
+                # The Nix store compresses well, and fewer bytes written is
+                # easier on a budget SSD.
                 "@nix" = {
                   mountpoint = "/nix";
                   mountOptions = [ "compress=zstd:1" "noatime" ];
@@ -103,23 +116,22 @@
           };
         };
 
-        # ── Personal data container ───────────────────────────────────────
-        # A separate container, not just another subvolume, so it can be
-        # unlocked on yara without touching the OS — and so reinstalling the OS
-        # can never endanger the data.
+        # ── Data container ────────────────────────────────────────────────
+        # Its own LUKS container rather than more subvolumes on nomad-os, so it
+        # can be unlocked on another machine without involving the OS at all.
         carry = {
           size = "300G";
           content = {
             type = "luks";
             name = "carry";
 
-            # CRITICAL: no boot.initrd.luks entry for this one.
+            # Keep this false. It stops disko adding a boot.initrd.luks entry.
             #
-            # The initrd lives on the plaintext ESP. Any keyfile the initrd can
-            # read is readable by whoever steals the disk, which would defeat
-            # this container's encryption entirely. So it is unlocked in
-            # *stage 2* instead, via /etc/crypttab, using a keyfile that only
-            # exists on the already-decrypted root. See system/nomad.nix.
+            # The initrd sits on the unencrypted ESP, so any keyfile the initrd
+            # can read is also readable by anyone holding the disk — which would
+            # make encrypting this container pointless. Instead it's unlocked
+            # later, from /etc/crypttab, with a keyfile that only exists once
+            # the root filesystem is already decrypted. See nomad.nix.
             initrdUnlock = false;
 
             extraFormatArgs = [ "--pbkdf" "argon2id" "--pbkdf-memory" "524288" ];
@@ -127,32 +139,28 @@
             content = {
               type = "btrfs";
               extraArgs = [ "-L" "carry" ];
-              # Two subvolumes sharing the 300 GiB, with different lifetimes:
+              # Two subvolumes sharing the 300 GiB, split by what they're for:
               #
-              #   @home     — nomad's home: dotfiles, caches, the Home Manager
-              #               symlinks into /nix/store, session state. Specific
-              #               to this machine; does not travel.
-              #   @personal — actual personal files, plus .claude/.codex/.gemini
-              #               and the Firefox personal profile. This is the unit
-              #               intended to mount as ~/Personal on other machines
-              #               later, which is why it is separate.
+              #   @home     — this machine's home: dotfiles, caches, the Home
+              #               Manager symlinks into /nix/store. Only meaningful
+              #               on nomad, since those store paths live here.
+              #   @personal — the actual files, plus .claude / .codex / .gemini
+              #               and the Firefox personal profile. Self-contained,
+              #               so it can be mounted as ~/Personal elsewhere.
               #
-              # Putting home here rather than on nomad-os means reinstalling the
-              # OS no longer destroys it, and /nix gets its 158 GiB to itself.
-              #
-              # nofail on both: a data container that fails to unlock must never
-              # block boot. Home Manager gets RequiresMountsFor=/home/gdmsl for
-              # free from its NixOS module, so if @home is missing, activation is
-              # skipped rather than writing into a directory that later gets
-              # shadowed by the real mount.
+              # nofail on both: if the container can't be unlocked, boot should
+              # still finish. Home Manager's unit gets RequiresMountsFor on the
+              # home directory automatically, so a missing @home means activation
+              # is skipped rather than writing files that the real mount would
+              # then hide.
               subvolumes = {
                 "@home" = {
                   mountpoint = "/home/gdmsl";
                   mountOptions = [ "compress=zstd:1" "noatime" "nofail" ];
                 };
-                # A real mount, not a directory — every guard in home/ tests
-                # `mountpoint -q ~/Personal` or ConditionPathIsMountPoint, so
-                # this has to be its own mount for them to keep working.
+                # Has to be a real mount, not a directory: the checks in
+                # home/scripts.nix and home/services.nix both test whether
+                # ~/Personal is a mountpoint.
                 "@personal" = {
                   mountpoint = "/home/gdmsl/Personal";
                   mountOptions = [ "compress=zstd:1" "noatime" "nofail" ];

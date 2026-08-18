@@ -2,16 +2,15 @@
 # ║  hyprland.nix — Hyprland window manager configuration                      ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# Since Hyprland 0.55 / Home Manager 26.05 the config is written in Lua. The
-# canonical entry-point is `~/.config/hypr/hyprland.lua`, which `require()`s
-# sibling modules (Hyprland adds `~/.config/hypr/` to package.path).
+# Hyprland's config is Lua as of 0.55. The entry point is
+# ~/.config/hypr/hyprland.lua, which require()s the other modules — Hyprland
+# puts ~/.config/hypr on package.path.
 #
-# We deploy the raw Lua files from raw/hypr/ as symlinks. The helper scripts
-# in raw/hypr/scripts/ are checked in with the executable bit set so Nix
-# preserves it through the store import.
+# The files come from raw/hypr/. Anything in raw/hypr/scripts/ needs its
+# executable bit committed to git, or it won't be executable after the copy into
+# the store.
 #
-# Note: hyprpaper still uses hyprlang — it's a separate daemon with its own
-# parser and wasn't migrated by 0.55.
+# hyprpaper is the exception and still uses the older hyprlang format.
 
 { config, pkgs, ... }:
 
@@ -31,16 +30,15 @@
     "hypr/monitors.lua".source = ../../raw/hypr/monitors.lua;
     "hypr/workspaces.lua".source = ../../raw/hypr/workspaces.lua;
 
-    # Standalone hyprlang configs for the auxiliary daemons. Lock and idle use
-    # hyprlock/hypridle (sleep inhibitor + loginctl lock-session); noctalia keeps
-    # the bar, clipboard, and notifications (its own lock is off for now).
+    # The auxiliary daemons, which still use hyprlang rather than Lua. Locking
+    # and idle are hyprlock and hypridle; noctalia provides the bar, clipboard
+    # and notifications.
     "hypr/hyprlock.conf".source = ../../raw/hypr/hyprlock.conf;
     "hypr/hypridle.conf".source = ../../raw/hypr/hypridle.conf;
     "hypr/hyprpaper.conf".source = ../../raw/hypr/hyprpaper.conf;
     "hypr/hyprshade.toml".source = ../../raw/hypr/hyprshade.toml;
 
-    # Modular fragments and helper scripts. `recursive = true` deploys the
-    # directory contents one-by-one as symlinks, instead of symlinking the
+    # `recursive = true` links each file individually instead of symlinking the
     # whole directory — that means new files show up after a `switch`.
     "hypr/conf" = {
       source = ../../raw/hypr/conf;

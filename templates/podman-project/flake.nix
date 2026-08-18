@@ -20,11 +20,9 @@
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
 
-      # Bash aliases set inside `shellHook` don't survive direnv's env capture
-      # — direnv exports environment variables back to fish, but aliases are
-      # local to the bash subshell that ran the hook. To get real `pc-*`
-      # commands on $PATH we build tiny wrapper scripts as actual binaries
-      # in the Nix store. `writeShellScriptBin` is the helper for that.
+      # These are real scripts rather than shell aliases because direnv only
+      # carries environment variables back to your shell — aliases defined in
+      # shellHook stay inside the bash subshell that ran it.
       mkPc = name: subcommand: pkgs.writeShellScriptBin name ''
         exec ${pkgs.podman-compose}/bin/podman-compose ${subcommand} "$@"
       '';

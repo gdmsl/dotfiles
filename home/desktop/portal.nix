@@ -2,12 +2,11 @@
 # ║  portal.nix — XDG Desktop Portal backends (user-profile side)              ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# The system module already enables xdg.portal at the NixOS level, but Home
-# Manager runs its own copy of the xdg-desktop-portal user service. HM sets
-# NIX_XDG_DESKTOP_PORTAL_DIR to the *user* profile path, so the running
-# portal only loads .portal files installed under
-# /etc/profiles/per-user/$USER/share/xdg-desktop-portal/portals/. That path
-# is HM-managed — system-level extraPortals never land there.
+# Portals are enabled system-wide in system/default.nix, but Home Manager runs
+# its own copy of the portal service and points it at the user profile. Backends
+# installed system-wide never appear there, so the ones needed have to be listed
+# here as well. Missing them shows up as screen sharing or file pickers silently
+# not working.
 #
 # `wayland.windowManager.hyprland.enable` already adds the Hyprland portal
 # at the HM level. Niri has no portal of its own; on Niri,

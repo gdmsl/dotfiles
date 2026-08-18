@@ -2,14 +2,14 @@
 # ║  pkgs/julia-wrapped.nix — Julia with FHS-style libdirs for JLL artifacts   ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# Julia's package manager downloads prebuilt JLL artifacts that expect
-# FHS-standard library paths. On NixOS those paths don't exist, so dlopen
-# fails (e.g. libquadmath.so.0 not found when loading OpenSpecFun_jll).
-# symlinkJoin + wrapProgram produces a `julia` whose every invocation gets
-# these libs appended to LD_LIBRARY_PATH.
+# Julia downloads prebuilt JLL artifacts that expect libraries at standard FHS
+# paths, which don't exist on NixOS — so loading one fails with something like
+# "libquadmath.so.0 not found". This wraps `julia` so those libraries are on
+# LD_LIBRARY_PATH.
 #
-# Usage: `(import ./pkgs/julia-wrapped.nix { inherit pkgs; })` inside a
-# `home.packages = with pkgs; [ ... ]` list.
+# Add another entry to the list below if a package fails to dlopen something.
+#
+#   (import ./pkgs/julia-wrapped.nix { inherit pkgs; })
 
 { pkgs }:
 

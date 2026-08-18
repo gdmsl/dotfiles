@@ -2,11 +2,10 @@
 # ║  anyrun.nix — Anyrun application launcher                                  ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# Anyrun is a Wayland-native launcher (alternative to rofi/wofi). It supports
-# plugins for different search modes: applications, shell commands, symbols,
-# translations, dictionary lookups, web search, and file indexing (kidex).
+# Another Wayland launcher, plugin-based: applications, shell commands,
+# symbols, translation, dictionary, web search, file indexing.
 #
-# The plugins come from the anyrun flake input (not nixpkgs).
+# Plugins come from the anyrun flake input.
 
 { inputs, pkgs, ... }:
 

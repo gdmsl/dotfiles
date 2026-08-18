@@ -2,21 +2,21 @@
 # ║  services.nix — systemd user services                                      ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# This module defines systemd user services — background daemons that run in
-# your user session (not as root). They're tied to the graphical session so
-# they start/stop with your desktop.
+# Background daemons that run in your user session rather than as root. Home
+# Manager writes them to ~/.config/systemd/user/ and enables them.
 #
-# Home Manager writes these to ~/.config/systemd/user/<name>.service and
-# enables them automatically.
+# The systemd fields used below:
+#   PartOf     — stop this when the named target stops
+#   After      — don't start until the target is up
+#   WantedBy   — start automatically once the target is reached
+#   graphical-session.target — active while a compositor is running
 #
-# Key systemd concepts:
-#   Unit.PartOf   — if the target stops, this service stops too
-#   Unit.After    — start this service after the target is up
-#   Install.WantedBy — auto-start when this target is reached
-#   graphical-session.target — active when your compositor is running
+# `${pkgs.foo}/bin/bar` interpolates the store path, which pins the exact build
+# rather than relying on PATH.
 #
-# `${pkgs.foo}/bin/bar` is Nix string interpolation — it resolves to the
-# full Nix store path of the binary, ensuring the correct version is used.
+# Useful when something here misbehaves:
+#   systemctl --user status <name>
+#   journalctl --user -u <name> -f
 
 { config, pkgs, lib, inputs, ... }:
 
@@ -25,10 +25,6 @@ let
 in
 {
   systemd.user.services = {
-    # Clipboard persistence and history are both owned by noctalia now (its
-    # built-in wlr-data-control clipboard manager survives the source app
-    # closing and keeps its own history), so no separate wl-clip-persist daemon.
-
     # ── Vicinae launcher daemon ───────────────────────────────────────────
     # Runs in server mode so the UI appears instantly when triggered.
     vicinae = {
@@ -64,16 +60,12 @@ in
     # };
 
     # ── Idle manager ──────────────────────────────────────────────────────
-    # hypridle triggers actions on inactivity: dim, lock, turn off display,
-    # suspend. Configured via hypridle.conf in the Hyprland config dir.
+    # Dims, locks, blanks and suspends on inactivity. Configured in
+    # raw/hypr/hypridle.conf.
     #
-    # Lock/idle run on hypridle + hyprlock, not noctalia's built-in equivalents.
-    # noctalia 5.0 does integrate with logind now (session lock, LockedHint,
-    # lock-on-suspend), but we currently find it too unstable — so it stays off
-    # (lockscreen.enabled = false in desktop/noctalia.nix) and hypridle drives
-    # things: it registers a systemd sleep inhibitor so the screen locks *before*
-    # suspend, and fires `loginctl lock-session` on idle and before sleep, which
-    # hypridle turns into hyprlock (see raw/hypr/hypridle.conf).
+    # Locking is hypridle + hyprlock rather than noctalia's own, which is
+    # disabled in desktop/noctalia.nix. hypridle registers a sleep inhibitor so
+    # the screen locks before suspend rather than after waking.
     hypridle = {
       Unit = {
         Description = "Idle manager (dim, lock, DPMS, suspend)";
@@ -91,13 +83,9 @@ in
     };
 
     # ── niri workspace auto-clean ─────────────────────────────────────────
-    # Removes empty *named* niri workspaces so they behave like numbered ones
-    # (niri keeps named workspaces around even when empty — see the script for
-    # the full rationale). The niri-workspace-autoclean script (home/scripts.nix)
-    # is a long-lived reader of niri's event stream. It's niri-specific, but
-    # rides graphical-session.target like the rest since niri is the only
-    # compositor we run — that target is what makes `niri msg` reachable here,
-    # the same way hypridle's niri calls work.
+    # niri keeps named workspaces around when they empty; this removes them so
+    # they behave like the numbered ones. The script (home/scripts.nix) sits on
+    # niri's event stream for as long as the session lasts.
     niri-workspace-autoclean = {
       Unit = {
         Description = "Remove empty named niri workspaces";
@@ -106,16 +94,13 @@ in
       };
       Service = {
         ExecStart = "%h/.local/bin/niri-workspace-autoclean";
-        # "always", not "on-failure": when the event stream ends, the script's
-        # `while read` loop hits EOF and exits 0 — a *success* — so on-failure
-        # would never relaunch it. always does.
+        # always, not on-failure: when the event stream ends the script exits 0,
+        # so on-failure would never restart it.
         Restart = "always";
         RestartSec = 2;
-        # Belt-and-suspenders for the nastier failure: the reader can stay alive
-        # yet silently stop delivering events (a stalled stream), which no Restart
-        # policy catches because the process never exits. Recycling it on a timer
-        # bounds how long such a stall can last; the script re-sweeps on each
-        # (re)start, so a recycle also reconciles current state.
+        # The stream can also stall while the process stays alive, which no
+        # Restart policy catches. Recycling on a timer bounds how long that can
+        # last, and each start re-sweeps existing workspaces anyway.
         RuntimeMaxSec = "15min";
       };
       Install = {
@@ -142,8 +127,11 @@ in
     };
 
     # ── Auto-mount removable media ────────────────────────────────────────
-    # udiskie watches for USB drives and auto-mounts them. --tray shows
-    # a system tray icon for safe eject.
+    # Mounts USB drives as they appear, under /run/media/$USER. --tray adds an
+    # icon for ejecting them.
+    #
+    # Worth stopping (`systemctl --user stop udiskie`) before partitioning a
+    # disk by hand, or it will mount the new filesystems mid-job.
     udiskie = {
       Unit = {
         Description = "Auto-mount removable media";
@@ -160,10 +148,9 @@ in
       };
     };
 
-    # ── Polkit graphical agent ────────────────────────────────────────────
-    # Shows the "enter password" dialog when an app asks for elevated
-    # privileges (mounting drives, modifying system settings, etc.).
-    # Tied to graphical-session.target so it follows the compositor.
+    # ── Polkit agent ──────────────────────────────────────────────────────
+    # Draws the "enter your password" dialog when something asks for privileges.
+    # Without it running, those requests fail silently.
     polkit-gnome-agent = {
       Unit = {
         Description = "polkit-gnome-authentication-agent-1";
@@ -182,24 +169,18 @@ in
       };
     };
 
-    # ── OneDrive: scheduled one-shot sync (replaces continuous --monitor) ──
-    # We deliberately do NOT run `onedrive --monitor`. A live bidirectional
-    # syncer rewrites files while editors are mid-write, which corrupted Logseq
-    # (constant "in-memory vs saved" conflicts, vanishing pages) and churns
-    # LibreOffice lock files. Instead we sync in short one-shot bursts driven by
-    # the two timers further below. Both call the same ~/.local/bin/onedrive-sync
-    # wrapper (start/finish notify-send + flock); that wrapper is also the manual
-    # command you can run any time.
+    # ── OneDrive sync ─────────────────────────────────────────────────────
+    # Short scheduled syncs rather than `onedrive --monitor`. Continuous
+    # bidirectional sync rewrites files while editors have them open, which
+    # corrupted Logseq pages and churned LibreOffice lock files.
     #
-    #   onedrive-sync         — forced sync, no editor check. Driven by the 04:00
-    #                           timer and by `systemctl --user start onedrive-sync`.
-    #   onedrive-sync-ifidle  — same sync, but ExecCondition skips the run when a
-    #                           fast editor (Logseq/LibreOffice) is open. Driven
-    #                           by the :26/:56 timer.
+    #   onedrive-sync         — syncs unconditionally. Runs at 04:00, or on
+    #                           `systemctl --user start onedrive-sync`.
+    #   onedrive-sync-ifidle  — same, but skipped while Logseq or LibreOffice is
+    #                           open. Runs at :26 and :56.
     #
-    # These are oneshot units triggered by timers, so (like podman-prune) they
-    # have no Install.WantedBy of their own. network-online is wanted so a sync
-    # doesn't fire before the link is up.
+    # Both call ~/.local/bin/onedrive-sync, which is also fine to run by hand.
+    # Timers activate them, so neither needs a WantedBy.
     onedrive-sync = {
       Unit = {
         Description = "OneDrive one-shot sync (forced)";
@@ -221,7 +202,7 @@ in
       };
       Service = {
         Type = "oneshot";
-        # exit != 0 from the guard → systemd skips this run cleanly (not failed).
+        # A non-zero ExecCondition skips the run without marking it failed.
         ExecCondition = "%h/.local/bin/onedrive-sync-guard";
         ExecStart = "%h/.local/bin/onedrive-sync";
         TimeoutStartSec = "1h";
@@ -229,20 +210,13 @@ in
     };
 
     # ── Podman weekly cleanup ─────────────────────────────────────────────
-    # Reclaims disk from stopped containers, dangling images, unused networks,
-    # and build cache. Fired by the matching timer below (see systemd.user.timers).
+    # Reclaims space from stopped containers, dangling images, unused networks
+    # and build cache. Started by its timer below, hence no WantedBy.
     #
-    # `Type = "oneshot"` means: run the command, exit, done — no long-lived
-    # process. The unit has no Install.WantedBy because it's not started at
-    # boot or login; the timer is what activates it.
-    #
-    # We deliberately do NOT pass `--volumes` or `-a`:
-    #   --volumes  would delete named volumes (e.g. your postgres data dir)
-    #              if no container currently references them — too dangerous
-    #              for an automatic weekly job.
-    #   -a         would remove every unused image, forcing a re-pull next
-    #              time you start a stack. Save bandwidth, prune manually
-    #              when you actually want that.
+    # Two flags left off on purpose: `--volumes` would delete named volumes
+    # nothing currently references, including database data, and `-a` would
+    # remove every unused image so the next start re-pulls everything. Pass
+    # them by hand when that's what you want.
     podman-prune = {
       Unit = {
         Description = "Weekly Podman cleanup (stopped containers, dangling images, build cache)";
@@ -254,10 +228,9 @@ in
     };
 
     # ── Syncthing vault guard ─────────────────────────────────────────────
-    # This companion service watches the encrypted ~/Personal mount.
-    # When the vault is unmounted (locked), it stops Syncthing to prevent
-    # sync errors against a missing directory.
-    # BindsTo means: if syncthing dies, this dies too (and vice versa).
+    # Watches ~/Personal and stops Syncthing when it's unmounted, so it isn't
+    # syncing against a directory that has vanished. BindsTo ties the two units
+    # together in both directions.
     syncthing-vault-guard = {
       Unit = {
         Description = "Stop syncthing when gocryptfs vault is unmounted";
@@ -274,14 +247,14 @@ in
     };
   };
 
-  # ── Systemd user timers ─────────────────────────────────────────────────
-  # Timers are systemd's cron replacement. Each timer activates a service of
-  # the same name (here: podman-prune.service, defined above).
+  # ── Timers ──────────────────────────────────────────────────────────────
+  # systemd's cron. Each timer starts the service of the same name.
+  # `systemctl --user list-timers` shows when they'll next fire.
   systemd.user.timers.podman-prune = {
     Unit.Description = "Weekly Podman cleanup timer";
     Timer = {
-      # OnCalendar uses systemd's calendar syntax. "weekly" expands to
-      # "Mon *-*-* 00:00:00" — every Monday at midnight local time.
+      # "weekly" means Monday 00:00. `systemd-analyze calendar <expr>` explains
+      # any other expression.
       OnCalendar = "weekly";
       # If the laptop was off when the timer should have fired, run it as
       # soon as possible after boot instead of skipping that week. Crucial
