@@ -396,5 +396,104 @@ in
           -- ${pkgs.gemini-cli}/bin/gemini "$@"
       '';
     };
+
+    # ── Portable SSD (nomad) maintenance mounts ─────────────────────────────
+    # Mount the nomad SSD at /mnt the way its own config describes, so you can
+    # `sudo nixos-enter --root /mnt` and fix or rebuild the installation.
+    #
+    # Why not just use the udiskie mounts under /run/media? Because those are
+    # wrong for this job in three ways: they mount the btrfs *top level*
+    # (subvol=/) rather than the @/@home/@nix subvolumes, they add nosuid,nodev
+    # which breaks anything chrooted, and udisks opens the LUKS containers under
+    # its own `luks-<uuid>` names instead of nomad-os/carry.
+    #
+    # The mount itself is delegated to disko, which generates it from
+    # system/disko-nomad.nix — the same declaration that created the disk. That
+    # means these scripts cannot drift from the real layout.
+    ".local/bin/nomad-mount" = {
+      executable = true;
+      text = ''
+        #!/usr/bin/env bash
+        set -euo pipefail
+
+        # Same by-id path as system/disko-nomad.nix. Keyed to the drive's serial
+        # so it cannot accidentally resolve to the internal NVMe.
+        DISK=/dev/disk/by-id/ata-CT500P3PSSD8_2401463EF214
+        FLAKE="''${FLAKE:-$HOME/dotfiles}"
+
+        if [ ! -e "$DISK" ]; then
+          echo "nomad-mount: SSD not attached ($DISK)" >&2
+          exit 1
+        fi
+        if ${pkgs.util-linux}/bin/mountpoint -q /mnt; then
+          echo "nomad-mount: /mnt is already a mountpoint — run nomad-umount first." >&2
+          exit 1
+        fi
+
+        # udiskie races us: it re-mounts any filesystem that appears, including
+        # the ones disko is about to open. Stop it for the duration.
+        if systemctl --user is-active --quiet udiskie; then
+          echo "==> stopping udiskie (nomad-umount restarts it)"
+          systemctl --user stop udiskie
+        fi
+
+        # Hand back anything udisks already holds. Only devices that are
+        # children of $DISK are touched — never yara's own LUKS volumes.
+        crypt_children() {
+          ${pkgs.util-linux}/bin/lsblk -rno NAME,TYPE "$DISK" | ${pkgs.gawk}/bin/awk '$2=="crypt"{print $1}'
+        }
+        for name in $(crypt_children); do
+          dev="/dev/mapper/$name"
+          mp=$(${pkgs.util-linux}/bin/findmnt -nlo TARGET "$dev" || true)
+          if [ -n "$mp" ]; then
+            echo "==> unmounting $mp"
+            udisksctl unmount -b "$dev" >/dev/null || sudo ${pkgs.util-linux}/bin/umount "$dev"
+          fi
+          echo "==> closing $name"
+          sudo ${pkgs.cryptsetup}/bin/cryptsetup close "$name"
+        done
+
+        echo "==> mounting via disko (asks for the LUKS passphrase)"
+        script=$(nix build --no-link --print-out-paths \
+          "$FLAKE#nixosConfigurations.nomad.config.system.build.mountScript")
+        sudo "$script"
+
+        echo
+        ${pkgs.util-linux}/bin/findmnt -R /mnt || true
+        echo
+        echo "Ready. Enter the installed system with:"
+        echo "  sudo nixos-enter --root /mnt"
+      '';
+    };
+
+    ".local/bin/nomad-umount" = {
+      executable = true;
+      text = ''
+        #!/usr/bin/env bash
+        set -euo pipefail
+
+        DISK=/dev/disk/by-id/ata-CT500P3PSSD8_2401463EF214
+
+        if ${pkgs.util-linux}/bin/mountpoint -q /mnt; then
+          echo "==> unmounting /mnt recursively"
+          sudo ${pkgs.util-linux}/bin/umount -R /mnt
+        fi
+
+        # Close only containers backed by the SSD. Never yara's root or swap.
+        if [ -e "$DISK" ]; then
+          for name in $(${pkgs.util-linux}/bin/lsblk -rno NAME,TYPE "$DISK" \
+                          | ${pkgs.gawk}/bin/awk '$2=="crypt"{print $1}'); do
+            echo "==> closing $name"
+            sudo ${pkgs.cryptsetup}/bin/cryptsetup close "$name"
+          done
+        fi
+
+        if ! systemctl --user is-active --quiet udiskie; then
+          echo "==> restarting udiskie"
+          systemctl --user start udiskie
+        fi
+        echo "Done — safe to unplug."
+      '';
+    };
   };
 }
