@@ -36,28 +36,29 @@ let
     lock-personal = "systemctl --user stop syncthing; fusermount -u ~/Personal";
   };
 
-  # LUKS: the container is opened and mounted at the system level, and
-  # ~/Personal is a bind mount of it — so "locking" means unmounting the bind
-  # *and* closing the container, in that order.
+  # system: ~/Personal is mounted by the system at boot, from a LUKS container
+  # that is already open because the user's *home* lives in it too (nomad's
+  # carry: @home → /home/gdmsl, @personal → ~/Personal).
   #
-  # udisksctl rather than `sudo cryptsetup`: it goes through polkit, so this
-  # stays a rootless operation like the gocryptfs version. On nomad the
-  # container is normally already open from boot via /etc/crypttab; these are
-  # for re-opening it after a manual lock.
-  luksCommands = {
+  # There is deliberately nothing to unlock or lock here. Closing the container
+  # while logged in would pull the home directory out from under the session,
+  # and "locking" only ~/Personal while home stays decrypted in the same
+  # container would be security theatre. So these become informational — the
+  # names still exist, because muscle memory and the guard messages in
+  # home/scripts.nix both refer to them.
+  systemCommands = {
     unlock-personal =
-      "udisksctl unlock -b /dev/disk/by-partlabel/disk-nomad-carry"
-      + " && systemctl --user start syncthing";
+      "echo '~/Personal is mounted at boot on this host (carry/@personal) — nothing to unlock.'";
     lock-personal =
-      "systemctl --user stop syncthing"
-      + "; udisksctl lock -b /dev/disk/by-partlabel/disk-nomad-carry";
+      "echo '~/Personal cannot be locked here: your home is in the same LUKS container.'";
   };
 
-  commands = if cfg.backend == "luks" then luksCommands else gocryptfsCommands;
+  commands =
+    if cfg.backend == "system" then systemCommands else gocryptfsCommands;
 in
 {
   options.my.personalVault.backend = lib.mkOption {
-    type = lib.types.enum [ "gocryptfs" "luks" ];
+    type = lib.types.enum [ "gocryptfs" "system" ];
     default = "gocryptfs";
     description = ''
       How ~/Personal is encrypted on this machine. Selects which

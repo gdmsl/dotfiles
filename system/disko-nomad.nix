@@ -14,10 +14,13 @@
 #
 #   Measured capacity: 976,773,168 sectors = 465.762 GiB (a "500 GB" drive)
 #
-#      2 GiB   ESP, FAT32          /boot        plaintext (firmware must read it)
-#    158 GiB   LUKS2 → btrfs       nomad-os     @ @nix @home @snapshots
-#    300 GiB   LUKS2 → btrfs       /mnt/carry   personal data
-#   5.76 GiB   unallocated                      alignment + SSD spare area
+#      2 GiB   ESP, FAT32      /boot                 plaintext (firmware reads it)
+#    158 GiB   LUKS "nomad-os" @ → /  @nix → /nix  @snapshots → /.snapshots
+#    300 GiB   LUKS "carry"    @home → /home/gdmsl  @personal → ~/Personal
+#   5.76 GiB   unallocated                          alignment + SSD spare area
+#
+# Home lives on the *data* container, not the OS one, so reinstalling the OS
+# cannot destroy it — and /nix gets the 158 GiB to itself.
 #
 # NOTE ON UNITS: `size` is in sgdisk format, where G means **GiB**, not GB.
 # "300G" is 300 GiB (= 322 GB). Do not "fix" these to decimal values.
@@ -55,7 +58,9 @@
 
         # ── OS container ──────────────────────────────────────────────────
         # Unlocked by passphrase in the initrd. btrfs subvolumes rather than
-        # separate partitions so /, /nix and /home share space freely.
+        # separate partitions so / and /nix share space freely. Note there is no
+        # @home here: /home is a plain directory in @, acting only as the mount
+        # parent for carry's @home.
         os = {
           size = "158G";
           content = {
@@ -87,10 +92,6 @@
                 # amplification on a QLC drive behind a USB bridge.
                 "@nix" = {
                   mountpoint = "/nix";
-                  mountOptions = [ "compress=zstd:1" "noatime" ];
-                };
-                "@home" = {
-                  mountpoint = "/home";
                   mountOptions = [ "compress=zstd:1" "noatime" ];
                 };
                 "@snapshots" = {
@@ -126,9 +127,37 @@
             content = {
               type = "btrfs";
               extraArgs = [ "-L" "carry" ];
-              mountpoint = "/mnt/carry";
-              # nofail: a locked or absent data container must never block boot.
-              mountOptions = [ "compress=zstd:1" "noatime" "nofail" ];
+              # Two subvolumes sharing the 300 GiB, with different lifetimes:
+              #
+              #   @home     — nomad's home: dotfiles, caches, the Home Manager
+              #               symlinks into /nix/store, session state. Specific
+              #               to this machine; does not travel.
+              #   @personal — actual personal files, plus .claude/.codex/.gemini
+              #               and the Firefox personal profile. This is the unit
+              #               intended to mount as ~/Personal on other machines
+              #               later, which is why it is separate.
+              #
+              # Putting home here rather than on nomad-os means reinstalling the
+              # OS no longer destroys it, and /nix gets its 158 GiB to itself.
+              #
+              # nofail on both: a data container that fails to unlock must never
+              # block boot. Home Manager gets RequiresMountsFor=/home/gdmsl for
+              # free from its NixOS module, so if @home is missing, activation is
+              # skipped rather than writing into a directory that later gets
+              # shadowed by the real mount.
+              subvolumes = {
+                "@home" = {
+                  mountpoint = "/home/gdmsl";
+                  mountOptions = [ "compress=zstd:1" "noatime" "nofail" ];
+                };
+                # A real mount, not a directory — every guard in home/ tests
+                # `mountpoint -q ~/Personal` or ConditionPathIsMountPoint, so
+                # this has to be its own mount for them to keep working.
+                "@personal" = {
+                  mountpoint = "/home/gdmsl/Personal";
+                  mountOptions = [ "compress=zstd:1" "noatime" "nofail" ];
+                };
+              };
             };
           };
         };

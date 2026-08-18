@@ -134,21 +134,14 @@
   '';
 
   # ── ~/Personal ──────────────────────────────────────────────────────────
-  # A bind mount, not a symlink: the existing home config gates on
-  # `mountpoint -q ~/Personal` (home/scripts.nix) and
-  # ConditionPathIsMountPoint (home/services.nix). A bind mount satisfies both,
-  # so every one of those guards keeps working unchanged.
+  # No bind mount needed: ~/Personal is carry's @personal subvolume, mounted
+  # directly by disko-nomad.nix. It is therefore a genuine mountpoint, which is
+  # what every guard in home/ actually tests — `mountpoint -q ~/Personal`
+  # (home/scripts.nix) and ConditionPathIsMountPoint (home/services.nix).
   #
-  # /mnt/carry stays the canonical path on every host — content on the SSD that
-  # embeds absolute paths then works the same wherever it's plugged in.
-  fileSystems."/home/gdmsl/Personal" = {
-    device = "/mnt/carry";
-    # "none" is how NixOS spells a bind mount — there's no filesystem to
-    # mount here, we're re-exposing an already-mounted tree at a second path.
-    fsType = "none";
-    options = [ "bind" "nofail" ];
-    depends = [ "/mnt/carry" ];
-  };
+  # Both @home and @personal live in the same LUKS container, so on this host
+  # there is nothing to unlock separately once the container is open; see the
+  # "system" vault backend in home/personal-vault.nix.
 
   # ── Opting out of yara's hardware ───────────────────────────────────────
   # system/default.nix is the shared base and still carries a few things tied

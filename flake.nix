@@ -200,11 +200,11 @@
             home-manager.extraSpecialArgs = { inherit inputs dotfilesPath; };
             home-manager.users.gdmsl = {
               imports = [ ./home ];
-              # ~/Personal here is the SSD's LUKS container bind-mounted by
-              # system/nomad.nix, not yara's gocryptfs vault — so the
-              # unlock/lock commands differ. Everything else in ./home is
-              # mount-mechanism agnostic and needs no changes.
-              my.personalVault.backend = "luks";
+              # ~/Personal here is carry's @personal subvolume, mounted by the
+              # system at boot — not yara's gocryptfs vault. Nothing to unlock,
+              # since the user's home lives in the same container. Everything
+              # else in ./home is mount-mechanism agnostic and needs no changes.
+              my.personalVault.backend = "system";
             };
           }
         ];
