@@ -37,6 +37,13 @@ The flake produces four things:
 The two NixOS hosts share `system/default.nix` and all of `home/`; each adds
 its own hardware file.
 
+Per-target guides — installing, updating, one-time setup, what to do when
+something breaks:
+
+- [`docs/yara.md`](docs/yara.md) — the laptop
+- [`docs/nomad.md`](docs/nomad.md) — the portable SSD, including a full reinstall
+- [`docs/standalone.md`](docs/standalone.md) — Home Manager on a machine you don't own
+
 ## Everyday commands
 
 ```bash
