@@ -43,6 +43,7 @@
     ./desktop/anyrun.nix        # Anyrun launcher
     ./firefox.nix               # Firefox custom desktop entry
     ./libreoffice.nix           # LibreOffice + OnlyOffice + TexMaths equations
+    ./prismlauncher.nix         # Minecraft launcher + a Java path that survives rebuilds
     ./services.nix              # systemd user services
     ./xdg.nix                   # XDG MIME types and default apps
     ./scripts.nix               # custom scripts in ~/.local/bin

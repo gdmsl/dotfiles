@@ -121,7 +121,6 @@ in
     inkscape         # vector graphics editor
     gimp             # image editor
     darktable        # photo editing / RAW processing
-    prismlauncher    # Minecraft launcher (FOSS; bundles its own Java, manages instances/mods)
 
     # Multiboot USB creator: write the drive once, then copy ISOs onto it.
     # Run `ventoy-gui` (desktop entry "Ventoy").
