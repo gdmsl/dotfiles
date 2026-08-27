@@ -188,6 +188,10 @@
     btrfs = true;
     f2fs = true;
     xfs = true;
+    # ntfs pulls in ntfs3g and its mount helper. It belongs here rather than in
+    # home packages because udisks2 runs as a system daemon and looks for
+    # mount.ntfs-3g on the system path, not in a user profile.
+    ntfs = true;
   };
 
   # ── Disk management GUI ─────────────────────────────────────────────────

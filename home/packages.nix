@@ -59,6 +59,10 @@ in
     glances       # broad single-screen system overview (also has a web mode)
     direnv        # auto-load env vars when entering a directory
     jq            # JSON processor (query, filter, transform)
+    ffmpeg        # audio/video transcoding; also what hyprfm uses for video
+                  # thumbnails — upstream leaves it out of its own wrapper on
+                  # size grounds and picks whichever is on PATH
+    exiftool      # read/write media metadata; backs hyprfm's metadata panel
     glow          # terminal markdown renderer (pager + TUI browser)
     mdcat         # inline markdown for the terminal (images via kitty protocol)
     psmisc        # process utilities — provides killall, pstree, fuser
@@ -88,7 +92,9 @@ in
     kanshi                # automatic display profile switching
     udiskie               # auto-mount removable drives
     xwayland-satellite    # X11 compatibility for niri (Zoom, Qt5/xcb apps)
-    gvfs                  # virtual filesystem (trash, MTP, etc.)
+    gvfs                  # virtual filesystem (trash, MTP, etc.). Ships its own
+                          # systemd user unit and D-Bus activation files, so the
+                          # daemon comes up without services.gvfs.enable.
     libnotify             # provides notify-send command
     networkmanagerapplet  # Wi-Fi tray icon
     pavucontrol           # PulseAudio/PipeWire volume control GUI
