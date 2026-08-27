@@ -586,7 +586,8 @@ binds {
     // wlr-data-control daemon + history store), opened via its IPC panel toggle.
     Mod+P repeat=false { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }
 
-    // File manager
+    // File managers. Mod+X is the terminal one; Mod+Shift+X the GUI one, which
+    // is also the inode/directory handler set in home/xdg.nix.
     Mod+X repeat=false { spawn "kitty" "-e" "yazi" ; }
-    Mod+Shift+X repeat=false { spawn "nautilus" ; }
+    Mod+Shift+X repeat=false { spawn "hyprfm" ; }
 }
