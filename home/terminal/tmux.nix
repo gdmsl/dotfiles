@@ -20,7 +20,8 @@
     # Plugins installed from nixpkgs
     plugins = with pkgs.tmuxPlugins; [
       sensible         # sane default settings (escape-time, history, etc.)
-      yank             # copy to system clipboard
+      yank             # copy-mode selections to the system clipboard
+                       # (detects wl-copy on its own, so no bindings needed)
       cpu              # CPU/RAM usage in status bar
       better-mouse-mode
     ];
@@ -31,8 +32,19 @@
       set -ga terminal-overrides ",*256col*:Tc"
       set-option -ga terminal-overrides ",alacritty:Tc"
 
-      # Pass through display/SSH environment variables when attaching
-      set -g update-environment "DISPLAY SSH_ASKPASS SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY SSH_AUTH_SOCK"
+      # Pass through display/SSH environment variables when attaching.
+      # WAYLAND_DISPLAY matters for the clipboard: wl-copy needs it to find the
+      # compositor socket. A session detached and reattached under a new
+      # compositor instance would otherwise keep the stale value and fail.
+      set -g update-environment "DISPLAY WAYLAND_DISPLAY SSH_ASKPASS SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY SSH_AUTH_SOCK"
+
+      # ── Clipboard ────────────────────────────────────────────────────
+      # Let programs inside tmux set the outer terminal's clipboard with the
+      # OSC 52 escape sequence, and pass it up to kitty. Without this tmux
+      # swallows the sequence. Locally Neovim uses wl-copy directly and never
+      # needs it; it matters over SSH, where a remote Neovim has no wl-copy to
+      # call and falls back to OSC 52.
+      set -s set-clipboard on
 
       # Sidebar plugin: use tree command for file tree view
       set -g @sidebar-tree-command 'tree -C'

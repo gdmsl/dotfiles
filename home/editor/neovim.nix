@@ -37,7 +37,17 @@ in
       options = {
         shiftwidth = 4;    # indent width
         tabstop = 4;       # tab display width
-        clipboard = "";    # don't auto-sync with system clipboard (use tmux)
+        # Make the Wayland clipboard the unnamed register, so plain `y` and `p`
+        # share text with every other app — no `"+` prefix needed. Neovim picks
+        # the provider itself: with WAYLAND_DISPLAY set it uses wl-copy/wl-paste,
+        # so no explicit provider is needed here (see luaConfigPre for the
+        # display-less fallback).
+        #
+        # The trade-off of "unnamedplus": deletes go to the clipboard too, so `d`
+        # and `x` overwrite whatever you last copied. If that gets annoying, the
+        # usual fix is to route small deletes to the black-hole register:
+        #   { mode = ["n" "x"]; key = "x"; action = "\"_x"; }
+        clipboard = "unnamedplus";
       };
 
       # ── Theme ────────────────────────────────────────────────────────
@@ -494,22 +504,19 @@ in
       ];
 
       # ── Lua config (runs before plugin setup) ────────────────────────
-      # Custom clipboard integration that routes yanks through tmux,
-      # so copy/paste works between Neovim and tmux panes.
       luaConfigPre = ''
-        -- tmux clipboard integration
-        vim.g.clipboard = {
-          name = 'myClipboard',
-          copy = {
-            ["+"] = {'tmux', 'load-buffer', '-'},
-            ["*"] = {'tmux', 'load-buffer', '-'},
-          },
-          paste = {
-            ["+"] = {'tmux', 'save-buffer', '-'},
-            ["*"] = {'tmux', 'save-buffer', '-'},
-          },
-          cache_enabled = true,
-        }
+        -- Clipboard fallback for machines with no display server (the
+        -- gdmsl-tty profile imports this same file over SSH).
+        --
+        -- Neovim autodetects wl-copy/wl-paste whenever WAYLAND_DISPLAY is set,
+        -- which covers both kitty and tmux locally. It also has a built-in
+        -- OSC 52 fallback that asks the terminal itself to hold the text — but
+        -- that one only engages while 'clipboard' is empty, and we set it to
+        -- unnamedplus above. Without this branch a remote yank would just warn
+        -- "No provider". Selecting osc52 by name keeps `y` working over SSH.
+        if vim.env.WAYLAND_DISPLAY == nil and vim.env.DISPLAY == nil then
+          vim.g.clipboard = 'osc52'
+        end
       '';
     };
   };
