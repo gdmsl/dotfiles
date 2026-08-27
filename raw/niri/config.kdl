@@ -590,4 +590,7 @@ binds {
     // is also the inode/directory handler set in home/xdg.nix.
     Mod+X repeat=false { spawn "kitty" "-e" "yazi" ; }
     Mod+Shift+X repeat=false { spawn "hyprfm" ; }
+
+    // Editor, in its own window rather than inside a terminal.
+    Mod+E repeat=false { spawn "neovide" ; }
 }
