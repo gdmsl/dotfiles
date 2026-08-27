@@ -509,13 +509,38 @@ in
         -- gdmsl-tty profile imports this same file over SSH).
         --
         -- Neovim autodetects wl-copy/wl-paste whenever WAYLAND_DISPLAY is set,
-        -- which covers both kitty and tmux locally. It also has a built-in
+        -- which covers kitty, tmux and Neovide locally. It also has a built-in
         -- OSC 52 fallback that asks the terminal itself to hold the text — but
         -- that one only engages while 'clipboard' is empty, and we set it to
         -- unnamedplus above. Without this branch a remote yank would just warn
         -- "No provider". Selecting osc52 by name keeps `y` working over SSH.
         if vim.env.WAYLAND_DISPLAY == nil and vim.env.DISPLAY == nil then
           vim.g.clipboard = 'osc52'
+        end
+
+        -- Neovide-only settings.
+        --
+        -- Neovide sets `vim.g.neovide` when it attaches, so this whole block is
+        -- inert under kitty and one config serves both UIs. These have to be
+        -- Neovim variables rather than config.toml entries because Neovide
+        -- re-reads them while running — assigning one at any time takes effect
+        -- immediately, which is also how you'd toggle them from `:lua`.
+        if vim.g.neovide then
+          -- Animation lengths, in seconds. 0 disables an animation outright.
+          vim.g.neovide_cursor_animation_length = 0.06    -- cursor glide
+          vim.g.neovide_scroll_animation_length = 0.3     -- smooth scrolling
+          vim.g.neovide_position_animation_length = 0.15  -- window/split moves
+
+          -- Trail drawn behind the cursor as it moves between positions.
+          -- Alternatives: "torpedo", "pixiedust", "sonicboom", "ripple",
+          -- "wireframe", or "" for no effect.
+          vim.g.neovide_cursor_vfx_mode = "railgun"
+
+          vim.g.neovide_hide_mouse_when_typing = true
+          vim.g.neovide_remember_window_size = true
+
+          -- Window transparency. 1.0 is fully opaque.
+          vim.g.neovide_opacity = 0.95
         end
       '';
     };

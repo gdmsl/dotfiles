@@ -33,6 +33,7 @@
     ./terminal/tmux.nix         # tmux multiplexer
     ./terminal/zellij.nix       # Zellij multiplexer
     ./editor/neovim.nix         # Neovim (via nvf framework)
+    ./editor/neovide.nix        # Neovide (GPU-accelerated Neovim GUI)
     ./desktop/hyprland.nix      # Hyprland window manager
     ./desktop/niri.nix          # Niri window manager
     ./desktop/portal.nix        # XDG Desktop Portal backends (screen sharing)
