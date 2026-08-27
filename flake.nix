@@ -81,6 +81,16 @@
       url = "github:gdmsl/bimbumbam";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # hyprfm: a Qt6/QML file manager. Not packaged in nixpkgs, but upstream
+    # ships its own flake, so the package comes from there rather than being
+    # re-derived here. `follows = "nixpkgs"` keeps it on our nixpkgs instead of
+    # pulling a second Qt6 closure; upstream tracks nixos-unstable too, so the
+    # two agree.
+    hyprfm = {
+      url = "github:soyeb-jim285/hyprfm";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # ── Outputs ───────────────────────────────────────────────────────────────

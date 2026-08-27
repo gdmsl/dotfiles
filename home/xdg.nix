@@ -92,7 +92,7 @@
         "application/pdf" = "org.pwmt.zathura.desktop";
         "x-scheme-handler/mailto" = "chromium.desktop";
         "x-scheme-handler/tonsite" = "org.telegram.desktop.desktop";
-        "inode/directory" = "org.gnome.Nautilus.desktop";
+        "inode/directory" = "io.github.soyeb_jim285.HyprFM.desktop";
 
         # ── LibreOffice (documents, presentations, spreadsheets) ──────
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = "libreoffice-writer.desktop";

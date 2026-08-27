@@ -21,6 +21,10 @@ let
   # flake exposes for a single main package.
   bimbumbam = inputs.bimbumbam.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
+  # Also from a flake input, for the same reason: hyprfm isn't in nixpkgs, but
+  # upstream maintains a flake, so there's no derivation to keep up to date here.
+  hyprfm = inputs.hyprfm.packages.${pkgs.stdenv.hostPlatform.system}.hyprfm;
+
   # Pinned to an older nixpkgs (the nixpkgs-logseq input): on current nixpkgs
   # it isn't cached and building from source hangs. Reusing `pkgs.config` keeps
   # the unfree and insecure allowances from applying. This shadows pkgs.logseq
@@ -100,7 +104,9 @@ in
     bimbumbam        # fullscreen Wayland keyboard-basher (toddler-proof mode)
     fastfetch        # system info display (like neofetch, but fast)
     mpv              # media player
-    nautilus         # GNOME file manager (GTK4/Adwaita)
+    hyprfm           # Qt6/QML file manager — the default for directories
+    nautilus         # GNOME file manager; kept as the fallback, and what
+                     # GTK apps' own "open containing folder" tends to reach for
     gnome-text-editor # GNOME text editor (GTK4/Adwaita)
     file-roller      # GUI archive manager (zip, tar, 7z, … — browse/extract)
     zathura          # minimal PDF/ebook viewer (vim keybindings)

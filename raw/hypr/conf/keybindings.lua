@@ -5,14 +5,14 @@
 --   * `hl.bind(keys, dispatcher, opts?)`. `keys` is a single string like
 --     "SUPER + SHIFT + Q"; mods come first, glued with " + ".
 --   * Dispatchers come from `hl.dsp.*`. They return *plans*, not actions —
---     e.g. `hl.dsp.exec_cmd("ghostty")` returns an opaque handle that
+--     e.g. `hl.dsp.exec_cmd("kitty")` returns an opaque handle that
 --     `hl.bind` then attaches.
 --   * `{ mouse = true }`  = old `bindm`. `{ locked = true }` = old `bindl`.
 local vars = require("vars")
 local mod  = vars.mainMod
 
 -- ── Applications ─────────────────────────────────────────────────────────
-hl.bind(mod .. " + Return",        hl.dsp.exec_cmd("uwsm app -- ghostty"))
+hl.bind(mod .. " + Return",        hl.dsp.exec_cmd("uwsm app -- kitty"))
 hl.bind(mod .. " + B",             hl.dsp.exec_cmd("uwsm app -- firefox"))
 hl.bind(mod .. " + SHIFT + B",     hl.dsp.exec_cmd("uwsm app -- bimbumbam"))
 hl.bind(mod .. " + X",             hl.dsp.exec_cmd("uwsm app -- kitty -e yazi"))
@@ -115,8 +115,9 @@ hl.bind(mod .. " + U", hl.dsp.focus({ urgent_or_last = true }))
 -- Pin the active floating window (sticky across workspaces)
 hl.bind(mod .. " + I", hl.dsp.window.pin({ action = "toggle" }))
 
--- Logout menu
-hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd("wlogout"))
+-- Logout menu. Noctalia is the session shell here, so use its session panel
+-- rather than a standalone menu; niri puts a plain `quit` on the same chord.
+hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd("noctalia msg panel-toggle session"))
 
 -- ── Audio (PipeWire) ─────────────────────────────────────────────────────
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"))
@@ -136,7 +137,7 @@ hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl s 10%+"))
 
 -- ── Misc hardware keys ───────────────────────────────────────────────────
 hl.bind("XF86Lock",       hl.dsp.exec_cmd("loginctl lock-session"))
-hl.bind("XF86Calculator", hl.dsp.exec_cmd("uwsm app -- ghostty -e julia"))
+hl.bind("XF86Calculator", hl.dsp.exec_cmd("uwsm app -- kitty -e julia"))
 hl.bind("XF86Favorites",  hl.dsp.exec_cmd("uwsm app -- firefox"))
 
 -- ── Submap: resize ───────────────────────────────────────────────────────

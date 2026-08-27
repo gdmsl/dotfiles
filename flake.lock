@@ -158,6 +158,28 @@
         "type": "github"
       }
     },
+    "hyprfm": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "quill": "quill",
+        "quill-icons": "quill-icons"
+      },
+      "locked": {
+        "lastModified": 1787801018,
+        "narHash": "sha256-7rrUmgw9RJoW47Vn+ofjU41CCD+EWEE7fu/6EHz2UGk=",
+        "owner": "soyeb-jim285",
+        "repo": "hyprfm",
+        "rev": "a662678ce7a18c260dc95bac4b8e3cdf877f8175",
+        "type": "github"
+      },
+      "original": {
+        "owner": "soyeb-jim285",
+        "repo": "hyprfm",
+        "type": "github"
+      }
+    },
     "mnw": {
       "locked": {
         "lastModified": 1780772958,
@@ -353,12 +375,47 @@
         "type": "github"
       }
     },
+    "quill": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1787578571,
+        "narHash": "sha256-N+m9k6WbMMm6GJOxILnEZRiQ0mm3Eu8Se1g0N1ZO0/U=",
+        "owner": "soyeb-jim285",
+        "repo": "quill",
+        "rev": "bc13deae669a1333a0d7bdd991c7015270a16a38",
+        "type": "github"
+      },
+      "original": {
+        "owner": "soyeb-jim285",
+        "repo": "quill",
+        "rev": "bc13deae669a1333a0d7bdd991c7015270a16a38",
+        "type": "github"
+      }
+    },
+    "quill-icons": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1776191081,
+        "narHash": "sha256-ezwie0hSHNT0m65dgTgwwh16vfb/vAshcNaccQChnzM=",
+        "owner": "soyeb-jim285",
+        "repo": "quill-icons",
+        "rev": "10db5facf6a560e60d2693ccd1909267ef436002",
+        "type": "github"
+      },
+      "original": {
+        "owner": "soyeb-jim285",
+        "repo": "quill-icons",
+        "rev": "10db5facf6a560e60d2693ccd1909267ef436002",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "anyrun": "anyrun",
         "bimbumbam": "bimbumbam",
         "disko": "disko",
         "home-manager": "home-manager",
+        "hyprfm": "hyprfm",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-logseq": "nixpkgs-logseq",
