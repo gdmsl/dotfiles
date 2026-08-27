@@ -39,6 +39,7 @@
     ./desktop/portal.nix        # XDG Desktop Portal backends (screen sharing)
     ./desktop/gtk.nix           # GTK theme, icons, cursor
     ./desktop/qt.nix            # Qt theme (qt6ct + Kvantum), matched to GTK
+    ./desktop/hyprfm.nix        # hyprfm file manager theme (QML, themed separately)
     ./desktop/kanshi.nix        # Kanshi display profile manager
     ./desktop/noctalia.nix      # Noctalia desktop shell
     ./desktop/vicinae.nix       # Vicinae launcher
