@@ -8,7 +8,9 @@ environment {
     GDK_BACKEND "wayland"
 
     QT_QPA_PLATFORM "wayland;xcb"
-    QT_QPA_PLATFORMTHEME "qt6ct"
+    // QT_QPA_PLATFORMTHEME is deliberately not set here. home/desktop/qt.nix
+    // exports it through environment.d, so both compositors get the same value
+    // instead of each naming its own (they used to disagree).
     QT_WAYLAND_DISABLE_WINDOW_DECORATION "1"
 
     SDL_VIDEODRIVER "wayland"

@@ -38,6 +38,7 @@
     ./desktop/niri.nix          # Niri window manager
     ./desktop/portal.nix        # XDG Desktop Portal backends (screen sharing)
     ./desktop/gtk.nix           # GTK theme, icons, cursor
+    ./desktop/qt.nix            # Qt theme (qt6ct + Kvantum), matched to GTK
     ./desktop/kanshi.nix        # Kanshi display profile manager
     ./desktop/noctalia.nix      # Noctalia desktop shell
     ./desktop/vicinae.nix       # Vicinae launcher
@@ -104,9 +105,6 @@
   xdg.configFile = {
     "fontconfig/fonts.conf".source = ../raw/fontconfig/fonts.conf;
     "paru/paru.conf".source = ../raw/paru/paru.conf;
-    "Kvantum/kvantum.kvconfig".source = ../raw/Kvantum/kvantum.kvconfig;
-    "qt5ct/qt5ct.conf".source = ../raw/qt5ct/qt5ct.conf;
-    "qt6ct/qt6ct.conf".source = ../raw/qt6ct/qt6ct.conf;
     # Chrome and Edge are Chromium derivatives and read the same flags, each
     # from its own filename, so all three point at one file.
     "chromium-flags.conf".source = ../raw/chromium-flags.conf;

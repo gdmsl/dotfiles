@@ -12,7 +12,9 @@ hl.env("XDG_SESSION_TYPE",    "wayland")
 hl.env("XDG_SESSION_DESKTOP", "Hyprland")
 
 hl.env("QT_QPA_PLATFORM",                    "wayland;xcb")
-hl.env("QT_QPA_PLATFORMTHEME",               "qt5ct")
+-- QT_QPA_PLATFORMTHEME is deliberately not set here. home/desktop/qt.nix
+-- exports it through environment.d, so both compositors get the same value
+-- instead of each naming its own (they used to disagree).
 hl.env("QT_WAYLAND_DISABLE_WINDOW_DECORATION", "1")
 hl.env("QT_AUTO_SCREEN_SCALE_FACTOR",        tostring(vars.dpi_scale))
 
