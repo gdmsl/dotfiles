@@ -114,7 +114,7 @@ in
     # ── AI / LLM CLIs ─────────────────────────────────────────────────────
     claude-code
     codex             # OpenAI's terminal coding agent (the `codex` command)
-    gemini-cli
+    antigravity-cli   # Google's agent CLI (the `agy` command); replaced gemini-cli
 
     # ── Secrets ───────────────────────────────────────────────────────────
     # No graphical keyring here, so GPG's terminal pinentry asks for

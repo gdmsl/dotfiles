@@ -157,7 +157,7 @@ in
     # ── AI / LLM ──────────────────────────────────────────────────────────
     claude-code
     codex            # OpenAI's terminal coding agent (the `codex` command)
-    gemini-cli
+    antigravity-cli  # Google's agent CLI (the `agy` command); replaced gemini-cli
 
     # ── GNOME keyring / secrets ───────────────────────────────────────────
     gnome-keyring    # password/key storage daemon

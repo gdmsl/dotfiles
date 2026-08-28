@@ -302,7 +302,7 @@ in
     };
 
     # ── Personal-account wrappers for the AI CLIs ─────────────────────────
-    # Same binaries as the bare `claude` / `codex` / `gemini`, but with their
+    # Same binaries as the bare `claude` / `codex` / `agy`, but with their
     # config inside ~/Personal. Bare command is the work account, `-personal` is
     # the personal one; they share no credentials or history and can run side by
     # side. Each needs its own login once.
@@ -331,26 +331,31 @@ in
       '';
     };
 
-    # Gemini has no such variable — it hardcodes ~/.gemini. Overriding $HOME
-    # would also hide the git identity and SSH keys from anything it shells out
-    # to, so instead bubblewrap swaps just that one directory: --dev-bind passes
-    # the filesystem through unchanged, then --bind puts the vault copy over
-    # ~/.gemini.
+    # antigravity-cli has no such variable — it hardcodes its config location,
+    # and that location is ~/.gemini: it writes ~/.gemini/config and
+    # ~/.gemini/antigravity-cli, inheriting the directory from the gemini-cli it
+    # replaced. So this keeps using the same vault directory, and a login made
+    # under the old gemini-personal still applies.
+    #
+    # Overriding $HOME would also hide the git identity and SSH keys from
+    # anything it shells out to, so instead bubblewrap swaps just that one
+    # directory: --dev-bind passes the filesystem through unchanged, then --bind
+    # puts the vault copy over ~/.gemini.
     #
     # That swap only exists inside this process and its children, so a plain
-    # `gemini` elsewhere still sees the real directory.
-    ".local/bin/gemini-personal" = {
+    # `agy` elsewhere still sees the real directory.
+    ".local/bin/antigravity-personal" = {
       executable = true;
       text = ''
         #!/bin/sh
-        ${requireVault "gemini-personal"}
+        ${requireVault "antigravity-personal"}
         dir="$HOME/Personal/.gemini"
         # bwrap needs both paths to exist before binding one over the other.
         mkdir -p "$dir" "$HOME/.gemini"
         exec ${pkgs.bubblewrap}/bin/bwrap \
           --dev-bind / / \
           --bind "$dir" "$HOME/.gemini" \
-          -- ${pkgs.gemini-cli}/bin/gemini "$@"
+          -- ${pkgs.antigravity-cli}/bin/agy "$@"
       '';
     };
 

@@ -474,6 +474,7 @@
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
     "acli"
     "acli-unwrapped"
+    "antigravity-cli"
     "aptos-fonts"
     "aptos-fonts.zip"  # the requireFile src derivation now inherits the unfree license too
     "claude-code"
