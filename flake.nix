@@ -132,7 +132,7 @@
         # Keep in sync with system/default.nix's permittedInsecurePackages.
         config.permittedInsecurePackages = [
           "electron-39.8.10"
-          "ventoy-gtk3-1.1.12"
+          "ventoy-gtk3-1.1.17"
         ];
       };
 

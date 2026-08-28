@@ -123,11 +123,12 @@ in
     zotero           # reference manager
     keepassxc        # offline password manager (KDBX database files)
     hyprpicker       # color picker
-    # Screen recorder, pinned to FFmpeg 7. wf-recorder 0.6.0 still uses
-    # AVCodec.sample_fmts, which FFmpeg removed in 8.0, so it won't compile
-    # against the default ffmpeg. Drop the override once nixpkgs has a version
-    # that builds against current FFmpeg.
-    (wf-recorder.override { ffmpeg = ffmpeg_7; })
+    # Screen recorder. This used to carry `.override { ffmpeg = ffmpeg_7; }`,
+    # because wf-recorder 0.6.0 uses AVCodec.sample_fmts, which FFmpeg dropped
+    # in 8.0. nixpkgs now takes ffmpeg_8 as a named argument of its own, so the
+    # pin is handled upstream — and the override stopped even being expressible,
+    # since there is no longer an `ffmpeg` argument to override.
+    wf-recorder
     gpu-screen-recorder    # hardware-accelerated recorder (used by Noctalia's screen-recorder plugin)
     obs-studio             # full streaming/recording suite (scenes, sources, RTMP)
     inkscape         # vector graphics editor

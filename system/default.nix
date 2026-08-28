@@ -500,7 +500,7 @@
   # Also in flake.nix, same reason as the unfree list.
   nixpkgs.config.permittedInsecurePackages = [
     "electron-39.8.10"
-    "ventoy-gtk3-1.1.12"
+    "ventoy-gtk3-1.1.17"
   ];
 
   # ── Nix daemon settings ─────────────────────────────────────────────────
