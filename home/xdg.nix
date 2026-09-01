@@ -87,8 +87,27 @@
         "image/vnd.wap.wbmp" = "org.gnome.Loupe.desktop";
         "image/x-icns" = "org.gnome.Loupe.desktop";
 
-        # ── Text, PDF, files ──────────────────────────────────────────
-        "text/plain" = "org.gnome.TextEditor.desktop";
+        # ── Text and source code (Neovide) ────────────────────────────
+        # Everything here subclasses text/plain, so in principle setting
+        # text/plain alone would be enough — GIO walks the MIME hierarchy
+        # upwards when no exact match exists. The explicit entries are here
+        # anyway: they're what shows up in a file manager's "Open With", and
+        # not every launcher does the inheritance walk.
+        #
+        # The MIME name for an extension is whatever `xdg-mime query filetype
+        # foo.jl` prints — it comes from shared-mime-info, not from the
+        # extension itself, which is why C++ sources and headers are two
+        # separate types and Julia is `text/julia` with no `x-` prefix.
+        "text/plain" = "neovide.desktop";       # .txt, and anything unrecognised but textual
+        "text/markdown" = "neovide.desktop";    # .md
+        "text/julia" = "neovide.desktop";       # .jl
+        "text/x-python" = "neovide.desktop";    # .py
+        "text/x-csrc" = "neovide.desktop";      # .c
+        "text/x-chdr" = "neovide.desktop";      # .h
+        "text/x-c++src" = "neovide.desktop";    # .cpp, .cxx, .cc, .c++
+        "text/x-c++hdr" = "neovide.desktop";    # .hpp, .hxx, .hh
+
+        # ── PDF, files, schemes ───────────────────────────────────────
         "application/pdf" = "org.pwmt.zathura.desktop";
         "x-scheme-handler/mailto" = "chromium.desktop";
         "x-scheme-handler/tonsite" = "org.telegram.desktop.desktop";
