@@ -31,7 +31,10 @@ let
 in
 {
   home.packages = with pkgs; [
-    libreoffice-fresh
+    # Upstream retired the fresh/still release split, so nixpkgs collapsed both
+    # into one `libreoffice-stable`. This is the GTK build, matching gtk.nix;
+    # `libreoffice-qt-stable` is the Qt one.
+    libreoffice-stable
     # Reads and writes .docx/.xlsx/.pptx natively instead of converting via
     # ODF, so layout survives a round trip better. Worth having when a file has
     # to go back to someone on Microsoft Office.
@@ -70,7 +73,7 @@ in
             mkdir -p "$(dirname "$installed_marker")"
             # -f replaces an existing copy, which is how version bumps apply.
             # --suppress-license accepts the licence prompt without asking.
-            if ${pkgs.libreoffice-fresh}/bin/unopkg add \
+            if ${pkgs.libreoffice-stable}/bin/unopkg add \
                  --suppress-license -f "$desired"; then
               echo "$desired" > "$installed_marker"
             else
