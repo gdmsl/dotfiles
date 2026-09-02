@@ -85,14 +85,21 @@
   # the flags land on the command line before it runs and a one-off variation
   # is an edit away rather than a different command. Fish only: scoping an
   # expansion to one command has no bash or zsh equivalent.
+  #
+  # Both expansions lead with the id. `rbw get` takes a name, a URI or an id
+  # as its first argument and works out which by trying to parse it, and the
+  # id is the only one of the three guaranteed to hit a single entry — so
+  # printing it means every ambiguous result carries its own fix. Leading with
+  # it also lines the name column up, since a UUID is always 36 characters
+  # wide and the names after it therefore all start at the same tab stop.
   programs.fish.shellAbbrs = {
-    # `--fields` defaults to name alone, which is the half that isn't unique
-    # when two entries share one. The username is what `rbw get` wants as its
-    # second argument to disambiguate, so show that too.
+    # `--fields` defaults to name alone, which is exactly the half that isn't
+    # unique when two entries share it. The username comes along because it is
+    # what `rbw get <name> <user>` takes to disambiguate by hand.
     rbw-search = {
       name = "search";
       command = "rbw";
-      expansion = "search --fields name,user";
+      expansion = "search --fields id,name,user";
     };
 
     # Browsing the whole vault rather than looking one thing up, so the folder
@@ -100,7 +107,7 @@
     rbw-ls = {
       name = "ls";
       command = "rbw";
-      expansion = "ls --fields name,user,folder";
+      expansion = "ls --fields id,name,user,folder";
     };
   };
 }
