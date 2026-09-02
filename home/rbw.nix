@@ -28,9 +28,24 @@
 #                               the Nix store. `rbw config set …` therefore
 #                               fails — edit this file and rebuild instead.
 #
-#   ~/.local/share/rbw/         the encrypted vault cache and this machine's
-#                               device id. rbw writes here at runtime, and
-#                               nothing in this file touches it.
+#   ~/.cache/rbw/               the synced vault, one file per server+account.
+#                               Entries sit in there as Bitwarden
+#                               cipherstrings and are decrypted on read; the
+#                               API tokens beside them are not. `rbw purge`
+#                               stops the agent and deletes this.
+#
+#   ~/.local/share/rbw/         this machine's device id, written once by
+#                               `rbw login`, plus the agent's log files.
+#
+#   $XDG_RUNTIME_DIR/rbw/       the agent's socket and pidfile. That is a
+#                               tmpfs, so rebooting drops them along with the
+#                               decrypted key the agent was holding. The
+#                               registration and the synced vault above are on
+#                               disk and survive, so what a reboot costs is
+#                               one master password prompt on next use, not
+#                               another `rbw login`.
+#
+# rbw creates all three of those directories 0700 itself.
 
 { pkgs, lib, ... }:
 
