@@ -32,6 +32,7 @@ in
     ./shell/atuin.nix        # synced shell history
     ./shell/direnv.nix       # per-directory env loader
     ./personal-vault.nix     # unlock-personal / lock-personal (~/Personal)
+    ./rbw.nix                # rbw, CLI client for the Vaultwarden instance
 
     # Editor / VCS / multiplexers
     ./git.nix                # git config, delta, aliases
@@ -70,6 +71,11 @@ in
     "$HOME/Variable/go/bin"
     "$HOME/.npm-packages/bin"
   ];
+
+  # ── rbw ─────────────────────────────────────────────────────────────────
+  # rbw.nix picks a Qt dialog for the master password prompt. There is no
+  # display on these machines, so ask in the terminal instead.
+  programs.rbw.settings.pinentry = pkgs.pinentry-curses;
 
   # ── Packages ────────────────────────────────────────────────────────────
   home.packages = with pkgs; [
