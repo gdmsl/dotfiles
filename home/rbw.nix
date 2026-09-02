@@ -59,7 +59,7 @@
       # The self-hosted Vaultwarden. `.home.arpa` is the domain RFC 8375 sets
       # aside for home networks, so the name only resolves on the LAN: away
       # from home `rbw sync` fails, while `rbw get` keeps answering out of the
-      # cache in ~/.local/share/rbw.
+      # cache in ~/.cache/rbw.
       base_url = "https://vault.home.arpa/";
 
       # Seconds the agent holds the key before asking again, and seconds
@@ -72,6 +72,35 @@
       # Kvantum already theme it — see desktop/qt.nix. mkDefault leaves it
       # overridable, which tty.nix does.
       pinentry = lib.mkDefault pkgs.pinentry-qt;
+    };
+  };
+
+  # ── Fish abbreviations ──────────────────────────────────────────────────
+  # `command = "rbw"` is what scopes these to a subcommand: fish expands the
+  # word only where it sits as an argument to rbw, so typing plain `ls` still
+  # reaches the eza alias in shell/_aliases.nix. The attribute name is just a
+  # Nix key — `name` is the word you actually type.
+  #
+  # Abbreviations rather than aliases, as everywhere else in this config, so
+  # the flags land on the command line before it runs and a one-off variation
+  # is an edit away rather than a different command. Fish only: scoping an
+  # expansion to one command has no bash or zsh equivalent.
+  programs.fish.shellAbbrs = {
+    # `--fields` defaults to name alone, which is the half that isn't unique
+    # when two entries share one. The username is what `rbw get` wants as its
+    # second argument to disambiguate, so show that too.
+    rbw-search = {
+      name = "search";
+      command = "rbw";
+      expansion = "search --fields name,user";
+    };
+
+    # Browsing the whole vault rather than looking one thing up, so the folder
+    # earns its column here.
+    rbw-ls = {
+      name = "ls";
+      command = "rbw";
+      expansion = "ls --fields name,user,folder";
     };
   };
 }
