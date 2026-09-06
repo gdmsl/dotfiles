@@ -90,6 +90,20 @@
     hyprfm = {
       url = "github:soyeb-jim285/hyprfm";
       inputs.nixpkgs.follows = "nixpkgs";
+
+      # Upstream keeps its icon set in a git submodule (src/qml/icons) *and*
+      # mirrors it as a flake input. Nix never checks out submodules, so only
+      # the flake input matters — and at rev c0287fe upstream bumped the
+      # submodule to 69b6536 without bumping the input, which still points at
+      # an older commit missing IconColumns3.qml. CMakeLists.txt lists that
+      # file, so the build dies at configure time.
+      #
+      # Pin the input to the commit the submodule actually references. Drop
+      # this override once upstream re-syncs the two.
+      inputs.quill-icons = {
+        url = "github:soyeb-jim285/quill-icons/69b653672ece8652cfef52c1c228abe9e2c4fce0";
+        flake = false;
+      };
     };
   };
 
