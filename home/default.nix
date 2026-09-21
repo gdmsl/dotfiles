@@ -45,6 +45,7 @@
     ./desktop/vicinae.nix       # Vicinae launcher
     ./desktop/anyrun.nix        # Anyrun launcher
     ./firefox.nix               # Firefox custom desktop entry
+    ./element.nix               # Element (Matrix) + the keyring backend flag
     ./libreoffice.nix           # LibreOffice + OnlyOffice + TexMaths equations
     ./prismlauncher.nix         # Minecraft launcher + a Java path that survives rebuilds
     ./services.nix              # systemd user services

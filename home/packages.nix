@@ -146,7 +146,7 @@ in
 
     # ── Communication / productivity ──────────────────────────────────────
     discord
-    element-desktop  # Matrix client (Element); the `element-desktop` command
+    # Element (Matrix) is in element.nix — it needs a wrapper to find the keyring.
     signal-desktop
     slack
     telegram-desktop
