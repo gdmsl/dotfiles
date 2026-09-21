@@ -146,6 +146,7 @@ in
 
     # ── Communication / productivity ──────────────────────────────────────
     discord
+    element-desktop  # Matrix client (Element); the `element-desktop` command
     signal-desktop
     slack
     telegram-desktop
