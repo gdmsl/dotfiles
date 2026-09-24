@@ -58,9 +58,11 @@
   # ── Networking ──────────────────────────────────────────────────────────
   networking.networkmanager = {
     enable = true;
-    # Lets NetworkManager configure Fortinet SSL VPN connections (Unistra).
-    # Pulls in openfortivpn as its backend.
-    plugins = with pkgs; [ networkmanager-fortisslvpn ];
+    # Lets NetworkManager configure the Unistra Fortinet SSL VPN.
+    # networkmanager-fortisslvpn was removed from nixpkgs as insecure, so we use
+    # the OpenConnect plugin instead: pick the "Fortinet" protocol when creating
+    # the VPN connection and it speaks the same protocol via openconnect.
+    plugins = with pkgs; [ networkmanager-openconnect ];
   };
   networking.firewall = {
     enable = true;
