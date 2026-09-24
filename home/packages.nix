@@ -63,6 +63,9 @@ in
                   # thumbnails — upstream leaves it out of its own wrapper on
                   # size grounds and picks whichever is on PATH
     exiftool      # read/write media metadata; backs hyprfm's metadata panel
+    sox           # audio CLI toolkit: `rec -V out.wav` records the mic with a
+                  # live level meter (Ctrl-C stops); `play` and `sox` convert,
+                  # trim and apply effects. Talks to PipeWire via its Pulse layer.
     glow          # terminal markdown renderer (pager + TUI browser)
     mdcat         # inline markdown for the terminal (images via kitty protocol)
     psmisc        # process utilities — provides killall, pstree, fuser
