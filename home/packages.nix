@@ -33,6 +33,13 @@ let
     inherit (pkgs) config;
     inherit (pkgs.stdenv.hostPlatform) system;   # `pkgs.system` is deprecated
   }).logseq;
+
+  # Pinned the same way (the nixpkgs-zotero input): on current nixpkgs the
+  # zotero build fails against firefox-esr 153.4. Shadows pkgs.zotero below.
+  zotero = (import inputs.nixpkgs-zotero {
+    inherit (pkgs) config;
+    inherit (pkgs.stdenv.hostPlatform) system;
+  }).zotero;
 in
 
 {

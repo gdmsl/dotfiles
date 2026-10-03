@@ -35,6 +35,14 @@
     # Revisit (and drop this input) once upstream logseq builds/caches cleanly.
     nixpkgs-logseq.url = "github:NixOS/nixpkgs/567a49d1913ce81ac6e9582e3553dd90a955875f";
 
+    # Pinned nixpkgs used *only* for zotero. Zotero 10 needs Firefox ESR 140,
+    # but nixpkgs builds it against firefox-esr-153, and 153.4 changed how
+    # ActorManagerParent registers actors, so Zotero's fetch_xulrunner patching
+    # aborts ("AboutTranslations ... not found"). This revision (firefox 153.3)
+    # still builds, and its zotero output is already in our /nix/store.
+    # Drop once NixOS/nixpkgs#569006 (revive Firefox 140 for zotero) lands.
+    nixpkgs-zotero.url = "github:NixOS/nixpkgs/7a0f122f5090cf4c2ade2a13a0e229d4e19ba71f";
+
     # Hardware-specific tweaks (kernel params, firmware, power) for well-known
     # laptop/desktop models. Provides a NixOS module for our ThinkPad.
     nixos-hardware.url = "github:NixOS/nixos-hardware";
