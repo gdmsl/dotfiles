@@ -69,6 +69,9 @@
 
     vicinae = {
       url = "github:vicinaehq/vicinae";
+      # Must share our nixpkgs: a separate copy ships a mismatched Qt/libglvnd
+      # that can't load the system mesa driver, and vicinae aborts on toggle.
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     anyrun = {
