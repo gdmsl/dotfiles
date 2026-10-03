@@ -186,6 +186,33 @@ in
       source = ../raw/scripts/git-mkversion.sh;
     };
 
+    # Pick a niri workspace from a tofi list and jump to it. Each line shows
+    # output, index, name, window count and the active window's title, with
+    # ● on the focused one. Empty workspaces are skipped (niri keeps a spare
+    # one per output) unless focused. Index is per-output, so it focuses the monitor
+    # first, then the workspace by index (works for unnamed ones too).
+    ".local/bin/niri-workspaces" = {
+      executable = true;
+      text = ''
+        #!/bin/sh
+        wins=$(niri msg -j windows)
+        sel=$(niri msg -j workspaces | jq -r --argjson wins "$wins" '
+          sort_by(.output, .idx)[] as $w
+          | ($wins | map(select(.workspace_id == $w.id))) as $ws
+          | select(($ws | length) > 0 or $w.is_focused)
+          | ($ws | map(select(.id == $w.active_window_id)) | .[0].title // "") as $t
+          | [$w.output, $w.idx, ($w.name // "-"), ($ws | length),
+             (if $w.is_focused then "●" else " " end), $t] | @tsv' \
+          | awk -F'\t' '{ printf "%-8s %2s  %-12s %2sw %s %.70s\n", $1, $2, $3, $4, $5, $6 }' \
+          | tofi --config "$HOME/.config/tofi/cheatsheet" \
+              --prompt-text "workspace ❯ " --placeholder-text "pick a workspace…")
+        [ -n "$sel" ] || exit 0   # Escape → do nothing
+        set -- $sel
+        niri msg action focus-monitor "$1"
+        niri msg action focus-workspace "$2"
+      '';
+    };
+
     # Rename the focused niri workspace via a tofi prompt.
     # --require-match=false turns tofi into a plain input box. Empty input
     # changes nothing. Names set this way are lost when niri restarts — use

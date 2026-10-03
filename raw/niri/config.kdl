@@ -393,6 +393,7 @@ binds {
     Mod+Space hotkey-overlay-title="Launcher: Vicinae" { spawn "vicinae" "toggle"; }
     Mod+Shift+Space hotkey-overlay-title="Launcher: Noctalia" { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
     Mod+Alt+Space hotkey-overlay-title="Launcher: Anyrun" { spawn "anyrun"; }
+    Mod+Ctrl+Space hotkey-overlay-title="Switch workspace" repeat=false { spawn "niri-workspaces"; }
     // loginctl lock-session → logind Lock signal → hypridle runs hyprlock.
     Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "loginctl" "lock-session"; }
     Mod+G hotkey-overlay-title="Switch windows" { spawn "vicinae" "deeplink" "vicinae://launch/wm/switch-windows"; }
