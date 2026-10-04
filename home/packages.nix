@@ -165,10 +165,7 @@ in
     spotify
     logseq
 
-    # ── AI / LLM ──────────────────────────────────────────────────────────
-    claude-code
-    codex            # OpenAI's terminal coding agent (the `codex` command)
-    antigravity-cli  # Google's agent CLI (the `agy` command); replaced gemini-cli
+    # AI / LLM agents are in ai.nix, shared with the tty profile.
 
     # ── GNOME keyring / secrets ───────────────────────────────────────────
     gnome-keyring    # password/key storage daemon

@@ -33,6 +33,7 @@ in
     ./shell/direnv.nix       # per-directory env loader
     ./personal-vault.nix     # unlock-personal / lock-personal (~/Personal)
     ./rbw.nix                # rbw, CLI client for the Vaultwarden instance
+    ./ai.nix                 # AI coding agents (claude-code, codex, …)
 
     # Editor / VCS / multiplexers
     ./git.nix                # git config, delta, aliases
@@ -117,10 +118,7 @@ in
     cpufetch          # CPU info with ASCII art
     fastfetch         # one-shot system info display
 
-    # ── AI / LLM CLIs ─────────────────────────────────────────────────────
-    claude-code
-    codex             # OpenAI's terminal coding agent (the `codex` command)
-    antigravity-cli   # Google's agent CLI (the `agy` command); replaced gemini-cli
+    # AI / LLM agents are in ai.nix.
 
     # ── Secrets ───────────────────────────────────────────────────────────
     # No graphical keyring here, so GPG's terminal pinentry asks for

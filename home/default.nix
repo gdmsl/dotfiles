@@ -22,6 +22,7 @@
   # The directory structure mirrors the concern: shell/, terminal/, editor/, etc.
   imports = [
     ./packages.nix              # user-level packages (CLI tools, apps, fonts)
+    ./ai.nix                    # AI coding agents (claude-code, codex, …)
     ./shell/fish.nix            # Fish shell (primary)
     ./shell/bash.nix            # Bash (fallback)
     ./shell/zsh.nix             # Zsh (fallback)
