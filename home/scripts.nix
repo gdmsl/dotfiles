@@ -342,7 +342,9 @@ in
         #!/bin/sh
         ${requireVault "claude-personal"}
         export CLAUDE_CONFIG_DIR="$HOME/Personal/.claude"
-        mkdir -p "$CLAUDE_CONFIG_DIR"
+        # Separate mempalace store; its MCP server inherits this from claude.
+        export MEMPALACE_PALACE_PATH="$HOME/Personal/.mempalace/palace"
+        mkdir -p "$CLAUDE_CONFIG_DIR" "$MEMPALACE_PALACE_PATH"
         exec ${pkgs.claude-code}/bin/claude "$@"
       '';
     };
