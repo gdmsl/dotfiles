@@ -186,7 +186,8 @@ in
     (import ./pkgs/julia-wrapped.nix { inherit pkgs; })
     lua
     rustup     # Rust toolchain manager (provides rustc, cargo)
-    python3
+    # Python that can import pip wheels, see pkgs/python-wrapped.nix.
+    (import ./pkgs/python-wrapped.nix { inherit pkgs; })
     uv         # fast Python package manager
     gcc
     cmake
