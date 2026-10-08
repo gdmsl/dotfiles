@@ -64,6 +64,9 @@ in
     FZF_DEFAULT_COMMAND = "rg --files --no-ignore-vcs --hidden";
     VCPKG_ROOT = "$HOME/.local/share/vcpkg";
     JULIA_SSH_NO_VERIFY_HOSTS = "git.unistra.fr";
+    # Pkg clones with the git CLI, which uses the ssh agent and ~/.ssh/config;
+    # its built-in libssh2 often can't talk to a forwarded agent.
+    JULIA_PKG_USE_CLI_GIT = "true";
   };
 
   home.sessionPath = [
