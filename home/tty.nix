@@ -44,7 +44,8 @@ in
 
   # Override these if the username on that machine differs.
   home.username = "gdmsl";
-  home.homeDirectory = "/home/gdmsl";
+  # mkDefault lets a profile in flake.nix set its own path (see gdmsl-cluster).
+  home.homeDirectory = lib.mkDefault "/home/gdmsl";
   home.stateVersion = "24.11";
 
   programs.home-manager.enable = true;

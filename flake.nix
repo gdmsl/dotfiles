@@ -262,6 +262,21 @@
         modules = [ ./home/tty.nix ];
       };
 
+      # ── Work cluster ────────────────────────────────────────────────────
+      # Same as gdmsl-tty, but home is on NFS at /nfs-home/gdmsl. Home Manager
+      # refuses to activate when $HOME doesn't match home.homeDirectory.
+      # Usage:
+      #   nix run github:nix-community/home-manager -- switch \
+      #       --flake github:gdmsl/dotfiles#gdmsl-cluster
+      homeConfigurations."gdmsl-cluster" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = { inherit inputs dotfilesPath; };
+        modules = [
+          ./home/tty.nix
+          { home.homeDirectory = "/nfs-home/gdmsl"; }
+        ];
+      };
+
       # ── Flake templates ─────────────────────────────────────────────────
       # `nix flake init -t /home/gdmsl/dotfiles#<name>` copies the template's
       # files into the current directory. Use this to bootstrap new projects
