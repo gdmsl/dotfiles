@@ -13,6 +13,5 @@
     # wrapper doesn't put node on PATH, so it has to come from here.
     nodejs
     codex            # OpenAI's terminal coding agent (the `codex` command)
-    antigravity-cli  # Google's agent CLI (the `agy` command); replaced gemini-cli
   ];
 }

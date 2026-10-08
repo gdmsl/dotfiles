@@ -166,6 +166,9 @@ in
     logseq
 
     # AI / LLM agents are in ai.nix, shared with the tty profile.
+    # antigravity-cli is desktop-only: its prebuilt binary needs the PCLMUL
+    # CPU instruction, which some servers lack, and then the build fails.
+    antigravity-cli  # Google's agent CLI (the `agy` command)
 
     # ── GNOME keyring / secrets ───────────────────────────────────────────
     gnome-keyring    # password/key storage daemon
