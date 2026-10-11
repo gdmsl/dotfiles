@@ -388,6 +388,24 @@ in
       '';
     };
 
+    # Forgejo CLI. Personal-only, so it's plain `fj` with no work counterpart.
+    # Its logins (keys.json) live in ~/.local/share/forgejo-cli, a hardcoded
+    # path, so this swaps in the vault copy the same way antigravity-personal
+    # does.
+    ".local/bin/fj" = {
+      executable = true;
+      text = ''
+        #!/bin/sh
+        ${requireVault "fj"}
+        dir="$HOME/Personal/.local/share/forgejo-cli"
+        mkdir -p "$dir" "$HOME/.local/share/forgejo-cli"
+        exec ${pkgs.bubblewrap}/bin/bwrap \
+          --dev-bind / / \
+          --bind "$dir" "$HOME/.local/share/forgejo-cli" \
+          -- ${pkgs.forgejo-cli}/bin/fj "$@"
+      '';
+    };
+
     # ── Mounting the portable SSD for maintenance ─────────────────────────
     # Mounts the SSD at /mnt as its own config describes it, so you can
     # `sudo nixos-enter --root /mnt` and repair or rebuild the installation.
