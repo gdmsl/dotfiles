@@ -32,6 +32,9 @@
   # Hardware virtualisation for VMs.
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+  # Run aarch64 binaries through QEMU, so this laptop can build and deploy the
+  # homelab's Raspberry Pis.
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   # ── Disk encryption ─────────────────────────────────────────────────────
   # The root partition is encrypted; boot prompts for the passphrase. Referred
