@@ -2,24 +2,22 @@
 # ║  hub.nix — hub, a terminal homepage for this setup                          ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# `hub` (or Alt-h in fish) opens a full-screen terminal homepage. A row of
-# status widgets sits on top of two tabs (Tab switches):
+# `hub` (or Alt-h in fish) opens a terminal homepage with five tabs, in the
+# order things usually need you:
 #
-#   1 Overview  Agents: running Claude Code and Codex sessions, those waiting
-#               for you first. Services: uptime of the URLs in the private
-#               local.toml (see below). Todos: open tasks from the Logseq
-#               graphs below; space moves one along
-#               (TODO → DOING → DONE), x marks it done, a adds one to today's
-#               journal. One panel per project root: every repo with its last
-#               commit, uncommitted changes (~), unpushed (↑) and unpulled (↓)
-#               commits, and open MRs (!) and issues (#).
-#   2 Search    fuzzy search over all of the above plus workflow cards,
-#               scripts, aliases, user units and every installed package.
-#               Selecting a project fetches its MR and issue titles.
+#   1 Dash      status widgets and service checks, and an Attention strip
+#               with everything that needs you across all tabs
+#   2 Agents    running Claude Code and Codex sessions with their last prompt
+#               and reply; Enter jumps to the session's kitty tab
+#   3 Commands  navi cheats (raw/cheats, shared with navi), workflow cards,
+#               and an index of scripts, aliases, user units and packages
+#   4 Git       every repo: last commit, changes (~), unpushed (↑), unpulled
+#               (↓), open MRs (!) and issues (#)
+#   5 Todos     open tasks from the Logseq graphs below
 #
-# Enter puts a command for the selected row (cd, edit, …) on the fish prompt,
-# without running it. Ctrl-r refreshes everything; widgets, services and git
-# state also refresh every minute, agents every two seconds.
+# It's modal, like vim: 1–5 switch tabs, j/k move, / filters the current tab,
+# Space searches everything, ? lists the keys. Enter usually prints a command
+# (cd, edit, a filled-in cheat) for the shell; Alt-h puts it on the prompt.
 #
 # Projects are the git repos in each root, or one level below
 # (Code/group/repo), found each time hub opens. MR and issue counts come from
@@ -198,6 +196,7 @@ in
       projects = map (p: lib.nameValuePair p.name p.dir) projectRoots;
       claude = lib.mapAttrsToList lib.nameValuePair claudeDirs;
       codex = lib.mapAttrsToList lib.nameValuePair codexHomes;
+      cheats = [ (lib.nameValuePair "dotfiles" "${dotfiles}/raw/cheats") ];
       widgets = map (w: lib.nameValuePair w.name "${pkgs.writeShellScript "hub-${w.name}" w.cmd}") widgets;
     };
     "hub/cards".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/raw/hub";

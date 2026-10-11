@@ -1,0 +1,22 @@
+% git, workflow
+
+# Start a branch off devel
+git switch devel && git pull && git switch -c <type>/<name>
+
+# Open an MR into devel (GitLab)
+glab mr create --target-branch devel --fill --remove-source-branch
+
+# Squash-merge this branch's MR and delete the branch
+glab mr merge --squash --remove-source-branch --yes
+
+# Check out an open MR
+glab mr checkout <mr>
+
+# Undo the last commit, keep its changes staged
+git reset --soft HEAD~1
+
+# Delete local branches already merged into devel
+git branch --merged devel | grep -v -E '^\*|main$|devel$' | xargs -r git branch -d
+
+$ type: printf 'feat\nfix\nchore\ndocs\nrefactor\n'
+$ mr: glab mr list --output json | jq -r '.[] | "\(.iid)\t\(.title)"' --- --column 1 --delimiter '\t'

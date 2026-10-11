@@ -1,0 +1,28 @@
+% forgejo, fj
+
+# Create a private repo on Forgejo and push the current branch to it
+fj repo create --private --ssh --push <name>
+
+# Open a PR from this branch into devel, title and body from its commits
+fj pr create --base devel --autofill
+
+# Squash-merge a PR and delete its branch
+fj pr merge <pr> --method squash --delete
+
+# Show whether a PR can merge, and its CI status
+fj pr status <pr>
+
+# Check out a PR in a new branch
+fj pr checkout <pr>
+
+# Open a PR in the browser
+fj pr browse <pr>
+
+# List open issues
+fj issue search
+
+# Open this repo in the browser
+fj repo browse
+
+$ name: basename "$PWD"
+$ pr: fj pr search | sed 's/\xe2\x81\xa8//g; s/\xe2\x81\xa9//g' | sed -n 's/^#\([0-9]*\): /\1\t/p' --- --column 1 --delimiter '\t'

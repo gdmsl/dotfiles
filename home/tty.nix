@@ -31,6 +31,7 @@ in
     ./shell/starship.nix     # cross-shell prompt
     ./shell/atuin.nix        # synced shell history
     ./shell/direnv.nix       # per-directory env loader
+    ./shell/navi.nix         # navi cheatsheets (raw/cheats)
     ./personal-vault.nix     # unlock-personal / lock-personal (~/Personal)
     ./rbw.nix                # rbw, CLI client for the Vaultwarden instance
     ./ai.nix                 # AI coding agents (claude-code, codex, …)

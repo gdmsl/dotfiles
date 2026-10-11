@@ -54,6 +54,13 @@
       dynamic_background_opacity = "yes";
       scrollback_pager = "nvim";     # use Neovim to browse scrollback
       tab_title_template = "{title}{fmt.bold}{'  ' if num_windows > 1 and layout_name == 'stack' else ''}";
+
+      # Remote control over one socket per kitty instance, so other tools can
+      # drive it: hub uses `kitty @ focus-window` to bring an agent's tab
+      # forward. socket-only means programs running inside kitty can't use
+      # escape codes for it; kitty exports the address as $KITTY_LISTEN_ON.
+      allow_remote_control = "socket-only";
+      listen_on = "unix:@kitty-{kitty_pid}";
     };
 
     # ── Keybindings ───────────────────────────────────────────────────────

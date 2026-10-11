@@ -29,6 +29,7 @@
     ./shell/starship.nix        # Starship prompt (cross-shell)
     ./shell/atuin.nix           # Atuin shell history sync
     ./shell/direnv.nix          # direnv + nix-direnv
+    ./shell/navi.nix            # navi cheatsheets (raw/cheats)
     ./git.nix                   # Git config, delta pager, aliases
     ./terminal/kitty.nix        # Kitty terminal emulator
     ./terminal/tmux.nix         # tmux multiplexer

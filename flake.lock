@@ -165,11 +165,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791728375,
-        "narHash": "sha256-jgBU9A9OxZxDuX9S8C1pjSw74bKrI1RwEtXqi29whkc=",
+        "lastModified": 1791748801,
+        "narHash": "sha256-728TILAia0aZHM7WRTOpQDtlSAVwwE2/ly+QBSb8F6M=",
         "ref": "devel",
-        "rev": "6a3356fe231a423776963a0e86864ee7f848e952",
-        "revCount": 2,
+        "rev": "61937ccd3c1d7c2774968f3fe868302955861958",
+        "revCount": 3,
         "type": "git",
         "url": "ssh://forgejo@vestara:2222/gdmsl/hub.git"
       },

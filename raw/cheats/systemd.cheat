@@ -1,0 +1,12 @@
+% systemd
+
+# Why did a user service fail
+systemctl --user status <unit>; journalctl --user -u <unit> -n 50 --no-pager
+
+# Restart a user service
+systemctl --user restart <unit>
+
+# List failed units, system and user
+systemctl --failed; systemctl --user --failed
+
+$ unit: systemctl --user list-units --type=service --all --no-legend --plain | awk '{print $1}'

@@ -1,0 +1,28 @@
+% nix, dotfiles
+
+# Rebuild the system (from ~/dotfiles: root can't read ~/Personal)
+cd ~/dotfiles && sudo nixos-rebuild switch --flake .#yara
+
+# Rebuild only the user environment
+home-manager switch --flake ~/dotfiles#gdmsl
+
+# Update one flake input
+nix flake update <input> --flake ~/dotfiles
+
+# Update every flake input
+nix flake update --flake ~/dotfiles
+
+# Search nixpkgs
+nix search nixpkgs <query>
+
+# Show why the system needs a package
+nix why-depends /run/current-system nixpkgs#<package>
+
+# Roll back to the previous system generation
+sudo nixos-rebuild switch --rollback
+
+# Delete old generations and collect garbage
+sudo nix-collect-garbage --delete-older-than <age>
+
+$ input: nix flake metadata ~/dotfiles --json | jq -r '.locks.nodes.root.inputs | keys[]'
+$ age: printf '14d\n30d\n7d\n'
