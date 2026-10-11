@@ -158,6 +158,27 @@
         "type": "github"
       }
     },
+    "hub": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791728375,
+        "narHash": "sha256-jgBU9A9OxZxDuX9S8C1pjSw74bKrI1RwEtXqi29whkc=",
+        "ref": "devel",
+        "rev": "6a3356fe231a423776963a0e86864ee7f848e952",
+        "revCount": 2,
+        "type": "git",
+        "url": "ssh://forgejo@vestara:2222/gdmsl/hub.git"
+      },
+      "original": {
+        "ref": "devel",
+        "type": "git",
+        "url": "ssh://forgejo@vestara:2222/gdmsl/hub.git"
+      }
+    },
     "hyprfm": {
       "inputs": {
         "nixpkgs": [
@@ -421,6 +442,7 @@
         "bimbumbam": "bimbumbam",
         "disko": "disko",
         "home-manager": "home-manager",
+        "hub": "hub",
         "hyprfm": "hyprfm",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",

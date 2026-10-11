@@ -93,6 +93,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # hub: terminal homepage (coding agents, services, todos, projects); set
+    # up in home/hub.nix. A private repo on the homelab Forgejo, so only
+    # machines that can reach it can build it. Tracks devel until the first
+    # release is on main.
+    hub = {
+      url = "git+ssh://forgejo@vestara:2222/gdmsl/hub.git?ref=devel";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # hyprfm: a Qt6/QML file manager. Not packaged in nixpkgs, but upstream
     # ships its own flake, so the package comes from there rather than being
     # re-derived here. `follows = "nixpkgs"` keeps it on our nixpkgs instead of

@@ -54,6 +54,7 @@
     ./scripts.nix               # custom scripts in ~/.local/bin
     ./personal-vault.nix        # unlock-personal / lock-personal (~/Personal)
     ./rbw.nix                   # rbw, CLI client for the Vaultwarden instance
+    ./hub.nix                   # hub, terminal homepage (status + searchable index)
   ];
 
   # ── Identity ────────────────────────────────────────────────────────────
