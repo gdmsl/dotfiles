@@ -145,6 +145,13 @@ in
     gimp             # image editor
     darktable        # photo editing / RAW processing
 
+    # ── Typing games ──────────────────────────────────────────────────────
+    ttyper           # terminal typing test (monkeytype-style)
+    thokr            # typing TUI with result graphs and history
+    typespeed        # curses game: type the words before they cross the screen
+    gtypist          # terminal typing tutor with lessons
+    klavaro          # GUI touch-typing tutor
+
     # Multiboot USB creator: write the drive once, then copy ISOs onto it.
     # Run `ventoy-gui` (desktop entry "Ventoy").
     #
