@@ -95,10 +95,10 @@
 
     # hub: terminal homepage (coding agents, services, todos, projects); set
     # up in home/hub.nix. A private repo on the homelab Forgejo, so only
-    # machines that can reach it can build it. Tracks devel until the first
-    # release is on main.
+    # machines that can reach it can build it. Follows main, which only
+    # receives releases.
     hub = {
-      url = "git+ssh://forgejo@vestara:2222/gdmsl/hub.git?ref=devel";
+      url = "git+ssh://forgejo@vestara:2222/gdmsl/hub.git?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

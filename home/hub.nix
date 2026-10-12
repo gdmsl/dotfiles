@@ -103,10 +103,14 @@ let
     }
   ];
 
-  # Prints `host/owner/repo<TAB>open MRs<TAB>open issues`. GitLab: every open
-  # MR and issue you can see, counted per project, in one paginated call each
-  # per host. GitHub: one GraphQL query for the owner/repo pairs hub passes as
-  # arguments; missing or private repos come back null and are skipped.
+  # Prints `host/owner/repo<TAB>open MRs<TAB>open issues`, given every repo's
+  # `host/owner/repo` as arguments:
+  #   GitLab   every open MR and issue you can see, counted per project, in
+  #            one paginated call each per host (the arguments aren't needed)
+  #   GitHub   one GraphQL query for all the GitHub repos; missing or private
+  #            ones come back null and are skipped
+  #   others   asked one repo at a time with fj (Forgejo); hosts fj isn't
+  #            logged in to just give nothing
   forge = pkgs.writeShellScript "hub-forge" ''
     for h in ${lib.concatStringsSep " " gitlabHosts}; do
       for kind in merge_requests issues; do
@@ -116,13 +120,23 @@ let
     done | awk -F'\t' '{ c[$2, $1]++; k[$2] }
       END { for (x in k) printf "%s\t%d\t%d\n", x, c[x, "merge_requests"], c[x, "issues"] }'
 
-    [ $# -gt 0 ] || exit 0
+    # fj prints "N pull requests" first, with the number in Unicode isolates.
+    fjcount() { fj -H "$1" "$2" search -r "$3" 2>/dev/null | head -1 | tr -dc '0-9'; }
     q=; i=0
     for r in "$@"; do
-      q="$q r$i: repository(owner: \"''${r%%/*}\", name: \"''${r#*/}\") {
-        nameWithOwner pullRequests(states: OPEN) { totalCount } issues(states: OPEN) { totalCount } }"
-      i=$((i + 1))
+      host=''${r%%/*} path=''${r#*/}
+      case "$host" in
+        github.com)
+          q="$q r$i: repository(owner: \"''${path%%/*}\", name: \"''${path#*/}\") {
+            nameWithOwner pullRequests(states: OPEN) { totalCount } issues(states: OPEN) { totalCount } }"
+          i=$((i + 1)) ;;
+        ${lib.concatStringsSep "|" gitlabHosts}) ;;
+        *)
+          prs=$(fjcount "$host" pr "$path") issues=$(fjcount "$host" issue "$path")
+          [ -n "$prs$issues" ] && printf '%s\t%s\t%s\n' "$r" "''${prs:-0}" "''${issues:-0}" ;;
+      esac
     done
+    [ -n "$q" ] || exit 0
     gh api graphql -f query="{ $q }" 2>/dev/null | ${jq} -r '.data[] | select(. != null)
       | "github.com/\(.nameWithOwner)\t\(.pullRequests.totalCount)\t\(.issues.totalCount)"'
   '';
@@ -148,11 +162,21 @@ let
         list '#\(.number) \(.title) @\(.author.login)' gh pr list -L 10 --json number,title,author
         echo "── issues"
         list '#\(.number) \(.title)' gh issue list -L 10 --json number,title ;;
-      *)
+      ${lib.concatMapStringsSep "|" (h: "*${h}*") gitlabHosts})
         echo "── merge requests"
         list '!\(.iid) \(.title) @\(.author.username)' glab mr list -P 10 --output json
         echo "── issues"
         list '#\(.iid) \(.title)' glab issue list -P 10 --output json ;;
+      *)
+        # Anything else is taken to be Forgejo; fj finds the host from the
+        # remote. Its lists start with a count line and wrap values in
+        # Unicode isolates, both dropped here.
+        for kind in pr issue; do
+          [ $kind = pr ] && echo "── pull requests" || echo "── issues"
+          out=$(fj $kind search 2>&1) || { printf '%s\n' "$out"; continue; }
+          out=$(printf '%s\n' "$out" | sed 's/\xe2\x81\xa8//g; s/\xe2\x81\xa9//g' | tail -n +2)
+          [ -n "$out" ] && printf '%s\n' "$out" || echo none
+        done ;;
     esac
   '';
 
