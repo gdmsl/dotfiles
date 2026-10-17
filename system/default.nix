@@ -319,6 +319,25 @@
     extraBackends = [ pkgs.sane-airscan ];
   };
 
+  # The office copier (Toshiba e-STUDIO, CESQ) can't be discovered: mDNS stays
+  # on the local network and doesn't cross the Unistra VPN. So it's declared
+  # here instead, and ensure-printers.service adds the queue at boot. It only
+  # prints while the VPN is up; jobs sent without it wait in the queue.
+  #
+  # IPP is off on the copier, so this sends PostScript over a raw socket (port
+  # 9100) using CUPS's generic PostScript driver. Every e-STUDIO speaks it.
+  hardware.printers.ensurePrinters = [{
+    name = "Toshiba_CESQ";
+    description = "Toshiba e-STUDIO (CESQ office)";
+    location = "CESQ, Unistra";
+    deviceUri = "socket://copieurcesq.isis.unistra.fr:9100";
+    model = "drv:///sample.drv/generic.ppd";
+    ppdOptions = {
+      PageSize = "A4";
+      Option1 = "True";  # the PPD's name for "duplex unit installed"
+    };
+  }];
+
   # Printer manager GUI: add, remove, set defaults, print a test page.
   # Scanning app (simple-scan) is in home/packages.nix.
   programs.system-config-printer.enable = true;
