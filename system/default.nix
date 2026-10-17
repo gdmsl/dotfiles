@@ -44,7 +44,7 @@
   # the listed groups (wheel = sudo, video = GPU access, input = input devices).
   users.users.gdmsl = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "video" "input" ];
+    extraGroups = [ "wheel" "networkmanager" "video" "input" "scanner" "lp" ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFqoqv6KPpIJGLs15p9AfwJoH4hWm3DGqeIL3PUsYAFK gdmsl-homelab"
     ];
@@ -297,8 +297,31 @@
   # services). All apps using the system trust store will trust this CA.
   security.pki.certificateFiles = [ ./ca.pem ];
 
-  # ── Printing ────────────────────────────────────────────────────────────
-  services.printing.enable = true;  # CUPS print server
+  # ── Printing & scanning ─────────────────────────────────────────────────
+  # Both home printers (Brother DCP-L2667DW, MFC-L2710DW) speak IPP Everywhere
+  # (AirPrint) for printing and eSCL/WSD for scanning, so no Brother drivers are
+  # needed: CUPS and SANE talk to them over the network with generic protocols.
+  services.printing.enable = true;  # CUPS print server, web UI on localhost:631
+
+  # mDNS lets the machine find printers on the LAN by themselves. With avahi on,
+  # cups-browsed also starts and adds any IPP Everywhere printer it sees as a
+  # queue automatically. nssmdns4 makes `*.local` hostnames resolve.
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;  # mDNS replies are UDP 5353
+  };
+
+  # SANE is the scanning layer. sane-airscan adds the eSCL and WSD protocols,
+  # which is how both Brothers expose their scanners on the network.
+  hardware.sane = {
+    enable = true;
+    extraBackends = [ pkgs.sane-airscan ];
+  };
+
+  # Printer manager GUI: add, remove, set defaults, print a test page.
+  # Scanning app (simple-scan) is in home/packages.nix.
+  programs.system-config-printer.enable = true;
 
   # ── Graphics tablet (XP-Pen Star G640S) ─────────────────────────────────
   # OpenTabletDriver reads the tablet's raw HID in userspace and emits a

@@ -127,6 +127,7 @@ in
     file-roller      # GUI archive manager (zip, tar, 7z, … — browse/extract)
     zathura          # minimal PDF/ebook viewer (vim keybindings)
     evince           # GNOME PDF viewer
+    simple-scan      # "Document Scanner": scan to PDF/PNG, multi-page
     xournalpp        # handwritten notes / PDF annotation (stylus-friendly)
     loupe            # GNOME image viewer
     satty            # screenshot annotation tool
