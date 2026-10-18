@@ -325,16 +325,22 @@
   # prints while the VPN is up; jobs sent without it wait in the queue.
   #
   # IPP is off on the copier, so this sends PostScript over a raw socket (port
-  # 9100) using CUPS's generic PostScript driver. Every e-STUDIO speaks it.
+  # 9100), through Toshiba's own driver (./toshiba-mono.nix). Unlike a generic
+  # PostScript one, it knows the copier's trays, finisher and department codes.
+  # To set a department code: system-config-printer → Printer Options, or
+  # DeptCode = "True" plus DCDigit1..5 in ppdOptions below.
+  services.printing.drivers = [ (pkgs.callPackage ./toshiba-mono.nix { }) ];
+
   hardware.printers.ensurePrinters = [{
     name = "Toshiba_CESQ";
     description = "Toshiba e-STUDIO2528A (CESQ office)";
     location = "CESQ, Unistra";
     deviceUri = "socket://copieurcesq.isis.unistra.fr:9100";
-    model = "drv:///sample.drv/generic.ppd";
+    # Path relative to the driver's share/cups/model; `lpinfo -m` lists them.
+    model = "Toshiba/TOSHIBA_MonoMFP_CUPS.gz";
     ppdOptions = {
+      ModelSelection = "e-STUDIO4528ASeries";  # the 2528A is in this series
       PageSize = "A4";
-      Option1 = "True";  # the PPD's name for "duplex unit installed"
     };
   }];
 
@@ -529,6 +535,7 @@
     "logseq"
     "slack"
     "spotify"
+    "cups-toshiba-estudio-mono"  # system/toshiba-mono.nix
     "ventoy-gtk3"  # the GTK variant renames the derivation from `ventoy`
     "vista-fonts"
     "zoom"
