@@ -63,6 +63,9 @@
       treesitter = {
         enable = true;
         autotagHtml = true;  # auto-close/rename HTML tags
+        # Pins the enclosing function/class header to the top of the window
+        # while you scroll through its body.
+        context.enable = true;
       };
 
       # ── Language support ─────────────────────────────────────────────
@@ -122,6 +125,12 @@
         julia = {
           enable = true;
           lsp.enable = true;
+        };
+        markdown = {
+          enable = true;
+          # Draws headings, tables, lists and code blocks in the buffer.
+          # The raw text comes back on the line under the cursor.
+          extensions.render-markdown-nvim.enable = true;
         };
       };
 
@@ -267,6 +276,21 @@
         persistence-nvim = {
           package = pkgs.vimPlugins.persistence-nvim;
           setup = "require('persistence').setup()";
+        };
+        # Claude Code in a Snacks terminal split, speaking the same protocol as
+        # the VS Code extension: Claude sees the open file and selection, and
+        # its edits open as a diff to accept or deny. Keymaps under <leader>a.
+        claudecode-nvim = {
+          package = pkgs.vimPlugins.claudecode-nvim;
+          setup = "require('claudecode').setup()";
+        };
+        # LaTeX beyond what texlab offers: continuous compilation
+        # (<localleader>ll, localleader is `,`), forward/inverse search with
+        # zathura (<localleader>lv), environment maps (`cse` change, `dse`
+        # delete) and text objects (`ie`, `i$`).
+        vimtex = {
+          package = pkgs.vimPlugins.vimtex;
+          setup = "vim.g.vimtex_view_method = 'zathura'";
         };
         ts-comments-nvim = {
           package = pkgs.vimPlugins.ts-comments-nvim;
@@ -415,6 +439,7 @@
         { mode = "n"; key = "<leader>ul"; action = "<cmd>set number!<cr>"; desc = "Toggle line numbers"; }
         { mode = "n"; key = "<leader>uL"; action = "<cmd>set relativenumber!<cr>"; desc = "Toggle relative numbers"; }
         { mode = "n"; key = "<leader>ud"; action = "<cmd>lua vim.diagnostic.enable(not vim.diagnostic.is_enabled())<cr>"; desc = "Toggle diagnostics"; }
+        { mode = "n"; key = "<leader>uu"; action = "<cmd>Undotree<cr>"; desc = "Undo tree"; }
         { mode = "n"; key = "<leader>uh"; action = "<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<cr>"; desc = "Toggle inlay hints"; }
 
         # ── Terminal (LazyVim-style toggle on Ctrl+/) ────────────────
@@ -426,6 +451,17 @@
         { mode = "t"; key = "<C-/>"; action = "<cmd>close<cr>"; desc = "Hide terminal"; }
         { mode = "t"; key = "<C-_>"; action = "<cmd>close<cr>"; desc = "Hide terminal"; }
 
+        # ── Claude Code (<leader>a) ──────────────────────────────────
+        { mode = "n"; key = "<leader>ac"; action = "<cmd>ClaudeCode<cr>"; desc = "Toggle Claude"; }
+        { mode = "n"; key = "<leader>af"; action = "<cmd>ClaudeCodeFocus<cr>"; desc = "Focus Claude"; }
+        { mode = "n"; key = "<leader>ar"; action = "<cmd>ClaudeCode --resume<cr>"; desc = "Resume Claude"; }
+        { mode = "n"; key = "<leader>aC"; action = "<cmd>ClaudeCode --continue<cr>"; desc = "Continue Claude"; }
+        { mode = "n"; key = "<leader>am"; action = "<cmd>ClaudeCodeSelectModel<cr>"; desc = "Select Claude model"; }
+        { mode = "n"; key = "<leader>ab"; action = "<cmd>ClaudeCodeAdd %<cr>"; desc = "Add buffer to Claude"; }
+        { mode = "v"; key = "<leader>as"; action = "<cmd>ClaudeCodeSend<cr>"; desc = "Send selection to Claude"; }
+        { mode = "n"; key = "<leader>aa"; action = "<cmd>ClaudeCodeDiffAccept<cr>"; desc = "Accept diff"; }
+        { mode = "n"; key = "<leader>ad"; action = "<cmd>ClaudeCodeDiffDeny<cr>"; desc = "Deny diff"; }
+
         # ── Quit / Session (<leader>q) ───────────────────────────────
         { mode = "n"; key = "<leader>qq"; action = "<cmd>qa<cr>"; desc = "Quit all"; }
         { mode = "n"; key = "<leader>qs"; action = "<cmd>lua require('persistence').load()<cr>"; desc = "Restore session"; }
@@ -434,6 +470,12 @@
 
       # ── Lua config (runs before plugin setup) ────────────────────────
       luaConfigPre = ''
+        -- Optional plugins that ship with Neovim 0.12. `:Undotree` browses
+        -- the undo history as a tree; `:DiffTool <left> <right>` diffs two
+        -- directories, and `nvim -d dir1 dir2` opens it directly.
+        vim.cmd.packadd('nvim.undotree')
+        vim.cmd.packadd('nvim.difftool')
+
         -- Clipboard fallback for machines with no display server (the
         -- gdmsl-tty profile imports this same file over SSH).
         --
