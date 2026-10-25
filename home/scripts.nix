@@ -87,9 +87,10 @@ in
       '';
     };
 
-    # Unicode picker. Lists selected blocks as "glyph U+XXXX NAME" so you can
-    # search by meaning ("arrow", "euro") as well as codepoint; the choice is
-    # copied to the clipboard.
+    # Unicode and emoji picker. Lists selected blocks as "glyph U+XXXX NAME"
+    # so you can search by meaning ("arrow", "euro") as well as codepoint, then
+    # every emoji with its keywords ("happy", "launch"). The choice is copied
+    # to the clipboard.
     #
     # Queries are `block:NAME` or `cat:NAME`, abbreviations allowed. Edit the
     # list below to taste — `uni list blocks` shows what's available.
@@ -97,7 +98,7 @@ in
       executable = true;
       text = ''
         #!/bin/sh
-        sel=$(uni print -c -f '%(char)  %(cpoint l:auto)  %(name)' \
+        sel=$({ uni print -c -f '%(char)  %(cpoint l:auto)  %(name)' \
           block:arrows \
           block:'supplemental arrows-a' \
           block:'mathematical operators' \
@@ -111,9 +112,10 @@ in
           block:'geometric shapes' \
           block:'box drawing' \
           block:'block elements' \
-          block:'greek and coptic' \
+          block:'greek and coptic'
+          uni emoji -c -f '%(emoji)  %(name)  (%(cldr))' all; } \
           | tofi --config "$HOME/.config/tofi/cheatsheet" \
-                 --prompt-text "symbol ❯ " --placeholder-text "search unicode…")
+                 --prompt-text "symbol ❯ " --placeholder-text "search unicode and emoji…")
 
         # tofi echoes the whole line; the glyph is the first field. Empty
         # output means Escape.
@@ -213,16 +215,29 @@ in
       '';
     };
 
+    # Replace :shortcode: in stdin with the emoji, GitHub/Slack style
+    # (":rocket: work" → "🚀 work"). Unknown codes are left as typed.
+    ".local/bin/emojize" = {
+      executable = true;
+      text = ''
+        #!${pkgs.python3.withPackages (p: [ p.emoji ])}/bin/python3
+        import sys, emoji
+        print(emoji.emojize(sys.stdin.read().strip(), language="alias"))
+      '';
+    };
+
     # Rename the focused niri workspace via a tofi prompt.
     # --require-match=false turns tofi into a plain input box. Empty input
-    # changes nothing. Names set this way are lost when niri restarts — use
-    # `workspace "name"` blocks in the niri config for permanent ones.
+    # changes nothing. Type :shortcode: for an emoji, see emojize above. Names
+    # set this way are lost when niri restarts — use `workspace "name"` blocks
+    # in the niri config for permanent ones.
     ".local/bin/niri-rename-workspace" = {
       executable = true;
       text = ''
         #!/bin/sh
         name=$(tofi --config "$HOME/.config/tofi/prompt" \
-          --prompt-text "rename workspace ❯ " --require-match=false </dev/null)
+          --prompt-text "rename workspace ❯ " --require-match=false </dev/null \
+          | emojize)
         [ -n "$name" ] && niri msg action set-workspace-name "$name"
       '';
     };
