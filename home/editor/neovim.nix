@@ -12,13 +12,8 @@
 #
 # The cost is that anything nvf doesn't have an option for needs `extraPlugins`
 # or raw Lua via `luaConfigPre` / `luaConfigPost`, both used further down.
-#
-# `mkForce` appears throughout to override values nvf sets by default.
 
-{ pkgs, lib, inputs, ... }:
-let
-  inherit (lib) mkForce;
-in
+{ pkgs, inputs, ... }:
 
 {
   # nvf's own Home Manager module, from the flake input.
@@ -165,8 +160,9 @@ in
         root_markers = [ "Project.toml" "JuliaProject.toml" ];
       };
 
-      # clangd needs UTF-16 offset encoding for compatibility with some clients
-      lsp.servers.clangd.cmd = mkForce [ "clangd" "--offset-encoding=utf-16" ];
+      # Fetch missing flake inputs without asking. nvf sets this under
+      # `nil.nix.autoArchive`, but nil reads it from `nix.flake`.
+      lsp.servers.nil.settings.nil.nix.flake.autoArchive = true;
 
       # ── Formatter ────────────────────────────────────────────────────
       # conform-nvim is a lightweight formatter runner. It calls external
@@ -180,32 +176,29 @@ in
       # blink-cmp provides autocompletion (LSP, buffer words, paths, etc.)
       autocomplete.blink-cmp.enable = true;
 
-      # ── Fuzzy finder ──────────────────────────────────────────────────
-      # Telescope: fuzzy search files, grep, buffers, symbols, and more
-      telescope.enable = true;
-
-      # ── File tree ────────────────────────────────────────────────────
-      # Neo-tree: sidebar file explorer (<leader>e to toggle)
-      filetree.neo-tree.enable = true;
+      # ── Files ────────────────────────────────────────────────────────
+      # Oil opens a directory as a buffer: rename, create and delete files by
+      # editing lines, then `:w`. `-` opens the parent directory. It also
+      # replaces netrw, so `nvim .` lands in oil. For a sidebar tree there is
+      # Snacks.explorer on <leader>e.
+      utility.oil-nvim.enable = true;
 
       # ── Dashboard ────────────────────────────────────────────────────
       # Alpha: startup screen with recent files and shortcuts
       dashboard.alpha.enable = true;
 
-      # ── Session ──────────────────────────────────────────────────────
-      # nvim-session-manager is available, but we disable its auto-load
-      # so that starting `nvim` with no arguments lands on the alpha
-      # dashboard instead of reopening the last session. Sessions can
-      # still be restored manually via :SessionManager load_session.
-      # (persistence-nvim is also configured further below as a lighter
-      # alternative — it doesn't auto-load either.)
-      session.nvim-session-manager = {
-        enable = true;
-        setupOpts.autoload_mode = "Disabled";
-      };
-
       # ── UI ───────────────────────────────────────────────────────────
       statusline.lualine.enable = true;       # status bar at the bottom
+
+      # ui2: Neovim 0.12's built-in message and cmdline UI (experimental).
+      # Messages show in a small window in the bottom-right corner and fade
+      # out, so there is no hit-enter prompt. `:messages` opens the full
+      # history as a normal buffer.
+      ui.ui2 = {
+        enable = true;
+        setupOpts.msg.targets = "msg";
+      };
+
       tabline.nvimBufferline = {
         enable = true;                        # buffer tabs at the top
         # Hide the per-buffer ordinal indicator (the superscript "³·"
@@ -213,68 +206,17 @@ in
         # "buffer_id", or "both" to bring it back.
         setupOpts.options.numbers = "none";
       };
-      ui.noice = {
-        enable = true;                        # enhanced command line and notifications
-        # Route `vim.notify` through nvim-notify (LazyVim defaults) and
-        # teach noice how to render LSP hover/signatureHelp markdown.
-        setupOpts = {
-          lsp.override = {
-            "vim.lsp.util.convert_input_to_markdown_lines" = true;
-            "vim.lsp.util.stylize_markdown" = true;
-            "cmp.entry.get_documentation" = true;
-          };
-          # Route all regular/error/warn messages through nvim-notify so
-          # they appear as popups instead of triggering Neovim's built-in
-          # hit-enter prompt (":press ENTER to continue").
-          messages = {
-            view = "notify";
-            view_error = "notify";
-            view_warn = "notify";
-          };
-          # LazyVim presets: search stays at the bottom, ":" becomes a
-          # floating palette, long messages go to a split (this is the
-          # one that kills the "press any key" prompt on overflow).
-          presets = {
-            bottom_search = true;
-            command_palette = true;
-            long_message_to_split = true;
-            inc_rename = false;
-            lsp_doc_border = false;
-          };
-          # Send short "written/loaded" messages (e.g. "42L, 1024B") to the
-          # tiny mini view in the corner instead of the full notify box.
-          routes = [
-            {
-              filter = {
-                event = "msg_show";
-                any = [
-                  { find = "%d+L, %d+B"; }
-                  { find = "; after #%d+"; }
-                  { find = "; before #%d+"; }
-                ];
-              };
-              view = "mini";
-            }
-          ];
-        };
-      };
 
-      # nvim-notify: the pretty boxed notification popups LazyVim uses.
-      # noice routes `vim.notify` here automatically (see lsp.override above).
-      notify.nvim-notify = {
+      # ── Snacks ───────────────────────────────────────────────────────
+      # folke's collection of small plugins. Most modules work on call
+      # (Snacks.lazygit(), Snacks.terminal(), Snacks.explorer()); the picker
+      # is enabled here too so it also replaces vim.ui.select, which is what
+      # code actions and other prompts use. Picker keymaps are under <leader>s
+      # and <leader>f below; inside a picker, <a-?> or ? lists its keys.
+      utility.snacks-nvim = {
         enable = true;
-        setupOpts = {
-          top_down = true;                    # new notifications appear at the top
-          timeout = 5000;                     # dismiss after 5 seconds
-          fps = 30;
-          stages = "fade_in_slide_out";       # fade + slide animation
-          render = "default";                 # full-border box style
-          max_height = 10;
-          max_width = 80;
-        };
+        setupOpts.picker.enabled = true;
       };
-
-      utility.snacks-nvim.enable = true;      # collection of small UI improvements
 
       # ── Git ──────────────────────────────────────────────────────────
       # Gitsigns shows git diff indicators in the sign column
@@ -290,27 +232,38 @@ in
       mini.ai.enable = true;      # enhanced text objects (around/inside)
       mini.icons.enable = true;   # icon provider for other plugins
       mini.pairs.enable = true;   # auto-close brackets and quotes
+      # Add, delete and replace surrounding brackets, quotes and tags.
+      # Flash owns `s`, so the maps use LazyVim's `gs` prefix:
+      # `gsaiw"` surrounds a word with quotes, `gsd"` deletes them,
+      # `gsr"'` turns them into single quotes.
+      mini.surround = {
+        enable = true;
+        setupOpts.mappings = {
+          add = "gsa";
+          delete = "gsd";
+          find = "gsf";
+          find_left = "gsF";
+          highlight = "gsh";
+          replace = "gsr";
+          update_n_lines = "gsn";
+        };
+      };
+
+      # Detects each file's indent style from its contents, so the
+      # shiftwidth/tabstop above only apply to new or ambiguous files.
+      utility.guess-indent-nvim.enable = true;
 
       # ── Diagnostics ──────────────────────────────────────────────────
       diagnostics.nvim-lint.enable = true;    # async linting
       lsp.trouble.enable = true;              # diagnostics list panel
       notes.todo-comments.enable = true;      # highlight and list TODO/FIXME comments
 
-      # ── Yanky (clipboard manager for Neovim) ─────────────────────────
-      # Yanky keeps a ring of yanked text and lets you cycle through pastes.
-      utility.yanky-nvim = {
-        enable = true;
-        setupOpts = {
-          highlight.timer = 150;      # highlight duration after paste (ms)
-          ring.storage = "sqlite";    # persist yank ring to disk
-        };
-      };
-
       # ── Extra plugins (not available as nvf modules) ─────────────────
       # `extraPlugins` lets you add any Vim plugin from nixpkgs. The
       # `setup` field runs Lua code to configure the plugin.
       extraPlugins = {
-        plenary-nvim = { package = pkgs.vimPlugins.plenary-nvim; };
+        # Saves a session per directory on exit; never auto-loads, so plain
+        # `nvim` still lands on the dashboard. Restore with <leader>qs.
         persistence-nvim = {
           package = pkgs.vimPlugins.persistence-nvim;
           setup = "require('persistence').setup()";
@@ -327,7 +280,7 @@ in
             src = pkgs.fetchFromGitHub {
               owner = "kdheepak";
               repo = "JuliaFormatter.vim";
-              rev = "main";
+              rev = "2db5c22703fae588dad8ef5d43559a1b235fa312";
               hash = "sha256-KcIAFw8Sthaqp2aTTG0MJQTJoO0N4AhS9BNnp9IstfM=";
             };
           };
@@ -339,25 +292,6 @@ in
       # Modes: "n" = normal, "i" = insert, "v" = visual, "x" = visual block.
       # <leader> is Space by default.
       keymaps = [
-        # ── Yanky (yank/paste with history) ──────────────────────────
-        { mode = [ "n" "x" ]; key = "y";  action = "<Plug>(YankyYank)"; }
-        { mode = [ "n" "x" ]; key = "p";  action = "<Plug>(YankyPutAfter)"; }
-        { mode = [ "n" "x" ]; key = "P";  action = "<Plug>(YankyPutBefore)"; }
-        { mode = [ "n" "x" ]; key = "gp"; action = "<Plug>(YankyGPutAfter)"; }
-        { mode = [ "n" "x" ]; key = "gP"; action = "<Plug>(YankyGPutBefore)"; }
-        { mode = "n"; key = "<c-n>"; action = "<Plug>(YankyCycleForward)"; }
-        { mode = "n"; key = "<c-p>"; action = "<Plug>(YankyCycleBackward)"; }
-        { mode = "n"; key = "]p"; action = "<Plug>(YankyPutIndentAfterLinewise)"; }
-        { mode = "n"; key = "[p"; action = "<Plug>(YankyPutIndentBeforeLinewise)"; }
-        { mode = "n"; key = "]P"; action = "<Plug>(YankyPutIndentAfterLinewise)"; }
-        { mode = "n"; key = "[P"; action = "<Plug>(YankyPutIndentBeforeLinewise)"; }
-        { mode = "n"; key = ">p"; action = "<Plug>(YankyPutIndentAfterShiftRight)"; }
-        { mode = "n"; key = "<p"; action = "<Plug>(YankyPutIndentAfterShiftLeft)"; }
-        { mode = "n"; key = ">P"; action = "<Plug>(YankyPutIndentBeforeShiftRight)"; }
-        { mode = "n"; key = "<P"; action = "<Plug>(YankyPutIndentBeforeShiftLeft)"; }
-        { mode = "n"; key = "=p"; action = "<Plug>(YankyPutAfterFilter)"; }
-        { mode = "n"; key = "=P"; action = "<Plug>(YankyPutBeforeFilter)"; }
-
         # ── Window navigation (Ctrl+hjkl) ────────────────────────────
         { mode = "n"; key = "<C-h>"; action = "<C-w>h"; desc = "Go to left window"; }
         { mode = "n"; key = "<C-j>"; action = "<C-w>j"; desc = "Go to lower window"; }
@@ -392,67 +326,62 @@ in
         { mode = "n"; key = "]b"; action = "<cmd>BufferLineCycleNext<cr>"; desc = "Next buffer"; }
 
         # ── Diagnostics navigation ───────────────────────────────────
-        { mode = "n"; key = "]d"; action = "<cmd>lua vim.diagnostic.goto_next()<cr>"; desc = "Next diagnostic"; }
-        { mode = "n"; key = "[d"; action = "<cmd>lua vim.diagnostic.goto_prev()<cr>"; desc = "Prev diagnostic"; }
-        { mode = "n"; key = "]e"; action = "<cmd>lua vim.diagnostic.goto_next({severity=vim.diagnostic.severity.ERROR})<cr>"; desc = "Next error"; }
-        { mode = "n"; key = "[e"; action = "<cmd>lua vim.diagnostic.goto_prev({severity=vim.diagnostic.severity.ERROR})<cr>"; desc = "Prev error"; }
-        { mode = "n"; key = "]w"; action = "<cmd>lua vim.diagnostic.goto_next({severity=vim.diagnostic.severity.WARN})<cr>"; desc = "Next warning"; }
-        { mode = "n"; key = "[w"; action = "<cmd>lua vim.diagnostic.goto_prev({severity=vim.diagnostic.severity.WARN})<cr>"; desc = "Prev warning"; }
+        # ]d / [d are Neovim defaults.
+        { mode = "n"; key = "]e"; action = "<cmd>lua vim.diagnostic.jump({count=1, float=true, severity=vim.diagnostic.severity.ERROR})<cr>"; desc = "Next error"; }
+        { mode = "n"; key = "[e"; action = "<cmd>lua vim.diagnostic.jump({count=-1, float=true, severity=vim.diagnostic.severity.ERROR})<cr>"; desc = "Prev error"; }
+        { mode = "n"; key = "]w"; action = "<cmd>lua vim.diagnostic.jump({count=1, float=true, severity=vim.diagnostic.severity.WARN})<cr>"; desc = "Next warning"; }
+        { mode = "n"; key = "[w"; action = "<cmd>lua vim.diagnostic.jump({count=-1, float=true, severity=vim.diagnostic.severity.WARN})<cr>"; desc = "Prev warning"; }
 
         # ── Todo comments ────────────────────────────────────────────
         { mode = "n"; key = "]t"; action = "<cmd>lua require('todo-comments').jump_next()<cr>"; desc = "Next todo comment"; }
         { mode = "n"; key = "[t"; action = "<cmd>lua require('todo-comments').jump_prev()<cr>"; desc = "Previous todo comment"; }
 
         # ── File tree ────────────────────────────────────────────────
-        { mode = "n"; key = "<leader>e"; action = "<cmd>Neotree toggle<cr>"; desc = "Explorer"; }
-        { mode = "n"; key = "<leader>E"; action = "<cmd>Neotree reveal<cr>"; desc = "Explorer (reveal file)"; }
+        { mode = "n"; key = "<leader>e"; action = "<cmd>lua Snacks.explorer()<cr>"; desc = "Explorer"; }
+        { mode = "n"; key = "-"; action = "<cmd>Oil<cr>"; desc = "Open parent directory"; }
 
         # ── Find / Files (<leader>f) ─────────────────────────────────
-        { mode = "n"; key = "<leader><space>"; action = "<cmd>Telescope find_files<cr>"; desc = "Find files"; }
-        { mode = "n"; key = "<leader>ff"; action = "<cmd>Telescope find_files<cr>"; desc = "Find files"; }
-        { mode = "n"; key = "<leader>fg"; action = "<cmd>Telescope git_files<cr>"; desc = "Find files (git)"; }
-        { mode = "n"; key = "<leader>fr"; action = "<cmd>Telescope oldfiles<cr>"; desc = "Recent files"; }
-        { mode = "n"; key = "<leader>fb"; action = "<cmd>Telescope buffers<cr>"; desc = "Buffers"; }
+        { mode = "n"; key = "<leader><space>"; action = "<cmd>lua Snacks.picker.files()<cr>"; desc = "Find files"; }
+        { mode = "n"; key = "<leader>ff"; action = "<cmd>lua Snacks.picker.files()<cr>"; desc = "Find files"; }
+        { mode = "n"; key = "<leader>fg"; action = "<cmd>lua Snacks.picker.git_files()<cr>"; desc = "Find files (git)"; }
+        { mode = "n"; key = "<leader>fr"; action = "<cmd>lua Snacks.picker.recent()<cr>"; desc = "Recent files"; }
+        { mode = "n"; key = "<leader>fb"; action = "<cmd>lua Snacks.picker.buffers()<cr>"; desc = "Buffers"; }
         { mode = "n"; key = "<leader>fn"; action = "<cmd>enew<cr>"; desc = "New file"; }
 
         # ── Search (<leader>s) ───────────────────────────────────────
-        { mode = "n"; key = "<leader>/"; action = "<cmd>Telescope live_grep<cr>"; desc = "Grep"; }
-        { mode = "n"; key = "<leader>,"; action = "<cmd>Telescope buffers<cr>"; desc = "Switch buffer"; }
-        { mode = "n"; key = "<leader>:"; action = "<cmd>Telescope command_history<cr>"; desc = "Command history"; }
-        { mode = "n"; key = "<leader>sg"; action = "<cmd>Telescope live_grep<cr>"; desc = "Grep"; }
-        { mode = "n"; key = "<leader>sw"; action = "<cmd>Telescope grep_string<cr>"; desc = "Word under cursor"; }
-        { mode = "n"; key = "<leader>sb"; action = "<cmd>Telescope current_buffer_fuzzy_find<cr>"; desc = "Buffer lines"; }
-        { mode = "n"; key = "<leader>sd"; action = "<cmd>Telescope diagnostics<cr>"; desc = "Diagnostics"; }
-        { mode = "n"; key = "<leader>sh"; action = "<cmd>Telescope help_tags<cr>"; desc = "Help"; }
-        { mode = "n"; key = "<leader>sk"; action = "<cmd>Telescope keymaps<cr>"; desc = "Keymaps"; }
-        { mode = "n"; key = "<leader>sm"; action = "<cmd>Telescope marks<cr>"; desc = "Marks"; }
-        { mode = "n"; key = "<leader>sM"; action = "<cmd>Telescope man_pages<cr>"; desc = "Man pages"; }
-        { mode = "n"; key = "<leader>sr"; action = "<cmd>Telescope resume<cr>"; desc = "Resume search"; }
-        { mode = "n"; key = "<leader>sc"; action = "<cmd>Telescope command_history<cr>"; desc = "Command history"; }
-        { mode = "n"; key = "<leader>sC"; action = "<cmd>Telescope commands<cr>"; desc = "Commands"; }
-        { mode = "n"; key = "<leader>s\""; action = "<cmd>Telescope registers<cr>"; desc = "Registers"; }
-        { mode = "n"; key = "<leader>ss"; action = "<cmd>Telescope lsp_document_symbols<cr>"; desc = "LSP symbols"; }
-        { mode = "n"; key = "<leader>sS"; action = "<cmd>Telescope lsp_workspace_symbols<cr>"; desc = "LSP workspace symbols"; }
+        { mode = "n"; key = "<leader>/"; action = "<cmd>lua Snacks.picker.grep()<cr>"; desc = "Grep"; }
+        { mode = "n"; key = "<leader>,"; action = "<cmd>lua Snacks.picker.buffers()<cr>"; desc = "Switch buffer"; }
+        { mode = "n"; key = "<leader>:"; action = "<cmd>lua Snacks.picker.command_history()<cr>"; desc = "Command history"; }
+        { mode = "n"; key = "<leader>sg"; action = "<cmd>lua Snacks.picker.grep()<cr>"; desc = "Grep"; }
+        { mode = "n"; key = "<leader>sw"; action = "<cmd>lua Snacks.picker.grep_word()<cr>"; desc = "Word under cursor"; }
+        { mode = "n"; key = "<leader>sb"; action = "<cmd>lua Snacks.picker.lines()<cr>"; desc = "Buffer lines"; }
+        { mode = "n"; key = "<leader>sd"; action = "<cmd>lua Snacks.picker.diagnostics()<cr>"; desc = "Diagnostics"; }
+        { mode = "n"; key = "<leader>sh"; action = "<cmd>lua Snacks.picker.help()<cr>"; desc = "Help"; }
+        { mode = "n"; key = "<leader>sk"; action = "<cmd>lua Snacks.picker.keymaps()<cr>"; desc = "Keymaps"; }
+        { mode = "n"; key = "<leader>sm"; action = "<cmd>lua Snacks.picker.marks()<cr>"; desc = "Marks"; }
+        { mode = "n"; key = "<leader>sM"; action = "<cmd>lua Snacks.picker.man()<cr>"; desc = "Man pages"; }
+        { mode = "n"; key = "<leader>sr"; action = "<cmd>lua Snacks.picker.resume()<cr>"; desc = "Resume search"; }
+        { mode = "n"; key = "<leader>sc"; action = "<cmd>lua Snacks.picker.command_history()<cr>"; desc = "Command history"; }
+        { mode = "n"; key = "<leader>sC"; action = "<cmd>lua Snacks.picker.commands()<cr>"; desc = "Commands"; }
+        { mode = "n"; key = "<leader>s\""; action = "<cmd>lua Snacks.picker.registers()<cr>"; desc = "Registers"; }
+        { mode = "n"; key = "<leader>ss"; action = "<cmd>lua Snacks.picker.lsp_symbols()<cr>"; desc = "LSP symbols"; }
+        { mode = "n"; key = "<leader>sS"; action = "<cmd>lua Snacks.picker.lsp_workspace_symbols()<cr>"; desc = "LSP workspace symbols"; }
 
-        # ── Notifications (<leader>n, <leader>sn) ────────────────────
-        { mode = "n"; key = "<leader>n"; action = "<cmd>Noice history<cr>"; desc = "Notification history"; }
-        { mode = "n"; key = "<leader>snl"; action = "<cmd>Noice last<cr>"; desc = "Noice last message"; }
-        { mode = "n"; key = "<leader>snh"; action = "<cmd>Noice history<cr>"; desc = "Noice history"; }
-        { mode = "n"; key = "<leader>sna"; action = "<cmd>Noice all<cr>"; desc = "Noice all"; }
-        { mode = "n"; key = "<leader>snd"; action = "<cmd>Noice dismiss<cr>"; desc = "Dismiss all"; }
+        # ── Messages ─────────────────────────────────────────────────
+        { mode = "n"; key = "<leader>n"; action = "<cmd>messages<cr>"; desc = "Message history"; }
 
         # ── Git (<leader>g) ──────────────────────────────────────────
-        { mode = "n"; key = "<leader>gg"; action = "<cmd>terminal lazygit<cr>"; desc = "Lazygit"; }
-        { mode = "n"; key = "<leader>gl"; action = "<cmd>Telescope git_commits<cr>"; desc = "Git log"; }
-        { mode = "n"; key = "<leader>gs"; action = "<cmd>Telescope git_status<cr>"; desc = "Git status"; }
-        { mode = "n"; key = "<leader>gb"; action = "<cmd>Telescope git_branches<cr>"; desc = "Git branches"; }
+        { mode = "n"; key = "<leader>gg"; action = "<cmd>lua Snacks.lazygit()<cr>"; desc = "Lazygit"; }
+        { mode = "n"; key = "<leader>gl"; action = "<cmd>lua Snacks.picker.git_log()<cr>"; desc = "Git log"; }
+        { mode = "n"; key = "<leader>gs"; action = "<cmd>lua Snacks.picker.git_status()<cr>"; desc = "Git status"; }
+        { mode = "n"; key = "<leader>gb"; action = "<cmd>lua Snacks.picker.git_branches()<cr>"; desc = "Git branches"; }
 
         # ── LSP / Code (<leader>c) ───────────────────────────────────
         { mode = "n"; key = "<leader>cd"; action = "<cmd>lua vim.diagnostic.open_float()<cr>"; desc = "Line diagnostics"; }
         { mode = [ "n" "x" ]; key = "<leader>ca"; action = "<cmd>lua vim.lsp.buf.code_action()<cr>"; desc = "Code action"; }
         { mode = "n"; key = "<leader>cr"; action = "<cmd>lua vim.lsp.buf.rename()<cr>"; desc = "Rename"; }
         { mode = [ "n" "x" ]; key = "<leader>cf"; action = "<cmd>lua vim.lsp.buf.format({async=true})<cr>"; desc = "Format"; }
-        { mode = "n"; key = "<leader>cl"; action = "<cmd>LspInfo<cr>"; desc = "LSP info"; }
+        { mode = "n"; key = "<leader>cl"; action = "<cmd>checkhealth vim.lsp<cr>"; desc = "LSP info"; }
 
         # ── Diagnostics / Trouble (<leader>x) ────────────────────────
         { mode = "n"; key = "<leader>xx"; action = "<cmd>Trouble diagnostics toggle<cr>"; desc = "Diagnostics"; }
@@ -470,7 +399,6 @@ in
         { mode = "n"; key = "<leader>`"; action = "<cmd>e #<cr>"; desc = "Switch to other buffer"; }
 
         # ── Windows (<leader>w) ──────────────────────────────────────
-        { mode = "n"; key = "<leader>w"; action = "<c-w>"; desc = "Windows"; }
         { mode = "n"; key = "<leader>wd"; action = "<C-W>c"; desc = "Delete window"; }
         { mode = "n"; key = "<leader>-"; action = "<C-W>s"; desc = "Split below"; }
         { mode = "n"; key = "<leader>|"; action = "<C-W>v"; desc = "Split right"; }
@@ -488,7 +416,6 @@ in
         { mode = "n"; key = "<leader>uL"; action = "<cmd>set relativenumber!<cr>"; desc = "Toggle relative numbers"; }
         { mode = "n"; key = "<leader>ud"; action = "<cmd>lua vim.diagnostic.enable(not vim.diagnostic.is_enabled())<cr>"; desc = "Toggle diagnostics"; }
         { mode = "n"; key = "<leader>uh"; action = "<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<cr>"; desc = "Toggle inlay hints"; }
-        { mode = "n"; key = "<leader>un"; action = "<cmd>Noice dismiss<cr>"; desc = "Dismiss notifications"; }
 
         # ── Terminal (LazyVim-style toggle on Ctrl+/) ────────────────
         # Snacks' terminal opens a bottom split; <C-/> toggles it, and
@@ -501,6 +428,8 @@ in
 
         # ── Quit / Session (<leader>q) ───────────────────────────────
         { mode = "n"; key = "<leader>qq"; action = "<cmd>qa<cr>"; desc = "Quit all"; }
+        { mode = "n"; key = "<leader>qs"; action = "<cmd>lua require('persistence').load()<cr>"; desc = "Restore session"; }
+        { mode = "n"; key = "<leader>ql"; action = "<cmd>lua require('persistence').load({ last = true })<cr>"; desc = "Restore last session"; }
       ];
 
       # ── Lua config (runs before plugin setup) ────────────────────────
