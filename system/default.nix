@@ -182,6 +182,10 @@
   services.upower.enable = true;      # battery monitoring (consumed by noctalia/quickshell)
   hardware.sensor.iio.enable = true;  # accelerometer / ambient light sensor
 
+  # /tmp lives on the root disk, so leftovers (killed nix-shells, build
+  # scratch) pile up across sessions. Wipe it at every boot.
+  boot.tmp.cleanOnBoot = true;
+
   # ── Extra filesystem support ────────────────────────────────────────────
   # The kernel can already mount these; what this adds is the userspace tools
   # (mkfs, fsck, repair) and the drivers in the initrd, in case one of them
