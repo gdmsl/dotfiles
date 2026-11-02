@@ -29,10 +29,27 @@ let
   # it isn't cached and building from source hangs. Reusing `pkgs.config` keeps
   # the unfree and insecure allowances from applying. This shadows pkgs.logseq
   # for the plain `logseq` in the list below.
-  logseq = (import inputs.nixpkgs-logseq {
+  #
+  # The system mesa in /run/opengl-driver needs a newer glibc than this
+  # logseq's, so it fails to load. The wrapper points GBM/EGL/DRI at the mesa
+  # from the same pinned nixpkgs instead, and drops the session LD_LIBRARY_PATH
+  # (alsa-lib, sane) for the same reason.
+  logseqPkgs = import inputs.nixpkgs-logseq {
     inherit (pkgs) config;
     inherit (pkgs.stdenv.hostPlatform) system;   # `pkgs.system` is deprecated
-  }).logseq;
+  };
+  logseq = pkgs.symlinkJoin {
+    name = "logseq-wrapped";
+    paths = [ logseqPkgs.logseq ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = with logseqPkgs; ''
+      wrapProgram $out/bin/logseq \
+        --unset LD_LIBRARY_PATH \
+        --set GBM_BACKENDS_PATH ${mesa}/lib/gbm \
+        --set LIBGL_DRIVERS_PATH ${mesa}/lib/dri \
+        --set __EGL_VENDOR_LIBRARY_FILENAMES ${mesa}/share/glvnd/egl_vendor.d/50_mesa.json
+    '';
+  };
 
   # Pinned the same way (the nixpkgs-zotero input): on current nixpkgs the
   # zotero build fails against firefox-esr 153.4. Shadows pkgs.zotero below.
