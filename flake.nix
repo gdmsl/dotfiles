@@ -201,7 +201,12 @@
             home-manager.useUserPackages = true;        # install user pkgs to /etc/profiles
             home-manager.backupFileExtension = "hm-backup"; # back up conflicting files
             home-manager.extraSpecialArgs = { inherit inputs dotfilesPath; };
-            home-manager.users.gdmsl = import ./home;  # user config entry point
+            home-manager.users.gdmsl = {
+              imports = [
+                ./home           # user config entry point
+                ./home/mail.nix  # notmuch mail; yara only for now
+              ];
+            };
           }
         ];
       };
