@@ -138,7 +138,7 @@
   xdg.configFile = {
     "fastfetch/config.jsonc".source = ../raw/fastfetch/config.jsonc;
     "tofi/cheatsheet".source = ../raw/tofi/cheatsheet;
-    "tofi/prompt".source = ../raw/tofi/prompt;
+    "fuzzel/prompt.ini".source = ../raw/fuzzel/prompt.ini;
     "mpv/mpv.conf".source = ../raw/mpv/mpv.conf;
     "mpv/input.conf".source = ../raw/mpv/input.conf;
     "gdb/gdbinit".source = ../raw/gdb/gdbinit;

@@ -81,7 +81,7 @@ end
 -- Jump to the first empty workspace
 hl.bind(mod .. " + M", hl.dsp.focus({ workspace = "empty" }))
 
--- Rename the active workspace via a tofi prompt. ALT+N to match the niri bind
+-- Rename the active workspace via a fuzzel prompt. ALT+N to match the niri bind
 -- (SHIFT+N is taken here by "move window to next workspace").
 hl.bind(mod .. " + ALT + N", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/scripts/rename-workspace.sh"))
 

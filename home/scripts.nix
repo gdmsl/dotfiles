@@ -226,8 +226,8 @@ in
       '';
     };
 
-    # Rename the focused niri workspace via a tofi prompt.
-    # --require-match=false turns tofi into a plain input box. Empty input
+    # Rename the focused niri workspace via a fuzzel text prompt
+    # (--prompt-only: no list, just an input box). Empty input or Escape
     # changes nothing. Type :shortcode: for an emoji, see emojize above. Names
     # set this way are lost when niri restarts — use `workspace "name"` blocks
     # in the niri config for permanent ones.
@@ -235,8 +235,8 @@ in
       executable = true;
       text = ''
         #!/bin/sh
-        name=$(tofi --config "$HOME/.config/tofi/prompt" \
-          --prompt-text "rename workspace ❯ " --require-match=false </dev/null \
+        name=$(fuzzel --config "$HOME/.config/fuzzel/prompt.ini" \
+          --dmenu --prompt-only "rename workspace ❯ " </dev/null \
           | emojize)
         [ -n "$name" ] && niri msg action set-workspace-name "$name"
       '';
