@@ -283,6 +283,10 @@ in
       WorkingDirectory = "%h/Personal/Mail/gmail";
       ExecStart = toString (pkgs.writeShellScript "mail-personal" ''
         set -e
+        # lieer owns .gmailieer.json (it writes it during init), so settings
+        # are applied here rather than linked in. Empty = keep every Gmail
+        # label, including the CATEGORY_* ones Gmail sorts mail into.
+        gmi set --ignore-tags-remote ""
         # -s, not --quiet: lieer 1.6 crashes on a full pull with --quiet.
         gmi sync -s
         ${tagSync personalGit}
