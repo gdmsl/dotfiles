@@ -283,7 +283,8 @@ in
       WorkingDirectory = "%h/Personal/Mail/gmail";
       ExecStart = toString (pkgs.writeShellScript "mail-personal" ''
         set -e
-        gmi sync --quiet
+        # -s, not --quiet: lieer 1.6 crashes on a full pull with --quiet.
+        gmi sync -s
         ${tagSync personalGit}
       '');
     };
