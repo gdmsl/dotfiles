@@ -89,6 +89,18 @@ let
     All=*
   '';
 
+  # One desktop notification per sync: the count, then up to five
+  # "Author; Subject" lines. `notmuch search` lines look like
+  # "thread:… 2 mins. ago [1/1] Author; Subject (tags)", hence the sed.
+  notifyNew = account: query: ''
+    n=$(${pkgs.notmuch}/bin/notmuch count -- '${query}')
+    if [ "$n" -gt 0 ]; then
+      body=$(${pkgs.notmuch}/bin/notmuch search --limit=5 -- '${query}' \
+        | ${pkgs.gnused}/bin/sed -E 's/^thread:[^ ]+ +[^[]*\[[^]]*\] //; s/ \([^)]*\)$//')
+      ${pkgs.libnotify}/bin/notify-send -a aerc -i mail-unread "${account}: $n new" "$body" || true
+    fi
+  '';
+
   # Same refusal as the -personal wrappers in scripts.nix: with the vault
   # locked, ~/Personal is an empty directory and writing there would leave
   # unencrypted files behind the mount.
@@ -202,6 +214,7 @@ in
     executable = true;
     text = ''
       #!/bin/sh
+      ${notifyNew "QPerfect" "tag:new and tag:unread and folder:qperfect/INBOX and date:2d.."}
       notmuch tag -new -- tag:new
     '';
   };
@@ -286,9 +299,14 @@ in
         # lieer owns .gmailieer.json (it writes it during init), so settings
         # are applied here rather than linked in. Empty = keep every Gmail
         # label, including the CATEGORY_* ones Gmail sorts mail into.
-        gmi set --ignore-tags-remote ""
+        # `notified` is local bookkeeping for the notification below and must
+        # not become a Gmail label.
+        gmi set --ignore-tags-remote "" --ignore-tags-local notified
         # -s, not --quiet: lieer 1.6 crashes on a full pull with --quiet.
         gmi sync -s
+        # date:2d.. keeps the first run from announcing years of old unread mail.
+        ${notifyNew "Personal" "tag:inbox and tag:unread and not tag:notified and date:2d.."}
+        notmuch tag +notified -- 'tag:inbox and tag:unread and not tag:notified and date:2d..'
         ${tagSync personalGit}
       '');
     };
