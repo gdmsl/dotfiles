@@ -91,6 +91,7 @@ hl.bind(mod .. " + ALT + D", hl.dsp.exec_cmd("ciel dictate"))
 hl.bind(mod .. " + ALT + W", hl.dsp.exec_cmd("ciel wake toggle"))
 hl.bind(mod .. " + ALT + P", hl.dsp.exec_cmd("ciel panel"))
 hl.bind(mod .. " + ALT + S", hl.dsp.exec_cmd("ciel stop"))
+hl.bind(mod .. " + ALT + R", hl.dsp.exec_cmd("ciel-transcribe-toggle"))
 
 -- Special workspace ("scratchpad") with mod + /
 hl.bind(mod .. " + slash",         hl.dsp.workspace.toggle_special(""))

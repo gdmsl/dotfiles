@@ -70,16 +70,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1794077980,
-        "narHash": "sha256-4npcNTVqjLJ/mT8NIPsenjERCC7nQol09WN44vyb8vY=",
-        "ref": "devel",
-        "rev": "63f9b52dc51d925f6a9e0b584af0b1b7947eab27",
-        "revCount": 49,
+        "lastModified": 1794175749,
+        "narHash": "sha256-qXp9qD89lC0MLjpliwx68+qsC6WTiKLlhnKV3T6yaR0=",
+        "ref": "main",
+        "rev": "b69421234210908372c24bbdabef7cac5d001667",
+        "revCount": 2,
         "type": "git",
         "url": "ssh://forgejo@vestara:2222/gdmsl/ciel.git"
       },
       "original": {
-        "ref": "devel",
+        "ref": "main",
         "type": "git",
         "url": "ssh://forgejo@vestara:2222/gdmsl/ciel.git"
       }

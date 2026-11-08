@@ -105,10 +105,10 @@
     # ciel: the floating voice assistant orb, private on the homelab Forgejo
     # like hub. Inputs are fetched only when a configuration uses them, and
     # only yara's does (see below), so the other profiles still build on
-    # machines that can't reach vestara. Tracks devel until ciel has its
-    # first release on main.
+    # machines that can't reach vestara. Follows main, which only receives
+    # releases.
     ciel = {
-      url = "git+ssh://forgejo@vestara:2222/gdmsl/ciel.git?ref=devel";
+      url = "git+ssh://forgejo@vestara:2222/gdmsl/ciel.git?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
