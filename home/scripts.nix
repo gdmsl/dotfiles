@@ -343,34 +343,6 @@ in
       '';
     };
 
-    # ── ciel transcription on one key ─────────────────────────────────────
-    # Starts `ciel transcribe` in the background, or stops the running one.
-    # SIGINT is what Ctrl-C sends, so ciel finishes the same way as in a
-    # terminal. Bound to Mod+Alt+R in niri and Hyprland.
-    #
-    # ciel keeps every transcript itself (`ciel transcripts`), but only
-    # reprocesses the whole recording at the end, which tells speakers apart
-    # better, when writing to a file. So with the vault open it also saves a
-    # Markdown copy in Documents/Transcripts.
-    ".local/bin/ciel-transcribe-toggle" = {
-      executable = true;
-      text = ''
-        #!/bin/sh
-        if ${pkgs.procps}/bin/pkill -INT -f 'bin/ciel transcribe'; then
-          ${pkgs.libnotify}/bin/notify-send -a ciel "Transcription stopped" "Finishing the transcript…"
-          exit 0
-        fi
-        out=
-        if ${pkgs.util-linux}/bin/mountpoint -q "$HOME/Personal"; then
-          dir="$HOME/Personal/Documents/Transcripts"
-          mkdir -p "$dir"
-          out="--out=$dir/$(date '+%Y-%m-%d %H-%M').md"
-        fi
-        ${pkgs.libnotify}/bin/notify-send -a ciel "Transcribing" "Mod+Alt+R again to stop."
-        exec ciel transcribe ''${out:+"$out"} >/dev/null 2>&1
-      '';
-    };
-
     # ── Personal-account wrappers for the AI CLIs ─────────────────────────
     # Same binaries as the bare `claude` / `codex` / `agy`, but with their
     # config inside ~/Personal. Bare command is the work account, `-personal` is

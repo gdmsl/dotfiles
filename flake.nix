@@ -215,10 +215,8 @@
               imports = [
                 ./home           # user config entry point
                 ./home/mail.nix  # notmuch mail; yara only for now
-                # ciel's own module: runs cield with the graphical session.
-                inputs.ciel.homeModules.default
+                ./home/ciel.nix  # ciel assistant orb, data in ~/Personal
               ];
-              services.ciel.enable = true;
             };
           }
         ];
