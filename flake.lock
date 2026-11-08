@@ -63,6 +63,27 @@
         "type": "github"
       }
     },
+    "ciel": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794077980,
+        "narHash": "sha256-4npcNTVqjLJ/mT8NIPsenjERCC7nQol09WN44vyb8vY=",
+        "ref": "devel",
+        "rev": "63f9b52dc51d925f6a9e0b584af0b1b7947eab27",
+        "revCount": 49,
+        "type": "git",
+        "url": "ssh://forgejo@vestara:2222/gdmsl/ciel.git"
+      },
+      "original": {
+        "ref": "devel",
+        "type": "git",
+        "url": "ssh://forgejo@vestara:2222/gdmsl/ciel.git"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -440,6 +461,7 @@
       "inputs": {
         "anyrun": "anyrun",
         "bimbumbam": "bimbumbam",
+        "ciel": "ciel",
         "disko": "disko",
         "home-manager": "home-manager",
         "hub": "hub",

@@ -102,6 +102,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # ciel: the floating voice assistant orb, private on the homelab Forgejo
+    # like hub. Inputs are fetched only when a configuration uses them, and
+    # only yara's does (see below), so the other profiles still build on
+    # machines that can't reach vestara. Tracks devel until ciel has its
+    # first release on main.
+    ciel = {
+      url = "git+ssh://forgejo@vestara:2222/gdmsl/ciel.git?ref=devel";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # hyprfm: a Qt6/QML file manager. Not packaged in nixpkgs, but upstream
     # ships its own flake, so the package comes from there rather than being
     # re-derived here. `follows = "nixpkgs"` keeps it on our nixpkgs instead of
@@ -205,7 +215,10 @@
               imports = [
                 ./home           # user config entry point
                 ./home/mail.nix  # notmuch mail; yara only for now
+                # ciel's own module: runs cield with the graphical session.
+                inputs.ciel.homeModules.default
               ];
+              services.ciel.enable = true;
             };
           }
         ];

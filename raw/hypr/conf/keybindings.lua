@@ -85,6 +85,13 @@ hl.bind(mod .. " + M", hl.dsp.focus({ workspace = "empty" }))
 -- (SHIFT+N is taken here by "move window to next workspace").
 hl.bind(mod .. " + ALT + N", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/scripts/rename-workspace.sh"))
 
+-- ciel, the assistant orb. Each command toggles; same keys as in niri.
+hl.bind(mod .. " + ALT + C", hl.dsp.exec_cmd("ciel dashboard"))
+hl.bind(mod .. " + ALT + D", hl.dsp.exec_cmd("ciel dictate"))
+hl.bind(mod .. " + ALT + W", hl.dsp.exec_cmd("ciel wake toggle"))
+hl.bind(mod .. " + ALT + P", hl.dsp.exec_cmd("ciel panel"))
+hl.bind(mod .. " + ALT + S", hl.dsp.exec_cmd("ciel stop"))
+
 -- Special workspace ("scratchpad") with mod + /
 hl.bind(mod .. " + slash",         hl.dsp.workspace.toggle_special(""))
 hl.bind(mod .. " + SHIFT + slash", hl.dsp.window.move({ workspace = "special" }))

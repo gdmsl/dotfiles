@@ -409,6 +409,14 @@ binds {
     // Rename the focused workspace via a fuzzel prompt
     Mod+Alt+N hotkey-overlay-title="Rename workspace" repeat=false { spawn "niri-rename-workspace"; }
 
+    // ciel, the assistant orb. Each command toggles, so one key opens and
+    // closes. Same keys in Hyprland.
+    Mod+Alt+C hotkey-overlay-title="Ciel: dashboard" repeat=false { spawn "ciel" "dashboard"; }
+    Mod+Alt+D hotkey-overlay-title="Ciel: dictate into window" repeat=false { spawn "ciel" "dictate"; }
+    Mod+Alt+W hotkey-overlay-title="Ciel: wake word on/off" repeat=false { spawn "ciel" "wake" "toggle"; }
+    Mod+Alt+P hotkey-overlay-title="Ciel: caption panel" repeat=false { spawn "ciel" "panel"; }
+    Mod+Alt+S hotkey-overlay-title="Ciel: stop" repeat=false { spawn "ciel" "stop"; }
+
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument in the end.
     // Mod+T { spawn "bash" "-c" "notify-send hello && exec alacritty"; }
