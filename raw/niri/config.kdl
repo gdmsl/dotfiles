@@ -416,6 +416,7 @@ binds {
     Mod+Alt+W hotkey-overlay-title="Ciel: wake word on/off" repeat=false { spawn "ciel" "wake" "toggle"; }
     Mod+Alt+P hotkey-overlay-title="Ciel: caption panel" repeat=false { spawn "ciel" "panel"; }
     Mod+Alt+S hotkey-overlay-title="Ciel: stop" repeat=false { spawn "ciel" "stop"; }
+    Mod+Alt+O hotkey-overlay-title="Ciel: hide/show orb" repeat=false { spawn "ciel" "orb" "toggle"; }
     Mod+Alt+R hotkey-overlay-title="Ciel: start/stop transcription" repeat=false { spawn "ciel-transcribe-toggle"; }
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
