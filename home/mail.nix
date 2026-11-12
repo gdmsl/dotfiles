@@ -101,6 +101,37 @@ let
     fi
   '';
 
+  pythonGmail = pkgs.python3.withPackages (ps: [ ps.google-api-python-client ps.google-auth ]);
+
+  # "Empty" is Gmail's own count, so a label is never taken off a message
+  # lieer hasn't downloaded. A parent stays while a child still has mail:
+  # Gmail nests labels by name, and the children would lose their folder.
+  pruneLabels = pkgs.writeText "gmi-prune-labels.py" ''
+    import sys
+    from google.oauth2.credentials import Credentials
+    from googleapiclient.discovery import build
+
+    creds_file, *args = sys.argv[1:]
+    delete = args == ["--delete"]
+    if args not in ([], ["--delete"]):
+        sys.exit("usage: gmi-prune-labels [--delete]")
+
+    labels = build("gmail", "v1", credentials=Credentials.from_authorized_user_file(creds_file)).users().labels()
+    user = [labels.get(userId="me", id=l["id"]).execute()
+            for l in labels.list(userId="me").execute()["labels"] if l["type"] == "user"]
+    used = [l["name"] for l in user if l["messagesTotal"] > 0]
+    empty = sorted((l for l in user if l["messagesTotal"] == 0
+                    and not any(u.startswith(l["name"] + "/") for u in used)),
+                   key=lambda l: l["name"])
+
+    for l in empty:
+        print(("deleting " if delete else "empty    ") + l["name"])
+        if delete:
+            labels.delete(userId="me", id=l["id"]).execute()
+    if empty and not delete:
+        print(f"\n{len(empty)} empty labels. Run with --delete to remove them.")
+  '';
+
   # Same refusal as the -personal wrappers in scripts.nix: with the vault
   # locked, ~/Personal is an empty directory and writing there would leave
   # unencrypted files behind the mount.
@@ -130,6 +161,14 @@ in
       mkdir -p "${personalRoot}/gmail"
       cd "${personalRoot}/gmail"
       exec ${pkgs.lieer}/bin/gmi "$@"
+    '')
+
+    # lieer removes labels from messages but never deletes the label, so Gmail
+    # keeps every name ever used. This deletes the ones Gmail reports as empty,
+    # with lieer's own token. Dry run unless given --delete.
+    (pkgs.writeShellScriptBin "gmi-prune-labels" ''
+      ${requireVault "gmi-prune-labels"}
+      exec ${pythonGmail}/bin/python3 ${pruneLabels} "${personalRoot}/gmail/.credentials.gmailieer.json" "$@"
     '')
   ];
 
