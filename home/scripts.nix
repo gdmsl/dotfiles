@@ -344,12 +344,12 @@ in
     };
 
     # ── Personal-account wrappers for the AI CLIs ─────────────────────────
-    # Same binaries as the bare `claude` / `codex` / `agy`, but with their
+    # Same binaries as the bare `claude` / `codex` / `ant` / `agy`, but with their
     # config inside ~/Personal. Bare command is the work account, `-personal` is
     # the personal one; they share no credentials or history and can run side by
     # side. Each needs its own login once.
 
-    # These two read their config directory from an environment variable, so
+    # These read their config directory from an environment variable, so
     # redirecting them is a one-liner.
     ".local/bin/claude-personal" = {
       executable = true;
@@ -372,6 +372,17 @@ in
         export CODEX_HOME="$HOME/Personal/.codex"
         mkdir -p "$CODEX_HOME"
         exec ${pkgs.codex}/bin/codex "$@"
+      '';
+    };
+
+    ".local/bin/ant-personal" = {
+      executable = true;
+      text = ''
+        #!/bin/sh
+        ${requireVault "ant-personal"}
+        export ANTHROPIC_CONFIG_DIR="$HOME/Personal/.config/anthropic"
+        mkdir -p "$ANTHROPIC_CONFIG_DIR"
+        exec ${pkgs.callPackage ./pkgs/ant.nix { }}/bin/ant "$@"
       '';
     };
 

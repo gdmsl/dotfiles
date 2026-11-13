@@ -13,5 +13,6 @@
     # wrapper doesn't put node on PATH, so it has to come from here.
     nodejs
     codex            # OpenAI's terminal coding agent (the `codex` command)
+    (callPackage ./pkgs/ant.nix { })  # Claude API from the terminal (`ant`)
   ];
 }
