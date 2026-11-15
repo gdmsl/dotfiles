@@ -52,7 +52,7 @@
 # that name projects and people stay out of this public repo, one file per
 # profile, appended to that profile's afew config:
 #   work      ~/.config/afew/work.ini              (copy it to each machine)
-#   personal  ~/Personal/.config/afew/personal.ini (in the vault)
+#   personal  ~/Personal/Mail/afew.ini             (in the vault, with senders.md)
 # A missing file just means no rules. For work, [MailMover] turns tags into
 # folder moves that mbsync pushes to Outlook, one sync after the tagging.
 # Folders are relative to ~/Mail, and `rename = True` is required for mbsync:
@@ -181,7 +181,7 @@ let
   '';
 
   workRules = "${config.xdg.configHome}/afew/work.ini";
-  personalRules = "${home}/Personal/.config/afew/personal.ini";
+  personalRules = "${personalRoot}/afew.ini";
 
   # Mailing-list mail gets `lists` and `lists/<list-id>`.
   afewWork = afewFor "work" "default" workRules ''
@@ -405,8 +405,10 @@ in
         # -s, not --quiet: lieer 1.6 crashes on a full pull with --quiet.
         gmi sync -s
         # lieer sets no `new` tag, so `sorted` marks what afew has seen. A tag
-        # removed by hand stays removed. Changes reach Gmail on the next sync.
-        ${afewPersonal}/bin/afew-personal --tag 'not tag:sorted and date:2d..' || echo "afew-personal failed" >&2
+        # removed by hand stays removed, and mail that already has a keep/*
+        # tier was reviewed and is left alone. Changes reach Gmail on the next
+        # sync.
+        ${afewPersonal}/bin/afew-personal --tag 'not tag:sorted and not tag:/^keep\// and date:2d..' || echo "afew-personal failed" >&2
         notmuch tag +sorted -- 'not tag:sorted and date:2d..'
         # date:2d.. keeps the first run from announcing years of old unread mail.
         ${notifyNew "Personal" "tag:inbox and tag:unread and not tag:notified and date:2d.."}
