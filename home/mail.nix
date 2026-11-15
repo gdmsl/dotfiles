@@ -29,7 +29,7 @@
 #
 # ── One-time setup per machine ─────────────────────────────────────────────
 # Work:
-#   oama authorize microsoft guido.masella@qperfect.io   # device-code login
+#   oama authorize microsoft guido.masella@qperfect.io --device
 #   systemctl --user start mail-work                     # first download
 #   notmuch git clone <gitlab repo url>                  # or `notmuch git init`
 #                                                        # + `git remote add`
@@ -175,7 +175,8 @@ in
   # ── OAuth2 for Microsoft 365 ────────────────────────────────────────────
   # The client ID is Thunderbird's public one: Microsoft lets any tenant use it
   # for IMAP/SMTP, so no app registration is needed. With no client secret,
-  # oama uses the device-code flow (open a URL, type a code). Tokens go to the
+  # `oama authorize --device` uses the device-code flow (open a URL, type a
+  # code); without --device it hangs. Tokens go to the
   # keyring.
   xdg.configFile."oama/config.yaml".text = ''
     encryption:
@@ -315,6 +316,8 @@ in
       Environment = "PATH=${servicePath}";
       ExecStart = toString (pkgs.writeShellScript "mail-work" ''
         set -e
+        # mbsync won't create the store root itself.
+        mkdir -p ${workRoot}/qperfect
         mbsync qperfect
         notmuch new --quiet
         ${tagSync workGit}
