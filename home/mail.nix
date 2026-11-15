@@ -46,6 +46,29 @@
 # lieer keeps everything in ~/Personal/Mail/gmail: settings (.gmailieer.json),
 # sync state (.state.gmailieer.json), the OAuth token
 # (.credentials.gmailieer.json), a lock file, and the messages in mail/.
+#
+# ── Sorting rules ──────────────────────────────────────────────────────────
+# afew tags new mail on every sync. The generic filters are below; the rules
+# that name projects and people stay out of this public repo, one file per
+# profile, appended to that profile's afew config:
+#   work      ~/.config/afew/work.ini              (copy it to each machine)
+#   personal  ~/Personal/.config/afew/personal.ini (in the vault)
+# A missing file just means no rules. For work, [MailMover] turns tags into
+# folder moves that mbsync pushes to Outlook, one sync after the tagging.
+# Folders are relative to ~/Mail, and `rename = True` is required for mbsync:
+#
+#   [Filter.1]
+#   query = from:@client.com or subject:"[PRJ-X]"
+#   tags = +project-x
+#
+#   [MailMover]
+#   folders = qperfect/INBOX
+#   rename = True
+#   qperfect/INBOX = 'tag:project-x':"qperfect/Projects/X" 'tag:killed':"qperfect/Deleted Items"
+#
+# Personal has no folders: tags are Gmail labels, so [Filter.N] is all it needs.
+# Try rules without changing anything with `afew-work --tag --all --dry-run -v`
+# (or `afew-personal`, which needs a query such as 'date:7d..' instead of --new).
 
 { config, pkgs, lib, ... }:
 
@@ -141,10 +164,39 @@ let
       exit 1
     }
   '';
+
+  # afew reads exactly one config, ~/.config/afew/config, and doesn't know
+  # notmuch profiles. Each wrapper builds a throwaway config from the public
+  # filters below plus the private rules file, and points afew (and the
+  # `notmuch new` its mail mover runs) at that profile's notmuch config.
+  afewFor = name: profile: rules: filters: pkgs.writeShellScriptBin "afew-${name}" ''
+    ${lib.optionalString (name == "personal") (requireVault "afew-personal")}
+    dir=$(${pkgs.coreutils}/bin/mktemp -d)
+    trap '${pkgs.coreutils}/bin/rm -rf "$dir"' EXIT
+    mkdir "$dir/afew"
+    cat ${pkgs.writeText "afew-${name}" filters} > "$dir/afew/config"
+    if [ -f "${rules}" ]; then cat "${rules}" >> "$dir/afew/config"; fi
+    XDG_CONFIG_HOME="$dir" NOTMUCH_CONFIG="${config.xdg.configHome}/notmuch/${profile}/config" \
+      ${pkgs.afew}/bin/afew "$@"
+  '';
+
+  workRules = "${config.xdg.configHome}/afew/work.ini";
+  personalRules = "${home}/Personal/.config/afew/personal.ini";
+
+  # Mailing-list mail gets `lists` and `lists/<list-id>`.
+  afewWork = afewFor "work" "default" workRules ''
+    [ListMailsFilter]
+  '';
+
+  # A thread tagged `killed` stays out of the inbox, so it's archived in Gmail.
+  # Lists aren't tagged here: every tag becomes a Gmail label.
+  afewPersonal = afewFor "personal" "personal" personalRules ''
+    [KillThreadsFilter]
+  '';
 in
 {
   home.packages = [
-    mbsync pkgs.notmuch pkgs.oama pkgs.msmtp
+    mbsync pkgs.notmuch pkgs.oama pkgs.msmtp afewWork afewPersonal
 
     # `notmuch-personal search …` is `notmuch search …` on the Gmail database.
     (pkgs.writeShellScriptBin "notmuch-personal" ''
@@ -248,12 +300,14 @@ in
     git.path = workGit;
   };
 
-  # Runs after each `notmuch new` on work mail. Tagging rules, or an LLM
-  # tagger, go above the last line and should only touch `tag:new`.
+  # Runs after each `notmuch new` on work mail. Tagging, by afew or an LLM
+  # tagger, goes before the notification and should only touch `tag:new`.
+  # A broken rules file must not stop mail from arriving.
   xdg.configFile."notmuch/default/hooks/post-new" = {
     executable = true;
     text = ''
       #!/bin/sh
+      ${afewWork}/bin/afew-work --tag --new || echo "afew-work failed" >&2
       ${notifyNew "QPerfect" "tag:new and tag:unread and folder:qperfect/INBOX and date:2d.."}
       notmuch tag -new -- tag:new
     '';
@@ -318,6 +372,10 @@ in
         set -e
         # mbsync won't create the store root itself.
         mkdir -p ${workRoot}/qperfect
+        # Moves from the last run's tags; mbsync then pushes them to Outlook.
+        if ${pkgs.gnugrep}/bin/grep -qs '^\[MailMover\]' ${workRules}; then
+          ${afewWork}/bin/afew-work --move-mails || echo "afew-work failed" >&2
+        fi
         mbsync qperfect
         notmuch new --quiet
         ${tagSync workGit}
@@ -341,11 +399,15 @@ in
         # lieer owns .gmailieer.json (it writes it during init), so settings
         # are applied here rather than linked in. Empty = keep every Gmail
         # label, including the CATEGORY_* ones Gmail sorts mail into.
-        # `notified` is local bookkeeping for the notification below and must
-        # not become a Gmail label.
-        gmi set --ignore-tags-remote "" --ignore-tags-local notified
+        # `notified` and `sorted` are local bookkeeping for the steps below and
+        # must not become Gmail labels.
+        gmi set --ignore-tags-remote "" --ignore-tags-local notified,sorted
         # -s, not --quiet: lieer 1.6 crashes on a full pull with --quiet.
         gmi sync -s
+        # lieer sets no `new` tag, so `sorted` marks what afew has seen. A tag
+        # removed by hand stays removed. Changes reach Gmail on the next sync.
+        ${afewPersonal}/bin/afew-personal --tag 'not tag:sorted and date:2d..' || echo "afew-personal failed" >&2
+        notmuch tag +sorted -- 'not tag:sorted and date:2d..'
         # date:2d.. keeps the first run from announcing years of old unread mail.
         ${notifyNew "Personal" "tag:inbox and tag:unread and not tag:notified and date:2d.."}
         notmuch tag +notified -- 'tag:inbox and tag:unread and not tag:notified and date:2d..'
