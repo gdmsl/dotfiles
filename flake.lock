@@ -70,11 +70,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794316943,
-        "narHash": "sha256-5GnDRftrvlHjV+23EJtAIxGihrOuytZM3k3eFhSrE7o=",
+        "lastModified": 1794785449,
+        "narHash": "sha256-WFgIxMs6412LFvSVTSJ7WYLa0F0qJK7og1Fr5UkhvvA=",
         "ref": "main",
-        "rev": "e9a4166efa2e2a6f329a1cb8bf8ccb940d049e6b",
-        "revCount": 3,
+        "rev": "54440dea8095d8bc958c62dad898ee9c42e64d55",
+        "revCount": 5,
         "type": "git",
         "url": "ssh://forgejo@vestara:2222/gdmsl/ciel.git"
       },

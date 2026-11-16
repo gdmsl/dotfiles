@@ -293,7 +293,9 @@ in
     user = { inherit name; primary_email = workAddress; };
     # `new` marks what the last `notmuch new` added, for the post-new hook.
     new.tags = "new";
-    new.ignore = "/^[.]mbsyncstate/;.uidvalidity";
+    # Besides mbsync's state, skip the notes kept at the top of ~/Mail
+    # (CLAUDE.md, taxonomy and batch files): they aren't mail.
+    new.ignore = "/(^|/)[.]mbsyncstate/;.uidvalidity;/^[^/]+[.]md$/;/^(batches|[.]git|[.]claude)$/";
     search.exclude_tags = "deleted;spam";
     # Read/flagged/replied map to maildir filename flags, which mbsync syncs.
     maildir.synchronize_flags = "true";
