@@ -24,8 +24,8 @@
 
 let
   # ── Tokyo Night ───────────────────────────────────────────────────────────
-  # Taken from noctalia's own palette (~/.config/noctalia/colors.json) so the
-  # shell, the Qt apps and hyprfm all land on the same colours.
+  # The same palette noctalia uses, so the shell, the Qt apps and hyprfm all
+  # land on the same colours.
   tn = {
     bg        = "1a1b26";  # window
     bgDark    = "16161e";  # base / text entry background

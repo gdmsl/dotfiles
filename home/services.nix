@@ -148,6 +148,29 @@ in
       };
     };
 
+    # ── NetBird tray ──────────────────────────────────────────────────────
+    # Status icon and connect/disconnect menu for the company VPN. The daemon
+    # and this binary come from services.netbird in system/default.nix; the
+    # system path is used because its wrapper points at the daemon's socket.
+    # Started after noctalia so its tray is there to register with.
+    netbird-ui = {
+      Unit = {
+        Description = "NetBird tray";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" "noctalia-shell.service" ];
+        # Skips quietly on hosts without the system module (standalone HM).
+        ConditionPathExists = "/run/current-system/sw/bin/netbird-ui";
+      };
+      Service = {
+        ExecStart = "/run/current-system/sw/bin/netbird-ui";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
+      };
+    };
+
     # ── Polkit agent ──────────────────────────────────────────────────────
     # Draws the "enter your password" dialog when something asks for privileges.
     # Without it running, those requests fail silently.
