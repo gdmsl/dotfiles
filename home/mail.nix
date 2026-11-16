@@ -20,18 +20,19 @@
 #                                  API too. Its token sits in that directory.
 #
 # Tags that exist only in notmuch are kept in step between machines with
-# `notmuch git`, which stores them in a git repo per profile:
-#   work      ~/.local/share/notmuch/default/git  → gitlab.qperfect.io
-#   personal  ~/Personal/.local/share/notmuch/git → Forgejo on vestara
+# `notmuch git`, which stores them in a git repo per profile, each with its own
+# private remote (set in the repo, not here):
+#   work      ~/.local/share/notmuch/default/git
+#   personal  ~/Personal/.local/share/notmuch/git
 #
-# The sync timers below run everything every 5 minutes. The personal one only
-# runs while ~/Personal is mounted.
+# Mail syncs every 5 minutes; tags go to and from those remotes once a night.
+# Everything personal only runs while ~/Personal is mounted.
 #
 # ── One-time setup per machine ─────────────────────────────────────────────
 # Work:
 #   oama authorize microsoft guido.masella@qperfect.io --device
 #   systemctl --user start mail-work                     # first download
-#   notmuch git clone <gitlab repo url>                  # or `notmuch git init`
+#   notmuch git clone <tag repo url>                     # or `notmuch git init`
 #                                                        # + `git remote add`
 #                                                        # on the first machine
 # Personal (vault unlocked):
@@ -39,7 +40,7 @@
 #   notmuch-personal new                                 # create the database
 #   gmi init guido.masella@gmail.com
 #   systemctl --user start mail-personal
-#   notmuch-personal git clone <forgejo repo url>
+#   notmuch-personal git clone <tag repo url>
 #
 # Plain `notmuch` is the work database; `notmuch-personal` is the Gmail one.
 #
@@ -96,6 +97,13 @@ let
       notmuch git pull
       notmuch git push
     fi
+  '';
+
+  # A profile's mail sync and tag sync both write to its database, which
+  # takes only one writer at a time, so they wait for each other.
+  lock = name: ''
+    exec 9>"$XDG_RUNTIME_DIR/${name}.lock"
+    ${pkgs.util-linux}/bin/flock 9
   '';
 
   # systemd user services start with an almost empty PATH. ssh is for the
@@ -372,6 +380,7 @@ in
       Environment = "PATH=${servicePath}";
       ExecStart = toString (pkgs.writeShellScript "mail-work" ''
         set -e
+        ${lock "mail-work"}
         # mbsync won't create the store root itself.
         mkdir -p ${workRoot}/qperfect
         # Moves from the last run's tags; mbsync then pushes them to Outlook.
@@ -380,7 +389,6 @@ in
         fi
         mbsync qperfect
         notmuch new --quiet
-        ${tagSync workGit}
       '');
     };
   };
@@ -398,6 +406,7 @@ in
       WorkingDirectory = "%h/Personal/Mail/gmail";
       ExecStart = toString (pkgs.writeShellScript "mail-personal" ''
         set -e
+        ${lock "mail-personal"}
         # lieer owns .gmailieer.json (it writes it during init), so settings
         # are applied here rather than linked in. Empty = keep every Gmail
         # label, including the CATEGORY_* ones Gmail sorts mail into.
@@ -415,15 +424,50 @@ in
         # date:2d.. keeps the first run from announcing years of old unread mail.
         ${notifyNew "Personal" "tag:inbox and tag:unread and not tag:notified and date:2d.."}
         notmuch tag +notified -- 'tag:inbox and tag:unread and not tag:notified and date:2d..'
+      '');
+    };
+  };
+
+  systemd.user.services.mail-work-tags = {
+    Unit.Description = "Sync work notmuch tags (notmuch git)";
+    Service = {
+      Type = "oneshot";
+      Environment = "PATH=${servicePath}";
+      ExecStart = toString (pkgs.writeShellScript "mail-work-tags" ''
+        set -e
+        ${lock "mail-work"}
+        ${tagSync workGit}
+      '');
+    };
+  };
+
+  systemd.user.services.mail-personal-tags = {
+    Unit = {
+      Description = "Sync personal notmuch tags (notmuch git)";
+      ConditionPathIsMountPoint = "%h/Personal";
+    };
+    Service = {
+      Type = "oneshot";
+      Environment = [ "PATH=${servicePath}" "NOTMUCH_PROFILE=personal" ];
+      ExecStart = toString (pkgs.writeShellScript "mail-personal-tags" ''
+        set -e
+        ${lock "mail-personal"}
         ${tagSync personalGit}
       '');
     };
   };
 
-  # Every 5 minutes, and not Persistent: a missed run just happens next slot.
+  # Mail every 5 minutes, and not Persistent: a missed run just happens next
+  # slot. Tags once a night, and Persistent: with the laptop off at 03:00, the
+  # run happens at the next boot. A personal run skipped because the vault was
+  # locked waits for the next night.
   systemd.user.timers = lib.genAttrs [ "mail-work" "mail-personal" ] (n: {
     Unit.Description = "Periodic ${n} sync";
     Timer.OnCalendar = "*:0/5";
+    Install.WantedBy = [ "timers.target" ];
+  }) // lib.genAttrs [ "mail-work-tags" "mail-personal-tags" ] (n: {
+    Unit.Description = "Nightly ${n} sync";
+    Timer = { OnCalendar = "03:00"; Persistent = true; };
     Install.WantedBy = [ "timers.target" ];
   });
 }
