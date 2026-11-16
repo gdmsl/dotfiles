@@ -99,6 +99,19 @@
     };
   };
 
+  # ── NetBird (company VPN) ───────────────────────────────────────────────
+  # Another WireGuard mesh, run by a root daemon on interface wt0 (port 51820,
+  # no clash with Tailscale). `ui` adds a tray icon to connect/disconnect.
+  # Login is not declarative: run `netbird up` once after rebuilding.
+  # "client" lets us use routes other peers advertise without routing ourselves.
+  # NB_MANAGEMENT_URL points `netbird up` at the company server by default.
+  services.netbird = {
+    enable = true;
+    ui.enable = true;
+    useRoutingFeatures = "client";
+    clients.default.environment.NB_MANAGEMENT_URL = "https://vpn.qperfect.io";
+  };
+
   # ── GPU (AMD integrated graphics) ──────────────────────────────────────
   # VA-API and VDPAU provide hardware-accelerated video decode for Firefox,
   # mpv, and other media apps.
