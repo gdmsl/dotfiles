@@ -347,6 +347,14 @@ layer-rule {
     place-within-backdrop true
 }
 
+// Teams' pop-out meeting/chat window. The main window's title carries a
+// " - ..." suffix, so the exact title only matches the pop-out. Niri has no
+// pinned/sticky windows, so this only floats it.
+window-rule {
+    match app-id="^microsoft-edge$" title=r#"^Microsoft Teams \(PWA\)$"#
+    open-floating true
+}
+
 // Open clipse as floating window
 window-rule {
     match app-id="^me.gdmsl.clipse$"

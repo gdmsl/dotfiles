@@ -42,3 +42,11 @@ hl.window_rule({
     size  = "622 652",
     stay_focused = true,
 })
+
+-- Teams' pop-out meeting/chat window: floating and pinned across workspaces.
+-- The main window's title carries a " - ..." suffix, so this only hits the pop-out.
+hl.window_rule({
+    match = { class = "^(microsoft-edge)$", title = "^(Microsoft Teams \\(PWA\\))$" },
+    float = true,
+    pin   = true,
+})
