@@ -355,6 +355,16 @@ window-rule {
     open-floating true
 }
 
+// Zoom's helper windows during a share (annotate_toolbar, as_toolbar,
+// zoom_linux_float_video_window, ...) all have lowercase snake_case titles,
+// unlike the real windows ("Zoom Meeting", "Webinar", "Zoom Workplace - ...").
+// Float them and keep them from grabbing focus from the meeting window.
+window-rule {
+    match app-id="^zoom$" title="^[a-z_]+$"
+    open-floating true
+    open-focused false
+}
+
 // Open clipse as floating window
 window-rule {
     match app-id="^me.gdmsl.clipse$"
