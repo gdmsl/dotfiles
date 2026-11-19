@@ -34,6 +34,10 @@
       # Nix-managed and read-only, the setting survives updates and can't be
       # switched back on from noctalia's own settings UI.
       lockscreen.enabled = false;
+
+      # Dots for inactive workspaces, a full pill only for the active one, so
+      # many named workspaces still fit on one bar. SUPER+A lists them by name.
+      widget.workspaces.style = "focus_hint";
     };
   };
 }
