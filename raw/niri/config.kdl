@@ -426,6 +426,7 @@ binds {
 
     // Rename the focused workspace via a fuzzel prompt
     Mod+Alt+N hotkey-overlay-title="Rename workspace" repeat=false { spawn "niri-rename-workspace"; }
+    Mod+A hotkey-overlay-title="Pick workspace" repeat=false { spawn "niri-pick-workspace"; }
 
     // ciel, the assistant orb. Each command toggles, so one key opens and
     // closes. Same keys in Hyprland.

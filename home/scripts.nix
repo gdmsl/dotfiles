@@ -242,6 +242,26 @@ in
       '';
     };
 
+    # Pick a niri workspace from a fuzzel list and switch to it.
+    #
+    # Lines are "<output>\t<ref>\t<label>"; fuzzel shows the label and hands
+    # back output and ref. The ref is the name when there is one, otherwise the
+    # index, which niri resolves on the focused monitor, hence focus-monitor
+    # first.
+    ".local/bin/niri-pick-workspace" = {
+      executable = true;
+      text = ''
+        #!/bin/sh
+        niri msg -j workspaces \
+          | jq -r 'sort_by(.output, .idx)[]
+              | "\(.output)\t\(.name // .idx)\t\(.output)  \(.idx)  \(.name // "")"' \
+          | fuzzel --dmenu --prompt "workspace ❯ " --with-nth 3 --accept-nth '{1} {2}' \
+          | { read -r output ref || exit 0
+              niri msg action focus-monitor "$output"
+              niri msg action focus-workspace "$ref"; }
+      '';
+    };
+
     # Remove empty named niri workspaces, so they behave like numbered ones.
     #
     # niri drops unnamed workspaces when they empty but keeps named ones
