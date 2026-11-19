@@ -80,7 +80,10 @@ in
     yazi          # terminal file manager (fast, async)
     bottom        # htop alternative (system monitor; the command is `btm`)
     btop          # resource monitor with a polished TUI (CPU/mem/net/procs)
-    glances       # broad single-screen system overview (also has a web mode)
+    # broad single-screen system overview (also has a web mode). Its REST API
+    # tests need a local server the build sandbox can't reach, so they fail;
+    # skipping the test suite also saves ~10 minutes of build.
+    (glances.overridePythonAttrs { doCheck = false; })
     direnv        # auto-load env vars when entering a directory
     jq            # JSON processor (query, filter, transform)
     ffmpeg        # audio/video transcoding; also what hyprfm uses for video
