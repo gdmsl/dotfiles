@@ -365,6 +365,13 @@ window-rule {
     open-focused false
 }
 
+// The Android emulator sizes its window to the device's aspect ratio. When
+// tiled, niri and the emulator keep resizing it back and forth, which flickers.
+window-rule {
+    match app-id="^Emulator$"
+    open-floating true
+}
+
 // Open clipse as floating window
 window-rule {
     match app-id="^me.gdmsl.clipse$"
