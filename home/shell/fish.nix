@@ -170,6 +170,29 @@ in
         '';
       };
 
+      # Run a uv subcommand against a project, with Julia-style named envs:
+      #   uvp @global add ipython   → like `]add` in `julia --project=@global`
+      #   uvp @global run ipython   → like `julia --project=@global`
+      #   uvp .       run python    → like `julia --project=.`
+      # A named env is a bare uv project in ~/.local/share/pyenvs/<name>,
+      # created on first use, so it has its own pyproject.toml and uv.lock.
+      uvp = {
+        description = "Run uv against a project or a named @env";
+        body = ''
+          if test (count $argv) -lt 2
+              echo "Usage: uvp <path|@name> <uv subcommand> [args...]"
+              return 1
+          end
+
+          set -l p $argv[1]
+          if string match -q '@*' -- $p
+              set p ~/.local/share/pyenvs/(string sub -s 2 -- $p)
+              test -d $p; or uv init --bare -q $p
+          end
+          uv $argv[2] --project $p $argv[3..]
+        '';
+      };
+
       # Focus the "dev" workspace in Niri and spawn a terminal if empty.
       # Uses Niri's IPC (niri msg) to control the compositor.
       dev = {
